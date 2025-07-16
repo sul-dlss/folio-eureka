@@ -23,14 +23,14 @@ extraEnvVars:
   #     secretKeyRef:
   #       name: eureka-common
   #       key: KC_IDENTITY_PROVIDER_BASE_URL
-  # - name: KC_HOSTNAME_STRICT
-  #   value: "false"
-  # - name: KC_HOSTNAME_STRICT_HTTPS
-  #   value: "false"
+  - name: KC_HOSTNAME_STRICT
+    value: "false"
+  - name: KC_HOSTNAME_STRICT_HTTPS
+    value: "false"
   # - name: KC_PROXY
   #   value: "edge"
-  # - name: FIPS
-  #   value: "false"
+  - name: FIPS
+    value: "false"
   # - name: EUREKA_RESOLVE_SIDECAR_IP
   #   value: "false"
   # - name: PROXY_ADDRESS_FORWARDING
@@ -45,35 +45,35 @@ extraEnvVars:
       secretKeyRef:
         name: keycloak-credentials
         key: KC_HTTPS_KEY_STORE_PASSWORD
-  - name: KC_LOG_LEVEL
-    value: "DEBUG"
+  # - name: KC_LOG_LEVEL
+  #   value: "DEBUG"
   # - name: KC_HOSTNAME_DEBUG
   #   value: "true"
-  # - name: KC_DB_PASSWORD
-  #   valueFrom:
-  #     secretKeyRef:
-  #       name: keycloak-credentials
-  #       key: KC_DB_PASSWORD
-  # - name: KC_DB_URL_DATABASE
-  #   valueFrom:
-  #     secretKeyRef:
-  #       name: keycloak-credentials
-  #       key: KC_DB_URL_DATABASE
-  # - name: KC_DB_URL_HOST
-  #   valueFrom:
-  #     secretKeyRef:
-  #       name: keycloak-credentials
-  #       key: KC_DB_URL_HOST
-  # - name: KC_DB_URL_PORT
-  #   valueFrom:
-  #     secretKeyRef:
-  #       name: keycloak-credentials
-  #       key: KC_DB_URL_PORT
-  # - name: KC_DB_USERNAME
-  #   valueFrom:
-  #     secretKeyRef:
-  #       name: keycloak-credentials
-  #       key: KC_DB_USERNAME
+  - name: KC_DB_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-credentials
+        key: KC_DB_PASSWORD
+  - name: KC_DB_URL_DATABASE
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-credentials
+        key: KC_DB_URL_DATABASE
+  - name: KC_DB_URL_HOST
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-credentials
+        key: KC_DB_URL_HOST
+  - name: KC_DB_URL_PORT
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-credentials
+        key: KC_DB_URL_PORT
+  - name: KC_DB_USERNAME
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-credentials
+        key: KC_DB_USERNAME
   # - name: KC_HTTP_ENABLED
   #   value: "true"
   # - name: KC_HTTP_PORT
