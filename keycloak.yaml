@@ -1,0 +1,156 @@
+image:
+  registry: folioorg
+  repository: folio-keycloak
+  tag: 26.1.3
+  pullPolicy: Always
+  debug: false
+
+auth:
+  adminUser: "admin"
+  existingSecret: keycloak-credentials
+  passwordSecretKey: KC_BOOTSTRAP_ADMIN_PASSWORD
+
+extraEnvVars:
+  # - name: KC_HOSTNAME_BACKCHANNEL_DYNAMIC
+  #   value: "true"
+  # - name: KC_HOSTNAME
+  #   valueFrom:
+  #     secretKeyRef:
+  #       name: eureka-common
+  #       key: KC_IDENTITY_PROVIDER_BASE_URL
+  # - name: KC_HOSTNAME_BACKCHANNEL
+  #   valueFrom:
+  #     secretKeyRef:
+  #       name: eureka-common
+  #       key: KC_IDENTITY_PROVIDER_BASE_URL
+  # - name: KC_HOSTNAME_STRICT
+  #   value: "false"
+  # - name: KC_HOSTNAME_STRICT_HTTPS
+  #   value: "false"
+  # - name: KC_PROXY
+  #   value: "edge"
+  # - name: FIPS
+  #   value: "false"
+  # - name: EUREKA_RESOLVE_SIDECAR_IP
+  #   value: "false"
+  # - name: PROXY_ADDRESS_FORWARDING
+  #   value: "true"
+  - name: KC_FOLIO_BE_ADMIN_CLIENT_SECRET
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-credentials
+        key: KC_FOLIO_BE_ADMIN_CLIENT_SECRET
+  - name: KC_HTTPS_KEY_STORE_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-credentials
+        key: KC_HTTPS_KEY_STORE_PASSWORD
+  - name: KC_LOG_LEVEL
+    value: "DEBUG"
+  # - name: KC_HOSTNAME_DEBUG
+  #   value: "true"
+  # - name: KC_DB_PASSWORD
+  #   valueFrom:
+  #     secretKeyRef:
+  #       name: keycloak-credentials
+  #       key: KC_DB_PASSWORD
+  # - name: KC_DB_URL_DATABASE
+  #   valueFrom:
+  #     secretKeyRef:
+  #       name: keycloak-credentials
+  #       key: KC_DB_URL_DATABASE
+  # - name: KC_DB_URL_HOST
+  #   valueFrom:
+  #     secretKeyRef:
+  #       name: keycloak-credentials
+  #       key: KC_DB_URL_HOST
+  # - name: KC_DB_URL_PORT
+  #   valueFrom:
+  #     secretKeyRef:
+  #       name: keycloak-credentials
+  #       key: KC_DB_URL_PORT
+  # - name: KC_DB_USERNAME
+  #   valueFrom:
+  #     secretKeyRef:
+  #       name: keycloak-credentials
+  #       key: KC_DB_USERNAME
+  # - name: KC_HTTP_ENABLED
+  #   value: "true"
+  # - name: KC_HTTP_PORT
+  #   value: "8080"
+  # - name: KC_HEALTH_ENABLED
+  #   value: "true"
+
+resources:
+  requests:
+    memory: 3072Mi
+  limits:
+    memory: 4096Mi
+
+postgresql:
+  enabled: false
+
+externalDatabase:
+  existingSecret: keycloak-credentials
+  existingSecretHostKey: KC_DB_URL_HOST
+  existingSecretPortKey: KC_DB_URL_PORT
+  existingSecretUserKey: KC_DB_USERNAME
+  existingSecretDatabaseKey: KC_DB_URL_DATABASE
+  existingSecretPasswordKey: KC_DB_PASSWORD
+
+logging:
+  output: default
+  level: INFO
+
+enableDefaultInitContainers: false
+
+containerSecurityContext:
+  enabled: false
+
+service:
+  type: NodePort
+  http:
+    enabled: true
+  ports:
+    http: 8080
+
+networkPolicy:
+  enabled: false
+
+livenessProbe:
+  enabled: true
+  initialDelaySeconds: 60
+  periodSeconds: 1
+  timeoutSeconds: 10
+  failureThreshold: 5
+  successThreshold: 1
+
+readinessProbe:
+  enabled: true
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 10
+  failureThreshold: 10
+  successThreshold: 1
+
+startupProbe:
+  enabled: false
+  initialDelaySeconds: 30
+  periodSeconds: 5
+  timeoutSeconds: 1
+  failureThreshold: 300
+  successThreshold: 1
+
+ingress:
+  enabled: true
+  hostname: keycloak-folio-dev.stanford.edu
+  ingressClassName: "nginx"
+  pathType: ImplementationSpecific
+  path: /*
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/client-body-buffer-size: 512M
+    nginx.ingress.kubernetes.io/proxy-body-size: 8192M
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
