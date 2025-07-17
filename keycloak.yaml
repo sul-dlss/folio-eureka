@@ -144,7 +144,7 @@ startupProbe:
 ingress:
   enabled: true
   hostname: keycloak-folio-dev.stanford.edu
-  ingressClassName: "nginx"
+  ingressClassName: ""
   pathType: ImplementationSpecific
   path: /*
   annotations:
