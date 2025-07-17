@@ -147,6 +147,7 @@ ingress:
   ingressClassName: ""
   pathType: ImplementationSpecific
   path: /*
+  tls: true
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
     nginx.ingress.kubernetes.io/client-body-buffer-size: 512M
