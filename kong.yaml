@@ -62,9 +62,9 @@ kong:
   extraEnvVars:
   - name: KONG_PASSWORD
     valueFrom:
-       secretKeyRef:
-         name: kong-credentials
-         key: KONG_PASSWORD
+      secretKeyRef:
+        name: kong-credentials
+        key: KONG_PASSWORD
   - name: KONG_UPSTREAM_TIMEOUT
     value: "600000"
   - name: KONG_UPSTREAM_SEND_TIMEOUT
@@ -95,9 +95,9 @@ kong:
     value: "20000"
   - name: KONG_PG_DATABASE
     valueFrom:
-       secretKeyRef:
-         name: kong-credentials
-         key: KONG_PG_DATABASE
+      secretKeyRef:
+        name: kong-credentials
+        key: KONG_PG_DATABASE
   - name: KONG_NGINX_PROXY_PROXY_BUFFERS
     value: "64 160k"
   - name: KONG_NGINX_PROXY_CLIENT_HEADER_BUFFER_SIZE
@@ -120,9 +120,9 @@ kong:
     value: "info"
   - name: KONG_ADMIN_GUI_API_URL
     valueFrom:
-       secretKeyRef:
-         name: kong-credentials
-         key: KONG_URL
+      secretKeyRef:
+        name: kong-credentials
+        key: KONG_URL
   - name: KONG_NGINX_HTTPS_LARGE_CLIENT_HEADER_BUFFERS
     value: "4 16k"
   - name: KONG_PROXY_LISTEN
