@@ -1,40 +1,11 @@
-image:
-  registry: folioorg
-  repository: folio-keycloak
-  tag: 26.1.3
-  pullPolicy: Always
-  debug: false
-
 auth:
   adminUser: "admin"
   existingSecret: keycloak-credentials
   passwordSecretKey: KC_BOOTSTRAP_ADMIN_PASSWORD
 
 extraEnvVars:
-  # - name: KC_HOSTNAME_BACKCHANNEL_DYNAMIC
-  #   value: "true"
-  # - name: KC_HOSTNAME
-  #   valueFrom:
-  #     secretKeyRef:
-  #       name: eureka-common
-  #       key: KC_IDENTITY_PROVIDER_BASE_URL
-  # - name: KC_HOSTNAME_BACKCHANNEL
-  #   valueFrom:
-  #     secretKeyRef:
-  #       name: eureka-common
-  #       key: KC_IDENTITY_PROVIDER_BASE_URL
-  - name: KC_HOSTNAME_STRICT
-    value: "false"
-  - name: KC_HOSTNAME_STRICT_HTTPS
-    value: "false"
-  # - name: KC_PROXY
-  #   value: "edge"
   - name: FIPS
-    value: "false"
-  # - name: EUREKA_RESOLVE_SIDECAR_IP
-  #   value: "false"
-  # - name: PROXY_ADDRESS_FORWARDING
-  #   value: "true"
+    value: "true"
   - name: KC_FOLIO_BE_ADMIN_CLIENT_SECRET
     valueFrom:
       secretKeyRef:
@@ -45,10 +16,6 @@ extraEnvVars:
       secretKeyRef:
         name: keycloak-credentials
         key: KC_HTTPS_KEY_STORE_PASSWORD
-  # - name: KC_LOG_LEVEL
-  #   value: "DEBUG"
-  # - name: KC_HOSTNAME_DEBUG
-  #   value: "true"
   - name: KC_DB_PASSWORD
     valueFrom:
       secretKeyRef:
@@ -74,12 +41,6 @@ extraEnvVars:
       secretKeyRef:
         name: keycloak-credentials
         key: KC_DB_USERNAME
-  # - name: KC_HTTP_ENABLED
-  #   value: "true"
-  # - name: KC_HTTP_PORT
-  #   value: "8080"
-  # - name: KC_HEALTH_ENABLED
-  #   value: "true"
 
 resources:
   requests:
@@ -102,7 +63,7 @@ logging:
   output: default
   level: INFO
 
-enableDefaultInitContainers: false
+enableDefaultInitContainers: true
 
 containerSecurityContext:
   enabled: false
