@@ -45,7 +45,7 @@ service:
     adminHttp: ""
     adminHttps: ""
 ingress:
-  ingressClassName: ""
+  ingressClassName: "nginx"
   pathType: ImplementationSpecific
   hostname: kong-folio-dev.stanford.edu
   enabled: true
