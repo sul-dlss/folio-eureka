@@ -1,0 +1,117 @@
+auth:
+  adminUser: "admin"
+  existingSecret: keycloak-credentials
+  passwordSecretKey: KC_BOOTSTRAP_ADMIN_PASSWORD
+
+extraEnvVars:
+  - name: FIPS
+    value: "true"
+  - name: KC_FOLIO_BE_ADMIN_CLIENT_SECRET
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-credentials
+        key: KC_FOLIO_BE_ADMIN_CLIENT_SECRET
+  - name: KC_HTTPS_KEY_STORE_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-credentials
+        key: KC_HTTPS_KEY_STORE_PASSWORD
+  - name: KC_DB_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-credentials
+        key: KC_DB_PASSWORD
+  - name: KC_DB_URL_DATABASE
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-credentials
+        key: KC_DB_URL_DATABASE
+  - name: KC_DB_URL_HOST
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-credentials
+        key: KC_DB_URL_HOST
+  - name: KC_DB_URL_PORT
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-credentials
+        key: KC_DB_URL_PORT
+  - name: KC_DB_USERNAME
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-credentials
+        key: KC_DB_USERNAME
+
+resources:
+  requests:
+    memory: 3072Mi
+  limits:
+    memory: 4096Mi
+
+postgresql:
+  enabled: false
+
+externalDatabase:
+  existingSecret: keycloak-credentials
+  existingSecretHostKey: KC_DB_URL_HOST
+  existingSecretPortKey: KC_DB_URL_PORT
+  existingSecretUserKey: KC_DB_USERNAME
+  existingSecretDatabaseKey: KC_DB_URL_DATABASE
+  existingSecretPasswordKey: KC_DB_PASSWORD
+
+logging:
+  output: default
+  level: INFO
+
+enableDefaultInitContainers: true
+
+containerSecurityContext:
+  enabled: false
+
+service:
+  type: NodePort
+  http:
+    enabled: true
+  ports:
+    http: 8080
+
+networkPolicy:
+  enabled: false
+
+livenessProbe:
+  enabled: true
+  initialDelaySeconds: 60
+  periodSeconds: 1
+  timeoutSeconds: 10
+  failureThreshold: 5
+  successThreshold: 1
+
+readinessProbe:
+  enabled: true
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 10
+  failureThreshold: 10
+  successThreshold: 1
+
+startupProbe:
+  enabled: false
+  initialDelaySeconds: 30
+  periodSeconds: 5
+  timeoutSeconds: 1
+  failureThreshold: 300
+  successThreshold: 1
+
+ingress:
+  enabled: true
+  hostname: keycloak-folio-dev.stanford.edu
+  ingressClassName: ""
+  pathType: ImplementationSpecific
+  tls: true
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/client-body-buffer-size: 512M
+    nginx.ingress.kubernetes.io/proxy-body-size: 8192M
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"

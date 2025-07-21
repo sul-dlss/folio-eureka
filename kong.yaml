@@ -1,0 +1,145 @@
+image:
+  registry: folioorg
+  repository: folio-kong
+  tag: 3.9.0
+  pullPolicy: Always
+useDaemonset: false
+replicaCount: 1
+containerSecurityContext:
+  enabled: true
+  seLinuxOptions: {}
+  runAsUser: 1001
+  runAsGroup: 1001
+  runAsNonRoot: true
+  privileged: false
+  readOnlyRootFilesystem: true
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop: ["ALL"]
+  seccompProfile:
+    type: "RuntimeDefault"
+database: postgresql
+postgresql:
+  enabled: false
+  external:
+    host: sul-folio-db-dev.stanford.edu
+    port: 9999
+    user: kong
+    database: kong
+    existingSecret: "kong-credentials"
+    existingSecretPasswordKey: "KONG_PG_PASSWORD"
+networkPolicy:
+  enabled: false
+service:
+  type: NodePort
+  exposeAdmin: true
+  disableHttpPort: false
+  ports:
+    proxyHttp: 8000
+    proxyHttps: 443
+    adminHttp: 8001
+    adminHttps: 8444
+  nodePorts:
+    proxyHttp: ""
+    proxyHttps: ""
+    adminHttp: ""
+    adminHttps: ""
+ingress:
+  ingressClassName: ""
+  pathType: ImplementationSpecific
+  hostname: kong-folio-dev.stanford.edu
+  enabled: true
+  tls: true
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+kong:
+  livenessProbe:
+    enabled: false
+  readinessProbe:
+    enabled: false
+  startupProbe:
+    enabled: false
+  extraEnvVars:
+  - name: KONG_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: kong-credentials
+        key: KONG_PASSWORD
+  - name: KONG_UPSTREAM_TIMEOUT
+    value: "600000"
+  - name: KONG_UPSTREAM_SEND_TIMEOUT
+    value: "600000"
+  - name: KONG_UPSTREAM_READ_TIMEOUT
+    value: "600000"
+  - name: KONG_NGINX_HTTP_CLIENT_MAX_BODY_SIZE
+    value: "256m"
+  - name: KONG_NGINX_PROXY_PROXY_NEXT_UPSTREAM
+    value: "error timeout http_500 http_502 http_503 http_504"
+  - name: "KONG_PROXY_SEND_TIMEOUT"
+    value: "600000"
+  - name: "KONG_UPSTREAM_CONNECT_TIMEOUT"
+    value: "600000"
+  - name: "KONG_PROXY_READ_TIMEOUT"
+    value: "600000"
+  - name: "KONG_NGINX_HTTP_KEEPALIVE_TIMEOUT"
+    value: "600000"
+  - name: "KONG_NGINX_UPSTREAM_KEEPALIVE"
+    value: "600000"
+  - name: "KONG_UPSTREAM_KEEPALIVE_IDLE_TIMEOUT"
+    value: "600000"
+  - name: "KONG_UPSTREAM_KEEPALIVE_POOL_SIZE"
+    value: "1024"
+  - name: "KONG_UPSTREAM_KEEPALIVE_MAX_REQUESTS"
+    value: "20000"
+  - name: "KONG_NGINX_HTTP_KEEPALIVE_REQUESTS"
+    value: "20000"
+  - name: KONG_PG_DATABASE
+    valueFrom:
+      secretKeyRef:
+        name: kong-credentials
+        key: KONG_PG_DATABASE
+  - name: KONG_NGINX_PROXY_PROXY_BUFFERS
+    value: "64 160k"
+  - name: KONG_NGINX_PROXY_CLIENT_HEADER_BUFFER_SIZE
+    value: "16k"
+  - name: KONG_NGINX_HTTP_CLIENT_HEADER_BUFFER_SIZE
+    value: "16k"
+  - name: KONG_ADMIN_LISTEN
+    value: "0.0.0.0:8001"
+  - name: KONG_NGINX_PROXY_PROXY_BUFFER_SIZE
+    value: "160k"
+  - name: KONG_NGINX_PROXY_LARGE_CLIENT_HEADER_BUFFERS
+    value: "4 16k"
+  - name: KONG_PLUGINS
+    value: "bundled"
+  - name: KONG_MEM_CACHE_SIZE
+    value: "2048m"
+  - name: KONG_NGINX_HTTP_LARGE_CLIENT_HEADER_BUFFERS
+    value: "4 16k"
+  - name: KONG_LOG_LEVEL
+    value: "info"
+  - name: KONG_ADMIN_GUI_API_URL
+    valueFrom:
+      secretKeyRef:
+        name: kong-credentials
+        key: KONG_URL
+  - name: KONG_NGINX_HTTPS_LARGE_CLIENT_HEADER_BUFFERS
+    value: "4 16k"
+  - name: KONG_PROXY_LISTEN
+    value: "0.0.0.0:8000"
+  - name: KONG_NGINX_WORKER_PROCESSES
+    value: "auto"
+  - name: EUREKA_RESOLVE_SIDECAR_IP
+    value: "false"
+  resources:
+    requests:
+      ephemeral-storage: 50Mi
+      memory: 2428Mi
+    limits:
+      ephemeral-storage: 1Gi
+      memory: 3072Mi
+ingressController:
+  enabled: false
+migration:
+  command: ["/bin/sh", "-c"]
+  args: ["echo 'Hello kong!'"]
