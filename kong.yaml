@@ -45,13 +45,11 @@ service:
     adminHttp: ""
     adminHttps: ""
 ingress:
-  ingressClassName: ""
+  ingressClassName: "nginx"
   pathType: ImplementationSpecific
   hostname: kong-folio-dev.stanford.edu
   enabled: true
   tls: true
-  annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"
 kong:
   livenessProbe:
     enabled: false
@@ -134,10 +132,10 @@ kong:
   resources:
     requests:
       ephemeral-storage: 50Mi
-      memory: 2428Mi
+      memory: 5Gi
     limits:
       ephemeral-storage: 1Gi
-      memory: 3072Mi
+      memory: 5Gi
 ingressController:
   enabled: false
 migration:
