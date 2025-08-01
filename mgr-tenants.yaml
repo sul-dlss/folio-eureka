@@ -1,0 +1,14 @@
+image:
+  repository: folioorg/mgr-tenants
+  tag: 2.0.1
+
+eureka:
+  enabled: true
+
+integrations:
+  db:
+    enabled: true
+    existingSecret: "db-credentials"
+  kafka:
+    enabled: true
+    existingSecret: "kafka-credentials"

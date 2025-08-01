@@ -1,0 +1,39 @@
+image:
+  repository: folioorg/mgr-applications
+  tag: 2.1.0
+
+eureka:
+  enabled: true
+
+integrations:
+  db:
+    enabled: true
+    existingSecret: "db-credentials"
+  kafka:
+    enabled: true
+    existingSecret: "kafka-credentials"
+
+extraJavaOpts:
+  - "-Dlogging.level.root=DEBUG"
+
+extraEnvVars:
+  - name: kong.url
+    valueFrom:
+      secretKeyRef:
+        name: kong-credentials
+        key: KONG_URL
+  - name: SECRET_STORE_VAULT_TOKEN
+    valueFrom:
+      secretKeyRef:
+        name: folio-vault
+        key: SECRET_STORE_VAULT_TOKEN
+  - name: SECRET_STORE_VAULT_ADDRESS
+    valueFrom:
+      secretKeyRef:
+        name: folio-vault
+        key: SECRET_STORE_VAULT_ADDRESS
+  - name: SECRET_STORE_VAULT_ENABLE_SSL
+    valueFrom:
+      secretKeyRef:
+        name: folio-vault
+        key: SECRET_STORE_VAULT_ENABLE_SSL

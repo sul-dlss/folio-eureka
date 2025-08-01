@@ -1,0 +1,13 @@
+modules/*/*
+!modules/*/replicaset-prod.y?ml
+!modules/*/resource?.y?ml
+!modules/*/probe?.y?ml
+!modules/*/java_options.y?ml
+!modules/edge-*/overrides-folio*.y?ml
+!modules/edge-sip2/sip2*.y?ml
+!modules/*/*serv*.y?ml
+!modules/*/*custom-ingress*.y?ml
+!modules/mod-z3950/mod-search-grapql-query.yaml
+!modules/mod-finance-storage/fix_encumbrances.py
+modules/mod-finance-storage/cronjob10example.yaml
+*/[a-zA-Z0-9-_]*overrides.y?ml

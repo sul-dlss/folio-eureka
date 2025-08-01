@@ -31,7 +31,6 @@ postgresql:
 networkPolicy:
   enabled: false
 service:
-  type: NodePort
   exposeAdmin: true
   disableHttpPort: false
   ports:
@@ -39,11 +38,6 @@ service:
     proxyHttps: 443
     adminHttp: 8001
     adminHttps: 8444
-  nodePorts:
-    proxyHttp: ""
-    proxyHttps: ""
-    adminHttp: ""
-    adminHttps: ""
 ingress:
   ingressClassName: "nginx"
   pathType: ImplementationSpecific

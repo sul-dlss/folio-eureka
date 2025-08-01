@@ -1,0 +1,5395 @@
+{
+  "id": "app-platform-minimal-1.0.41",
+  "name": "app-platform-minimal",
+  "version": "1.0.41",
+  "description": "Minimal FOLIO platform installation",
+  "platform": "base",
+  "modules":   [
+        {
+      "name": "mod-configuration",
+      "version": "5.11.0"
+    },
+        {
+      "name": "mod-permissions",
+      "version": "6.6.1"
+    },
+        {
+      "name": "mod-tags",
+      "version": "2.3.0"
+    },
+        {
+      "name": "mod-users",
+      "version": "19.4.6"
+    },
+        {
+      "name": "mod-users-bl",
+      "version": "7.9.4"
+    },
+        {
+      "name": "mod-password-validator",
+      "version": "3.3.0"
+    },
+        {
+      "name": "mod-login-keycloak",
+      "version": "2.0.2"
+    },
+        {
+      "name": "mod-users-keycloak",
+      "version": "2.0.7"
+    },
+        {
+      "name": "mod-roles-keycloak",
+      "version": "2.0.15"
+    },
+        {
+      "name": "mod-notes",
+      "version": "6.0.0"
+    },
+        {
+      "name": "mod-scheduler",
+      "version": "2.0.1"
+    },
+        {
+      "name": "mod-settings",
+      "version": "1.1.0"
+    },
+        {
+      "name": "mod-okapi-facade",
+      "version": "2.0.3"
+    }
+  ],
+  "uiModules":   [
+        {
+      "name": "folio_developer",
+      "version": "9.0.0"
+    },
+        {
+      "name": "folio_tags",
+      "version": "8.2.1"
+    },
+        {
+      "name": "folio_stripes-core",
+      "version": "10.2.7"
+    },
+        {
+      "name": "folio_notes",
+      "version": "10.0.0"
+    },
+        {
+      "name": "folio_stripes-smart-components",
+      "version": "9.2.7"
+    },
+        {
+      "name": "folio_authorization-policies",
+      "version": "1.3.0"
+    },
+        {
+      "name": "folio_authorization-roles",
+      "version": "1.7.3"
+    }
+  ],
+  "dependencies": [],
+  "moduleDescriptors":   [
+        {
+      "id": "mod-configuration-5.11.0",
+      "name": "Configuration",
+      "provides":       [
+                {
+          "id": "configuration",
+          "version": "2.0",
+          "handlers":           [
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/configurations/entries",
+              "permissionsRequired": ["configuration.entries.collection.get"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/configurations/entries/{id}",
+              "permissionsRequired": ["configuration.entries.item.get"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/configurations/entries",
+              "permissionsRequired": ["configuration.entries.item.post"]
+            },
+                        {
+              "methods": ["PUT"],
+              "pathPattern": "/configurations/entries/{id}",
+              "permissionsRequired": ["configuration.entries.item.put"]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/configurations/entries/{id}",
+              "permissionsRequired": ["configuration.entries.item.delete"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/configurations/audit",
+              "permissionsRequired": ["configuration.audit.collection.get"]
+            }
+          ]
+        },
+                {
+          "id": "_tenant",
+          "version": "2.0",
+          "interfaceType": "system",
+          "handlers":           [
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/_/tenant"
+            },
+                        {
+              "methods":               [
+                "DELETE",
+                "GET"
+              ],
+              "pathPattern": "/_/tenant/{id}"
+            }
+          ]
+        }
+      ],
+      "permissionSets":       [
+                {
+          "permissionName": "configuration.entries.collection.get",
+          "displayName": "configuration - get configuration entries collection",
+          "description": "get configuration entries from storage"
+        },
+                {
+          "permissionName": "configuration.entries.item.get",
+          "displayName": "configuration - get configuration entry",
+          "description": "get individual configuration entry from storage"
+        },
+                {
+          "permissionName": "configuration.entries.item.post",
+          "displayName": "configuration - create configuration entry",
+          "description": "create individual configuration entry in storage"
+        },
+                {
+          "permissionName": "configuration.entries.item.put",
+          "displayName": "configuration - modify configuration entry",
+          "description": "modify individual configuration entry in storage"
+        },
+                {
+          "permissionName": "configuration.entries.item.delete",
+          "displayName": "configuration - delete configuration entry",
+          "description": "delete individual configuration entry in storage"
+        },
+                {
+          "permissionName": "configuration.audit.collection.get",
+          "displayName": "configuration - get configuration audit entries collection",
+          "description": "get configuration audit entries from storage"
+        },
+                {
+          "permissionName": "configuration.all",
+          "displayName": "configuration module - all permissions",
+          "description": "entire set of permissions needed to use the configuration module",
+          "subPermissions":           [
+            "configuration.entries.collection.get",
+            "configuration.entries.item.get",
+            "configuration.entries.item.post",
+            "configuration.entries.item.put",
+            "configuration.entries.item.delete",
+            "configuration.audit.collection.get"
+          ]
+        }
+      ],
+      "launchDescriptor":       {
+        "dockerImage": "mod-configuration:5.11.0",
+        "dockerPull": false,
+        "dockerArgs": {"HostConfig":         {
+          "Memory": 357913941,
+          "PortBindings": {"8081/tcp": [{"HostPort": "%p"}]}
+        }},
+        "env":         [
+                    {
+            "name": "JAVA_OPTIONS",
+            "value": "-XX:MaxRAMPercentage=66.0"
+          },
+                    {
+            "name": "DB_HOST",
+            "value": "postgres"
+          },
+                    {
+            "name": "DB_PORT",
+            "value": "5432"
+          },
+                    {
+            "name": "DB_USERNAME",
+            "value": "folio_admin"
+          },
+                    {
+            "name": "DB_PASSWORD",
+            "value": "folio_admin"
+          },
+                    {
+            "name": "DB_DATABASE",
+            "value": "okapi_modules"
+          },
+                    {
+            "name": "DB_QUERYTIMEOUT",
+            "value": "60000"
+          },
+                    {
+            "name": "DB_CHARSET",
+            "value": "UTF-8"
+          },
+                    {
+            "name": "DB_MAXPOOLSIZE",
+            "value": "5"
+          }
+        ]
+      }
+    },
+        {
+      "id": "mod-permissions-6.6.1",
+      "name": "permissions",
+      "provides":       [
+                {
+          "id": "permissions",
+          "version": "5.8",
+          "handlers":           [
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/perms/users*",
+              "permissionsDesired":               [
+                "perms.users.assign.okapi",
+                "perms.users.assign.immutable",
+                "perms.users.assign.mutable"
+              ],
+              "permissionsRequired": ["perms.users.item.post"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/perms/users*",
+              "permissionsRequired": ["perms.users.get"]
+            },
+                        {
+              "methods": ["PUT"],
+              "pathPattern": "/perms/users/{id}",
+              "permissionsDesired":               [
+                "perms.users.assign.okapi",
+                "perms.users.assign.immutable",
+                "perms.users.assign.mutable"
+              ],
+              "permissionsRequired": ["perms.users.item.put"]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/perms/users/{id}",
+              "permissionsDesired":               [
+                "perms.users.assign.okapi",
+                "perms.users.assign.immutable",
+                "perms.users.assign.mutable"
+              ],
+              "permissionsRequired": ["perms.users.item.id.delete"]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/perms/users/{id}/permissions/{perm}",
+              "permissionsDesired":               [
+                "perms.users.assign.okapi",
+                "perms.users.assign.immutable",
+                "perms.users.assign.mutable"
+              ],
+              "permissionsRequired": ["perms.users.item.perm.delete"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/perms/permissions",
+              "permissionsRequired": ["perms.permissions.collection.get"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/perms/permissions/{id}",
+              "permissionsRequired": ["perms.permissions.item.get"]
+            },
+                        {
+              "methods": ["PUT"],
+              "pathPattern": "/perms/permissions/{id}",
+              "permissionsDesired":               [
+                "perms.users.assign.okapi",
+                "perms.users.assign.immutable",
+                "perms.users.assign.mutable"
+              ],
+              "permissionsRequired": ["perms.permissions.item.put"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/perms/permissions",
+              "permissionsRequired": ["perms.permissions.item.post"]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/perms/permissions/{id}",
+              "permissionsRequired": ["perms.permissions.item.delete"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/perms/purge-deprecated",
+              "permissionsRequired": ["perms.permissions.purge-deprecated.post"]
+            }
+          ]
+        },
+                {
+          "id": "_tenant",
+          "version": "2.0",
+          "interfaceType": "system",
+          "handlers":           [
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/_/tenant"
+            },
+                        {
+              "methods":               [
+                "GET",
+                "DELETE"
+              ],
+              "pathPattern": "/_/tenant/{id}"
+            }
+          ]
+        },
+                {
+          "id": "_tenantPermissions",
+          "version": "2.1",
+          "interfaceType": "system",
+          "handlers": [          {
+            "methods": ["POST"],
+            "pathPattern": "/_/tenantpermissions"
+          }]
+        }
+      ],
+      "requires": [],
+      "permissionSets":       [
+                {
+          "permissionName": "perms.users.get",
+          "displayName": "permission users read",
+          "description": "Read or list permissions user(s)"
+        },
+                {
+          "permissionName": "perms.users.item.post",
+          "displayName": "permission users item create",
+          "description": "Add a new permissions user"
+        },
+                {
+          "permissionName": "perms.users.item.put",
+          "displayName": "permission users item modify",
+          "description": "Modify a permissions user"
+        },
+                {
+          "permissionName": "perms.users.item.delete",
+          "displayName": "permission users item delete",
+          "description": "Remove a permissions user or remove permissions from a user",
+          "subPermissions":           [
+            "perms.users.item.id.delete",
+            "perms.users.item.perm.delete"
+          ]
+        },
+                {
+          "permissionName": "perms.users.item.id.delete",
+          "displayName": "permission user delete",
+          "description": "Remove a permissions user"
+        },
+                {
+          "permissionName": "perms.users.item.perm.delete",
+          "displayName": "permission users permission delete",
+          "description": "Remove a permission from a user"
+        },
+                {
+          "permissionName": "perms.permissions.get",
+          "displayName": "permission read",
+          "description": "Read or list permissions",
+          "subPermissions":           [
+            "perms.permissions.collection.get",
+            "perms.permissions.item.get"
+          ]
+        },
+                {
+          "permissionName": "perms.permissions.collection.get",
+          "displayName": "permission collection get",
+          "description": "List permissions"
+        },
+                {
+          "permissionName": "perms.permissions.item.get",
+          "displayName": "permission item get",
+          "description": "Read a single permission"
+        },
+                {
+          "permissionName": "perms.permissions.item.post",
+          "displayName": "permission item create",
+          "description": "Add a new permission"
+        },
+                {
+          "permissionName": "perms.permissions.item.put",
+          "displayName": "permission item modify",
+          "description": "Modify a permission"
+        },
+                {
+          "permissionName": "perms.permissions.item.delete",
+          "displayName": "permission item delete",
+          "description": "Remove a permission"
+        },
+                {
+          "permissionName": "perms.permissions.purge-deprecated.post",
+          "displayName": "purge deprecated permission",
+          "description": "Purge deprecated permissions"
+        },
+                {
+          "permissionName": "perms.users.assign.okapi",
+          "displayName": "perms users assign okapi",
+          "description": "Allow any okapi permission to be added for user"
+        },
+                {
+          "permissionName": "perms.users.assign.immutable",
+          "displayName": "perms users assign immutable",
+          "description": "Allow any immutable permission to be added for user"
+        },
+                {
+          "permissionName": "perms.users.assign.mutable",
+          "displayName": "perms users assign mutable",
+          "description": "Allow any mutable permission to be added for user"
+        },
+                {
+          "permissionName": "perms.permissions.all",
+          "displayName": "permissions",
+          "description": "All permissions for permission objects",
+          "subPermissions":           [
+            "perms.permissions.get",
+            "perms.permissions.item.post",
+            "perms.permissions.item.put",
+            "perms.permissions.item.delete",
+            "perms.permissions.purge-deprecated.post"
+          ],
+          "replaces": ["perms.permissions"]
+        },
+                {
+          "permissionName": "perms.users.all",
+          "displayName": "permission users",
+          "description": "All permissions for permission user objects",
+          "subPermissions":           [
+            "perms.users.get",
+            "perms.users.item.post",
+            "perms.users.item.put",
+            "perms.users.item.delete"
+          ],
+          "replaces": ["perms.users"]
+        },
+                {
+          "permissionName": "perms.all",
+          "displayName": "perms all",
+          "description": "All permissions for the permissions module",
+          "subPermissions":           [
+            "perms.users.all",
+            "perms.permissions.all",
+            "perms.users.assign.immutable",
+            "perms.users.assign.mutable"
+          ]
+        }
+      ],
+      "launchDescriptor":       {
+        "dockerImage": "mod-permissions:6.6.1",
+        "dockerPull": false,
+        "dockerArgs": {"HostConfig":         {
+          "Memory": 715827883,
+          "PortBindings": {"8081/tcp": [{"HostPort": "%p"}]}
+        }},
+        "env":         [
+                    {
+            "name": "JAVA_OPTIONS",
+            "value": "-XX:MaxRAMPercentage=66.0"
+          },
+                    {
+            "name": "DB_HOST",
+            "value": "postgres"
+          },
+                    {
+            "name": "DB_PORT",
+            "value": "5432"
+          },
+                    {
+            "name": "DB_USERNAME",
+            "value": "folio_admin"
+          },
+                    {
+            "name": "DB_PASSWORD",
+            "value": "folio_admin"
+          },
+                    {
+            "name": "DB_DATABASE",
+            "value": "okapi_modules"
+          },
+                    {
+            "name": "DB_QUERYTIMEOUT",
+            "value": "60000"
+          },
+                    {
+            "name": "DB_CHARSET",
+            "value": "UTF-8"
+          },
+                    {
+            "name": "DB_MAXPOOLSIZE",
+            "value": "5"
+          }
+        ]
+      }
+    },
+        {
+      "id": "mod-tags-2.3.0",
+      "name": "Tags",
+      "requires": [],
+      "provides":       [
+                {
+          "id": "tags",
+          "version": "1.0",
+          "handlers":           [
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/tags",
+              "permissionsRequired": ["tags.collection.get"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/tags",
+              "permissionsRequired": ["tags.item.post"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/tags/{id}",
+              "permissionsRequired": ["tags.item.get"]
+            },
+                        {
+              "methods": ["PUT"],
+              "pathPattern": "/tags/{id}",
+              "permissionsRequired": ["tags.item.put"]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/tags/{id}",
+              "permissionsRequired": ["tags.item.delete"]
+            }
+          ]
+        },
+                {
+          "id": "_tenant",
+          "version": "2.0",
+          "interfaceType": "system",
+          "handlers":           [
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/_/tenant",
+              "permissionsRequired": []
+            },
+                        {
+              "methods":               [
+                "GET",
+                "DELETE"
+              ],
+              "pathPattern": "/_/tenant/{id}",
+              "permissionsRequired": []
+            }
+          ]
+        }
+      ],
+      "permissionSets":       [
+                {
+          "permissionName": "tags.collection.get",
+          "displayName": "Tags - get tags collection",
+          "description": "Get tags collection"
+        },
+                {
+          "permissionName": "tags.item.get",
+          "displayName": "Tags - get individual tag from storage",
+          "description": "Get individual tag"
+        },
+                {
+          "permissionName": "tags.item.post",
+          "displayName": "Tags - create tag",
+          "description": "Create tag"
+        },
+                {
+          "permissionName": "tags.item.put",
+          "displayName": "Tags - modify tag",
+          "description": "Modify tag"
+        },
+                {
+          "permissionName": "tags.item.delete",
+          "displayName": "Tags - delete tag",
+          "description": "Delete tag"
+        },
+                {
+          "permissionName": "tags.all",
+          "displayName": "Tags module - all permissions",
+          "description": "Entire set of permissions needed to use the tags module",
+          "subPermissions":           [
+            "tags.collection.get",
+            "tags.item.get",
+            "tags.item.post",
+            "tags.item.put",
+            "tags.item.delete"
+          ],
+          "visible": false
+        }
+      ],
+      "launchDescriptor":       {
+        "dockerImage": "mod-tags:2.3.0",
+        "dockerPull": false,
+        "dockerArgs": {"HostConfig":         {
+          "Memory": 542293850,
+          "PortBindings": {"8081/tcp": [{"HostPort": "%p"}]}
+        }},
+        "env":         [
+                    {
+            "name": "JAVA_OPTIONS",
+            "value": "-XX:MaxRAMPercentage=85.0"
+          },
+                    {
+            "name": "DB_HOST",
+            "value": "postgres"
+          },
+                    {
+            "name": "DB_PORT",
+            "value": "5432"
+          },
+                    {
+            "name": "DB_USERNAME",
+            "value": "folio_admin"
+          },
+                    {
+            "name": "DB_PASSWORD",
+            "value": "folio_admin"
+          },
+                    {
+            "name": "DB_DATABASE",
+            "value": "okapi_modules"
+          },
+                    {
+            "name": "DB_QUERYTIMEOUT",
+            "value": "60000"
+          },
+                    {
+            "name": "DB_CHARSET",
+            "value": "UTF-8"
+          },
+                    {
+            "name": "DB_MAXPOOLSIZE",
+            "value": "5"
+          }
+        ]
+      }
+    },
+        {
+      "id": "mod-users-19.4.6",
+      "name": "users",
+      "provides":       [
+                {
+          "id": "users",
+          "version": "16.3",
+          "handlers":           [
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/users",
+              "permissionsRequired": ["users.collection.get"],
+              "permissionsDesired":               [
+                "users.basic-read.execute",
+                "users.restricted-read.execute"
+              ]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/users/{id}",
+              "permissionsRequired": ["users.item.get"],
+              "permissionsDesired":               [
+                "users.basic-read.execute",
+                "users.restricted-read.execute"
+              ]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/users",
+              "permissionsRequired": ["users.item.post"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/users/profile-picture/{id}",
+              "permissionsRequired": ["users.profile-picture.item.get"]
+            },
+                        {
+              "methods": ["PUT"],
+              "pathPattern": "/users/profile-picture/{id}",
+              "permissionsRequired": ["users.profile-picture.item.put"]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/users/profile-picture/{id}",
+              "permissionsRequired": ["users.profile-picture.item.delete"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/users/profile-picture",
+              "permissionsRequired": ["users.profile-picture.item.post"]
+            },
+                        {
+              "methods": ["PUT"],
+              "pathPattern": "/users/configurations/entry/{configId}",
+              "permissionsRequired": ["users.configurations.item.put"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/users/configurations/entry",
+              "permissionsRequired": ["users.configurations.item.get"]
+            },
+                        {
+              "methods": ["PUT"],
+              "pathPattern": "/users/{id}",
+              "permissionsRequired": ["users.item.put"]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/users/{id}",
+              "permissionsRequired": ["users.item.delete"]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/users",
+              "permissionsRequired": ["users.collection.delete"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/groups",
+              "permissionsRequired": ["usergroups.collection.get"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/groups/{id}*",
+              "permissionsRequired": ["usergroups.item.get"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/groups*",
+              "permissionsRequired": ["usergroups.item.post"]
+            },
+                        {
+              "methods": ["PUT"],
+              "pathPattern": "/groups/{id}*",
+              "permissionsRequired": ["usergroups.item.put"]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/groups/{id}*",
+              "permissionsRequired": ["usergroups.item.delete"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/addresstypes",
+              "permissionsRequired": ["addresstypes.collection.get"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/addresstypes/{id}",
+              "permissionsRequired": ["addresstypes.item.get"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/addresstypes",
+              "permissionsRequired": ["addresstypes.item.post"]
+            },
+                        {
+              "methods": ["PUT"],
+              "pathPattern": "/addresstypes/{id}",
+              "permissionsRequired": ["addresstypes.item.put"]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/addresstypes/{id}",
+              "permissionsRequired": ["addresstypes.item.delete"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/proxiesfor",
+              "permissionsRequired": ["proxiesfor.collection.get"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/proxiesfor/{id}",
+              "permissionsRequired": ["proxiesfor.item.get"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/proxiesfor",
+              "permissionsRequired": ["proxiesfor.item.post"]
+            },
+                        {
+              "methods": ["PUT"],
+              "pathPattern": "/proxiesfor/{id}",
+              "permissionsRequired": ["proxiesfor.item.put"]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/proxiesfor/{id}",
+              "permissionsRequired": ["proxiesfor.item.delete"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/departments",
+              "permissionsRequired": ["departments.collection.get"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/departments/{id}",
+              "permissionsRequired": ["departments.item.get"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/departments",
+              "permissionsRequired": ["departments.item.post"]
+            },
+                        {
+              "methods": ["PUT"],
+              "pathPattern": "/departments/{id}",
+              "permissionsRequired": ["departments.item.put"]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/departments/{id}",
+              "permissionsRequired": ["departments.item.delete"]
+            }
+          ]
+        },
+                {
+          "id": "custom-fields",
+          "version": "3.0",
+          "interfaceType": "multiple",
+          "handlers":           [
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/custom-fields",
+              "permissionsRequired": ["user-settings.custom-fields.collection.get"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/custom-fields",
+              "permissionsRequired": ["user-settings.custom-fields.item.post"],
+              "modulePermissions": ["users.item.get"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/custom-fields/{id}",
+              "permissionsRequired": ["user-settings.custom-fields.item.get"]
+            },
+                        {
+              "methods": ["PUT"],
+              "pathPattern": "/custom-fields/{id}",
+              "permissionsRequired": ["user-settings.custom-fields.item.put"],
+              "modulePermissions": ["users.item.get"]
+            },
+                        {
+              "methods": ["PUT"],
+              "pathPattern": "/custom-fields",
+              "permissionsRequired": ["user-settings.custom-fields.collection.put"],
+              "modulePermissions": ["users.item.get"]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/custom-fields/{id}",
+              "permissionsRequired": ["user-settings.custom-fields.item.delete"],
+              "modulePermissions":               [
+                "users.item.get",
+                "user-settings.custom-fields.item.stats.get"
+              ]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/custom-fields/{id}/stats",
+              "permissionsRequired": ["user-settings.custom-fields.item.stats.get"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/custom-fields/{id}/options/{optId}/stats",
+              "permissionsRequired": ["user-settings.custom-fields.item.option.stats.get"]
+            }
+          ]
+        },
+                {
+          "id": "patron-pin",
+          "version": "1.0",
+          "handlers":           [
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/patron-pin",
+              "permissionsRequired": ["patron-pin.post"]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/patron-pin",
+              "permissionsRequired": ["patron-pin.delete"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/patron-pin/verify",
+              "permissionsRequired": ["patron-pin.validate"]
+            }
+          ]
+        },
+                {
+          "id": "user-tenants",
+          "version": "1.0",
+          "handlers":           [
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/user-tenants",
+              "permissionsRequired": ["user-tenants.collection.get"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/user-tenants",
+              "permissionsRequired": ["user-tenants.item.post"]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/user-tenants",
+              "permissionsRequired": ["user-tenants.item.delete"]
+            }
+          ]
+        },
+                {
+          "id": "_tenant",
+          "version": "2.0",
+          "interfaceType": "system",
+          "handlers":           [
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/_/tenant"
+            },
+                        {
+              "methods":               [
+                "GET",
+                "DELETE"
+              ],
+              "pathPattern": "/_/tenant/{id}"
+            }
+          ]
+        },
+                {
+          "id": "_timer",
+          "version": "1.0",
+          "interfaceType": "system",
+          "handlers":           [
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/users/expire/timer",
+              "unit": "minute",
+              "delay": "1"
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/users/outbox/process",
+              "unit": "minute",
+              "delay": "30"
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/users/profile-picture/cleanup",
+              "unit": "hour",
+              "delay": "24"
+            }
+          ]
+        },
+                {
+          "id": "staging-users",
+          "version": "1.1",
+          "handlers":           [
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/staging-users",
+              "permissionsRequired": ["staging-users.collection.get"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/staging-users",
+              "permissionsRequired": ["staging-users.item.post"]
+            },
+                        {
+              "methods": ["PUT"],
+              "pathPattern": "/staging-users/{id}/mergeOrCreateUser",
+              "permissionsRequired": ["staging-users.item.put"]
+            },
+                        {
+              "methods": ["PUT"],
+              "pathPattern": "/staging-users/{externalSystemId}",
+              "permissionsRequired": ["staging-users.external-system-id.put"]
+            }
+          ]
+        }
+      ],
+      "permissionSets":       [
+                {
+          "permissionName": "users.collection.get",
+          "displayName": "users collection get",
+          "description": "Get a collection of user records"
+        },
+                {
+          "permissionName": "users.profile-picture.item.post",
+          "displayName": "post user profile picture",
+          "description": "Post users profile picture"
+        },
+                {
+          "permissionName": "users.profile-picture.item.delete",
+          "displayName": "delete user profile picture",
+          "description": "Delete user profile picture"
+        },
+                {
+          "permissionName": "users.configurations.item.get",
+          "displayName": "get user configuration",
+          "description": "Get user configuration"
+        },
+                {
+          "permissionName": "users.configurations.item.put",
+          "displayName": "update user configuration",
+          "description": "Update user configuration"
+        },
+                {
+          "permissionName": "users.profile-picture.item.get",
+          "displayName": "get user profile picture",
+          "description": "Get users profile picture"
+        },
+                {
+          "permissionName": "users.profile-picture.item.put",
+          "displayName": "update user profile picture",
+          "description": "Update users profile picture"
+        },
+                {
+          "permissionName": "users.collection.delete",
+          "displayName": "users collection delete",
+          "description": "Delete a collection of user records"
+        },
+                {
+          "permissionName": "user-settings.custom-fields.collection.put",
+          "displayName": "Custom Fields - put collection",
+          "description": "Put Custom Fields collection"
+        },
+                {
+          "permissionName": "users.item.get",
+          "displayName": "users item get",
+          "description": "Read an individual record in the User module"
+        },
+                {
+          "permissionName": "users.basic-read.execute",
+          "displayName": "users read-basic",
+          "description": "Read non-restricted User data information",
+          "replaces": ["users.read.basic"]
+        },
+                {
+          "permissionName": "users.restricted-read.execute",
+          "displayName": "users read-restricted",
+          "description": "Read restricted User data information",
+          "replaces": ["users.read.restricted"]
+        },
+                {
+          "permissionName": "users.item.post",
+          "displayName": "users item post",
+          "description": "Create new records in the User module"
+        },
+                {
+          "permissionName": "users.item.put",
+          "displayName": "users item put",
+          "description": "Edit existing records in the User module"
+        },
+                {
+          "permissionName": "users.item.delete",
+          "displayName": "users item delete",
+          "description": "Delete records from the User module"
+        },
+                {
+          "permissionName": "usergroups.collection.get",
+          "displayName": "usergroups collection get",
+          "description": "Get a list of usergroup records"
+        },
+                {
+          "permissionName": "usergroups.item.get",
+          "displayName": "usergroups item get",
+          "description": "Get a single usergroup item"
+        },
+                {
+          "permissionName": "usergroups.item.post",
+          "displayName": "usergroups item post",
+          "description": "Create new Groups for users"
+        },
+                {
+          "permissionName": "usergroups.item.put",
+          "displayName": "usergroups item put",
+          "description": "Edit existing Groups for users"
+        },
+                {
+          "permissionName": "usergroups.item.delete",
+          "displayName": "usergroups item delete",
+          "description": "Delete Groups for users"
+        },
+                {
+          "permissionName": "addresstypes.collection.get",
+          "displayName": "addresstypes collection get",
+          "description": "Get a list of addresstype records"
+        },
+                {
+          "permissionName": "addresstypes.item.get",
+          "displayName": "addresstypes item get",
+          "description": "Get a single addresstype record"
+        },
+                {
+          "permissionName": "addresstypes.item.post",
+          "displayName": "addresstypes item post",
+          "description": "Create a new addresstype record"
+        },
+                {
+          "permissionName": "addresstypes.item.put",
+          "displayName": "addresstypes item put",
+          "description": "Edit an addresstype record"
+        },
+                {
+          "permissionName": "addresstypes.item.delete",
+          "displayName": "addresstypes item delete",
+          "description": "Delete an addresstype record"
+        },
+                {
+          "permissionName": "proxiesfor.collection.get",
+          "displayName": "proxiesfor collection get",
+          "description": "Get a list of proxyfor records"
+        },
+                {
+          "permissionName": "proxiesfor.item.get",
+          "displayName": "proxiesfor item get",
+          "description": "Get a single proxyfor record"
+        },
+                {
+          "permissionName": "proxiesfor.item.post",
+          "displayName": "proxiesfor item post",
+          "description": "Create a new proxyfor record"
+        },
+                {
+          "permissionName": "proxiesfor.item.put",
+          "displayName": "proxiesfor item put",
+          "description": "Edit a proxyfor record"
+        },
+                {
+          "permissionName": "proxiesfor.item.delete",
+          "displayName": "proxiesfor.item.delete",
+          "description": "Delete a proxyfor record"
+        },
+                {
+          "permissionName": "departments.collection.get",
+          "displayName": "departments collection get",
+          "description": "Get a list of departments records"
+        },
+                {
+          "permissionName": "departments.item.get",
+          "displayName": "departments item get",
+          "description": "Get a single department record"
+        },
+                {
+          "permissionName": "departments.item.post",
+          "displayName": "departments item post",
+          "description": "Create a new department record"
+        },
+                {
+          "permissionName": "departments.item.put",
+          "displayName": "departments item put",
+          "description": "Edit a department record"
+        },
+                {
+          "permissionName": "departments.item.delete",
+          "displayName": "departments.item.delete",
+          "description": "Delete a department record"
+        },
+                {
+          "permissionName": "patron-pin.post",
+          "displayName": "Permission to set patron pin",
+          "description": "Permission to set patron pin",
+          "replaces": ["patron-pin.set"]
+        },
+                {
+          "permissionName": "patron-pin.delete",
+          "displayName": "Permission to delete patron pin",
+          "description": "Permission to delete patron pin"
+        },
+                {
+          "permissionName": "patron-pin.validate",
+          "displayName": "Permission to validate patron pin",
+          "description": "Permission to validate patron pin"
+        },
+                {
+          "permissionName": "user-tenants.collection.get",
+          "displayName": "Permission to retrieve primary affiliation for the user",
+          "description": "Get a list of user-tenants records"
+        },
+                {
+          "permissionName": "user-tenants.item.post",
+          "displayName": "user-tenants item post",
+          "description": "Create a new user-tenant record"
+        },
+                {
+          "permissionName": "user-tenants.item.delete",
+          "displayName": "user-tenants item delete",
+          "description": "Delete user-tenant record"
+        },
+                {
+          "permissionName": "users.all",
+          "displayName": "users all",
+          "description": "All permissions for the mod-users module",
+          "subPermissions":           [
+            "users.profile-picture.item.delete",
+            "users.configurations.item.get",
+            "users.configurations.item.put",
+            "users.collection.get",
+            "users.collection.delete",
+            "users.item.get",
+            "users.basic-read.execute",
+            "users.restricted-read.execute",
+            "users.item.post",
+            "users.item.put",
+            "users.item.delete",
+            "usergroups.collection.get",
+            "usergroups.item.get",
+            "usergroups.item.post",
+            "usergroups.item.put",
+            "usergroups.item.delete",
+            "addresstypes.collection.get",
+            "addresstypes.item.get",
+            "addresstypes.item.post",
+            "addresstypes.item.put",
+            "addresstypes.item.delete",
+            "proxiesfor.collection.get",
+            "proxiesfor.item.get",
+            "proxiesfor.item.post",
+            "proxiesfor.item.put",
+            "proxiesfor.item.delete",
+            "departments.collection.get",
+            "departments.item.get",
+            "departments.item.post",
+            "departments.item.put",
+            "departments.item.delete",
+            "patron-pin.post",
+            "patron-pin.delete",
+            "patron-pin.validate",
+            "user-tenants.collection.get",
+            "user-tenants.item.post",
+            "user-tenants.item.delete",
+            "users.profile-picture.item.get",
+            "users.profile-picture.item.put",
+            "users.profile-picture.item.post"
+          ]
+        },
+                {
+          "permissionName": "user-settings.custom-fields.collection.get",
+          "displayName": "User Custom Fields - get collection",
+          "description": "Get User Custom Fields collection"
+        },
+                {
+          "permissionName": "user-settings.custom-fields.item.post",
+          "displayName": "User Custom Fields - create field",
+          "description": "Create User Custom Field"
+        },
+                {
+          "permissionName": "user-settings.custom-fields.item.get",
+          "displayName": "User Custom Fields - get field",
+          "description": "Get User Custom Field"
+        },
+                {
+          "permissionName": "user-settings.custom-fields.item.put",
+          "displayName": "User Custom Fields - modify field",
+          "description": "Modify User Custom Field"
+        },
+                {
+          "permissionName": "user-settings.custom-fields.item.delete",
+          "displayName": "User Custom Fields - delete field",
+          "description": "Delete User Custom Field"
+        },
+                {
+          "permissionName": "user-settings.custom-fields.item.stats.get",
+          "displayName": "User Custom Fields - get item usage statistic",
+          "description": "Get Custom Field Statistic"
+        },
+                {
+          "permissionName": "user-settings.custom-fields.item.option.stats.get",
+          "displayName": "User Custom Fields - get item option usage statistic",
+          "description": "Get Custom Field Option Statistic"
+        },
+                {
+          "permissionName": "user-settings.custom-fields.all",
+          "displayName": "User Custom Fields module - all permissions",
+          "description": "Entire set of permissions needed to use the user custom fields",
+          "subPermissions":           [
+            "user-settings.custom-fields.collection.get",
+            "user-settings.custom-fields.collection.put",
+            "user-settings.custom-fields.item.post",
+            "user-settings.custom-fields.item.get",
+            "user-settings.custom-fields.item.put",
+            "user-settings.custom-fields.item.delete",
+            "user-settings.custom-fields.item.stats.get",
+            "user-settings.custom-fields.item.option.stats.get"
+          ],
+          "visible": false
+        },
+                {
+          "permissionName": "staging-users.collection.get",
+          "displayName": "staging users collection get",
+          "description": "Get a collection of staging user records"
+        },
+                {
+          "permissionName": "staging-users.item.post",
+          "displayName": "staging users collection post",
+          "description": "Post a staging user records"
+        },
+                {
+          "permissionName": "staging-users.item.put",
+          "displayName": "staging users - create or merge user details",
+          "description": "create or update user details from staging user records"
+        },
+                {
+          "permissionName": "staging-users.external-system-id.put",
+          "displayName": "staging users - update user details",
+          "description": "update staging user details by external system id"
+        }
+      ],
+      "launchDescriptor":       {
+        "dockerImage": "mod-users:19.4.6",
+        "dockerPull": false,
+        "dockerArgs": {"HostConfig":         {
+          "Memory": 536870912,
+          "PortBindings": {"8081/tcp": [{"HostPort": "%p"}]}
+        }},
+        "env":         [
+                    {
+            "name": "JAVA_OPTIONS",
+            "value": "-XX:MaxRAMPercentage=66.0"
+          },
+                    {
+            "name": "DB_HOST",
+            "value": "postgres"
+          },
+                    {
+            "name": "DB_PORT",
+            "value": "5432"
+          },
+                    {
+            "name": "DB_USERNAME",
+            "value": "folio_admin"
+          },
+                    {
+            "name": "DB_PASSWORD",
+            "value": "folio_admin"
+          },
+                    {
+            "name": "DB_DATABASE",
+            "value": "okapi_modules"
+          },
+                    {
+            "name": "DB_QUERYTIMEOUT",
+            "value": "60000"
+          },
+                    {
+            "name": "DB_CHARSET",
+            "value": "UTF-8"
+          },
+                    {
+            "name": "DB_MAXPOOLSIZE",
+            "value": "5"
+          },
+                    {
+            "name": "KAFKA_HOST",
+            "value": "10.0.2.15"
+          },
+                    {
+            "name": "KAFKA_PORT",
+            "value": "9092"
+          },
+                    {
+            "name": "AWS_URL",
+            "value": "http://127.0.0.1:9000/"
+          },
+                    {
+            "name": "AWS_REGION",
+            "value": ""
+          },
+                    {
+            "name": "AWS_BUCKET",
+            "value": "example-bucket"
+          },
+                    {
+            "name": "AWS_ACCESS_KEY_ID",
+            "value": "AKIAIOSFODNN7EXAMPLE"
+          },
+                    {
+            "name": "AWS_SECRET_ACCESS_KEY",
+            "value": "wJalrXUtnFEMI/K7MDENG/EXAMPLEKEY"
+          },
+                    {
+            "name": "AWS_SDK",
+            "value": "false"
+          }
+        ]
+      }
+    },
+        {
+      "id": "mod-users-bl-7.9.4",
+      "name": "users business logic",
+      "provides": [      {
+        "id": "users-bl",
+        "version": "6.1",
+        "handlers":         [
+                    {
+            "methods": ["GET"],
+            "pathPattern": "/bl-users",
+            "permissionsRequired": ["users-bl.collection.get"],
+            "modulePermissions":             [
+              "users.collection.get",
+              "inventory-storage.service-points-users.collection.get",
+              "inventory-storage.service-points-users.item.get",
+              "inventory-storage.service-points.collection.get",
+              "inventory-storage.service-points.item.get"
+            ]
+          },
+                    {
+            "methods": ["GET"],
+            "pathPattern": "/bl-users/_self",
+            "permissionsRequired": [],
+            "modulePermissions":             [
+              "users.item.get",
+              "users.collection.get",
+              "perms.users.get",
+              "usergroups.item.get",
+              "inventory-storage.service-points-users.collection.get",
+              "inventory-storage.service-points-users.item.get",
+              "inventory-storage.service-points.collection.get",
+              "inventory-storage.service-points.item.get"
+            ]
+          },
+                    {
+            "methods": ["POST"],
+            "pathPattern": "/bl-users/login",
+            "permissionsRequired": [],
+            "modulePermissions":             [
+              "users.item.get",
+              "users.collection.get",
+              "perms.users.get",
+              "usergroups.item.get",
+              "inventory-storage.service-points-users.collection.get",
+              "inventory-storage.service-points-users.item.get",
+              "inventory-storage.service-points.collection.get",
+              "inventory-storage.service-points.item.get"
+            ]
+          },
+                    {
+            "methods": ["POST"],
+            "pathPattern": "/bl-users/login-with-expiry",
+            "permissionsRequired": [],
+            "modulePermissions":             [
+              "users.item.get",
+              "users.collection.get",
+              "perms.users.get",
+              "usergroups.item.get",
+              "inventory-storage.service-points-users.collection.get",
+              "inventory-storage.service-points-users.item.get",
+              "inventory-storage.service-points.collection.get",
+              "inventory-storage.service-points.item.get"
+            ]
+          },
+                    {
+            "methods": ["GET"],
+            "pathPattern": "/bl-users/by-username/{id}",
+            "permissionsRequired": ["users-bl.users-by-username.item.get"],
+            "modulePermissions":             [
+              "users.item.get",
+              "users.collection.get",
+              "perms.users.get",
+              "inventory-storage.service-points-users.collection.get",
+              "inventory-storage.service-points-users.item.get",
+              "inventory-storage.service-points.collection.get",
+              "inventory-storage.service-points.item.get"
+            ]
+          },
+                    {
+            "methods": ["GET"],
+            "pathPattern": "/bl-users/by-id/{id}",
+            "permissionsRequired": ["users-bl.item.get"],
+            "modulePermissions":             [
+              "users.item.get",
+              "users.collection.get",
+              "perms.users.get",
+              "inventory-storage.service-points-users.collection.get",
+              "inventory-storage.service-points-users.item.get",
+              "inventory-storage.service-points.collection.get",
+              "inventory-storage.service-points.item.get"
+            ]
+          },
+                    {
+            "methods": ["DELETE"],
+            "pathPattern": "/bl-users/by-id/{id}",
+            "permissionsRequired": ["users-bl.item.delete"],
+            "modulePermissions":             [
+              "users.item.get",
+              "users.item.delete",
+              "circulation-storage.loans.collection.get",
+              "circulation-storage.requests.collection.get",
+              "accounts.collection.get",
+              "manualblocks.collection.get",
+              "proxiesfor.collection.get",
+              "circulation-storage.request-preferences.collection.get",
+              "circulation-storage.request-preferences.item.delete",
+              "login.item.delete",
+              "perms.users.item.id.delete"
+            ]
+          },
+                    {
+            "methods": ["GET"],
+            "pathPattern": "/bl-users/by-id/{id}/open-transactions",
+            "permissionsRequired": ["users-bl.transactions.get"],
+            "modulePermissions":             [
+              "users.item.get",
+              "circulation-storage.loans.collection.get",
+              "circulation-storage.requests.collection.get",
+              "accounts.collection.get",
+              "manualblocks.collection.get",
+              "proxiesfor.collection.get"
+            ]
+          },
+                    {
+            "methods": ["GET"],
+            "pathPattern": "/bl-users/by-username/{name}/open-transactions",
+            "permissionsRequired": ["users-bl.transactions-by-username.get"],
+            "modulePermissions":             [
+              "users.collection.get",
+              "circulation-storage.loans.collection.get",
+              "circulation-storage.requests.collection.get",
+              "accounts.collection.get",
+              "manualblocks.collection.get",
+              "proxiesfor.collection.get"
+            ]
+          },
+                    {
+            "methods": ["POST"],
+            "pathPattern": "/bl-users",
+            "permissionsRequired": ["users-bl.item.post"],
+            "permissionsDesired": ["perms.users.item.post"],
+            "modulePermissions":             [
+              "users.item.post",
+              "perms.users.item.post",
+              "login.item.post"
+            ]
+          },
+                    {
+            "methods": ["PUT"],
+            "pathPattern": "/bl-users/{id}",
+            "permissionsDesired": ["perms.users.item.put"],
+            "permissionsRequired": ["users-bl.item.put"],
+            "modulePermissions":             [
+              "users.item.put",
+              "perms.users.item.put"
+            ]
+          },
+                    {
+            "methods": ["POST"],
+            "pathPattern": "/bl-users/forgotten/password",
+            "permissionsDesired": [],
+            "permissionsRequired": [],
+            "modulePermissions":             [
+              "users.edit",
+              "users.item.put",
+              "perms.users.item.put",
+              "configuration.entries.collection.get",
+              "users.collection.get",
+              "users.item.get",
+              "login.password-reset-action.post",
+              "auth.signtoken.all",
+              "notify.item.post",
+              "notify.users.item.post",
+              "user-tenants.collection.get"
+            ]
+          },
+                    {
+            "methods": ["POST"],
+            "pathPattern": "/bl-users/forgotten/username",
+            "permissionsDesired": [],
+            "permissionsRequired": [],
+            "modulePermissions":             [
+              "users.edit",
+              "users.item.put",
+              "perms.users.item.put",
+              "configuration.entries.collection.get",
+              "users.collection.get",
+              "users.item.get",
+              "notify.item.post",
+              "notify.users.item.post",
+              "user-tenants.collection.get"
+            ]
+          },
+                    {
+            "methods": ["POST"],
+            "pathPattern": "/bl-users/settings/myprofile/password",
+            "permissionsDesired": [],
+            "permissionsRequired": [],
+            "modulePermissions":             [
+              "validation.validate.post",
+              "users.item.get"
+            ]
+          },
+                    {
+            "methods": ["POST"],
+            "pathPattern": "/bl-users/password-reset/link",
+            "permissionsRequired": ["users-bl.password-reset-link.generate"],
+            "permissionsDesired": [],
+            "modulePermissions":             [
+              "users.item.get",
+              "configuration.entries.collection.get",
+              "login.password-reset-action.post",
+              "auth.signtoken.all",
+              "notify.item.post",
+              "notify.users.item.post"
+            ]
+          },
+                    {
+            "methods": ["POST"],
+            "pathPattern": "/bl-users/password-reset/reset",
+            "permissionsDesired": [],
+            "permissionsRequired": ["users-bl.password-reset-link.reset"],
+            "modulePermissions":             [
+              "login.password-reset-action.get",
+              "users.item.get",
+              "auth.signtoken.all",
+              "login.password-reset.post",
+              "validation.validate.post",
+              "notify.item.post",
+              "notify.users.item.post"
+            ]
+          },
+                    {
+            "methods": ["POST"],
+            "pathPattern": "/bl-users/password-reset/validate",
+            "permissionsDesired": [],
+            "permissionsRequired": ["users-bl.password-reset-link.validate"],
+            "modulePermissions":             [
+              "users.item.get",
+              "auth.signtoken.all",
+              "login.password-reset-action.get"
+            ]
+          }
+        ]
+      }],
+      "requires":       [
+                {
+          "id": "users",
+          "version": "16.3"
+        },
+                {
+          "id": "permissions",
+          "version": "5.7"
+        },
+                {
+          "id": "login",
+          "version": "7.3"
+        },
+                {
+          "id": "authtoken",
+          "version": "2.1"
+        },
+                {
+          "id": "authtoken2",
+          "version": "1.1"
+        },
+                {
+          "id": "configuration",
+          "version": "2.0"
+        },
+                {
+          "id": "password-validator",
+          "version": "1.0"
+        }
+      ],
+      "optional":       [
+                {
+          "id": "loan-storage",
+          "version": "7.3"
+        },
+                {
+          "id": "feesfines",
+          "version": "19.0"
+        },
+                {
+          "id": "service-points",
+          "version": "3.3"
+        },
+                {
+          "id": "service-points-users",
+          "version": "1.0"
+        },
+                {
+          "id": "notify",
+          "version": "2.2"
+        },
+                {
+          "id": "request-storage",
+          "version": "6.1"
+        },
+                {
+          "id": "request-preference-storage",
+          "version": "2.0"
+        }
+      ],
+      "permissionSets":       [
+                {
+          "permissionName": "users-bl.collection.get",
+          "displayName": "users-bl collection get",
+          "description": "Get a list of composite user records"
+        },
+                {
+          "permissionName": "users-bl.item.get",
+          "displayName": "users-bl item get",
+          "description": "Get a single composite user record by id"
+        },
+                {
+          "permissionName": "users-bl.users-by-username.item.get",
+          "displayName": "users-bl item get by username",
+          "description": "Get a single composite user record by username"
+        },
+                {
+          "permissionName": "users-bl.item.post",
+          "displayName": "users-bl item post",
+          "description": "Create a new composite user record"
+        },
+                {
+          "permissionName": "users-bl.item.put",
+          "displayName": "users-bl item put",
+          "description": "Modify a composite user record"
+        },
+                {
+          "permissionName": "users-bl.password-reset-link.generate",
+          "displayName": "users-bl password reset link generate",
+          "description": "Generate and send password reset link"
+        },
+                {
+          "permissionName": "users-bl.password-reset-link.validate",
+          "displayName": "users-bl password-reset-link validate",
+          "description": "Validate create/reset password link and log user into system to change password"
+        },
+                {
+          "permissionName": "users-bl.password-reset-link.reset",
+          "displayName": "users-bl password-reset-link reset",
+          "description": "Reset password by link"
+        },
+                {
+          "permissionName": "users-bl.item.delete",
+          "displayName": "users-bl item delete",
+          "description": "Delete a user record after checking for open transactions"
+        },
+                {
+          "permissionName": "users-bl.transactions.get",
+          "displayName": "users-bl transactions get",
+          "description": "Get summary of open transactions of user record"
+        },
+                {
+          "permissionName": "users-bl.transactions-by-username.get",
+          "displayName": "users-bl transactions get by username",
+          "description": "Get summary of open transactions of user record by its username"
+        },
+                {
+          "permissionName": "users-bl.all",
+          "displayName": "users-bl all",
+          "description": "All user business-logic permissions",
+          "subPermissions":           [
+            "users-bl.collection.get",
+            "users-bl.users-by-username.item.get",
+            "users-bl.item.get",
+            "users-bl.item.post",
+            "users-bl.item.put",
+            "users-bl.item.delete",
+            "users-bl.password-reset-link.generate",
+            "users-bl.password-reset-link.validate",
+            "users-bl.password-reset-link.reset",
+            "users-bl.transactions.get",
+            "users-bl.transactions-by-username.get"
+          ],
+          "visible": false
+        }
+      ],
+      "launchDescriptor":       {
+        "dockerImage": "mod-users-bl:7.9.4",
+        "dockerPull": false,
+        "dockerArgs": {"HostConfig":         {
+          "Memory": 536870912,
+          "PortBindings": {"8081/tcp": [{"HostPort": "%p"}]}
+        }},
+        "env": [        {
+          "name": "JAVA_OPTIONS",
+          "value": "-XX:MaxRAMPercentage=66.0"
+        }]
+      }
+    },
+        {
+      "id": "mod-password-validator-3.3.0",
+      "name": "Password Validator Module",
+      "provides":       [
+                {
+          "id": "password-validator",
+          "version": "1.0",
+          "handlers":           [
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/password/validate",
+              "permissionsRequired": ["validation.validate.post"],
+              "modulePermissions":               [
+                "login.password.validate",
+                "users.item.get"
+              ]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/tenant/rules",
+              "permissionsRequired": []
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/tenant/rules",
+              "permissionsRequired": ["validation.rules.item.post"]
+            },
+                        {
+              "methods": ["PUT"],
+              "pathPattern": "/tenant/rules",
+              "permissionsRequired": ["validation.rules.item.put"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/tenant/rules/{ruleId}",
+              "permissionsRequired": ["validation.rules.item.get"]
+            }
+          ]
+        },
+                {
+          "id": "_tenant",
+          "version": "2.0",
+          "interfaceType": "system",
+          "handlers":           [
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/_/tenant"
+            },
+                        {
+              "methods":               [
+                "GET",
+                "DELETE"
+              ],
+              "pathPattern": "/_/tenant/{id}"
+            }
+          ]
+        }
+      ],
+      "permissionSets":       [
+                {
+          "permissionName": "validation.validate.post",
+          "displayName": "validate password post",
+          "description": "Validate a password"
+        },
+                {
+          "permissionName": "validation.rules.item.post",
+          "displayName": "create validation rule",
+          "description": "Add a new rule"
+        },
+                {
+          "permissionName": "validation.rules.item.put",
+          "displayName": "modify validation rule",
+          "description": "Modify the rule info"
+        },
+                {
+          "permissionName": "validation.rules.item.get",
+          "displayName": "get validation rule",
+          "description": "Get a rule by id"
+        },
+                {
+          "permissionName": "validation.all",
+          "displayName": "password validator module - all permissions",
+          "description": "All permissions for password validation",
+          "subPermissions":           [
+            "validation.validate.post",
+            "validation.rules.item.post",
+            "validation.rules.item.put",
+            "validation.rules.item.get"
+          ]
+        }
+      ],
+      "requires":       [
+                {
+          "id": "users",
+          "version": "16.3"
+        },
+                {
+          "id": "login",
+          "version": "7.3"
+        }
+      ],
+      "launchDescriptor":       {
+        "dockerImage": "mod-password-validator:3.3.0",
+        "dockerPull": false,
+        "dockerArgs": {"HostConfig":         {
+          "Memory": 536870912,
+          "PortBindings": {"8081/tcp": [{"HostPort": "%p"}]}
+        }},
+        "env":         [
+                    {
+            "name": "JAVA_OPTIONS",
+            "value": "-XX:MaxRAMPercentage=85.0"
+          },
+                    {
+            "name": "DB_HOST",
+            "value": "postgres"
+          },
+                    {
+            "name": "DB_PORT",
+            "value": "5432"
+          },
+                    {
+            "name": "DB_USERNAME",
+            "value": "folio_admin"
+          },
+                    {
+            "name": "DB_PASSWORD",
+            "value": "folio_admin"
+          },
+                    {
+            "name": "DB_DATABASE",
+            "value": "okapi_modules"
+          },
+                    {
+            "name": "DB_QUERYTIMEOUT",
+            "value": "60000"
+          },
+                    {
+            "name": "DB_CHARSET",
+            "value": "UTF-8"
+          },
+                    {
+            "name": "DB_MAXPOOLSIZE",
+            "value": "5"
+          }
+        ]
+      }
+    },
+        {
+      "id": "mod-login-keycloak-2.0.2",
+      "name": "keycloak-login",
+      "provides":       [
+                {
+          "id": "login",
+          "version": "7.3",
+          "handlers":           [
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/authn/log/events",
+              "permissionsRequired": ["login.event.collection.post"],
+              "modulePermissions":               [
+                "users.collection.get",
+                "configuration.entries.collection.get",
+                "configuration.entries.item.get"
+              ]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/authn/log/events",
+              "permissionsRequired": ["login.event.collection.get"],
+              "modulePermissions": ["configuration.entries.item.get"]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/authn/log/events/{id}",
+              "permissionsRequired": ["login.event.delete"],
+              "modulePermissions": ["configuration.entries.item.get"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/authn/token",
+              "permissionsRequired": [],
+              "modulePermissions": []
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/authn/login",
+              "permissionsRequired": [],
+              "modulePermissions":               [
+                "users.collection.get",
+                "users.item.put",
+                "users.item.get",
+                "configuration.entries.collection.get",
+                "user-tenants.collection.get"
+              ]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/authn/login-with-expiry",
+              "permissionsRequired": [],
+              "modulePermissions":               [
+                "users.collection.get",
+                "users.item.put",
+                "users.item.get",
+                "configuration.entries.collection.get",
+                "user-tenants.collection.get"
+              ]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/authn/logout",
+              "permissionsRequired": []
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/authn/logout-all",
+              "permissionsRequired": []
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/authn/refresh",
+              "permissionsRequired": []
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/authn/loginAttempts/{id}",
+              "permissionsRequired": ["login.attempts.item.get"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/authn/credentials",
+              "permissionsRequired": ["login.item.post"],
+              "modulePermissions": ["users-keycloak.auth-users.item.post"]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/authn/credentials",
+              "permissionsRequired": ["login.item.delete"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/authn/update",
+              "permissionsRequired": [],
+              "modulePermissions":               [
+                "users.collection.get",
+                "configuration.entries.collection.get"
+              ]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/authn/password/repeatable",
+              "permissionsRequired": ["login.password.validate"],
+              "modulePermissions": ["configuration.entries.collection.get"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/authn/password-reset-action",
+              "permissionsRequired": ["login.password-reset-action.post"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/authn/password-reset-action/{actionId}",
+              "permissionsRequired": ["login.password-reset-action.get"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/authn/reset-password",
+              "permissionsRequired": ["login.password-reset.post"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/authn/credentials-existence",
+              "permissionsRequired": ["login.credentials-existence.get"]
+            }
+          ]
+        },
+                {
+          "id": "_tenant",
+          "version": "2.0",
+          "interfaceType": "system",
+          "handlers":           [
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/_/tenant"
+            },
+                        {
+              "methods":               [
+                "GET",
+                "DELETE"
+              ],
+              "pathPattern": "/_/tenant/{id}"
+            }
+          ]
+        },
+        {
+          "id": "authtoken",
+          "version": "2.1",
+          "handlers":           [
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/token",
+              "permissionsRequired": ["auth.token.post"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/refreshtoken",
+              "permissionsRequired": ["auth.refreshtoken.post"]
+            }
+          ]
+        },
+                {
+          "id": "authtoken2",
+          "version": "1.1",
+          "handlers":           [
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/token/sign",
+              "permissionsRequired": ["auth.token.sign.post"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/token/refresh",
+              "permissionsRequired": ["auth.token.refresh.post"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/token/invalidate",
+              "permissionsRequired": []
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/token/invalidate-all",
+              "permissionsRequired": []
+            }
+          ]
+        }
+      ],
+      "requires":       [
+                {
+          "id": "users",
+          "version": "16.1"
+        },
+                {
+          "id": "users-keycloak",
+          "version": "1.0"
+        }
+      ],
+      "optional": [      {
+        "id": "configuration",
+        "version": "2.0"
+      }],
+      "permissionSets":       [
+                {
+          "permissionName": "login.item.post",
+          "displayName": "login item post",
+          "description": "Add New Login"
+        },
+                {
+          "permissionName": "login.item.delete",
+          "displayName": "login item delete",
+          "description": "Remove existing login credentials"
+        },
+                {
+          "permissionName": "login.attempts.item.get",
+          "displayName": "login attempt item get",
+          "description": "Read a login attempt entity for user"
+        },
+                {
+          "permissionName": "login.password.validate",
+          "displayName": "login password validate",
+          "description": "Validate password for repeatability"
+        },
+                {
+          "permissionName": "login.password-reset-action.post",
+          "displayName": "login create a new action",
+          "description": "Saves action to storage"
+        },
+                {
+          "permissionName": "login.password-reset-action.get",
+          "displayName": "login get the action by id",
+          "description": "Retrieves action record by id"
+        },
+                {
+          "permissionName": "login.password-reset.post",
+          "displayName": "login password reset",
+          "description": "Resets password for user in record and deletes action record"
+        },
+                {
+          "permissionName": "login.event.collection.post",
+          "displayName": "login save log event",
+          "description": "Saves received event into the storage"
+        },
+                {
+          "permissionName": "login.event.collection.get",
+          "displayName": "login get a list of events",
+          "description": "Get a list of events from storage"
+        },
+                {
+          "permissionName": "login.event.delete",
+          "displayName": "login delete event",
+          "description": "Delete log event"
+        },
+                {
+          "permissionName": "login.credentials-existence.get",
+          "displayName": "Credentials existence get",
+          "description": "Get credentials existence"
+        },
+                {
+          "permissionName": "login.all",
+          "displayName": "login credentials",
+          "description": "All permissions for login credentials",
+          "subPermissions":           [
+            "login.item.post",
+            "login.item.delete",
+            "login.attempts.item.get",
+            "login.password.validate",
+            "login.password-reset-action.get",
+            "login.password-reset-action.post",
+            "login.password-reset.post",
+            "login.password.validate",
+            "login.event.collection.post",
+            "login.event.collection.get",
+            "login.event.delete",
+            "login.credentials-existence.get"
+          ]
+        },
+                {
+          "permissionName": "auth.token.post",
+          "displayName": "auth-token - sign token - legacy, deprecated",
+          "description": "sign token, legacy, deprecated"
+        },
+                {
+          "permissionName": "auth.refreshtoken.post",
+          "displayName": "auth-token - sign refresh token - legacy, deprecated",
+          "description": "sign refresh token, legacy, deprecated"
+        },
+                {
+          "permissionName": "auth.token.sign.post",
+          "displayName": "auth-token - sign expiring token",
+          "description": "sign expiring token"
+        },
+                {
+          "permissionName": "auth.token.refresh.post",
+          "displayName": "auth-token - use refresh token to sign a new expiring token",
+          "description": "sign expiring token using refresh token"
+        },
+                {
+          "permissionName": "auth.signtoken.all",
+          "displayName": "auth-token - sign token",
+          "description": "sign token",
+          "subPermissions":           [
+            "auth.token.post",
+            "auth.token.sign.post"
+          ],
+          "replaces": ["auth.signtoken"]
+        },
+                {
+          "permissionName": "auth.signrefreshtoken.all",
+          "displayName": "auth-token - sign refresh token",
+          "description": "sign refresh token",
+          "subPermissions":           [
+            "auth.refreshtoken.post",
+            "auth.token.refresh.post"
+          ],
+          "replaces": ["auth.signrefreshtoken"]
+        },
+                {
+          "permissionName": "auth.sign-and-refresh-token.all",
+          "displayName": "auth-token - sign and refresh token",
+          "description": "sign and refresh token",
+          "subPermissions":           [
+            "auth.token.post",
+            "auth.token.sign.post",
+            "auth.refreshtoken.post",
+            "auth.token.refresh.post"
+          ]
+        }
+      ],
+      "launchDescriptor":       {
+        "dockerImage": "mod-login-keycloak-2.0.2",
+        "dockerPull": false,
+        "dockerCMD": ["verify.user=true"],
+        "dockerArgs": {"HostConfig":         {
+          "Memory": 357913941,
+          "PortBindings": {"8081/tcp": [{"HostPort": "%p"}]}
+        }},
+        "env":         [
+                    {
+            "name": "JAVA_OPTIONS",
+            "value": "-XX:MaxRAMPercentage=66.0"
+          },
+                    {
+            "name": "DB_HOST",
+            "value": "postgres"
+          },
+                    {
+            "name": "DB_PORT",
+            "value": "5432"
+          },
+                    {
+            "name": "DB_USERNAME",
+            "value": "folio_admin"
+          },
+                    {
+            "name": "DB_PASSWORD",
+            "value": "folio_admin"
+          },
+                    {
+            "name": "DB_DATABASE",
+            "value": "okapi_modules"
+          },
+                    {
+            "name": "DB_QUERYTIMEOUT",
+            "value": "60000"
+          },
+                    {
+            "name": "DB_CHARSET",
+            "value": "UTF-8"
+          },
+                    {
+            "name": "DB_MAXPOOLSIZE",
+            "value": "5"
+          },
+                    {
+            "name": "KC_CONFIG_STORE_TYPE",
+            "value": "ephemeral"
+          },
+                    {
+            "name": "KC_CONFIG_CACHE_CAPACITY",
+            "value": "100"
+          },
+                    {
+            "name": "KC_CONFIG_CACHE_TTL_MS",
+            "value": "3600000"
+          },
+                    {
+            "name": "KC_CONFIG_FAILURE_CACHE_TTL_MS",
+            "value": "30000"
+          },
+                    {
+            "name": "KC_CONFIG_EPHEMERAL_CREDENTIALS",
+            "value": ""
+          },
+                    {
+            "name": "KC_CONFIG_AWS_SSM_REGION",
+            "value": ""
+          },
+                    {
+            "name": "KC_CONFIG_AWS_SSM_USE_IAM",
+            "value": "true"
+          },
+                    {
+            "name": "KC_CONFIG_AWS_SSM_ECS_CREDENTIALS_ENDPOINT",
+            "value": ""
+          },
+                    {
+            "name": "KC_CONFIG_AWS_SSM_ECS_CREDENTIALS_PATH",
+            "value": ""
+          },
+                    {
+            "name": "KC_CONFIG_VAULT_TOKEN",
+            "value": ""
+          },
+                    {
+            "name": "KC_CONFIG_VAULT_ADDRESS",
+            "value": ""
+          },
+                    {
+            "name": "KC_CONFIG_VAULT_ENABLE_SSL",
+            "value": "false"
+          },
+                    {
+            "name": "KC_CONFIG_VAULT_KEYSTORE_PASSWORD",
+            "value": ""
+          },
+                    {
+            "name": "KC_CONFIG_VAULT_PEM_FILE_PATH",
+            "value": ""
+          },
+                    {
+            "name": "KC_CONFIG_VAULT_KEYSTORE_FILE_PATH",
+            "value": ""
+          },
+                    {
+            "name": "KC_CONFIG_VAULT_TRUSTSTORE_FILE_PATH",
+            "value": ""
+          }
+        ]
+      }
+    },
+        {
+      "id": "mod-users-keycloak-2.0.7",
+      "name": "Users business logic (with Keycloak)",
+      "provides":       [
+                {
+          "id": "users-keycloak",
+          "version": "1.0",
+          "handlers":           [
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/users-keycloak/users/{id}",
+              "permissionsRequired": ["users-keycloak.item.get"],
+              "permissionsDesired":               [
+                "users-keycloak.read.basic",
+                "users-keycloak.read.restricted"
+              ]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/users-keycloak/users",
+              "permissionsRequired": ["users-keycloak.item.post"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/users-keycloak/users",
+              "permissionsRequired": ["users-keycloak.collection.get"],
+              "permissionsDesired":               [
+                "users-keycloak.read.basic",
+                "users-keycloak.read.restricted"
+              ]
+            },
+                        {
+              "methods": ["PUT"],
+              "pathPattern": "/users-keycloak/users/{id}",
+              "permissionsRequired": ["users-keycloak.item.put"]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/users-keycloak/users/{id}",
+              "permissionsRequired": ["users-keycloak.item.delete"],
+              "modulePermissions":               [
+                "policies.item.delete",
+                "policies.item.put",
+                "policies.collection.get",
+                "roles.users.item.get",
+                "roles.users.item.delete",
+                "user-capabilities.collection.delete",
+                "user.capabilities.collection.get",
+                "user.capability-sets.collection.get",
+                "user-capability-sets.collection.delete"
+              ]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/users-keycloak/_self",
+              "permissionsRequired": []
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/users-keycloak/migrations",
+              "permissionsRequired": ["users-keycloak.migrations.post"],
+              "modulePermissions":               [
+                "users.collection.get",
+                "perms.users.all"
+              ]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/users-keycloak/migrations",
+              "permissionsRequired": ["users-keycloak.migrations.get"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/users-keycloak/migrations/{id}",
+              "permissionsRequired": ["users-keycloak.migrations.get"]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/users-keycloak/migrations/{id}",
+              "permissionsRequired": ["users-keycloak.migrations.delete"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/users-keycloak/forgotten/password",
+              "permissionsDesired": [],
+              "permissionsRequired": [],
+              "modulePermissions":               [
+                "users.edit",
+                "users.item.put",
+                "perms.users.item.put",
+                "configuration.entries.collection.get",
+                "users.collection.get",
+                "users.item.get",
+                "login.password-reset-action.post",
+                "notify.item.post",
+                "notify.users.item.post"
+              ]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/users-keycloak/forgotten/username",
+              "permissionsDesired": [],
+              "permissionsRequired": [],
+              "modulePermissions":               [
+                "users.edit",
+                "users.item.put",
+                "perms.users.item.put",
+                "configuration.entries.collection.get",
+                "users.collection.get",
+                "notify.users.item.post",
+                "notify.item.post"
+              ]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/users-keycloak/password-reset/link",
+              "permissionsRequired": ["users-keycloak.password-reset-link.generate"],
+              "permissionsDesired": [],
+              "modulePermissions":               [
+                "users.item.get",
+                "configuration.entries.collection.get",
+                "login.password-reset-action.post",
+                "notify.users.item.post",
+                "notify.item.post"
+              ]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/users-keycloak/password-reset/reset",
+              "permissionsDesired": [],
+              "permissionsRequired": ["users-keycloak.password-reset-link.reset"],
+              "modulePermissions":               [
+                "login.password-reset-action.get",
+                "users.item.get",
+                "login.password-reset.post",
+                "validation.validate.post",
+                "notify.users.item.post",
+                "notify.item.post"
+              ]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/users-keycloak/password-reset/validate",
+              "permissionsDesired": [],
+              "permissionsRequired": ["users-keycloak.password-reset-link.validate"],
+              "modulePermissions":               [
+                "users.item.get",
+                "login.password-reset-action.get"
+              ]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/users-keycloak/users/{id}/permissions",
+              "permissionsRequired": ["users-keycloak.users.permissions.collection.get"],
+              "modulePermissions": ["permissions.users.item.get"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/users-keycloak/auth-users/{userId}",
+              "permissionsRequired": ["users-keycloak.auth-users.item.get"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/users-keycloak/auth-users/{userId}",
+              "permissionsRequired": ["users-keycloak.auth-users.item.post"],
+              "modulePermissions": ["permissions.users.item.get"]
+            }
+          ]
+        },
+                {
+          "id": "_tenant",
+          "version": "2.0",
+          "interfaceType": "system",
+          "handlers":           [
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/_/tenant"
+            },
+                        {
+              "methods":               [
+                "GET",
+                "DELETE"
+              ],
+              "pathPattern": "/_/tenant/{id}"
+            }
+          ]
+        }
+      ],
+      "requires":       [
+                {
+          "id": "users",
+          "version": "16.1"
+        },
+                {
+          "id": "permissions",
+          "version": "5.6"
+        },
+                {
+          "id": "login",
+          "version": "7.3"
+        },
+                {
+          "id": "configuration",
+          "version": "2.0"
+        },
+                {
+          "id": "password-validator",
+          "version": "1.0"
+        },
+                {
+          "id": "permissions-users",
+          "version": "1.0"
+        },
+                {
+          "id": "capabilities",
+          "version": "1.0"
+        },
+                {
+          "id": "policies",
+          "version": "1.1"
+        },
+                {
+          "id": "roles-user",
+          "version": "1.0"
+        },
+                {
+          "id": "user-capability-sets",
+          "version": "1.0"
+        },
+                {
+          "id": "user-capabilities",
+          "version": "1.0"
+        }
+      ],
+      "optional":       [
+                {
+          "id": "notify",
+          "version": "2.0"
+        },
+                {
+          "id": "service-points",
+          "version": "3.3"
+        },
+                {
+          "id": "service-points-users",
+          "version": "1.0"
+        },
+                {
+          "id": "user-tenants",
+          "version": "1.0"
+        }
+      ],
+      "permissionSets":       [
+                {
+          "description": "Create a new Users Migration",
+          "displayName": "Users (keycloak) - create new migration",
+          "permissionName": "users-keycloak.migrations.post"
+        },
+                {
+          "description": "Get Users Migration",
+          "displayName": "Users (keycloak) - retrieve users migration",
+          "permissionName": "users-keycloak.migrations.get"
+        },
+                {
+          "description": "Delete Users Migration",
+          "displayName": "Users (keycloak) - delete users migration",
+          "permissionName": "users-keycloak.migrations.delete"
+        },
+                {
+          "description": "Get user by ID",
+          "displayName": "Users (keycloak) - get user keycloak",
+          "permissionName": "users-keycloak.item.get"
+        },
+                {
+          "description": "Create user",
+          "displayName": "Users (keycloak) - create a new user keycloak",
+          "permissionName": "users-keycloak.item.post"
+        },
+                {
+          "description": "Get users collection",
+          "displayName": "Users (keycloak) - get users collection keycloak",
+          "permissionName": "users-keycloak.collection.get"
+        },
+                {
+          "description": "Update user",
+          "displayName": "Users (keycloak) - update user keycloak",
+          "permissionName": "users-keycloak.item.put"
+        },
+                {
+          "description": "Delete user",
+          "displayName": "Users (keycloak) - delete user keycloak",
+          "permissionName": "users-keycloak.item.delete"
+        },
+                {
+          "description": "Generate password reset link for user",
+          "displayName": "Users (keycloak) - generate password reset link ",
+          "permissionName": "users-keycloak.password-reset-link.generate"
+        },
+                {
+          "description": "Reset password by generated link",
+          "displayName": "Users (keycloak) - reset password",
+          "permissionName": "users-keycloak.password-reset-link.reset"
+        },
+                {
+          "description": "Validate password",
+          "displayName": "Users (keycloak) - validate password",
+          "permissionName": "users-keycloak.password-reset-link.validate"
+        },
+                {
+          "description": "Read basic",
+          "displayName": "Users (keycloak) - read basic",
+          "permissionName": "users-keycloak.read.basic"
+        },
+                {
+          "description": "Read restricted",
+          "displayName": "Users (keycloak) - read restricted",
+          "permissionName": "users-keycloak.read.restricted"
+        },
+                {
+          "description": "User permissions read",
+          "displayName": "Users (keycloak) - find permissions for user",
+          "permissionName": "users-keycloak.users.permissions.collection.get"
+        },
+                {
+          "description": "Verify existence of a Keycloak user",
+          "displayName": "Users (keycloak) - verify exists",
+          "permissionName": "users-keycloak.auth-users.item.get"
+        },
+                {
+          "description": "Create Keycloak user for Folio user, if not yet present",
+          "displayName": "Users (keycloak) - ensure created",
+          "permissionName": "users-keycloak.auth-users.item.post"
+        },
+                {
+          "description": "All permissions for user operations",
+          "displayName": "Users (keycloak) - all users permissions",
+          "permissionName": "users-keycloak.all",
+          "subPermissions":           [
+            "users-keycloak.migrations.post",
+            "users-keycloak.migrations.get",
+            "users-keycloak.migrations.delete",
+            "users-keycloak.item.get",
+            "users-keycloak.item.post",
+            "users-keycloak.collection.get",
+            "users-keycloak.item.put",
+            "users-keycloak.item.delete",
+            "users-keycloak.password-reset-link.generate",
+            "users-keycloak.password-reset-link.reset",
+            "users-keycloak.password-reset-link.validate",
+            "users-keycloak.read.restricted",
+            "users-keycloak.read.basic",
+            "users-keycloak.users.permissions.collection.get",
+            "users-keycloak.auth-users.item.get",
+            "users-keycloak.auth-users.item.post"
+          ]
+        }
+      ],
+      "launchDescriptor":       {
+        "dockerImage": "mod-users-keycloak:2.0.7",
+        "dockerPull": false,
+        "dockerArgs": {"HostConfig":         {
+          "Memory": 536870912,
+          "PortBindings": {"8081/tcp": [{"HostPort": "%p"}]}
+        }},
+        "env": [        {
+          "name": "JAVA_OPTIONS",
+          "value": "-XX:MaxRAMPercentage=66.0"
+        }]
+      }
+    },
+        {
+      "id": "mod-roles-keycloak-2.0.15",
+      "name": "roles-keycloak",
+      "provides":       [
+                {
+          "id": "roles",
+          "version": "1.1",
+          "handlers":           [
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/roles/{id}",
+              "permissionsRequired": ["roles.item.get"]
+            },
+                        {
+              "methods": ["PUT"],
+              "pathPattern": "/roles/{id}",
+              "permissionsRequired": ["roles.item.put"]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/roles/{id}",
+              "permissionsRequired": ["roles.item.delete"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/roles",
+              "permissionsRequired": ["roles.item.post"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/roles",
+              "permissionsRequired": ["roles.collection.get"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/roles/batch",
+              "permissionsRequired": ["roles.collection.post"]
+            }
+          ]
+        },
+                {
+          "id": "policies",
+          "version": "1.1",
+          "handlers":           [
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/policies/{id}",
+              "permissionsRequired": ["policies.item.get"]
+            },
+                        {
+              "methods": ["PUT"],
+              "pathPattern": "/policies/{id}",
+              "permissionsRequired": ["policies.item.put"]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/policies/{id}",
+              "permissionsRequired": ["policies.item.delete"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/policies",
+              "permissionsRequired": ["policies.item.post"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/policies/batch",
+              "permissionsRequired": ["policies.collection.post"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/policies",
+              "permissionsRequired": ["policies.collection.get"]
+            }
+          ]
+        },
+                {
+          "id": "roles-user",
+          "version": "1.0",
+          "handlers":           [
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/roles/users/{id}",
+              "permissionsRequired": ["roles.users.item.get"]
+            },
+                        {
+              "methods": ["PUT"],
+              "pathPattern": "/roles/users/{id}",
+              "permissionsRequired": ["roles.users.item.put"]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/roles/users/{id}",
+              "permissionsRequired": ["roles.users.item.delete"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/roles/users",
+              "permissionsRequired": ["roles.users.item.post"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/roles/users",
+              "permissionsRequired": ["roles.users.collection.get"]
+            }
+          ]
+        },
+                {
+          "id": "roles-permission-migration",
+          "version": "1.0",
+          "handlers":           [
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/roles-keycloak/migrations",
+              "permissionsRequired": ["roles-keycloak.migrations.item.post"],
+              "modulePermissions": ["perms.users.get"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/roles-keycloak/migrations",
+              "permissionsRequired": ["roles-keycloak.migrations.collection.get"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/roles-keycloak/migrations/{id}",
+              "permissionsRequired": ["roles-keycloak.migrations.item.get"]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/roles-keycloak/migrations/{id}",
+              "permissionsRequired": ["roles-keycloak.migrations.item.delete"]
+            }
+          ]
+        },
+                {
+          "id": "capabilities",
+          "version": "1.0",
+          "handlers":           [
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/capabilities/{id}",
+              "permissionsRequired": ["capabilities.item.get"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/capabilities",
+              "permissionsRequired": ["capabilities.collection.get"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/capability-sets/{id}/capabilities",
+              "permissionsRequired": ["capability-sets.capabilities.collection.get"]
+            }
+          ]
+        },
+                {
+          "id": "capability-sets",
+          "version": "2.0",
+          "handlers":           [
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/capability-sets/{id}",
+              "permissionsRequired": ["capability-sets.item.get"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/capability-sets",
+              "permissionsRequired": ["capability-sets.collection.get"]
+            }
+          ]
+        },
+                {
+          "id": "role-capabilities",
+          "version": "1.0",
+          "handlers":           [
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/roles/capabilities",
+              "permissionsRequired": ["role-capabilities.collection.post"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/roles/capabilities",
+              "permissionsRequired": ["role-capabilities.collection.get"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/roles/{id}/capabilities",
+              "permissionsRequired": ["role-capabilities.collection.get"]
+            },
+                        {
+              "methods": ["PUT"],
+              "pathPattern": "/roles/{id}/capabilities",
+              "permissionsRequired": ["role-capabilities.collection.put"]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/roles/{id}/capabilities",
+              "permissionsRequired": ["role-capabilities.collection.delete"]
+            }
+          ]
+        },
+                {
+          "id": "role-capability-sets",
+          "version": "1.1",
+          "handlers":           [
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/roles/capability-sets",
+              "permissionsRequired": ["role-capability-sets.collection.post"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/roles/capability-sets",
+              "permissionsRequired": ["role-capability-sets.collection.get"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/roles/{id}/capability-sets",
+              "permissionsRequired": ["role.capability-sets.collection.get"]
+            },
+                        {
+              "methods": ["PUT"],
+              "pathPattern": "/roles/{id}/capability-sets",
+              "permissionsRequired": ["role-capability-sets.collection.put"]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/roles/{id}/capability-sets",
+              "permissionsRequired": ["role-capability-sets.collection.delete"]
+            }
+          ]
+        },
+                {
+          "id": "user-capabilities",
+          "version": "1.0",
+          "handlers":           [
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/users/capabilities",
+              "permissionsRequired": ["user-capabilities.collection.post"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/users/capabilities",
+              "permissionsRequired": ["user-capabilities.collection.get"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/users/{id}/capabilities",
+              "permissionsRequired": ["user.capabilities.collection.get"]
+            },
+                        {
+              "methods": ["PUT"],
+              "pathPattern": "/users/{id}/capabilities",
+              "permissionsRequired": ["user-capabilities.collection.put"]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/users/{id}/capabilities",
+              "permissionsRequired": ["user-capabilities.collection.delete"]
+            }
+          ]
+        },
+                {
+          "id": "user-capability-sets",
+          "version": "1.0",
+          "handlers":           [
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/users/capability-sets",
+              "permissionsRequired": ["user-capability-sets.collection.post"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/users/capability-sets",
+              "permissionsRequired": ["user-capability-sets.collection.get"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/users/{id}/capability-sets",
+              "permissionsRequired": ["user.capability-sets.collection.get"]
+            },
+                        {
+              "methods": ["PUT"],
+              "pathPattern": "/users/{id}/capability-sets",
+              "permissionsRequired": ["user-capability-sets.collection.put"]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/users/{id}/capability-sets",
+              "permissionsRequired": ["user-capability-sets.collection.delete"]
+            }
+          ]
+        },
+                {
+          "id": "permissions-users",
+          "version": "1.0",
+          "handlers": [          {
+            "methods": ["GET"],
+            "pathPattern": "/permissions/users/{id}",
+            "permissionsRequired": ["permissions.users.item.get"]
+          }]
+        },
+                {
+          "id": "loadable-roles",
+          "version": "1.0",
+          "handlers": [          {
+            "methods": ["GET"],
+            "pathPattern": "/loadable-roles",
+            "permissionsRequired": ["loadable-roles.collection.get"]
+          }]
+        },
+                {
+          "id": "_tenant",
+          "version": "2.0",
+          "interfaceType": "system",
+          "handlers":           [
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/_/tenant"
+            },
+                        {
+              "methods":               [
+                "GET",
+                "DELETE"
+              ],
+              "pathPattern": "/_/tenant/{id}"
+            }
+          ]
+        }
+      ],
+      "permissionSets":       [
+                {
+          "permissionName": "roles.item.get",
+          "displayName": "role item get",
+          "description": "Get role"
+        },
+                {
+          "permissionName": "roles.item.put",
+          "displayName": "roles item put",
+          "description": "Update role"
+        },
+                {
+          "permissionName": "roles.item.delete",
+          "displayName": "roles item delete",
+          "description": "Delete role"
+        },
+                {
+          "permissionName": "roles.item.post",
+          "displayName": "Creates a role item",
+          "description": "Create a role"
+        },
+                {
+          "permissionName": "roles.collection.post",
+          "displayName": "roles collection post",
+          "description": "Create one or more roles"
+        },
+                {
+          "permissionName": "roles.collection.get",
+          "displayName": "roles collection get",
+          "description": "Searching roles"
+        },
+                {
+          "permissionName": "roles.all",
+          "displayName": "Roles module - all permissions and all domains",
+          "description": "Entire set of permissions needed to use the roles module on any domain",
+          "subPermissions":           [
+            "roles.item.get",
+            "roles.item.put",
+            "roles.item.delete",
+            "roles.item.post",
+            "roles.collection.post",
+            "roles.collection.get"
+          ],
+          "visible": false
+        },
+                {
+          "permissionName": "policies.item.get",
+          "displayName": "policies item get",
+          "description": "Get policy"
+        },
+                {
+          "permissionName": "policies.item.put",
+          "displayName": "policies item put",
+          "description": "Update policy"
+        },
+                {
+          "permissionName": "policies.item.delete",
+          "displayName": "policies item delete",
+          "description": "Delete policy"
+        },
+                {
+          "permissionName": "policies.item.post",
+          "displayName": "Creates a policy item",
+          "description": "Create a policy"
+        },
+                {
+          "permissionName": "policies.collection.post",
+          "displayName": "policies collection post",
+          "description": "Create one or more policies"
+        },
+                {
+          "permissionName": "policies.collection.get",
+          "displayName": "policies collection get",
+          "description": "Searching policies"
+        },
+                {
+          "permissionName": "policies.all",
+          "displayName": "Policies module - all permissions and all domains",
+          "description": "Entire set of permissions needed to use the policies module on any domain",
+          "subPermissions":           [
+            "policies.item.get",
+            "policies.item.put",
+            "policies.item.delete",
+            "policies.item.post",
+            "policies.collection.post",
+            "policies.collection.get"
+          ],
+          "visible": false
+        },
+                {
+          "permissionName": "roles.users.item.get",
+          "displayName": "roles user item get",
+          "description": "Get roles user"
+        },
+                {
+          "permissionName": "roles.users.item.put",
+          "displayName": "roles user item put",
+          "description": "Update roles user"
+        },
+                {
+          "permissionName": "roles.users.item.delete",
+          "displayName": "roles user item delete",
+          "description": "Delete roles user"
+        },
+                {
+          "permissionName": "roles.users.item.post",
+          "displayName": "roles user item post",
+          "description": "Assign roles to user"
+        },
+                {
+          "permissionName": "roles.users.collection.get",
+          "displayName": "roles user collection get",
+          "description": "Searching roles user"
+        },
+                {
+          "permissionName": "roles-keycloak.migrations.item.post",
+          "displayName": "Migrations - start a user permission migration job",
+          "description": "Start user policies migration job (in async mode)"
+        },
+                {
+          "permissionName": "roles-keycloak.migrations.item.get",
+          "displayName": "Migrations - get migration job by id",
+          "description": "Retrieves permissions migration job by id"
+        },
+                {
+          "permissionName": "roles-keycloak.migrations.item.delete",
+          "displayName": "Migrations - remove migration job by id",
+          "description": "Removes permissions migration job by id"
+        },
+                {
+          "permissionName": "roles-keycloak.migrations.collection.get",
+          "displayName": "Migrations - search across user permission migration jobs",
+          "description": "Retrieves permissions migration job by CQL query and paging parameters"
+        },
+                {
+          "permissionName": "roles.users.all",
+          "displayName": "roles.users module - all permissions and all domains",
+          "description": "Entire set of permissions needed to use the roles user module on any domain",
+          "subPermissions":           [
+            "roles.users.item.get",
+            "roles.users.item.put",
+            "roles.users.item.delete",
+            "roles.users.item.post",
+            "roles.users.collection.get"
+          ],
+          "visible": false
+        },
+                {
+          "permissionName": "capabilities.item.get",
+          "displayName": "Capabilities - get record by ID",
+          "description": "Get capability"
+        },
+                {
+          "permissionName": "capabilities.collection.get",
+          "displayName": "Capabilities - find records by CQL query",
+          "description": "Searching capabilities"
+        },
+                {
+          "permissionName": "capability-sets.capabilities.collection.get",
+          "displayName": "Capabilities - find records by capability set ID",
+          "description": "Searching capabilities"
+        },
+                {
+          "permissionName": "capability-sets.item.get",
+          "displayName": "Capability Set - get record by ID",
+          "description": "Get capability"
+        },
+                {
+          "permissionName": "capability-sets.collection.get",
+          "displayName": "Capability Set - find records by CQL query",
+          "description": "Searching capabilities"
+        },
+                {
+          "permissionName": "capabilities.all",
+          "displayName": "Capabilities - all permissions",
+          "description": "All permissions for capability management",
+          "subPermissions":           [
+            "capabilities.item.get",
+            "capabilities.collection.get",
+            "capability-sets.capabilities.collection.get",
+            "capability-sets.collection.get",
+            "capability-sets.collection.post"
+          ]
+        },
+                {
+          "permissionName": "role-capabilities.collection.post",
+          "displayName": "Role-Capabilities - Create an association between role and capabilities",
+          "description": "Create a record associating one or more capabilities with role"
+        },
+                {
+          "permissionName": "role-capabilities.collection.get",
+          "displayName": "Role-Capabilities - Get capabilities assigned to role",
+          "description": "Retrieve capabilities assigned to role"
+        },
+                {
+          "permissionName": "role-capabilities.collection.put",
+          "displayName": "Role-Capabilities - Update a set of assigned capabilities for role",
+          "description": "Update assigned capabilities for role"
+        },
+                {
+          "permissionName": "role-capabilities.collection.delete",
+          "displayName": "Role-Capabilities - Delete all for role",
+          "description": "Delete all assigned capabilities for role"
+        },
+                {
+          "permissionName": "role.capabilities.collection.get",
+          "displayName": "Role-Capabilities - Find records by the query",
+          "description": "Retrieve role-capability items by CQL query"
+        },
+                {
+          "permissionName": "role-capabilities.all",
+          "displayName": "Role-Capabilities - all permissions",
+          "description": "All permissions for role-capability management",
+          "subPermissions":           [
+            "role-capabilities.item.get",
+            "role-capabilities.item.put",
+            "role-capabilities.item.delete",
+            "role-capabilities.item.post",
+            "role-capabilities.collection.get"
+          ]
+        },
+                {
+          "permissionName": "role-capability-sets.collection.post",
+          "displayName": "Role-Capability-Sets - Create record",
+          "description": "Create a record associating one or more capabilities with role"
+        },
+                {
+          "permissionName": "role-capability-sets.collection.get",
+          "displayName": "Role-Capability-Sets - Find records by the query",
+          "description": "Retrieve role-capability items by CQL query"
+        },
+                {
+          "permissionName": "role-capability-sets.collection.put",
+          "displayName": "Role-Capability-Sets - Update a set of records for role",
+          "description": "Update assigned capability-sets for role"
+        },
+                {
+          "permissionName": "role-capability-sets.collection.delete",
+          "displayName": "Role-Capability-Sets - Delete all for role",
+          "description": "Delete all assigned capability-sets for role"
+        },
+                {
+          "permissionName": "role.capability-sets.collection.get",
+          "displayName": "Role-Capability-Sets - Get capability-sets assigned to role",
+          "description": "Retrieve capability-sets assigned to role"
+        },
+                {
+          "permissionName": "role-capability-sets.all",
+          "displayName": "Role-Capability Sets - all permissions",
+          "description": "All permissions for role-capability set management",
+          "subPermissions":           [
+            "role-capability-sets.collection.put",
+            "role-capability-sets.collection.get",
+            "role-capability-sets.collection.post",
+            "role-capability-sets.collection.delete",
+            "role.capability-sets.collection.get"
+          ]
+        },
+                {
+          "permissionName": "user-capabilities.collection.post",
+          "displayName": "User-Capabilities - Create an association between user and capabilities",
+          "description": "Create a record associating one or more capabilities with user"
+        },
+                {
+          "permissionName": "user-capabilities.collection.get",
+          "displayName": "Role-Capabilities - Get capabilities assigned to user",
+          "description": "Retrieve capabilities assigned to user"
+        },
+                {
+          "permissionName": "user-capabilities.collection.put",
+          "displayName": "Role-Capabilities - Update a set of assigned capabilities for user",
+          "description": "Update assigned capabilities for user"
+        },
+                {
+          "permissionName": "user-capabilities.collection.delete",
+          "displayName": "User-Capabilities - delete all for user",
+          "description": "Delete all assigned capabilities for user"
+        },
+                {
+          "permissionName": "user.capabilities.collection.get",
+          "displayName": "User-Capabilities - Find records by query",
+          "description": "Retrieve user-capability items by CQL query"
+        },
+                {
+          "permissionName": "user-capabilities.all",
+          "displayName": "User-Capabilities - all permissions",
+          "description": "All permissions for user-capability management",
+          "subPermissions":           [
+            "user-capabilities.collection.put",
+            "user-capabilities.collection.post",
+            "user-capabilities.collection.delete",
+            "user-capabilities.collection.get",
+            "user.capabilities.collection.get"
+          ]
+        },
+                {
+          "permissionName": "user-capability-sets.collection.post",
+          "displayName": "User-Capability-Sets - Create record",
+          "description": "Create a record associating one or more capabilities with user"
+        },
+                {
+          "permissionName": "user-capability-sets.collection.get",
+          "displayName": "User-Capability-Sets - Find records by the query",
+          "description": "Retrieve role-capability items by CQL query"
+        },
+                {
+          "permissionName": "user-capability-sets.collection.put",
+          "displayName": "User-Capability-Sets - Update a set of records for user",
+          "description": "Update assigned capability-sets for user"
+        },
+                {
+          "permissionName": "user-capability-sets.collection.delete",
+          "displayName": "User-Capability-Sets - Delete all for user",
+          "description": "Delete all assigned capability-sets for user"
+        },
+                {
+          "permissionName": "user.capability-sets.collection.get",
+          "displayName": "User-Capability-Sets - Get capability-sets assigned to user",
+          "description": "Retrieve capability-sets assigned to user"
+        },
+                {
+          "permissionName": "user-capability-sets.all",
+          "displayName": "User-Capability Sets - all permissions",
+          "description": "All permissions for user-capability set management",
+          "subPermissions":           [
+            "user-capability-sets.collection.put",
+            "user-capability-sets.collection.get",
+            "user-capability-sets.collection.post",
+            "user-capability-sets.collection.delete",
+            "user.capability-sets.collection.get"
+          ]
+        },
+                {
+          "permissionName": "permissions.users.item.get",
+          "displayName": "Permissions - get user permissions",
+          "description": "Get user permissions based on assigned roles and capabilities"
+        },
+                {
+          "permissionName": "loadable-roles.collection.get",
+          "displayName": "Loadable roles collection get",
+          "description": "Searching loadable roles"
+        }
+      ],
+      "requires": [      {
+        "id": "permissions",
+        "version": "5.6"
+      }],
+      "launchDescriptor":       {
+        "dockerImage": "mod-roles-keycloak-2.0.15",
+        "dockerPull": false,
+        "dockerArgs": {"HostConfig":         {
+          "Memory": 357913941,
+          "PortBindings": {"8081/tcp": [{"HostPort": "%p"}]}
+        }},
+        "env":         [
+                    {
+            "name": "JAVA_OPTIONS",
+            "value": "-XX:MaxRAMPercentage=85.0"
+          },
+                    {
+            "name": "DB_HOST",
+            "value": "postgres"
+          },
+                    {
+            "name": "DB_PORT",
+            "value": "5432"
+          },
+                    {
+            "name": "DB_USERNAME",
+            "value": "postgres"
+          },
+                    {
+            "name": "DB_PASSWORD",
+            "value": "postgres"
+          },
+                    {
+            "name": "DB_DATABASE",
+            "value": "okapi_modules"
+          },
+                    {
+            "name": "KC_URL",
+            "value": "keycloak:8080"
+          },
+                    {
+            "name": "KC_CLIENT_SECRET",
+            "value": "mod-roles-keycloak"
+          },
+                    {
+            "name": "KC_CLIENT_ID",
+            "value": "secret"
+          },
+                    {
+            "name": "KC_POLICIES_CLIENT_NAME",
+            "value": "mod-login-keycloak"
+          },
+                    {
+            "name": "KC_TOKEN_TTL",
+            "value": "59"
+          },
+                    {
+            "name": "KC_CLIENT_ID_TTL",
+            "value": "3600"
+          }
+        ]
+      },
+      "metadata": {"user":       {
+        "type": "system",
+        "permissions":         [
+          "users-keycloak.auth-users.item.get",
+          "users-keycloak.auth-users.item.post"
+        ]
+      }}
+    },
+        {
+      "id": "mod-notes-6.0.0",
+      "name": "Notes",
+      "requires":       [
+                {
+          "id": "users",
+          "version": "15.1 16.0"
+        },
+                {
+          "id": "configuration",
+          "version": "2.0"
+        }
+      ],
+      "provides":       [
+                {
+          "id": "notes",
+          "version": "4.0",
+          "handlers":           [
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/notes",
+              "permissionsRequired": ["notes.collection.get"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/notes",
+              "permissionsRequired": ["notes.item.post"],
+              "modulePermissions": ["users.item.get"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/notes/{id}",
+              "permissionsRequired": ["notes.item.get"]
+            },
+                        {
+              "methods": ["PUT"],
+              "pathPattern": "/notes/{id}",
+              "permissionsRequired": ["notes.item.put"],
+              "modulePermissions": ["users.item.get"]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/notes/{id}",
+              "permissionsRequired": ["notes.item.delete"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/note-types",
+              "permissionsRequired": ["note.types.collection.get"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/note-types/{typeId}",
+              "permissionsRequired": ["note.types.item.get"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/note-types",
+              "permissionsRequired": ["note.types.item.post"],
+              "modulePermissions":               [
+                "configuration.entries.collection.get",
+                "users.item.get"
+              ]
+            },
+                        {
+              "methods": ["PUT"],
+              "pathPattern": "/note-types/{id}",
+              "permissionsRequired": ["note.types.item.put"],
+              "modulePermissions": ["users.item.get"]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/note-types/{id}",
+              "permissionsRequired": ["note.types.item.delete"]
+            },
+                        {
+              "methods": ["PUT"],
+              "pathPattern": "/note-links/type/{type}/id/{id}",
+              "permissionsRequired": ["note.links.collection.put"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/note-links/domain/{domain}/type/{type}/id/{id}",
+              "permissionsRequired": ["note.links.collection.get"]
+            }
+          ]
+        },
+                {
+          "id": "_tenant",
+          "version": "2.0",
+          "interfaceType": "system",
+          "handlers":           [
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/_/tenant"
+            },
+                        {
+              "methods":               [
+                "GET",
+                "DELETE"
+              ],
+              "pathPattern": "/_/tenant/{id}"
+            }
+          ]
+        }
+      ],
+      "permissionSets":       [
+                {
+          "permissionName": "notes.collection.get",
+          "displayName": "Notes - get notes collection",
+          "description": "Get notes collection"
+        },
+                {
+          "permissionName": "notes.item.get",
+          "displayName": "Notes - get individual note from storage",
+          "description": "Get individual note"
+        },
+                {
+          "permissionName": "notes.item.post",
+          "displayName": "Notes - create note",
+          "description": "Create note"
+        },
+                {
+          "permissionName": "notes.item.put",
+          "displayName": "Notes - modify note",
+          "description": "Modify note"
+        },
+                {
+          "permissionName": "notes.item.delete",
+          "displayName": "Notes - delete note",
+          "description": "Delete note"
+        },
+                {
+          "permissionName": "note.types.collection.get",
+          "displayName": "Note types - get note types collection",
+          "description": "Get note types collection"
+        },
+                {
+          "permissionName": "note.types.item.get",
+          "displayName": "Note types - get individual note type from storage",
+          "description": "Get individual note type"
+        },
+                {
+          "permissionName": "note.types.item.post",
+          "displayName": "Note types - create note type",
+          "description": "Create note type"
+        },
+                {
+          "permissionName": "note.types.item.put",
+          "displayName": "Note types - modify note type",
+          "description": "Modify note type"
+        },
+                {
+          "permissionName": "note.types.item.delete",
+          "displayName": "Note types - delete note type",
+          "description": "Delete note type"
+        },
+                {
+          "permissionName": "note.links.collection.put",
+          "displayName": "Note links - update note links",
+          "description": "Update note links"
+        },
+                {
+          "permissionName": "note.links.collection.get",
+          "displayName": "Notes - get notes collection sorted by status",
+          "description": "Get notes collection by status and domain",
+          "replaces": ["notes.collection.get.by.status"]
+        },
+                {
+          "permissionName": "notes.allops",
+          "displayName": "Notes module - all CRUD permissions",
+          "description": "Entire set of permissions needed to use the notes modules, but no domain permissions",
+          "subPermissions":           [
+            "notes.collection.get",
+            "notes.item.get",
+            "notes.item.post",
+            "notes.item.put",
+            "notes.item.delete",
+            "note.links.collection.put",
+            "note.links.collection.get"
+          ],
+          "visible": false
+        },
+                {
+          "permissionName": "note.types.allops",
+          "displayName": "Note types - all CRUD permissions",
+          "description": "Entire set of permissions needed to use the note type for note module",
+          "subPermissions":           [
+            "note.types.item.get",
+            "note.types.collection.get",
+            "note.types.item.post",
+            "note.types.item.put",
+            "note.types.item.delete"
+          ],
+          "visible": false
+        },
+                {
+          "permissionName": "notes.all",
+          "displayName": "Notes module - all permissions and all domains",
+          "description": "Entire set of permissions needed to use the notes modules on any domain",
+          "subPermissions":           [
+            "notes.allops",
+            "note.types.allops"
+          ],
+          "visible": false
+        }
+      ],
+      "launchDescriptor":       {
+        "dockerImage": "mod-notes:6.0.0",
+        "dockerPull": false,
+        "dockerArgs": {"HostConfig":         {
+          "Memory": 542293850,
+          "PortBindings": {"8081/tcp": [{"HostPort": "%p"}]}
+        }},
+        "env":         [
+                    {
+            "name": "JAVA_OPTIONS",
+            "value": "-XX:MaxRAMPercentage=66.0"
+          },
+                    {
+            "name": "DB_HOST",
+            "value": "postgres"
+          },
+                    {
+            "name": "DB_PORT",
+            "value": "5432"
+          },
+                    {
+            "name": "DB_USERNAME",
+            "value": "folio_admin"
+          },
+                    {
+            "name": "DB_PASSWORD",
+            "value": "folio_admin"
+          },
+                    {
+            "name": "DB_DATABASE",
+            "value": "okapi_modules"
+          },
+                    {
+            "name": "DB_QUERYTIMEOUT",
+            "value": "60000"
+          },
+                    {
+            "name": "DB_CHARSET",
+            "value": "UTF-8"
+          },
+                    {
+            "name": "DB_MAXPOOLSIZE",
+            "value": "5"
+          }
+        ]
+      }
+    },
+        {
+      "id": "mod-scheduler-2.0.1",
+      "name": "Scheduler",
+      "provides":       [
+                {
+          "id": "scheduler",
+          "version": "1.0",
+          "handlers":           [
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/scheduler/timers",
+              "permissionsRequired": ["scheduler.collection.get"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/scheduler/timers",
+              "permissionsRequired": ["scheduler.item.post"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/scheduler/timers/{id}",
+              "permissionsRequired": ["scheduler.item.get"]
+            },
+                        {
+              "methods": ["PUT"],
+              "pathPattern": "/scheduler/timers/{id}",
+              "permissionsRequired": ["scheduler.item.put"]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/scheduler/timers/{id}",
+              "permissionsRequired": ["scheduler.item.delete"]
+            }
+          ]
+        },
+                {
+          "id": "_tenant",
+          "version": "2.0",
+          "interfaceType": "system",
+          "handlers":           [
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/_/tenant"
+            },
+                        {
+              "methods":               [
+                "GET",
+                "DELETE"
+              ],
+              "pathPattern": "/_/tenant/{id}"
+            }
+          ]
+        }
+      ],
+      "permissionSets":       [
+                {
+          "permissionName": "scheduler.collection.get",
+          "displayName": "Scheduler - get scheduler collection",
+          "description": "Get scheduler collection"
+        },
+                {
+          "permissionName": "scheduler.item.get",
+          "displayName": "Scheduler - get individual scheduler from storage",
+          "description": "Get individual scheduler"
+        },
+                {
+          "permissionName": "scheduler.item.post",
+          "displayName": "Scheduler - create scheduler",
+          "description": "Create scheduler"
+        },
+                {
+          "permissionName": "scheduler.item.put",
+          "displayName": "Scheduler - modify scheduler",
+          "description": "Modify scheduler"
+        },
+                {
+          "permissionName": "scheduler.item.delete",
+          "displayName": "scheduler - delete scheduler",
+          "description": "Delete scheduler"
+        },
+                {
+          "permissionName": "scheduler.all",
+          "displayName": "Scheduler module - all permissions and all domains",
+          "description": "Entire set of permissions needed to use the scheduler modules on any domain",
+          "subPermissions":           [
+            "scheduler.item.get",
+            "scheduler.collection.get",
+            "scheduler.item.post",
+            "scheduler.item.put",
+            "scheduler.item.delete"
+          ],
+          "visible": false
+        }
+      ],
+      "launchDescriptor":       {
+        "dockerImage": "mod-scheduler:2.0.1",
+        "dockerPull": false,
+        "dockerArgs": {"HostConfig":         {
+          "Memory": 542293850,
+          "PortBindings": {"8081/tcp": [{"HostPort": "%p"}]}
+        }},
+        "env":         [
+                    {
+            "name": "JAVA_OPTIONS",
+            "value": "-XX:MaxRAMPercentage=85.0"
+          },
+                    {
+            "name": "DB_HOST",
+            "value": "postgres"
+          },
+                    {
+            "name": "DB_PORT",
+            "value": "5432"
+          },
+                    {
+            "name": "DB_USERNAME",
+            "value": "folio_admin"
+          },
+                    {
+            "name": "DB_PASSWORD",
+            "value": "folio_admin"
+          },
+                    {
+            "name": "DB_DATABASE",
+            "value": "okapi_modules"
+          },
+                    {
+            "name": "DB_QUERYTIMEOUT",
+            "value": "60000"
+          },
+                    {
+            "name": "DB_CHARSET",
+            "value": "UTF-8"
+          },
+                    {
+            "name": "DB_MAXPOOLSIZE",
+            "value": "5"
+          }
+        ]
+      }
+    },
+        {
+      "id": "mod-settings-1.1.0",
+      "name": "settings",
+      "provides":       [
+                {
+          "id": "_tenant",
+          "version": "2.0",
+          "interfaceType": "system",
+          "handlers":           [
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/_/tenant"
+            },
+                        {
+              "methods":               [
+                "GET",
+                "DELETE"
+              ],
+              "pathPattern": "/_/tenant/{id}"
+            }
+          ]
+        },
+                {
+          "id": "settings",
+          "version": "1.1",
+          "handlers":           [
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/settings/entries",
+              "permissionsRequired": ["mod-settings.entries.item.post"],
+              "permissionsDesired":               [
+                "mod-settings.global.write.*",
+                "mod-settings.users.write.*",
+                "mod-settings.owner.write.*"
+              ]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/settings/entries",
+              "permissionsRequired": ["mod-settings.entries.collection.get"],
+              "permissionsDesired":               [
+                "mod-settings.global.read.*",
+                "mod-settings.users.read.*",
+                "mod-settings.owner.read.*"
+              ]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/settings/entries/{id}",
+              "permissionsRequired": ["mod-settings.entries.item.get"],
+              "permissionsDesired":               [
+                "mod-settings.global.read.*",
+                "mod-settings.users.read.*",
+                "mod-settings.owner.read.*"
+              ]
+            },
+                        {
+              "methods": ["PUT"],
+              "pathPattern": "/settings/entries/{id}",
+              "permissionsRequired": ["mod-settings.entries.item.put"],
+              "permissionsDesired":               [
+                "mod-settings.global.write.*",
+                "mod-settings.users.write.*",
+                "mod-settings.owner.write.*"
+              ]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/settings/entries/{id}",
+              "permissionsRequired": ["mod-settings.entries.item.delete"],
+              "permissionsDesired":               [
+                "mod-settings.global.write.*",
+                "mod-settings.users.write.*",
+                "mod-settings.owner.write.*"
+              ]
+            },
+                        {
+              "methods": ["PUT"],
+              "pathPattern": "/settings/upload",
+              "permissionsRequired": ["mod-settings.entries.put"],
+              "permissionsDesired":               [
+                "mod-settings.global.write.*",
+                "mod-settings.users.write.*",
+                "mod-settings.owner.write.*"
+              ]
+            }
+          ]
+        }
+      ],
+      "requires": [],
+      "permissionSets":       [
+                {
+          "permissionName": "mod-settings.entries.item.post",
+          "displayName": "settings - create setting",
+          "description": "Create setting"
+        },
+                {
+          "permissionName": "mod-settings.entries.collection.get",
+          "displayName": "settings - get settings",
+          "description": "Get settings"
+        },
+                {
+          "permissionName": "mod-settings.entries.item.get",
+          "displayName": "settings - get setting",
+          "description": "Get setting"
+        },
+                {
+          "permissionName": "mod-settings.entries.item.put",
+          "displayName": "settings - update setting",
+          "description": "Update setting"
+        },
+                {
+          "permissionName": "mod-settings.entries.item.delete",
+          "displayName": "settings - delete setting",
+          "description": "Delete setting"
+        },
+                {
+          "permissionName": "mod-settings.entries.put",
+          "displayName": "settings - upload",
+          "description": "Upload settings",
+          "replaces": ["mod-settings.entries.upload"]
+        },
+                {
+          "permissionName": "mod-settings.entries.all",
+          "displayName": "settings - all setting permissions",
+          "description": "All setting permissions",
+          "subPermissions":           [
+            "mod-settings.entries.item.post",
+            "mod-settings.entries.collection.get",
+            "mod-settings.entries.item.get",
+            "mod-settings.entries.item.put",
+            "mod-settings.entries.item.delete",
+            "mod-settings.entries.put"
+          ]
+        }
+      ],
+      "launchDescriptor":       {
+        "dockerImage": "mod-settings:1.1.0",
+        "dockerPull": false,
+        "dockerArgs": {"HostConfig":         {
+          "Memory": 2147483648,
+          "PortBindings": {"8081/tcp": [{"HostPort": "%p"}]}
+        }},
+        "env":         [
+                    {
+            "name": "JAVA_OPTIONS",
+            "value": "-XX:MaxRAMPercentage=66.0"
+          },
+                    {
+            "name": "DB_HOST",
+            "value": "postgres"
+          },
+                    {
+            "name": "DB_PORT",
+            "value": "5432"
+          },
+                    {
+            "name": "DB_USERNAME",
+            "value": "folio_admin"
+          },
+                    {
+            "name": "DB_PASSWORD",
+            "value": "folio_admin"
+          },
+                    {
+            "name": "DB_DATABASE",
+            "value": "okapi_modules"
+          },
+                    {
+            "name": "DB_MAXPOOLSIZE",
+            "value": "5"
+          }
+        ]
+      }
+    },
+        {
+      "id": "mod-okapi-facade-2.0.3",
+      "name": "Okapi facade",
+      "provides":       [
+                {
+          "id": "_tenant",
+          "version": "2.0",
+          "interfaceType": "system",
+          "handlers":           [
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/_/tenant"
+            },
+                        {
+              "methods":               [
+                "GET",
+                "DELETE"
+              ],
+              "pathPattern": "/_/tenant/{id}"
+            }
+          ]
+        },
+                {
+          "id": "okapi",
+          "version": "1.9",
+          "handlers":           [
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/_/deployment/modules",
+              "permissionsRequired": ["okapi.deployment.post"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/_/deployment/modules",
+              "permissionsRequired": ["okapi.deployment.get"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/_/deployment/modules/{instanceId}",
+              "permissionsRequired": ["okapi.deployment.get"]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/_/deployment/modules/{instanceId}",
+              "permissionsRequired": ["okapi.deployment.delete"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/_/discovery/modules",
+              "permissionsRequired": ["okapi.discovery.post"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/_/discovery/modules",
+              "permissionsRequired": ["okapi.discovery.get"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/_/discovery/modules/{serviceId}",
+              "permissionsRequired": ["okapi.discovery.get"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/_/discovery/modules/{serviceId}/{instanceId}",
+              "permissionsRequired": ["okapi.discovery.get"]
+            },
+                        {
+              "methods": ["PUT"],
+              "pathPattern": "/_/discovery/modules/{serviceId}/{instanceId}",
+              "permissionsRequired": ["okapi.discovery.put"]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/_/discovery/modules",
+              "permissionsRequired": ["okapi.discovery.delete"]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/_/discovery/modules/{serviceId}",
+              "permissionsRequired": ["okapi.discovery.delete"]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/_/discovery/modules/{serviceId}/{instanceId}",
+              "permissionsRequired": ["okapi.discovery.delete"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/_/discovery/health",
+              "permissionsRequired": ["okapi.discovery.health.get"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/_/discovery/health/{serviceId}",
+              "permissionsRequired": ["okapi.discovery.health.get"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/_/discovery/health/{serviceId}/{instanceId}",
+              "permissionsRequired": ["okapi.discovery.health.get"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/_/discovery/nodes",
+              "permissionsRequired": ["okapi.discovery.nodes.get"]
+            },
+                        {
+              "methods": ["PUT"],
+              "pathPattern": "/_/discovery/nodes/{nodeId}",
+              "permissionsRequired": ["okapi.discovery.nodes.put"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/_/discovery/nodes/{nodeId}",
+              "permissionsRequired": ["okapi.discovery.nodes.get"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/_/proxy/import/modules",
+              "permissionsRequired": ["okapi.proxy.modules.post"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/_/proxy/cleanup/modules",
+              "permissionsRequired": ["okapi.proxy.cleanup.modules"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/_/proxy/modules",
+              "permissionsRequired": ["okapi.proxy.modules.post"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/_/proxy/modules",
+              "permissionsRequired": ["okapi.proxy.modules.list"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/_/proxy/modules/{moduleId}",
+              "permissionsRequired": ["okapi.proxy.modules.get"]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/_/proxy/modules/{moduleId}",
+              "permissionsRequired": ["okapi.proxy.modules.delete"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/_/proxy/tenants",
+              "permissionsRequired": ["okapi.proxy.tenants.post"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/_/proxy/tenants",
+              "permissionsRequired": ["okapi.proxy.tenants.list"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/_/proxy/tenants/{tenantId}",
+              "permissionsRequired": ["okapi.proxy.tenants.get"]
+            },
+                        {
+              "methods": ["PUT"],
+              "pathPattern": "/_/proxy/tenants/{tenantId}",
+              "permissionsRequired": ["okapi.proxy.tenants.put"]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/_/proxy/tenants/{tenantId}",
+              "permissionsRequired": ["okapi.proxy.tenants.delete"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/_/proxy/tenants/{tenantId}/upgrade",
+              "permissionsRequired": ["okapi.proxy.tenants.upgrade.post"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/_/proxy/tenants/{tenantId}/install",
+              "permissionsRequired": ["okapi.proxy.tenants.install.list"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/_/proxy/tenants/{tenantId}/install",
+              "permissionsRequired": ["okapi.proxy.tenants.install.post"]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/_/proxy/tenants/{tenantId}/install",
+              "permissionsRequired": ["okapi.proxy.tenants.install.delete"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/_/proxy/tenants/{tenantId}/install/{installId}",
+              "permissionsRequired": ["okapi.proxy.tenants.install.get"]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/_/proxy/tenants/{tenantId}/install/{installId}",
+              "permissionsRequired": ["okapi.proxy.tenants.install.delete"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/_/proxy/tenants/{tenantId}/modules",
+              "permissionsRequired": ["okapi.proxy.tenants.modules.post"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/_/proxy/tenants/{tenantId}/modules",
+              "permissionsRequired": ["okapi.proxy.tenants.modules.list"],
+              "permissionsRequiredTenant": []
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/_/proxy/tenants/{tenantId}/modules",
+              "permissionsRequired": ["okapi.proxy.tenants.modules.delete"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/_/proxy/tenants/{tenantId}/modules/{moduleId}",
+              "permissionsRequired": ["okapi.proxy.tenants.modules.enabled.post"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/_/proxy/tenants/{tenantId}/modules/{moduleId}",
+              "permissionsRequired": ["okapi.proxy.tenants.modules.enabled.get"],
+              "permissionsRequiredTenant": []
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/_/proxy/tenants/{tenantId}/modules/{moduleId}",
+              "permissionsRequired": ["okapi.proxy.tenants.modules.enabled.delete"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/_/proxy/tenants/{tenantId}/interfaces",
+              "permissionsRequired": ["okapi.proxy.tenants.interfaces.list"],
+              "permissionsRequiredTenant": []
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/_/proxy/tenants/{tenantId}/interfaces/{interfaceId}",
+              "permissionsRequired": ["okapi.proxy.tenants.interfaces.get"],
+              "permissionsRequiredTenant": []
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/_/proxy/tenants/{tenantId}/timers",
+              "permissionsRequired": ["okapi.proxy.tenants.timers.list"],
+              "permissionsRequiredTenant": []
+            },
+                        {
+              "methods": ["PATCH"],
+              "pathPattern": "/_/proxy/tenants/{tenantId}/timers",
+              "permissionsRequired": ["okapi.proxy.tenants.timers.patch"],
+              "permissionsRequiredTenant": ["okapi.proxy.self.timers.patch"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/_/proxy/tenants/{tenantId}/timers/{timerId}",
+              "permissionsRequired": ["okapi.proxy.tenants.timers.get"],
+              "permissionsRequiredTenant": []
+            },
+                        {
+              "methods": ["PATCH"],
+              "pathPattern": "/_/proxy/tenants/{tenantId}/timers/{timerId}",
+              "permissionsRequired": ["okapi.proxy.tenants.timers.patch"],
+              "permissionsRequiredTenant": ["okapi.proxy.self.timers.patch"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/_/proxy/health",
+              "permissionsRequired": []
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/_/proxy/pull/modules",
+              "permissionsRequired": ["okapi.proxy.pull.modules.post"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/_/env",
+              "permissionsRequired": ["okapi.env.post"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/_/env",
+              "permissionsRequired": ["okapi.env.list"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/_/env/{id}",
+              "permissionsRequired": ["okapi.env.get"]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/_/env/{id}",
+              "permissionsRequired": ["okapi.env.delete"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/_/version",
+              "permissionsRequired": ["okapi.version.get"],
+              "permissionsRequiredTenant": []
+            }
+          ]
+        }
+      ],
+      "permissionSets":       [
+                {
+          "permissionName": "okapi.deployment.get",
+          "displayName": "Okapi - get deployment info",
+          "description": "Get deployment info for module on 'this' node"
+        },
+                {
+          "permissionName": "okapi.deployment.post",
+          "displayName": "Okapi - deploy locally",
+          "description": "Deploy a module on 'this' node"
+        },
+                {
+          "permissionName": "okapi.deployment.delete",
+          "displayName": "Okapi - undeploy locally",
+          "description": "Undeploy a module on 'this' node"
+        },
+                {
+          "permissionName": "okapi.discovery.get",
+          "displayName": "Okapi - get discovery info",
+          "description": "Get discovery info for module"
+        },
+                {
+          "permissionName": "okapi.discovery.post",
+          "displayName": "Okapi - deploy a module on a given node",
+          "description": "Undeploy a module on 'this' node"
+        },
+                {
+          "permissionName": "okapi.discovery.put",
+          "displayName": "Okapi - update description of deployed module",
+          "description": "Update description"
+        },
+                {
+          "permissionName": "okapi.discovery.delete",
+          "displayName": "Okapi - undeploy a module instance",
+          "description": "Undeploy a given instance of a module"
+        },
+                {
+          "permissionName": "okapi.discovery.health.get",
+          "displayName": "Okapi - Get a health for module/node",
+          "description": "Get health info"
+        },
+                {
+          "permissionName": "okapi.discovery.nodes.get",
+          "displayName": "Okapi - Get a node descriptor",
+          "description": "Get a node descriptor"
+        },
+                {
+          "permissionName": "okapi.discovery.nodes.put",
+          "displayName": "Okapi - Update a node descriptor",
+          "description": "Update a node descriptor, usually to give it a new name"
+        },
+                {
+          "permissionName": "okapi.proxy.modules.list",
+          "displayName": "Okapi - list modules",
+          "description": "List modules"
+        },
+                {
+          "permissionName": "okapi.proxy.modules.get",
+          "displayName": "Okapi - get a module",
+          "description": "Get a module"
+        },
+                {
+          "permissionName": "okapi.proxy.modules.post",
+          "displayName": "Okapi - announce a new module to the proxy",
+          "description": "Announce a new module to the proxy"
+        },
+                {
+          "permissionName": "okapi.proxy.modules.put",
+          "displayName": "Okapi - update a module description",
+          "description": "Update a module description"
+        },
+                {
+          "permissionName": "okapi.proxy.modules.delete",
+          "displayName": "Okapi - undeclare a module",
+          "description": "Remove a moduleDescriptor from the system"
+        },
+                {
+          "permissionName": "okapi.proxy.pull.modules.post",
+          "displayName": "Okapi - get ModuleDescriptors",
+          "description": "Get MDs from another Okapi, maybe a repo"
+        },
+                {
+          "permissionName": "okapi.proxy.cleanup.modules",
+          "displayName": "Okapi - clean up obsolete snapshot modules",
+          "description": "Clean up obsolete snapshot modules"
+        },
+                {
+          "permissionName": "okapi.proxy.tenants.list",
+          "displayName": "Okapi - list tenants",
+          "description": "List tenants"
+        },
+                {
+          "permissionName": "okapi.proxy.tenants.get",
+          "displayName": "Okapi - get a tenant",
+          "description": "Get a tenant"
+        },
+                {
+          "permissionName": "okapi.proxy.tenants.post",
+          "displayName": "Okapi - create a tenant",
+          "description": "Declare a tenant"
+        },
+                {
+          "permissionName": "okapi.proxy.tenants.put",
+          "displayName": "Okapi - Update a tenant",
+          "description": "Update a tenant description"
+        },
+                {
+          "permissionName": "okapi.proxy.tenants.delete",
+          "displayName": "Okapi - Delete a tenant",
+          "description": "Remove a tenant description"
+        },
+                {
+          "permissionName": "okapi.proxy.tenants.install.list",
+          "displayName": "Okapi - list all install jobs",
+          "description": "Retrieve all install jobs"
+        },
+                {
+          "permissionName": "okapi.proxy.tenants.upgrade.post",
+          "displayName": "Okapi - Upgrade modules",
+          "description": "Check if newer versions available, and upgrade"
+        },
+                {
+          "permissionName": "okapi.proxy.tenants.install.get",
+          "displayName": "Okapi - get install job",
+          "description": "Retrieve install job by id"
+        },
+                {
+          "permissionName": "okapi.proxy.tenants.install.delete",
+          "displayName": "Okapi - delete install job",
+          "description": "Delete install job by id"
+        },
+                {
+          "permissionName": "okapi.proxy.tenants.install.post",
+          "displayName": "Okapi - Enable modules and dependencies",
+          "description": "Check dependencies and enable/disable modules as needed"
+        },
+                {
+          "permissionName": "okapi.proxy.tenants.modules.list",
+          "displayName": "Okapi - List modules enabled for tenant",
+          "description": "List modules enabled for tenant"
+        },
+                {
+          "permissionName": "okapi.proxy.tenants.modules.enabled.get",
+          "displayName": "Okapi - Get module enabled for tenant",
+          "description": "Get module enabled for tenant"
+        },
+                {
+          "permissionName": "okapi.proxy.tenants.modules.post",
+          "displayName": "Okapi - Enable a module for tenant",
+          "description": "Enable a module for the tenant"
+        },
+                {
+          "permissionName": "okapi.proxy.tenants.modules.enabled.post",
+          "displayName": "Okapi - Enable a module and disable another",
+          "description": "Enable a module for the tenant, and disable another one"
+        },
+                {
+          "permissionName": "okapi.proxy.tenants.modules.enabled.delete",
+          "displayName": "Okapi - Disable a module for tenant",
+          "description": "Disable a module for the tenant"
+        },
+                {
+          "permissionName": "okapi.proxy.tenants.interfaces.list",
+          "displayName": "Okapi - list interfaces for tenant",
+          "description": "List available interfaces for tenant"
+        },
+                {
+          "permissionName": "okapi.proxy.tenants.interfaces.get",
+          "displayName": "Okapi - get modules that provides interface",
+          "description": "get modules that provide some interface"
+        },
+                {
+          "permissionName": "okapi.proxy.tenants.timers.list",
+          "displayName": "Okapi - list timers for tenant",
+          "description": "List available timers for tenant"
+        },
+                {
+          "permissionName": "okapi.proxy.tenants.timers.get",
+          "displayName": "Okapi - get timer for tenant",
+          "description": "get timer for tenant"
+        },
+                {
+          "permissionName": "okapi.proxy.tenants.timers.patch",
+          "displayName": "Okapi - get timer for tenant",
+          "description": "get timer for tenant"
+        },
+                {
+          "permissionName": "okapi.proxy.self.timers.patch",
+          "displayName": "Okapi - patch timer for current tenant",
+          "description": "patch (modify) timer for current tenant"
+        },
+                {
+          "permissionName": "okapi.env.post",
+          "displayName": "Okapi - post env variable",
+          "description": "Set up an environment variable for all modules"
+        },
+                {
+          "permissionName": "okapi.env.list",
+          "displayName": "Okapi - list env variables",
+          "description": "List the environment variables"
+        },
+                {
+          "permissionName": "okapi.env.get",
+          "displayName": "Okapi - get one env variable",
+          "description": "Get one environment variable"
+        },
+                {
+          "permissionName": "okapi.env.delete",
+          "displayName": "Okapi - Delete env variable",
+          "description": "Delete one environment variable"
+        },
+                {
+          "permissionName": "okapi.version.get",
+          "displayName": "Okapi - Get version",
+          "description": "Get version"
+        },
+                {
+          "permissionName": "okapi.deploy",
+          "displayName": "Okapi - Manage deployments",
+          "description": "Deploy and undeploy modules",
+          "subPermissions":           [
+            "okapi.deployment.post",
+            "okapi.deployment.get",
+            "okapi.deployment.delete",
+            "okapi.discovery.post",
+            "okapi.discovery.get",
+            "okapi.discovery.put",
+            "okapi.discovery.delete",
+            "okapi.discovery.nodes.put",
+            "okapi.discovery.health.get",
+            "okapi.discovery.nodes.get"
+          ]
+        },
+                {
+          "permissionName": "okapi.modules",
+          "displayName": "Okapi - Manage modules",
+          "description": "Manage ModuleDescriptors known to the system",
+          "subPermissions":           [
+            "okapi.proxy.modules.list",
+            "okapi.proxy.modules.get",
+            "okapi.proxy.modules.post",
+            "okapi.proxy.modules.put",
+            "okapi.proxy.modules.delete",
+            "okapi.proxy.pull.modules.post",
+            "okapi.proxy.cleanup.modules"
+          ]
+        },
+                {
+          "permissionName": "okapi.tenants",
+          "displayName": "Okapi - Manage tenants",
+          "description": "Manage tenants known to the system",
+          "subPermissions":           [
+            "okapi.proxy.tenants.list",
+            "okapi.proxy.tenants.get",
+            "okapi.proxy.tenants.post",
+            "okapi.proxy.tenants.put",
+            "okapi.proxy.tenants.delete"
+          ]
+        },
+                {
+          "permissionName": "okapi.tenantmodules",
+          "displayName": "Okapi - Manage modules enabled for a tenant",
+          "description": "Enable and disable modules for a tenant",
+          "subPermissions":           [
+            "okapi.proxy.tenants.modules.list",
+            "okapi.proxy.tenants.modules.post",
+            "okapi.proxy.tenants.modules.enabled.get",
+            "okapi.proxy.tenants.modules.enabled.post",
+            "okapi.proxy.tenants.modules.enabled.delete",
+            "okapi.proxy.tenants.upgrade.post",
+            "okapi.proxy.tenants.install.list",
+            "okapi.proxy.tenants.install.get",
+            "okapi.proxy.tenants.install.delete",
+            "okapi.proxy.tenants.install.post"
+          ]
+        },
+                {
+          "permissionName": "okapi.timers",
+          "displayName": "Okapi - Timers",
+          "description": "Manager timer for modules",
+          "subPermissions":           [
+            "okapi.proxy.tenants.timers.list",
+            "okapi.proxy.tenants.timers.patch",
+            "okapi.proxy.tenants.timers.get",
+            "okapi.proxy.self.timers.patch"
+          ]
+        },
+                {
+          "permissionName": "okapi.interfaces",
+          "displayName": "Okapi - Module interfaces",
+          "description": "Discover modules that provide some interface",
+          "subPermissions":           [
+            "okapi.proxy.tenants.interfaces.list",
+            "okapi.proxy.tenants.interfaces.get"
+          ]
+        },
+                {
+          "permissionName": "okapi.env",
+          "displayName": "Okapi - Manage environment variables",
+          "description": "Set up env vars for modules",
+          "subPermissions":           [
+            "okapi.env.post",
+            "okapi.env.delete",
+            "okapi.env.list",
+            "okapi.env.get"
+          ]
+        },
+                {
+          "permissionName": "okapi.readonly",
+          "displayName": "Okapi - Read only permissions",
+          "description": "Permissions with no side effects",
+          "subPermissions":           [
+            "okapi.proxy.modules.list",
+            "okapi.proxy.modules.get",
+            "okapi.proxy.tenants.list",
+            "okapi.proxy.tenants.get",
+            "okapi.proxy.tenants.modules.list",
+            "okapi.proxy.tenants.modules.enabled.get",
+            "okapi.interfaces",
+            "okapi.version.get"
+          ]
+        },
+                {
+          "permissionName": "okapi.all",
+          "displayName": "Okapi - All permissions",
+          "description": "Anything goes",
+          "subPermissions":           [
+            "okapi.deploy",
+            "okapi.modules",
+            "okapi.tenants",
+            "okapi.tenantmodules",
+            "okapi.timers",
+            "okapi.interfaces",
+            "okapi.version.get",
+            "okapi.env"
+          ]
+        }
+      ],
+      "requires": [],
+      "launchDescriptor":       {
+        "dockerImage": "mod-okapi-facade:2.0.3",
+        "dockerPull": false,
+        "dockerArgs": {"HostConfig":         {
+          "Memory": 357913941,
+          "PortBindings": {"8081/tcp": [{"HostPort": "%p"}]}
+        }},
+        "env":         [
+                    {
+            "name": "JAVA_OPTIONS",
+            "value": "-XX:MaxRAMPercentage=66.0"
+          },
+                    {
+            "name": "DB_HOST",
+            "value": "postgres"
+          },
+                    {
+            "name": "DB_PORT",
+            "value": "5432"
+          },
+                    {
+            "name": "DB_USERNAME",
+            "value": "folio_admin"
+          },
+                    {
+            "name": "DB_PASSWORD",
+            "value": "folio_admin"
+          },
+                    {
+            "name": "DB_DATABASE",
+            "value": "okapi_modules"
+          },
+                    {
+            "name": "DB_QUERYTIMEOUT",
+            "value": "60000"
+          },
+                    {
+            "name": "DB_CHARSET",
+            "value": "UTF-8"
+          },
+                    {
+            "name": "DB_MAXPOOLSIZE",
+            "value": "5"
+          }
+        ]
+      }
+    }
+  ],
+  "uiModuleDescriptors":   [
+        {
+      "id": "folio_developer-9.0.0",
+      "name": "Developer settings",
+      "requires": [],
+      "optional":       [
+                {
+          "id": "app-manager",
+          "version": "1.0"
+        },
+                {
+          "id": "capabilities",
+          "version": "1.0"
+        },
+                {
+          "id": "capability-sets",
+          "version": "1.0"
+        }
+      ],
+      "permissionSets":       [
+                {
+          "permissionName": "module.developer.enabled",
+          "displayName": "UI: Developer module is enabled"
+        },
+                {
+          "permissionName": "settings.developer.enabled",
+          "displayName": "Settings (Developer): display list of settings pages",
+          "subPermissions": ["settings.enabled"]
+        },
+                {
+          "permissionName": "ui-developer.settings.configuration",
+          "displayName": "Settings (Developer): configuration",
+          "subPermissions": ["settings.developer.enabled"],
+          "visible": true
+        },
+                {
+          "permissionName": "ui-developer.settings.perms",
+          "displayName": "Settings (Developer): perms",
+          "subPermissions":           [
+            "perms.permissions.get",
+            "settings.developer.enabled"
+          ],
+          "visible": true
+        },
+                {
+          "permissionName": "ui-developer.settings.token",
+          "displayName": "Settings (Developer): manage JWT authentication token",
+          "subPermissions": ["settings.developer.enabled"],
+          "visible": true
+        },
+                {
+          "permissionName": "ui-developer.settings.locale",
+          "displayName": "Settings (Developer): set session locale",
+          "subPermissions": ["settings.developer.enabled"],
+          "visible": true
+        },
+                {
+          "permissionName": "ui-developer.settings.okapiConfiguration",
+          "displayName": "Settings (developer): Can view tenant configuration values",
+          "subPermissions":           [
+            "configuration.entries.collection.get",
+            "configuration.entries.item.get",
+            "settings.developer.enabled"
+          ],
+          "visible": true
+        },
+                {
+          "permissionName": "ui-developer.settings.passwd",
+          "displayName": "Settings (developer): Can change users' passwords",
+          "subPermissions":           [
+            "settings.developer.enabled",
+            "login.credentials-existence.get",
+            "login.item.post",
+            "login.item.delete"
+          ],
+          "visible": true
+        },
+                {
+          "permissionName": "ui-developer.settings.okapiQuery",
+          "displayName": "Settings (developer): Can run queries",
+          "subPermissions": ["settings.developer.enabled"],
+          "visible": true
+        },
+                {
+          "permissionName": "ui-developer.settings.dependencies",
+          "displayName": "Settings (developer): Can display dependency charts",
+          "subPermissions":           [
+            "settings.developer.enabled",
+            "okapi.proxy.tenants.modules.list"
+          ],
+          "visible": true
+        },
+                {
+          "permissionName": "ui-developer.settings.translations",
+          "displayName": "Settings (developer): Can display list of loaded translations",
+          "subPermissions": ["settings.developer.enabled"],
+          "visible": true
+        },
+                {
+          "permissionName": "ui-developer.settings.plugin-surface",
+          "displayName": "Settings (developer): plugin surface for developing plugins",
+          "subPermissions": ["settings.developer.enabled"],
+          "visible": true
+        },
+                {
+          "permissionName": "ui-developer.settings.handler-surface",
+          "displayName": "Settings (developer): handler surface for developing handlers",
+          "subPermissions": ["settings.developer.enabled"],
+          "visible": true
+        },
+                {
+          "permissionName": "ui-developer.settings.stripesInspector",
+          "displayName": "Settings (developer): Can display the contents of the stripes object",
+          "subPermissions": ["settings.developer.enabled"],
+          "visible": true
+        },
+                {
+          "permissionName": "ui-developer.settings.permissionsInspector",
+          "displayName": "Settings (developer): Can display the system's permissions",
+          "subPermissions":           [
+            "settings.developer.enabled",
+            "perms.permissions.get"
+          ],
+          "visible": true
+        },
+                {
+          "permissionName": "ui-developer.settings.okapiConsole",
+          "displayName": "Settings (developer): Can display the Okapi console",
+          "subPermissions":           [
+            "settings.developer.enabled",
+            "okapi.version.get"
+          ],
+          "visible": true
+        },
+                {
+          "permissionName": "ui-developer.settings.okapiConsole.environment",
+          "displayName": "Settings (developer): Can use the Okapi console's Environment tab",
+          "subPermissions":           [
+            "ui-developer.settings.okapiConsole",
+            "okapi.env.list"
+          ],
+          "visible": true
+        },
+                {
+          "permissionName": "ui-developer.settings.okapiConsole.modules",
+          "displayName": "Settings (developer): Can use the Okapi console's Modules tab",
+          "subPermissions":           [
+            "ui-developer.settings.okapiConsole",
+            "okapi.proxy.modules.list",
+            "okapi.proxy.tenants.modules.list",
+            "okapi.proxy.tenants.modules.post",
+            "okapi.proxy.tenants.modules.enabled.delete",
+            "okapi.discovery.get"
+          ],
+          "visible": true
+        },
+                {
+          "permissionName": "ui-developer.settings.userLocale",
+          "displayName": "Settings (developer): Can edit user configuration values",
+          "subPermissions":           [
+            "settings.developer.enabled",
+            "configuration.entries.collection.get",
+            "configuration.entries.item.post",
+            "configuration.entries.item.put"
+          ],
+          "visible": true
+        },
+                {
+          "permissionName": "ui-developer.settings.okapiTimers",
+          "displayName": "Settings (developer): Can view Okapi timers",
+          "subPermissions": [],
+          "visible": true
+        },
+                {
+          "permissionName": "ui-developer.settings.app-manager",
+          "displayName": "Settings (developer): Can use the app manager",
+          "subPermissions":           [
+            "app-manager.apps.collection.get",
+            "app-manager.config.sources.all"
+          ],
+          "visible": true
+        },
+                {
+          "permissionName": "ui-developer.settings.rtr",
+          "displayName": "Settings (developer): Can dicker with token expirations in redux",
+          "subPermissions": [],
+          "visible": true
+        }
+      ]
+    },
+        {
+      "id": "folio_tags-8.2.1",
+      "name": "Tags manager",
+      "requires": [      {
+        "id": "tags",
+        "version": "1.0"
+      }],
+      "optional": [],
+      "permissionSets":       [
+                {
+          "permissionName": "module.tags.enabled",
+          "displayName": "UI: Tags module is enabled"
+        },
+                {
+          "permissionName": "settings.tags.enabled",
+          "displayName": "Settings (Tags): display list of settings pages",
+          "subPermissions": ["settings.enabled"],
+          "visible": false
+        },
+                {
+          "permissionName": "ui-tags.settings.view",
+          "displayName": "Settings (Tags): Can view tags settings",
+          "subPermissions":           [
+            "settings.tags.enabled",
+            "configuration.entries.collection.get"
+          ],
+          "visible": true
+        },
+                {
+          "permissionName": "ui-tags.settings.all",
+          "displayName": "Settings (Tags): Can enable or disable tags for all apps",
+          "subPermissions":           [
+            "ui-tags.settings.view",
+            "configuration.entries.item.put",
+            "configuration.entries.item.post"
+          ],
+          "visible": true
+        },
+                {
+          "permissionName": "ui-tags.all",
+          "displayName": "Tags: All permissions",
+          "subPermissions":           [
+            "module.tags.enabled",
+            "ui-tags.view",
+            "ui-tags.create",
+            "ui-tags.edit",
+            "ui-tags.delete"
+          ],
+          "visible": true
+        },
+                {
+          "permissionName": "ui-tags.view",
+          "displayName": "Tags on records: View only",
+          "subPermissions":           [
+            "module.tags.enabled",
+            "tags.collection.get"
+          ],
+          "visible": true
+        },
+                {
+          "permissionName": "ui-tags.create",
+          "subPermissions":           [
+            "module.tags.enabled",
+            "tags.collection.get",
+            "tags.item.post"
+          ],
+          "visible": false
+        },
+                {
+          "permissionName": "ui-tags.edit",
+          "subPermissions":           [
+            "module.tags.enabled",
+            "tags.collection.get",
+            "tags.item.get",
+            "tags.item.put"
+          ],
+          "visible": false
+        },
+                {
+          "permissionName": "ui-tags.delete",
+          "subPermissions":           [
+            "module.tags.enabled",
+            "tags.collection.get",
+            "tags.item.get",
+            "tags.item.delete"
+          ],
+          "visible": false
+        }
+      ]
+    },
+        {
+      "id": "folio_stripes-core-10.2.7",
+      "name": "The starting point for Stripes applications",
+      "requires":       [
+                {
+          "id": "users-bl",
+          "version": "5.0 6.0"
+        },
+                {
+          "id": "authtoken",
+          "version": "1.0 2.0"
+        },
+                {
+          "id": "configuration",
+          "version": "2.0"
+        }
+      ],
+      "optional":       [
+                {
+          "id": "consortia",
+          "version": "1.0"
+        },
+                {
+          "id": "login-saml",
+          "version": "2.0"
+        },
+                {
+          "id": "roles",
+          "version": "1.1"
+        },
+                {
+          "id": "users-keycloak",
+          "version": "1.0"
+        }
+      ],
+      "permissionSets": [      {
+        "permissionName": "settings.enabled",
+        "displayName": "UI: settings area is enabled"
+      }]
+    },
+        {
+      "id": "folio_notes-10.0.0",
+      "name": "Note types manager",
+      "requires": [      {
+        "id": "notes",
+        "version": "4.0"
+      }],
+      "optional": [],
+      "permissionSets":       [
+                {
+          "permissionName": "module.notes.enabled",
+          "displayName": "UI: ui-notes module is enabled",
+          "visible": false
+        },
+                {
+          "permissionName": "settings.notes.enabled",
+          "subPermissions": ["settings.enabled"],
+          "visible": false
+        },
+                {
+          "permissionName": "ui-notes.settings.edit",
+          "displayName": "Settings (Notes): Edit and View General settings",
+          "subPermissions":           [
+            "settings.notes.enabled",
+            "settings.notes.view",
+            "note.types.item.post",
+            "note.types.item.put",
+            "note.types.item.delete",
+            "note.types.item.get",
+            "note.types.collection.get"
+          ],
+          "visible": true
+        },
+                {
+          "permissionName": "ui-notes.settings.view",
+          "displayName": "Settings (Notes): View General settings",
+          "subPermissions":           [
+            "settings.notes.enabled",
+            "note.types.item.get",
+            "note.types.collection.get"
+          ],
+          "visible": true
+        },
+                {
+          "permissionName": "ui-notes.item.view",
+          "displayName": "Notes: Can view a note",
+          "subPermissions":           [
+            "note.types.collection.get",
+            "note.types.item.get",
+            "notes.item.get",
+            "notes.collection.get",
+            "note.links.collection.get",
+            "module.notes.enabled"
+          ],
+          "visible": true
+        },
+                {
+          "permissionName": "ui-notes.item.create",
+          "displayName": "Notes: Can create a note",
+          "subPermissions":           [
+            "notes.item.post",
+            "note.types.item.post",
+            "ui-notes.item.view"
+          ],
+          "visible": true
+        },
+                {
+          "permissionName": "ui-notes.item.edit",
+          "displayName": "Notes: Can edit a note",
+          "subPermissions":           [
+            "notes.item.put",
+            "note.types.item.put",
+            "ui-notes.item.view"
+          ],
+          "visible": true
+        },
+                {
+          "permissionName": "ui-notes.item.delete",
+          "displayName": "Notes: Can delete a note",
+          "subPermissions":           [
+            "notes.item.delete",
+            "note.types.item.delete",
+            "ui-notes.item.view"
+          ],
+          "visible": true
+        },
+                {
+          "permissionName": "ui-notes.item.assign-unassign.execute",
+          "replaces": ["ui-notes.item.assign-unassign"],
+          "displayName": "Notes: Can assign and unassign a note",
+          "subPermissions":           [
+            "note.links.collection.put",
+            "ui-notes.item.view"
+          ],
+          "visible": true
+        }
+      ]
+    },
+        {
+      "id": "folio_stripes-smart-components-9.2.7",
+      "name": "Connected Stripes components",
+      "requires":       [
+                {
+          "id": "notes",
+          "version": "2.0 3.0 4.0"
+        },
+                {
+          "id": "tags",
+          "version": "1.0"
+        },
+                {
+          "id": "password-validator",
+          "version": "1.0"
+        }
+      ],
+      "optional":       [
+                {
+          "id": "configuration",
+          "version": "2.0"
+        },
+                {
+          "id": "remote-storage-mappings",
+          "version": "1.0 2.0"
+        },
+                {
+          "id": "settings",
+          "version": "1.0"
+        },
+                {
+          "id": "users",
+          "version": "16.1"
+        }
+      ],
+      "permissionSets": []
+    },
+        {
+      "id": "folio_authorization-policies-1.3.0",
+      "name": "FOLIO app for Authorization Policies",
+      "requires": [      {
+        "id": "policies",
+        "version": "1.1"
+      }],
+      "optional": [],
+      "permissionSets":       [
+                {
+          "permissionName": "settings.authorization-policies.enabled",
+          "displayName": "Settings (Authorization policies): display list of settings pages",
+          "subPermissions": ["settings.enabled"]
+        },
+                {
+          "permissionName": "ui-authorization-policies.settings.admin",
+          "displayName": "Settings (Authorization policies): Can manage authorization policies",
+          "description": "",
+          "subPermissions":           [
+            "settings.authorization-policies.enabled",
+            "policies.item.get",
+            "policies.item.put",
+            "policies.item.delete",
+            "policies.item.post",
+            "policies.collection.get",
+            "policies.collection.post"
+          ],
+          "visible": true
+        }
+      ]
+    },
+        {
+      "id": "folio_authorization-roles-1.7.3",
+      "name": "FOLIO app for Authorization Roles",
+      "requires":       [
+                {
+          "id": "capabilities",
+          "version": "1.0"
+        },
+                {
+          "id": "capability-sets",
+          "version": "1.0 2.0"
+        },
+                {
+          "id": "role-capabilities",
+          "version": "1.0"
+        },
+                {
+          "id": "role-capability-sets",
+          "version": "1.1"
+        },
+                {
+          "id": "roles",
+          "version": "1.1"
+        },
+                {
+          "id": "roles-user",
+          "version": "1.0"
+        }
+      ],
+      "optional": [],
+      "permissionSets":       [
+                {
+          "permissionName": "settings.authorization-roles.enabled",
+          "displayName": "Settings (Authorization roles): display list of settings pages",
+          "subPermissions": ["settings.enabled"]
+        },
+                {
+          "permissionName": "ui-authorization-roles.settings.admin",
+          "displayName": "Settings (Authorization roles): Can manage authorization roles",
+          "description": "",
+          "subPermissions":           [
+            "ui-authorization-roles.settings.create",
+            "ui-authorization-roles.settings.view",
+            "ui-authorization-roles.settings.edit",
+            "ui-authorization-roles.settings.delete"
+          ],
+          "visible": true
+        },
+                {
+          "permissionName": "ui-authorization-roles.settings.view",
+          "displayName": "Settings (Authorization roles): Can view authorization role details",
+          "description": "",
+          "subPermissions":           [
+            "settings.authorization-roles.enabled",
+            "roles.item.get",
+            "roles.collection.get",
+            "roles.users.item.get",
+            "roles.users.collection.get",
+            "role-capabilities.collection.get",
+            "role-capability-sets.collection.get",
+            "capabilities.collection.get",
+            "capability-sets.capabilities.collection.get",
+            "capability-sets.collection.get",
+            "users.collection.get",
+            "capabilities.item.get",
+            "roles.users.collection.get",
+            "capability-sets.item.get",
+            "role.capability-sets.collection.get"
+          ],
+          "visible": true
+        },
+                {
+          "permissionName": "ui-authorization-roles.settings.delete",
+          "displayName": "Settings (Authorization roles): Can delete authorization roles",
+          "description": "",
+          "subPermissions":           [
+            "ui-authorization-roles.settings.view",
+            "roles.item.delete",
+            "roles.users.item.delete",
+            "role-capabilities.collection.delete",
+            "role-capability-sets.collection.delete"
+          ],
+          "visible": true
+        },
+                {
+          "permissionName": "ui-authorization-roles.settings.create",
+          "displayName": "Settings (Authorization roles): Can create authorization roles",
+          "description": "",
+          "subPermissions":           [
+            "ui-authorization-roles.settings.view",
+            "roles.item.post",
+            "roles.collection.post",
+            "roles.users.item.post",
+            "role-capabilities.collection.post",
+            "role-capability-sets.collection.post"
+          ],
+          "visible": true
+        },
+                {
+          "permissionName": "ui-authorization-roles.settings.edit",
+          "displayName": "Settings (Authorization roles): Can edit authorization roles",
+          "description": "",
+          "subPermissions":           [
+            "ui-authorization-roles.settings.view",
+            "roles.item.put",
+            "roles.users.item.put",
+            "role-capabilities.collection.put",
+            "role-capability-sets.collection.put"
+          ],
+          "visible": true
+        }
+      ]
+    }
+  ]
+}
