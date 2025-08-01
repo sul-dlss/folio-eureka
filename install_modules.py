@@ -48,7 +48,7 @@ def replicaset_override(name):
         if Path(f"modules/{name}/replicaset-prod.yaml").exists():
             return f"-f modules/{name}/replicaset-prod.yaml"
     
-    return None
+    return ''
 
 
 def resources_override(name):
@@ -65,7 +65,7 @@ def extrafile_override(name, file):
     if Path(f"modules/{file}.yaml").exists():
         return f"-f modules/{file}.yaml"
 
-    return None
+    return ''
 
 
 with open(args.filename, 'r') as file:
