@@ -1,0 +1,91 @@
+import argparse
+import json
+import yaml
+
+from pathlib import Path
+
+parser = argparse.ArgumentParser(
+                    prog='InstallModules',
+                    description='Install FOLIO Eureka modules using application descriptors',
+                    epilog='-------')
+
+parser.add_argument('filename')
+parser.add_argument('-m', '--modules', help='a list of modules to install', nargs="+", action='extend')
+parser.add_argument('-n', '--namespace', required=True)
+parser.add_argument('-p', '--prod_replicasets', action='store_true')
+parser.add_argument('-r', '--helm_repo', default='folio-helm-v2')
+parser.add_argument('-x', '--execute', required=True, default='dry-run', choices=['install', 'upgrade', 'dry-run'])
+
+args = parser.parse_args()
+
+def base_override(name, version):
+    data = {
+        "image": {"repository": f"folioorg/{name}", "tag": f"{version}"},
+        "podSecurityContext": {"fsGroup": 2000},
+        "securityContext":{"capabilities": {"drop": ['ALL']},
+            "runAsNonRoot": True,
+            "runAsUser": 1000,
+            "allowPrivilegeEscalation": False
+        },
+        "eureka": {"enabled": True},
+        "integrations": {
+            "db": {"enabled": True, "existingSecret": "db-credentials"},
+            "kafka": {"enabled": True, "existingSecret": "kafka-credentials"}
+        }
+    }
+    
+    return yaml.dump(data)
+
+
+def override_file(dir, name, version):
+    filename = f"{dir}/overrides.yaml"
+    with open(filename, 'w') as file:
+        file.write(base_override(name, version))
+
+
+def replicaset_override(name):
+    if args.prod_replicasets:
+        if Path(f"modules/{name}/replicaset-prod.yaml").exists():
+            return f"-f modules/{name}/replicaset-prod.yaml"
+    
+    return None
+
+
+def resources_override(name):
+    if Path(f"modules/{name}/resources.yaml"):
+        return f"-f modules/{name}/resources.yaml"
+    
+    return f"-f modules/resources.yaml"
+
+
+def extrafile_override(name, file):
+    if Path(f"modules/{name}/{file}.yaml").exists():
+        return f"-f modules/{name}/{file}.yaml"
+    
+    return f"-f modules/{file}.yaml"
+
+
+with open(args.filename, 'r') as file:
+    data = json.load(file)
+
+modules = data['modules']
+
+for module in modules:
+    name = module['name']
+    version = module['version']
+    dir = Path(f"modules/{name}")
+    dir.mkdir(parents=True, exist_ok=True)
+    
+    override_file(dir, name, version)
+    helm_command = f"helm -n {args.namespace} {args.execute} -f modules/{name}/overrides.yaml \
+        {resources_override(name)} \
+        {replicaset_override(name)} \
+        {extrafile_override(name, 'probes')} \
+        {extrafile_override(name, 'service')} \
+        {name} {args.helm_repo}/{name}"
+    
+    if args.execute == 'dry-run':
+        command = " ".join(helm_command.replace('dry-run', 'install').strip().split())
+        print(f"{command}\n")
+    else:
+        exec(helm_command)
