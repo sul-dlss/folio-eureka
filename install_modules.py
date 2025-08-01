@@ -62,7 +62,10 @@ def extrafile_override(name, file):
     if Path(f"modules/{name}/{file}.yaml").exists():
         return f"-f modules/{name}/{file}.yaml"
     
-    return f"-f modules/{file}.yaml"
+    if Path(f"modules/{file}.yaml").exists():
+        return f"-f modules/{file}.yaml"
+
+    return None
 
 
 with open(args.filename, 'r') as file:
