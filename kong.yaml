@@ -1,3 +1,6 @@
+global:
+  security:
+    allowInsecureImages: true
 image:
   registry: folioorg
   repository: folio-kong
@@ -31,7 +34,6 @@ postgresql:
 networkPolicy:
   enabled: false
 service:
-  type: NodePort
   exposeAdmin: true
   disableHttpPort: false
   ports:
@@ -39,17 +41,25 @@ service:
     proxyHttps: 443
     adminHttp: 8001
     adminHttps: 8444
-  nodePorts:
-    proxyHttp: ""
-    proxyHttps: ""
-    adminHttp: ""
-    adminHttps: ""
 ingress:
   ingressClassName: "nginx"
   pathType: ImplementationSpecific
   hostname: kong-folio-dev.stanford.edu
   enabled: true
   tls: true
+  annotations:
+    nginx.ingress.kubernetes.io/client-body-buffer-size: 512M
+    nginx.ingress.kubernetes.io/proxy-body-size: 512M
+  # extraRules:
+  #  - host: kong-folio-dev-admin.stanford.edu
+  #    http:
+  #      paths:
+  #      - backend:
+  #          service:
+  #            name: kong-admin
+  #            port:
+  #              name: http-admin
+  #        pathType: ImplementationSpecific
 kong:
   livenessProbe:
     enabled: false
@@ -63,28 +73,35 @@ kong:
       secretKeyRef:
         name: kong-credentials
         key: KONG_PASSWORD
+  - name: KONG_PG_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: kong-credentials
+        key: KONG_PG_PASSWORD
+  - name: KONG_PG_PASSWORD_FILE
+    value: null
   - name: KONG_UPSTREAM_TIMEOUT
-    value: "600000"
+    value: "1200000"
   - name: KONG_UPSTREAM_SEND_TIMEOUT
-    value: "600000"
+    value: "1200000"
   - name: KONG_UPSTREAM_READ_TIMEOUT
-    value: "600000"
+    value: "1200000"
   - name: KONG_NGINX_HTTP_CLIENT_MAX_BODY_SIZE
-    value: "256m"
+    value: "256M"
   - name: KONG_NGINX_PROXY_PROXY_NEXT_UPSTREAM
     value: "error timeout http_500 http_502 http_503 http_504"
   - name: "KONG_PROXY_SEND_TIMEOUT"
-    value: "600000"
+    value: "1200000"
   - name: "KONG_UPSTREAM_CONNECT_TIMEOUT"
-    value: "600000"
+    value: "1200000"
   - name: "KONG_PROXY_READ_TIMEOUT"
-    value: "600000"
+    value: "1200000"
   - name: "KONG_NGINX_HTTP_KEEPALIVE_TIMEOUT"
-    value: "600000"
+    value: "1200000"
   - name: "KONG_NGINX_UPSTREAM_KEEPALIVE"
-    value: "600000"
+    value: "1200000"
   - name: "KONG_UPSTREAM_KEEPALIVE_IDLE_TIMEOUT"
-    value: "600000"
+    value: "1200000"
   - name: "KONG_UPSTREAM_KEEPALIVE_POOL_SIZE"
     value: "1024"
   - name: "KONG_UPSTREAM_KEEPALIVE_MAX_REQUESTS"
@@ -114,13 +131,8 @@ kong:
     value: "2048m"
   - name: KONG_NGINX_HTTP_LARGE_CLIENT_HEADER_BUFFERS
     value: "4 16k"
-  - name: KONG_LOG_LEVEL
-    value: "info"
   - name: KONG_ADMIN_GUI_API_URL
-    valueFrom:
-      secretKeyRef:
-        name: kong-credentials
-        key: KONG_URL
+    value: "https://kong-folio-dev-admin.stanford.edu"
   - name: KONG_NGINX_HTTPS_LARGE_CLIENT_HEADER_BUFFERS
     value: "4 16k"
   - name: KONG_PROXY_LISTEN
@@ -129,13 +141,15 @@ kong:
     value: "auto"
   - name: EUREKA_RESOLVE_SIDECAR_IP
     value: "false"
+  - name: KONG_LOG_LEVEL
+    value: "info"
   resources:
     requests:
       ephemeral-storage: 50Mi
-      memory: 5Gi
+      memory: 6Gi
     limits:
       ephemeral-storage: 1Gi
-      memory: 5Gi
+      memory: 8Gi
 ingressController:
   enabled: false
 migration:
