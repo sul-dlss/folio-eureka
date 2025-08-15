@@ -144,7 +144,6 @@ ingress:
 adminIngress:
   enabled: true
   hostname: keycloak-folio-dev.stanford.edu
-  # hostname: keycloak-admin-folio-dev.stanford.edu
   ingressClassName: "nginx"
   tls: true
   annotations:
