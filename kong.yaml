@@ -50,16 +50,6 @@ ingress:
   annotations:
     nginx.ingress.kubernetes.io/client-body-buffer-size: 512M
     nginx.ingress.kubernetes.io/proxy-body-size: 512M
-  # extraRules:
-  #  - host: kong-folio-dev-admin.stanford.edu
-  #    http:
-  #      paths:
-  #      - backend:
-  #          service:
-  #            name: kong-admin
-  #            port:
-  #              name: http-admin
-  #        pathType: ImplementationSpecific
 kong:
   livenessProbe:
     enabled: false
