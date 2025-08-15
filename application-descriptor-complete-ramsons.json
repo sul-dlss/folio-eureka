@@ -44135,7 +44135,7 @@
             "licenses.refdata.manage"
           ],
           "visible": true
-        },
+        }, 
                 {
           "permissionName": "ui-licenses.terms.view",
           "displayName": "Settings (Licenses): View license terms",

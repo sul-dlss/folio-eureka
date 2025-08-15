@@ -43,10 +43,11 @@ extraEnvVars:
         name: keycloak-credentials
         key: KC_BOOTSTRAP_ADMIN_PASSWORD
   - name: KC_HOSTNAME
-    valueFrom:
-      secretKeyRef:
-        name: eureka-common
-        key: KC_URL
+    value: 'https://keycloak-folio-dev.stanford.edu'
+    # valueFrom:
+    #   secretKeyRef:
+    #     name: eureka-common
+    #     key: KC_URL
   - name: KC_HOSTNAME_BACKCHANNEL
     valueFrom:
       secretKeyRef:
@@ -124,12 +125,6 @@ service:
 
 proxy: "edge"
 
-# rbac:
-#   create: true
-
-# serviceAccount:
-#   automountServiceAccountToken: true
-
 ingress:
   enabled: false
   hostname: keycloak-folio-dev.stanford.edu
@@ -146,14 +141,15 @@ ingress:
         proxy_set_header X-Forwarded-Proto $scheme;
       }
 
-# adminIngress:
-#   enabled: true
-#   hostname: keycloak-folio-dev.stanford.edu
-#   ingressClassName: "nginx"
-#   tls: true
-#   annotations:
-#     kubernetes.io/ingress.class: nginx
-#     nginx.ingress.kubernetes.io/ssl-redirect: "true"
+adminIngress:
+  enabled: true
+  hostname: keycloak-folio-dev.stanford.edu
+  # hostname: keycloak-admin-folio-dev.stanford.edu
+  ingressClassName: "nginx"
+  tls: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
 
 livenessProbe:
   enabled: true

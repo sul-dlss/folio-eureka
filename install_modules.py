@@ -1,5 +1,6 @@
 import argparse
 import json
+import os
 import yaml
 
 from pathlib import Path
@@ -10,7 +11,7 @@ parser = argparse.ArgumentParser(
                     epilog='-------')
 
 parser.add_argument('filename')
-parser.add_argument('-m', '--modules', help='a list of modules to install', nargs="+", action='extend')
+parser.add_argument('-m', '--modules', help='a list of modules to install, each with -m flag', nargs="+", action='extend')
 parser.add_argument('-n', '--namespace', required=True)
 parser.add_argument('-p', '--prod_replicasets', action='store_true')
 parser.add_argument('-r', '--helm_repo', default='folio-helm-v2')
@@ -52,7 +53,7 @@ def replicaset_override(name):
 
 
 def resources_override(name):
-    if Path(f"modules/{name}/resources.yaml"):
+    if Path(f"modules/{name}/resources.yaml").exists():
         return f"-f modules/{name}/resources.yaml"
     
     return f"-f modules/resources.yaml"
@@ -73,6 +74,9 @@ with open(args.filename, 'r') as file:
 
 modules = data['modules']
 
+if args.modules:
+    modules = [obj for obj in data['modules'] if obj['name'] in args.modules]
+        
 for module in modules:
     name = module['name']
     version = module['version']
@@ -85,10 +89,13 @@ for module in modules:
         {replicaset_override(name)} \
         {extrafile_override(name, 'probes')} \
         {extrafile_override(name, 'service')} \
+        {extrafile_override(name, 'sidecar')} \
+        {extrafile_override(name, 'java_opts')} \
+        {extrafile_override(name, 'extra_env')} \
         {name} {args.helm_repo}/{name}"
     
     if args.execute == 'dry-run':
         command = " ".join(helm_command.replace('dry-run', 'install').strip().split())
         print(f"{command}\n")
     else:
-        exec(helm_command)
+        os.system(helm_command)

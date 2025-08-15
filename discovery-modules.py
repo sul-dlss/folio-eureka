@@ -2,7 +2,7 @@ import httpx
 import json
 
 def main():
-    request = httpx.get('http://mgr-applications/applications')
+    request = httpx.get('http://mgr-applications:8081/applications')
     applications = json.loads(request.text)
     discovery = { "discovery": [] }
 
@@ -11,8 +11,10 @@ def main():
         module['location'] = module_location
         discovery['discovery'].append(module)
 
+    print(discovery)
+    print("POSTING to /modules/discovery")
     post_response = httpx.post(
-        'http://mgr-applications/modules/discovery', 
+        'http://mgr-applications:8081/modules/discovery', 
         headers={'content-type': 'application/json'},
         data=json.dumps(discovery)
     )
