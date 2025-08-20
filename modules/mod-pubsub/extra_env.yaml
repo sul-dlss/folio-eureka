@@ -1,0 +1,3 @@
+extraEnvVars: |
+  - name: SYSTEM_USER_NAME
+    value: "pub-sub"

@@ -2,6 +2,13 @@ sidecarContainers:
   eureka:
     image:
       tag: 2.0.13
+    resources:
+      requests:
+        cpu: 100m
+        memory: 512M
+      limits:
+        cpu: 150m
+        memory: 1024M
     extraEnvVars:
       - name: SECRET_STORE_VAULT_TOKEN
         value: root

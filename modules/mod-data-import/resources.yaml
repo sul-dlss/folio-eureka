@@ -1,0 +1,14 @@
+resources:
+  requests:
+    cpu: 275m
+    memory: 1024M
+  limits:
+    cpu: 300m
+    memory: 1280M
+
+dbMaxPoolSize: 10
+
+integrations:
+  s3:
+    enabled: true
+    existingSecret: "s3-credentials"

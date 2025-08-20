@@ -1,0 +1,20 @@
+resources:
+  requests:
+    cpu: 300m
+    memory: 2048M
+  limits:
+    cpu: 500m
+    memory: 3210M
+
+integrations:
+  opensearch:
+    enabled: true
+    existingSecret: "db-connect-modules"
+
+# initialLanguages: eng,chi,jpn,kor,rus
+# Include the extraEnvVars from the chart, and then add our KAFKA_* settings.
+extraEnvVars: |
+  - name: INDEXING_DATA_FORMAT
+    value: "json"
+  - name: INITIAL_LANGUAGES
+    value: "eng"

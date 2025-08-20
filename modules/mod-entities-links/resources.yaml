@@ -1,0 +1,22 @@
+resources:
+  requests:
+    cpu: 150m
+    memory: 1280M
+  limits:
+    cpu: 300m
+    memory: 1536M
+
+dbMaxPoolSize: 10
+
+integrations:
+  s3:
+    enabled: true
+    existingSecret: "s3-credentials"
+
+extraEnvVars: |
+  - name: DB_MAXPOOLSIZE
+    value: "{{ .Values.dbMaxPoolSize }}"
+  - name: JAVA_OPTIONS
+    value: {{ .Values.extraJavaOpts }}
+  - name: DB_QUERYTIMEOUT
+    value: "60000"

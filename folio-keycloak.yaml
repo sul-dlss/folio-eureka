@@ -43,15 +43,16 @@ extraEnvVars:
         name: keycloak-credentials
         key: KC_BOOTSTRAP_ADMIN_PASSWORD
   - name: KC_HOSTNAME
-    value: 'https://keycloak-folio-dev.stanford.edu'
-    # valueFrom:
-    #   secretKeyRef:
-    #     name: eureka-common
-    #     key: KC_URL
+    valueFrom:
+      secretKeyRef:
+        name: eureka-common
+        # key: KC_IDENTITY_PROVIDER_BASE_URL
+        key: KC_URL
   - name: KC_HOSTNAME_BACKCHANNEL
     valueFrom:
       secretKeyRef:
         name: eureka-common
+        # key: KC_IDENTITY_PROVIDER_BASE_URL
         key: KC_URL
   - name: KC_FOLIO_BE_ADMIN_CLIENT_SECRET
     valueFrom:
@@ -126,7 +127,7 @@ service:
 proxy: "edge"
 
 ingress:
-  enabled: false
+  enabled: true
   hostname: keycloak-folio-dev.stanford.edu
   ingressClassName: "nginx"
   tls: true
@@ -142,7 +143,7 @@ ingress:
       }
 
 adminIngress:
-  enabled: true
+  enabled: false
   hostname: keycloak-folio-dev.stanford.edu
   ingressClassName: "nginx"
   tls: true

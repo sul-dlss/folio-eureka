@@ -87,11 +87,11 @@ for module in modules:
     helm_command = f"helm -n {args.namespace} {args.execute} -f modules/{name}/overrides.yaml \
         {resources_override(name)} \
         {replicaset_override(name)} \
+        {extrafile_override(name, 'extra_env')} \
+        {extrafile_override(name, 'java_opts')} \
         {extrafile_override(name, 'probes')} \
         {extrafile_override(name, 'service')} \
         {extrafile_override(name, 'sidecar')} \
-        {extrafile_override(name, 'java_opts')} \
-        {extrafile_override(name, 'extra_env')} \
         {name} {args.helm_repo}/{name}"
     
     if args.execute == 'dry-run':
