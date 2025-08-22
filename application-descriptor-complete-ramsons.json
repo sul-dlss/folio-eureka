@@ -450,7 +450,7 @@
   ],
   "dependencies": [  {
     "name": "app-platform-minimal",
-    "version": "^1.0.0-SNAPSHOT"
+    "version": "1.0.41"
   }],
   "moduleDescriptors":   [
         {

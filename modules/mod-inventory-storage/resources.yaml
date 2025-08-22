@@ -7,17 +7,3 @@ resources:
     memory: 1792M
 
 dbMaxPoolSize: 20
-
-# mod-inventory-storage requires REPLICATION_FACTOR to be set as env variable because it creates necessary topics on its own
-# and it won’t be overridden by the kafka configured setting.
-# In addition to setting the number of pod replicas, REPLICATION_FACTOR env is set using the replicaCount setting
-replicaCount: 3
-
-# Include the extraEnvVars from the chart, and then add our REPLICATION_FACTOR.
-extraEnvVars: |
-  - name: DB_MAXPOOLSIZE
-    value: "{{ .Values.dbMaxPoolSize }}"
-  - name: JAVA_OPTIONS
-    value: {{ .Values.extraJavaOpts }}
-  - name: REPLICATION_FACTOR
-    value: {{ .Values.replicaCount | quote }}

@@ -15,16 +15,17 @@ def main():
 
     print(discovery)
     print("POSTING to /modules/discovery")
-    post_response = httpx.post(
-        'http://mgr-applications/modules/discovery', 
-        headers={
-            'content-type': 'application/json',
-            'Authorization': f'Bearer {os.getenv("TOKEN")}'
-        },
-        data=json.dumps(discovery)
-    )
+    with httpx.Client(timeout=20.0) as client:
+        post_response = client.post(
+            'http://mgr-applications/modules/discovery', 
+            headers={
+                'content-type': 'application/json',
+                'Authorization': f'Bearer {os.getenv("TOKEN")}'
+            },
+            data=json.dumps(discovery)
+        )
 
-    print(post_response)
+        print(post_response)
 
 
 if __name__ == "__main__":

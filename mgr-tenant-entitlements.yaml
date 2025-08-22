@@ -32,9 +32,21 @@ resources:
 
 extraEnvVars:
   - name: ROUTEMANAGEMENT_ENABLE
-    value: "false"
+    value: "true"
   - name: REGISTER_MODULE_IN_KONG
-    value: "false"
+    value: "true"
+  - name: MODULE_URL
+    value: "http://mgr-tenant-entitlements"
+  - name: FOLIO_CLIENT_CONNECT_TIMEOUT
+    value: "600s"
+  - name: FOLIO_CLIENT_READ_TIMEOUT
+    value: "600s"
+  - name: KONG_CONNECT_TIMEOUT
+    value: "600000"
+  - name: KONG_READ_TIMEOUT
+    value: "600000"
+  - name: KONG_WRITE_TIMEOUT
+    value: "600000"
   - name: kong.url
     valueFrom:
       secretKeyRef:

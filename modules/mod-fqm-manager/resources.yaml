@@ -7,22 +7,3 @@ resources:
     memory: 1024M
 
 dbMaxPoolSize: 10
-
-extraEnvVars: |
-  - name: DB_MAXPOOLSIZE
-    value: "{{ .Values.dbMaxPoolSize }}"
-  - name: JAVA_OPTIONS
-    value: {{ .Values.extraJavaOpts }}
-  - name: task.execution.pool.max-size
-    value: "{{ .Values.TaskPoolSize }}"
-  - name: task.execution.pool.core-size
-    value: "{{ .Values.taskPoolCoreSize }}"
-  - name: task.execution.pool.queue-capacity
-    value: "{{ .Values.taskPoolQueueCapacity }}"
-  - name: QUERY_RETENTION_DURATION
-    value: {{ .Values.queryRetentionDuration }}
-  - name: DB_PORT_READER
-    valueFrom:
-      secretKeyRef:
-        key: DB_PORT
-        name: db-connect-modules

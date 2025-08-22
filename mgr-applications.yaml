@@ -24,16 +24,14 @@ resources:
     cpu: 300m
     memory: 512Mi
 
-# service port 8081 needs to be set if we want to GET applications endpoint via the kong FQDN.
-# but token authorization will not work from outside the cluster
-# service:
-#   type: ClusterIP
-#   ports:
-#     - name: http
-#       protocol: TCP
-#       port: 8081
-#       containerPort: 8081
-#       targetPort: http
+  # service:
+  #   type: ClusterIP
+  #   ports:
+  #     - name: http
+  #       protocol: TCP
+  #       port: 8081
+  #       containerPort: 8081
+  #       targetPort: http
 
 extraEnvVars:
   - name: ROUTEMANAGEMENT_ENABLE

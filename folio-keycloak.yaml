@@ -43,16 +43,16 @@ extraEnvVars:
         name: keycloak-credentials
         key: KC_BOOTSTRAP_ADMIN_PASSWORD
   - name: KC_HOSTNAME
+    # Use this to access the admin UI
+    # value: "https://keycloak-folio-dev.stanford.edu"
     valueFrom:
       secretKeyRef:
         name: eureka-common
-        # key: KC_IDENTITY_PROVIDER_BASE_URL
         key: KC_URL
   - name: KC_HOSTNAME_BACKCHANNEL
     valueFrom:
       secretKeyRef:
         name: eureka-common
-        # key: KC_IDENTITY_PROVIDER_BASE_URL
         key: KC_URL
   - name: KC_FOLIO_BE_ADMIN_CLIENT_SECRET
     valueFrom:
@@ -101,7 +101,7 @@ postgresql:
 
 externalDatabase:
   existingSecret: keycloak-credentials
-  existingSecretHostKey: KC_DB_URL_HOST
+  existingSecretHostKey: KC_DB_URL_HOST 
   existingSecretPortKey: KC_DB_URL_PORT
   existingSecretUserKey: KC_DB_USERNAME
   existingSecretDatabaseKey: KC_DB_URL_DATABASE
