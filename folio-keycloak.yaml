@@ -43,11 +43,12 @@ extraEnvVars:
         name: keycloak-credentials
         key: KC_BOOTSTRAP_ADMIN_PASSWORD
   - name: KC_HOSTNAME
-    value: 'https://keycloak-folio-dev.stanford.edu'
-    # valueFrom:
-    #   secretKeyRef:
-    #     name: eureka-common
-    #     key: KC_URL
+    # Use this to access the admin UI
+    # value: "https://keycloak-folio-dev.stanford.edu"
+    valueFrom:
+      secretKeyRef:
+        name: eureka-common
+        key: KC_URL
   - name: KC_HOSTNAME_BACKCHANNEL
     valueFrom:
       secretKeyRef:
@@ -100,7 +101,7 @@ postgresql:
 
 externalDatabase:
   existingSecret: keycloak-credentials
-  existingSecretHostKey: KC_DB_URL_HOST
+  existingSecretHostKey: KC_DB_URL_HOST 
   existingSecretPortKey: KC_DB_URL_PORT
   existingSecretUserKey: KC_DB_USERNAME
   existingSecretDatabaseKey: KC_DB_URL_DATABASE
@@ -126,7 +127,7 @@ service:
 proxy: "edge"
 
 ingress:
-  enabled: false
+  enabled: true
   hostname: keycloak-folio-dev.stanford.edu
   ingressClassName: "nginx"
   tls: true
@@ -142,7 +143,7 @@ ingress:
       }
 
 adminIngress:
-  enabled: true
+  enabled: false
   hostname: keycloak-folio-dev.stanford.edu
   ingressClassName: "nginx"
   tls: true

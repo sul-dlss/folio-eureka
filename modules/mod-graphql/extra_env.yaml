@@ -1,0 +1,3 @@
+extraEnvVars: |
+  - name: OKAPI_TENANT
+    value: "sul"

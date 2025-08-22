@@ -136,10 +136,10 @@ kong:
   resources:
     requests:
       ephemeral-storage: 50Mi
-      memory: 6Gi
+      memory: 9Gi
     limits:
       ephemeral-storage: 1Gi
-      memory: 8Gi
+      memory: 12Gi
 ingressController:
   enabled: false
 migration:

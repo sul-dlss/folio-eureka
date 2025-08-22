@@ -6,14 +6,4 @@ resources:
     cpu: 200m
     memory: 1024M
 
-sidecarContainers:
-  eureka:
-    resources:
-      requests:
-        cpu: 100m
-        memory: 512M
-      limits:
-        cpu: 150m
-        memory: 1024M
-
 dbMaxPoolSize: 10
