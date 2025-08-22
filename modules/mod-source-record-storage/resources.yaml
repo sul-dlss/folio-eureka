@@ -5,11 +5,3 @@ resources:
   limits:
     memory: 2Gi
     cpu: 1536m
-
-extraEnvVars: |
-  - name: DB_MAXPOOLSIZE
-    value: "25"
-  - name: DB_CONNECTION_TIMEOUT
-    value: "300"
-  - name: DB_QUERYTIMEOUT
-    value: "300000"
