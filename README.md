@@ -1,15 +1,50 @@
 # folio-eureka
 
+## Version Management
+The version tag of Ramsons is R2-2024. To get the versions of the modules for Eureka, select the appropriate tag from [folio-org/platform-lsp](https://github.com/folio-org/platform-lsp). The version for Rmasons CSP4 app-platform-minimal is 1.0.41 and for app-platform-complete it is 1.1.78.
+
+## Secrets
+Add to [Vault](https://vault.sul.stanford.edu/) key-value pairs for db-credentials, eureka-common, eureka-edge, kafka-credentials, keycloak-credentials, kong-credentials, opensearch-credentials, and s3-credentials.
+Create k8s VaultStaticSecrets by applying the secrets.yaml file:
+```
+envsubst < secrets.yaml | kubectl -n ${namespace} apply -f -
+```
+
+## Kong, Keycloak, Vault
+Ask Operations to install Kong provided the overrides in kong.yaml. Recommended chart version is 12.0.11.
+Install Keycloak:
+```
+helm install -n folio-dev --version v21.0.4 keycloak bitnami/keycloak -f folio-keycloak.yaml
+```
+
+## Deploy mgr-* modules
+```
+helm install -n folio-dev mgr-applications -f mgr-applications.yaml folio-helm-v2/mgr-applications
+helm install -n folio-dev mgr-tenant-entitlements -f mgr-tenant-entitlements.yaml folio-helm-v2/mgr-tenant-entitlements
+helm install -n folio-dev mgr-tenants -f mgr-tenants.yaml folio-helm-v2/mgr-tenants
+```
+
 ## Get a token 
 
 TOKEN=$(curl -sX POST -d client_id="folio-backend-admin-client" -d client_secret=SecretPassword -d grant_type=client_credentials http://keycloak-headless.folio-dev.svc.cluster.local:8080/realms/master/protocol/openid-connect/token | jq -r '.access_token')
 
 ## Post the applications
+Get the application descriptors for app-platform-minimal from the repository [folio-org/app-platform-minimal](https://github.com/folio-org/app-platform-minimal) and select the version tag 1.0.41. Copy the application-descriptor.json file from there and save as application-descriptor-minimal-ramsons.json.
+```
 curl -X POST --location 'http://mgr-applications/applications' -H "Authorization: Bearer $TOKEN” -H 'Content-Type: application/json' -d@application-descriptor-minimal-ramsons.json
+```
 
+Get the application descriptors for app-platform-complete from the repository [folio-org/app-platform-complete](https://github.com/folio-org/app-platform-complete) and select the version tag 1.1.78. Copy the application-descriptor.json file from there and save as application-descriptor-complete-ramsons.json. Make sure the tag value for app-platform-minimal matches the version saved to application-descriptor-minimal-ramsons.json (listed in the depencies array of the app-platform-complete descriptor).
+```
 curl -X POST --location 'http://mgr-applications/applications' -H "Authorization: Bearer $TOKEN” -H 'Content-Type: application/json' -d@application-descriptor-complete-ramsons.json
+```
 
+Check the applications posted by logging into the folio-k8s-pod shell and doing:
+```
 curl http://mgr-applications/applications
+```
+
+## Extend keycloak token lifetime
 
 ## Create the tenant
 curl -X POST --location http://mgr-tenants/tenants --header "Authorization: Bearer $TOKEN" --header 'Content-Type: application/json' --data '{"name": "sul", "description": "Stanford University Libraries"}
