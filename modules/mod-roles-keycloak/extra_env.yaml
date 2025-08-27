@@ -1,4 +1,9 @@
 extraEnvVars:
+  - name: SECRET_STORE_ENV
+    valueFrom:
+      secretKeyRef:
+        name: db-credentials
+        key: ENV
   - name: SECRET_STORE_VAULT_TOKEN
     valueFrom:
       secretKeyRef:
