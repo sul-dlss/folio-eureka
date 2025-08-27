@@ -25,18 +25,24 @@ helm install -n folio-dev mgr-tenants -f mgr-tenants.yaml folio-helm-v2/mgr-tena
 ```
 
 ## Get a token 
+From the folio-k8s-pod:
 
 TOKEN=$(curl -sX POST -d client_id="folio-backend-admin-client" -d client_secret=SecretPassword -d grant_type=client_credentials http://keycloak-headless.folio-dev.svc.cluster.local:8080/realms/master/protocol/openid-connect/token | jq -r '.access_token')
+
+### Expand the access token lifespan
+```
+curl -sX PUT http://keycloak-headless.folio-dev.svc.cluster.local:8080/admin/realms/master -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -d'{"accessTokenLifespan": "3600", "ssoSessionIdleTimeout": "3600"}'
+```
 
 ## Post the applications
 Get the application descriptors for app-platform-minimal from the repository [folio-org/app-platform-minimal](https://github.com/folio-org/app-platform-minimal) and select the version tag 1.0.41. Copy the application-descriptor.json file from there and save as application-descriptor-minimal-ramsons.json.
 ```
-curl -X POST --location 'http://mgr-applications/applications' -H "Authorization: Bearer $TOKEN” -H 'Content-Type: application/json' -d@application-descriptor-minimal-ramsons.json
+curl -X POST --location 'http://mgr-applications/applications' -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -d@application-descriptor-minimal-ramsons.json
 ```
 
 Get the application descriptors for app-platform-complete from the repository [folio-org/app-platform-complete](https://github.com/folio-org/app-platform-complete) and select the version tag 1.1.78. Copy the application-descriptor.json file from there and save as application-descriptor-complete-ramsons.json. Make sure the tag value for app-platform-minimal matches the version saved to application-descriptor-minimal-ramsons.json (listed in the depencies array of the app-platform-complete descriptor).
 ```
-curl -X POST --location 'http://mgr-applications/applications' -H "Authorization: Bearer $TOKEN” -H 'Content-Type: application/json' -d@application-descriptor-complete-ramsons.json
+curl -X POST --location 'http://mgr-applications/applications' -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -d@application-descriptor-complete-ramsons.json
 ```
 
 Check the applications posted by logging into the folio-k8s-pod shell and doing:
@@ -44,7 +50,10 @@ Check the applications posted by logging into the folio-k8s-pod shell and doing:
 curl http://mgr-applications/applications
 ```
 
-## Extend keycloak token lifetime
+Delete any extra applications if desired:
+```
+curl -X DELETE --location 'http://mgr-applications/applications/app-platform-complete-1.1.83' -H "Authorization: Bearer $TOKEN"
+```
 
 ## Create the tenant
 curl -X POST --location http://mgr-tenants/tenants --header "Authorization: Bearer $TOKEN" --header 'Content-Type: application/json' --data '{"name": "sul", "description": "Stanford University Libraries"}
@@ -52,10 +61,16 @@ curl -X POST --location http://mgr-tenants/tenants --header "Authorization: Bear
 ### Get the tenantUUID
 curl -s http://mgr-tenants/tenants
 
+## Deploy backend modules
+```
+python3 ./install_modules.py application-descriptor-minimal-ramsons.json -n folio-dev -x install
+python3 ./install_modules.py application-descriptor-complete-ramsons.json -n folio-dev -x install
+```
+
 ## Create entitlements (Make sure all modules are up and running, may need to do multiple times due to timeouts)
 curl -X POST --location "http://mgr-tenant-entitlements/entitlements" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $token" --data '{"tenantId": "$tenantUUID", "applications": ["app-platform-minimal-1.0.41"]}'
 
-curl -X POST --location "http://mgr-tenant-entitlements/entitlements" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" --data '{"tenantId": "$tenantUUID", "applications": ["app-platform-complete-1.1.83"]}'
+curl -X POST --location "http://mgr-tenant-entitlements/entitlements" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" --data '{"tenantId": "$tenantUUID", "applications": ["app-platform-complete-1.1.78"]}'
 
 ## Create Admin User
 
