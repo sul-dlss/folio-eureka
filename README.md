@@ -55,11 +55,22 @@ Delete any extra applications if desired:
 curl -X DELETE --location 'http://mgr-applications/applications/app-platform-complete-1.1.83' -H "Authorization: Bearer $TOKEN"
 ```
 
+## Register the applications
+...with modules/discovery endpoint from the folio-k8s-pod shell:
+```
+python3 ./discovery-modules.py
+```
+
 ## Create the tenant
-curl -X POST --location http://mgr-tenants/tenants --header "Authorization: Bearer $TOKEN" --header 'Content-Type: application/json' --data '{"name": "sul", "description": "Stanford University Libraries"}
+curl -X POST --location http://mgr-tenants/tenants --header "Authorization: Bearer $TOKEN" --header 'Content-Type: application/json' --data '{"name": "sul", "description": "Stanford University Libraries"}'
 
 ### Get the tenantUUID
 curl -s http://mgr-tenants/tenants
+tenantUUID=$(curl -sX GET http://mgr-tenants/tenants | jq -r '.tenants | .[] | .id')
+
+## Get the tenant attributes
+curl -s http://mgr-tenants/tenants/$tenantUUID/tenant-attributes
+
 
 ## Deploy backend modules
 ```
@@ -68,9 +79,32 @@ python3 ./install_modules.py application-descriptor-complete-ramsons.json -n fol
 ```
 
 ## Create entitlements (Make sure all modules are up and running, may need to do multiple times due to timeouts)
-curl -X POST --location "http://mgr-tenant-entitlements/entitlements" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $token" --data '{"tenantId": "$tenantUUID", "applications": ["app-platform-minimal-1.0.41"]}'
+curl -X POST --location "http://mgr-tenant-entitlements/entitlements?async=true&tenantParameters=loadReference=true,loadSample=false" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" --data "{\"tenantId\":\"$tenantUUID\", \"applications\": [\"app-platform-minimal-1.0.41\"]}" 
 
-curl -X POST --location "http://mgr-tenant-entitlements/entitlements" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" --data '{"tenantId": "$tenantUUID", "applications": ["app-platform-complete-1.1.78"]}'
+curl -X POST --location "http://mgr-tenant-entitlements/entitlements?async=true&tenantParameters=loadReference=true,loadSample=false" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" --data "{\"tenantId\":\"$tenantUUID\", \"applications\": [\"app-platform-complete-1.1.78\"]}"
+
+mod-entities-links system user is failing the entitlements process due to its user missing from keycloak. However, we don't migrate users to keycloak until after the entitlements process is completed. We will skip mod-entities-links by passing the ignoreErrors=true query parameter so that the rollback operation (when ignoreErrors=false, the default) does not uninstall modules, remove Kong routes, and remove Keycloak resources.
+
+curl -X POST --location "http://mgr-tenant-entitlements/entitlements?async=true&tenantParameters=loadReference=true,loadSample=false&ignoreErrors=true" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" --data "{\"tenantId\":\"$tenantUUID\", \"applications\": [\"app-platform-complete-1.1.78\"]}"
+
+### Monitor entitlements process
+Using flowId (response from post)
+curl -s http://mgr-tenant-entitlements/entitlement-flows/$flowId
+appFlowId=$(curl -s http://mgr-tenant-entitlements/entitlement-flows/$flowId | jq -r '.applicationFlows | .[].id')
+
+Using application flow ID:
+curl -s http://mgr-tenant-entitlements/application-flows/$appFlowId?includeStages=true | jq
+
+### Get applications entitled for tenant
+curl -s http://mgr-tenant-entitlements/entitlements/sul/applications -H "Authorization: Bearer $TOKEN" -H "x-okapi-tenant: sul" -H "x-okapi-token: $TOKEN"
+
+### Get entitlements for tenant
+curl -s http://mgr-tenant-entitlements/entitlements?query=tenantId=="$tenantUUID"
+
+### Re-install entitlements/applications for tenant
+curl -sX PUT --location "http://mgr-tenant-entitlements/entitlements?async=true&tenantParameters=loadReference=true,loadSample=false" -H 'Content-Type: application/json' -H "Authorization: Bearer $TOKEN" -H "x-okapi-token: $TOKEN" -d "{\"tenantId\":\"$tenantUUID\", \"applications\": [\"app-platform-minimal-1.0.41\"]}"
+
+curl -sX DELETE http://mgr-tenant-entitlements/entitlements -d "{\"tenantId\":\"$tenantUUID\", \"applications\": [\"app-platform-minimal-1.0.41\"]}" -H 'Content-Type: application/json' -H "Authorization: Bearer $TOKEN"
 
 ## Create Admin User
 
