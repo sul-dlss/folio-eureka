@@ -25,10 +25,6 @@ database: postgresql
 postgresql:
   enabled: false
   external:
-    host: sul-folio-db-dev.stanford.edu
-    port: 9999
-    user: kong
-    database: kong
     existingSecret: "kong-credentials"
     existingSecretPasswordKey: "KONG_PG_PASSWORD"
 networkPolicy:
