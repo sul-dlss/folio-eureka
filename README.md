@@ -65,7 +65,6 @@ python3 ./discovery-modules.py
 curl -X POST --location http://mgr-tenants/tenants --header "Authorization: Bearer $TOKEN" --header 'Content-Type: application/json' --data '{"name": "sul", "description": "Stanford University Libraries"}'
 
 ### Get the tenantUUID
-curl -s http://mgr-tenants/tenants
 tenantUUID=$(curl -sX GET http://mgr-tenants/tenants | jq -r '.tenants | .[] | .id')
 
 ## Get the tenant attributes
@@ -81,15 +80,17 @@ python3 ./install_modules.py application-descriptor-complete-ramsons.json -n fol
 ## Create entitlements (Make sure all modules are up and running, may need to do multiple times due to timeouts)
 curl -X POST --location "http://mgr-tenant-entitlements/entitlements?async=true&tenantParameters=loadReference=true,loadSample=false" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" --data "{\"tenantId\":\"$tenantUUID\", \"applications\": [\"app-platform-minimal-1.0.41\"]}" 
 
-curl -X POST --location "http://mgr-tenant-entitlements/entitlements?async=true&tenantParameters=loadReference=true,loadSample=false" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" --data "{\"tenantId\":\"$tenantUUID\", \"applications\": [\"app-platform-complete-1.1.78\"]}"
+curl -X POST --location "http://mgr-tenant-entitlements/entitlements?async=true&ignoreErrors=true&tenantParameters=loadReference=true,loadSample=false" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" --data "{\"tenantId\":\"$tenantUUID\", \"applications\": [\"app-platform-complete-1.1.78\"]}"
 
 mod-entities-links system user is failing the entitlements process due to its user missing from keycloak. However, we don't migrate users to keycloak until after the entitlements process is completed. We will skip mod-entities-links by passing the ignoreErrors=true query parameter so that the rollback operation (when ignoreErrors=false, the default) does not uninstall modules, remove Kong routes, and remove Keycloak resources.
 
-curl -X POST --location "http://mgr-tenant-entitlements/entitlements?async=true&tenantParameters=loadReference=true,loadSample=false&ignoreErrors=true" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" --data "{\"tenantId\":\"$tenantUUID\", \"applications\": [\"app-platform-complete-1.1.78\"]}"
+curl -X POST --location "http://mgr-tenant-entitlements/entitlements?async=true&tenantParameters=loadReference=true,loadSample=false" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" --data "{\"tenantId\":\"$tenantUUID\", \"applications\": [\"app-platform-complete-1.1.78\"]}"
 
 ### Monitor entitlements process
-Using flowId (response from post)
-curl -s http://mgr-tenant-entitlements/entitlement-flows/$flowId
+Using flowId (<flow-id> from POST respone)
+
+flowId=$(curl -s http://mgr-tenant-entitlements/entitlement-flows/<flow-id> | jq -r '.id')
+
 appFlowId=$(curl -s http://mgr-tenant-entitlements/entitlement-flows/$flowId | jq -r '.applicationFlows | .[].id')
 
 Using application flow ID:
@@ -123,6 +124,14 @@ curl -X POST --location 'http://mod-users-keycloak:8082/users-keycloak/users' -H
 }'
 
 ## ...
+## Get a sidecar token
+### Find out the 
+vault login with the root token
+
+vault kv get secret/folio/sul
+
+TOKEN=$(curl -sX POST -d client_id="sidecar-module-access-client" -d client_secret="<value for sidecar-module-access-client>" -d grant_type=client_credentials http://keycloak-headless.folio-dev.svc.cluster.local:8080/realms/sul/protocol/openid-connect/token | jq -r  '.access_token')
+
 curl -X GET -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul' 'http://mod-users-keycloak:8082/users-keycloak/users/e38b316e-a83d-45b9-8cd5-1c5e3eec3582'
 
 {"username":"eureka_admin","id":"e38b316e-a83d-45b9-8cd5-1c5e3eec3582","active":true,"departments":[],"proxyFor":[],"personal":{"lastName":"Eureka","firstName":"Admin","email":"sul-unicorn-devs@lists.stanford.edu","addresses":[]},"createdDate":"2025-08-08T17:29:06.147+00:00","updatedDate":"2025-08-08T17:29:06.147+00:00","metadata":{"createdDate":"2025-08-08T17:29:06.143+00:00","updatedDate":"2025-08-08T17:29:06.143+00:00"},"customFields":{}}
