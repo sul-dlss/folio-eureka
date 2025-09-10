@@ -14,3 +14,7 @@ extraEnvVars:
       secretKeyRef:
         name: folio-vault
         key: SECRET_STORE_VAULT_ENABLE_SSL
+  # - name: KC_URL
+  #   value: 'http://keycloak-folio-dev.stanford.edu'
+  # - name: KC_IDENTITY_PROVIDER_BASE_URL
+  #   value: 'http://keycloak-folio-dev.stanford.edu'
