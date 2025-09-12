@@ -11,10 +11,16 @@ envsubst < secrets.yaml | kubectl -n ${namespace} apply -f -
 ```
 
 ## Kong, Keycloak, Vault
-Ask Operations to install Kong provided the overrides in kong.yaml. Recommended chart version is 12.0.11.
 Install Keycloak:
 ```
 helm install -n folio-dev --version v21.0.4 keycloak bitnami/keycloak -f folio-keycloak.yaml
+```
+
+Ask Operations to install Kong provided the overrides in kong.yaml. Recommended chart version is 12.0.11.
+
+After Kong is installed with its custom resources definitions you can upgrade the chart using:
+```
+helm -n ${namespace} upgrade -f kong.yaml kong bitnami/kong
 ```
 
 ## Deploy mgr-* modules
@@ -24,7 +30,7 @@ helm install -n folio-dev mgr-tenant-entitlements -f mgr-tenant-entitlements.yam
 helm install -n folio-dev mgr-tenants -f mgr-tenants.yaml folio-helm-v2/mgr-tenants
 ```
 
-## Get a token 
+## Get a token from the master realm 
 From the folio-k8s-pod:
 
 TOKEN=$(curl -sX POST -d client_id="folio-backend-admin-client" -d client_secret=SecretPassword -d grant_type=client_credentials http://keycloak-headless.folio-dev.svc.cluster.local:8080/realms/master/protocol/openid-connect/token | jq -r '.access_token')
@@ -110,10 +116,10 @@ curl -sX DELETE http://mgr-tenant-entitlements/entitlements -d "{\"tenantId\":\"
 ## Create Admin User
 
 ### Get the sidecar token from the tenant keycloak realm (sul)
-TOKEN=$(curl -sX POST -d client_id="sidecar-module-access-client" -d client_secret="p11qYvTbNp0JCkOO8BIcONI2uXtKoPiJ" -d grant_type=client_credentials http://keycloak-headless:8080/realms/sul/protocol/openid-connect/token | jq -r  '.access_token')
+TOKEN=$(curl -sX POST -d client_id="sidecar-module-access-client" -d client_secret="$SIDECAR_SECRET" -d grant_type=client_credentials http://keycloak-headless:8080/realms/sul/protocol/openid-connect/token | jq -r  '.access_token')
 
 ## Create the User
-curl -X POST --location 'http://mod-users-keycloak:8082/users-keycloak/users' -H "Authorization: Bearer $TOKEN” -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul' --data-raw '{
+curl -X POST --location 'http://mod-users-keycloak:8082/users-keycloak/users' -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul' --data-raw '{
     "username": "eureka_admin",
     "active": true,
     "personal": {
