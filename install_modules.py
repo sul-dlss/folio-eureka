@@ -31,7 +31,8 @@ def base_override(name, version):
         "eureka": {"enabled": True},
         "integrations": {
             "db": {"enabled": True, "existingSecret": "db-credentials"},
-            "kafka": {"enabled": True, "existingSecret": "kafka-credentials"}
+            "kafka": {"enabled": True, "existingSecret": "kafka-credentials"},
+            "okapi": {"enabled": False},
         }
     }
     
