@@ -7,7 +7,7 @@ global:
 image:
   registry: folioorg
   repository: folio-keycloak
-  tag: 26.1.3
+  tag: 26.3.1
   pullPolicy: Always
 
 auth:
@@ -16,8 +16,6 @@ auth:
   passwordSecretKey: KC_BOOTSTRAP_ADMIN_PASSWORD
 
 extraEnvVars:
-  - name: FIPS
-    value: "false"
   - name: KEYCLOAK_PROXY_ADDRESS_FORWARDING
     value: "true"
   - name: PROXY_ADDRESS_FORWARDING
@@ -32,28 +30,18 @@ extraEnvVars:
     value: "INFO"
   - name: KC_HOSTNAME_BACKCHANNEL_DYNAMIC
     value: "true"
-  - name: KC_BOOTSTRAP_ADMIN_USERNAME
-    valueFrom:
-      secretKeyRef:
-        name: keycloak-credentials
-        key: KC_BOOTSTRAP_ADMIN_USERNAME
-  - name: KC_BOOTSTRAP_ADMIN_PASSWORD
-    valueFrom:
-      secretKeyRef:
-        name: keycloak-credentials
-        key: KC_BOOTSTRAP_ADMIN_PASSWORD
+  - name: KC_HOSTNAME_STRICT
+    value: "true"
+  - name: KC_HOSTNAME_STRICT_HTTPS
+    value: "true"
+  - name: KC_PROXY
+    value: "edge"
+  - name: FIPS
+    value: "false"
   - name: KC_HOSTNAME
-    # Use this to access the admin UI
-    # value: "https://keycloak-folio-dev.stanford.edu"
-    valueFrom:
-      secretKeyRef:
-        name: eureka-common
-        key: KC_URL
+    value: "https://keycloak-folio-dev.stanford.edu"
   - name: KC_HOSTNAME_BACKCHANNEL
-    valueFrom:
-      secretKeyRef:
-        name: eureka-common
-        key: KC_URL
+    value: "http://keycloak-headless:8080"
   - name: KC_FOLIO_BE_ADMIN_CLIENT_ID
     valueFrom:
       secretKeyRef:
@@ -94,6 +82,16 @@ extraEnvVars:
       secretKeyRef:
         name: keycloak-credentials
         key: KC_DB_USERNAME
+  - name: KC_BOOTSTRAP_ADMIN_USERNAME
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-credentials
+        key: KC_BOOTSTRAP_ADMIN_USERNAME
+  - name: KC_BOOTSTRAP_ADMIN_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-credentials
+        key: KC_BOOTSTRAP_ADMIN_PASSWORD
 
 resources:
   requests:
@@ -143,18 +141,27 @@ ingress:
     nginx.org/redirect-to-https: "true"
     nginx.org/server-snippets: |
       location / {
-        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Host $host;
       }
 
 adminIngress:
   enabled: false
-  hostname: keycloak-folio-dev.stanford.edu
+  hostname: keycloak-admin-folio-dev.stanford.edu
   ingressClassName: "nginx"
   tls: true
+  certManager: true
   annotations:
     kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/ssl-passthrough: "false"
+    nginx.org/redirect-to-https: "true"
+    nginx.org/server-snippets: |
+      location / {
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto $scheme;
+          proxy_set_header X-Forwarded-Host $host;
+        }
 
 livenessProbe:
   enabled: true
