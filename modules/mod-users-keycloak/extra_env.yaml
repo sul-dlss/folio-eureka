@@ -1,4 +1,11 @@
+# integrations:
+#   systemuser:
+#       enabled: true
+#       name: "mod-users-keycloak"
+
 extraEnvVars:
+  - name: KC_ADMIN_TOKEN_TTL
+    value: "300s"
   - name: SECRET_STORE_VAULT_TOKEN
     valueFrom:
       secretKeyRef:

@@ -1,3 +1,8 @@
+# integrations:
+#   systemuser:
+#       enabled: true
+#       name: "mod-roles-keycloak"
+  
 extraEnvVars:
   - name: SECRET_STORE_VAULT_TOKEN
     valueFrom:
