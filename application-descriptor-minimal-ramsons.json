@@ -2782,7 +2782,7 @@
         }]
       }
     },
-        {
+    {
       "id": "mod-roles-keycloak-2.0.15",
       "name": "roles-keycloak",
       "provides":       [

@@ -118,7 +118,7 @@ kong:
   - name: KONG_NGINX_HTTP_LARGE_CLIENT_HEADER_BUFFERS
     value: "4 16k"
   - name: KONG_ADMIN_GUI_API_URL
-    value: "https://kong-folio-dev-admin.stanford.edu"
+    value: "https://kong-folio-dev.stanford.edu"
   - name: KONG_NGINX_HTTPS_LARGE_CLIENT_HEADER_BUFFERS
     value: "4 16k"
   - name: KONG_PROXY_LISTEN
@@ -132,10 +132,10 @@ kong:
   resources:
     requests:
       ephemeral-storage: 50Mi
-      memory: 9Gi
+      memory: 12Gi
     limits:
       ephemeral-storage: 1Gi
-      memory: 12Gi
+      memory: 15  Gi
 ingressController:
   enabled: false
 migration:
