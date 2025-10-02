@@ -1,0 +1,26 @@
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: folio-k8s-pod
+spec:
+  containers:
+  - image: ghcr.io/sul-dlss/folio-k8s:ramsons-r2-2024
+    name: folio-k8s-pod
+    envFrom:
+      - secretRef:
+          name: folio-k8s
+    imagePullPolicy: Always
+    # Just spin & wait forever
+    command: [ "/bin/bash", "-c", "--" ]
+    args: [ "while true; do sleep 60; done;" ]
+    resources:
+      limits:
+        cpu: 128m
+        memory: 512Mi
+      requests:
+        cpu: 50m
+        memory: 400Mi
+  restartPolicy: Never
+  imagePullSecrets:
+      - name: ghcr
