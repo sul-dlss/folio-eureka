@@ -1,0 +1,17 @@
+[
+  {"id": "app-acquisitions-1.0.24"},
+  {"id": "app-bulk-edit-1.0.7"},
+  {"id": "app-consortia-1.2.1"},
+  {"id": "app-dcb-1.1.4"},
+  {"id": "app-edge-complete-2.0.12"},
+  {"id": "app-erm-usage-2.0.3"},
+  {"id": "app-fqm-1.0.13"},
+  {"id": "app-marc-migrations-2.0.3"},
+  {"id": "app-oai-pmh-1.0.2"},
+  {"id": "app-platform-complete-2.2.0"},
+  {"id": "app-platform-minimal-2.0.30"},
+  {"id": "app-inn-reach-1.0.4"},
+  {"id": "app-linked-data-1.1.6"},
+  {"id": "app-reading-room-2.0.2"},
+  {"id": "app-consortia-manager-1.1.1"}
+]
