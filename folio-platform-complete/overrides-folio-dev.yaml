@@ -1,7 +1,7 @@
 image:
   imagePullPolicy: Always
-  repository: ghcr.io/sul-dlss-labs/eureka-platform-complete
-  tag: main
+  repository: ghcr.io/sul-dlss/folio-platform-complete
+  tag: R2-2024-csp-6-eureka-dev
 ingress:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
@@ -24,3 +24,4 @@ ingress:
 startupProbeEnabled : true
 livenessProbeEnabled : true
 readinessProbeEnabled : true
+  
