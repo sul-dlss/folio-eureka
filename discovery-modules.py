@@ -4,7 +4,7 @@ import os
 
 def main():
     token = _token()
-    request = httpx.get('http://mgr-applications/applications')
+    request = httpx.get('http://kong-folio-dev.stanford.edu/applications')
     applications = json.loads(request.text)
     discovery = { "discovery": [] }
 
@@ -19,7 +19,7 @@ def main():
     with httpx.Client(timeout=20.0) as client:
         try:
             response = client.post(
-                "http://mgr-applications/modules/discovery",
+                "http://kong-folio-dev.stanford.edu/modules/discovery",
                 headers={
                     "content-type": "application/json",
                     "Authorization": f"Bearer {token}"
@@ -34,7 +34,7 @@ def main():
 
 def _token():
     print('fetching new token')
-    response = httpx.post('http://keycloak-headless:8080/realms/master/protocol/openid-connect/token',
+    response = httpx.post('http://keycloak-folio-dev.stanford.edu/realms/master/protocol/openid-connect/token',
         data={
             "client_id": "folio-backend-admin-client",
             "grant_type": "client_credentials",

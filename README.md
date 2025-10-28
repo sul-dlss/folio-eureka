@@ -27,7 +27,7 @@ helm -n ${namespace} upgrade -f kong.yaml kong bitnami/kong
 ```
 helm install -n folio-dev mgr-applications -f mgr-applications.yaml folio-helm-v2/mgr-applications
 helm install -n folio-dev mgr-tenant-entitlements -f mgr-tenant-entitlements.yaml folio-helm-v2/mgr-tenant-entitlements
-helm install -n folio-dev mgr-tenants -f mgr-tenants.yaml folio-helm-v2/mgr-tenants
+    helm install -n folio-dev mgr-tenants -f mgr-tenants.yaml folio-helm-v2/mgr-tenants
 ```
 
 ## Get a token from the master realm 
@@ -70,6 +70,8 @@ python3 ./discovery-modules.py
 ## Create the tenant
 curl -X POST --location http://kong-folio-dev.stanford.edu/tenants --header "Authorization: Bearer $TOKEN" --header 'Content-Type: application/json' --data '{"name": "sul", "description": "Stanford University Libraries"}'
 
+117a2ac9-0815-414d-8aed-74b8568f767f
+
 ### Get the tenantUUID
 tenantUUID=$(curl -sX GET http://kong-folio-dev.stanford.edu/tenants | jq -r '.tenants | .[] | .id')
 
@@ -79,13 +81,13 @@ curl -s http://kong-folio-dev.stanford.edu/tenants/$tenantUUID/tenant-attributes
 ## Check or create sul-application redirect URIs in Keycloak
 ### 1. Get Keycloak client UUID for the tenant application
 ```
-CLIENT_UUID=$(curl -X GET   "https://keycloak-folio-dev.stanford.edu/admin/realms/$TENANT_ID/clients?clientId=$TENANT_ID-application"   -H "Authorization: Bearer $TOKEN"   -H 'Content-Type: application/json' | jq '.[].id')
+CLIENT_UUID=$(curl -X GET   "https://keycloak-folio-dev.stanford.edu/admin/realms/$TENANT_ID/clients?clientId=$TENANT_ID-application"   -H "Authorization: Bearer $TOKEN"   -H 'Content-Type: application/json' | jq -r '.[].id')
 ```
 ### 2. Update client to set tenant UI URLs and origins
 ```
 curl -X PUT \
-  "https://keykloak-folio-dev.stanford.edu/admin/realms/$TENANT_ID/clients/$CLIENT_UUID" \
-  -H 'Authorization: Bearer <MASTER_TOKEN>' \
+  "https://keycloak-folio-dev.stanford.edu/admin/realms/$TENANT_ID/clients/$CLIENT_UUID" \
+  -H "Authorization: Bearer $TOKEN" \
   -H 'Content-Type: application/json' \
   --data '{
     "rootUrl": "https://folio-dev.stanford.edu",
@@ -95,7 +97,7 @@ curl -X PUT \
     "webOrigins": ["/*"],
     "authorizationServicesEnabled": true,
     "serviceAccountsEnabled": true,
-    "attributes": {"post.logout.redirect.uris": "/*##https://folio-dev.stanford.edu/*", "login_theme": "custom-theme"}
+    "attributes": {"post.logout.redirect.uris": "/*##https://folio-dev.stanford.edu/*"}
   }'
 ```
 
@@ -104,12 +106,17 @@ curl -X PUT \
 python3 ./install_modules.py application-descriptor-minimal-ramsons.json -n folio-dev -x install
 python3 ./install_modules.py application-descriptor-complete-ramsons.json -n folio-dev -x install
 ```
-## Create keycloak system users if necessary (mod-login-keycloak, mod-roles-keycloak, mod-users-keycloak)
-### e.g. for mod-login-keycloak
-Create the system user
+## Create entitlements for app-platform-minimal (Make sure all modules are up and running, may need to do multiple times due to timeouts)
+curl -X POST --location "http://kong-folio-dev.stanford.edu/entitlements?async=true&tenantParameters=loadReference=true,loadSample=false" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" --data "{\"tenantId\":\"$tenantUUID\", \"applications\": [\"app-platform-minimal-1.0.41\"]}"
+
+## Create keycloak system users - mod-users-keycloak
+### N.B. SINCE ADDING THE $OKAPI_URL ENV VAR TO mod-users-keycloak: BEFORE DOING THIS CHECK WHETHER THE mod-users-keycloak USER WAS CREATED IN KEYCLOAK, VAULT folio/sul AND mod-users. IF SO, THERE IS NO NEED TO KEEP THIS STEP.
+
+Create the system user (mod-login-keycloak example) using the [sidecar-module-access-client](sidecar-client-login)
+
 ```
 curl -X POST --location 'http://kong-folio-dev.stanford.edu/users-keycloak/users' -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul' --data-raw '{
-    "username": "mod-login-keycloak",
+    "username": "mod-users-keycloak",
     "active": true,
     "personal": {
         "lastName": "System"
@@ -124,13 +131,15 @@ Add the password to keycloak
 ```
 curl -X POST --location 'http://kong-folio-dev.stanford.edu/authn/credentials' -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul' --data '{
     "username": "mod-login-keycloak",
-    "userId": "<select * from sul_mod_users.users where jsonb ->> 'username' like 'mod-login-keycloak';>",
+    "userId": "<select * from sul_mod_users.users where jsonb ->> 'username' like 'mod-%-keycloak';>",
     "password": "<random 32 character password from vault: secret/folio/sul>"
 }'
 ```
 
-## Create entitlements (Make sure all modules are up and running, may need to do multiple times due to timeouts)
-curl -X POST --location "http://kong-folio-dev.stanford.edu/entitlements?async=true&tenantParameters=loadReference=true,loadSample=false" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" --data "{\"tenantId\":\"$tenantUUID\", \"applications\": [\"app-platform-minimal-1.0.41\"]}" 
+Restart the mod-*-keycloak modules.
+
+## Create entitlements for app-platform-complete (Make sure all modules are up and running, may need to repeat due to timeouts)
+Use the folio-backend-admin-client id
 
 curl -X POST --location "http://kong-folio-dev.stanford.edu/entitlements?async=true&ignoreErrors=true&tenantParameters=loadReference=true,loadSample=false" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" --data "{\"tenantId\":\"$tenantUUID\", \"applications\": [\"app-platform-complete-1.1.78\"]}"
 
@@ -152,23 +161,16 @@ curl -s http://kong-folio-dev.stanford.edu/application-flows/$appFlowId?includeS
 curl -s http://kong-folio-dev.stanford.edu/entitlements/sul/applications -H "Authorization: Bearer $TOKEN" -H "x-okapi-tenant: sul" -H "x-okapi-token: $TOKEN"
 
 ### Get entitlements for tenant
-curl -s http://kong-folio-dev.stanford.edu/entitlements?query=tenantId=="$tenantUUID"
+curl -s "http://kong-folio-dev.stanford.edu/entitlements?includeModules=true&query=tenantId==$tenantUUID"
 
 ### Re-install entitlements/applications for tenant
 curl -sX PUT --location "http://kong-folio-dev.stanford.edu/entitlements?async=true&tenantParameters=loadReference=true,loadSample=false" -H 'Content-Type: application/json' -H "Authorization: Bearer $TOKEN" -H "x-okapi-token: $TOKEN" -d "{\"tenantId\":\"$tenantUUID\", \"applications\": [\"app-platform-minimal-1.0.41\"]}"
 
 curl -sX DELETE http://kong-folio-dev.stanford.edu/entitlements -d "{\"tenantId\":\"$tenantUUID\", \"applications\": [\"app-platform-minimal-1.0.41\"]}" -H 'Content-Type: application/json' -H "Authorization: Bearer $TOKEN"
 
-## Create Admin User
-
-`vault login` with root credential
-
-SIDECAR_SECRET=$(vault kv get secret/folio/sul | grep sidecar-module-access-client | awk '{print $2}')
-
-### Get the sidecar token from the tenant keycloak realm (sul)
-TOKEN=$(curl -sX POST -d client_id="sidecar-module-access-client" -d client_secret="$SIDECAR_SECRET" -d grant_type=client_credentials http://keycloak-headless:8080/realms/sul/protocol/openid-connect/token | jq -r  '.access_token')
-
-## Create the User
+## Create the Admin User
+Using the [sidecar-module-access-client](sidecar-client-login)
+```
 curl -X POST --location 'http://kong-folio-dev.stanford.edu/users-keycloak/users' -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul' --data-raw '{
     "username": "eureka_admin",
     "active": true,
@@ -178,36 +180,35 @@ curl -X POST --location 'http://kong-folio-dev.stanford.edu/users-keycloak/users
         "email": "sul-unicorn-devs@lists.stanford.edu"
     }
 }'
-
-### Check user creation
-curl -X GET -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul' 'http://mod-users-keycloak/users-keycloak/users/e38b316e-a83d-45b9-8cd5-1c5e3eec3582'
-
-{"username":"eureka_admin","id":"e38b316e-a83d-45b9-8cd5-1c5e3eec3582","active":true,"departments":[],"proxyFor":[],"personal":{"lastName":"Eureka","firstName":"Admin","email":"sul-unicorn-devs@lists.stanford.edu","addresses":[]},"createdDate":"2025-08-08T17:29:06.147+00:00","updatedDate":"2025-08-08T17:29:06.147+00:00","metadata":{"createdDate":"2025-08-08T17:29:06.143+00:00","updatedDate":"2025-08-08T17:29:06.143+00:00"},"customFields":{}}
+```
 
 ### Create User credentials
 curl -X POST --location 'http://kong-folio-dev.stanford.edu/authn/credentials' -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul' --data '{
     "username": "eureka_admin",
-    "userId": "e38b316e-a83d-45b9-8cd5-1c5e3eec3582",
+    "userId": "<userId>",
     "password": "SecretPassword"
 }'
 
 ### Create Admin Role
-curl -X POST --location 'http://mod-roles-keycloak/roles' -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul' --data '{
+curl -X POST --location 'http://kong-folio-dev.stanford.edu/roles' -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul' --data '{
     "name": "adminRole",
     "description": "Admin role"
 }'
-{"id":" ","name":"adminRole","description":"Admin role","type":"REGULAR","metadata":{"createdDate":"2025-08-08T19:39:12.140+00:00","updatedDate":"2025-08-08T19:39:12.140+00:00"}}
 
-adminRoleId=$(curl -s --location 'http://mod-roles-keycloak/roles?limit=500' -H "Authorization: Bearer $TOKE
-N" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul' | jq -r '.roles[] | select(.name == "adminRole") | .id')
+adminRoleId=$(curl -s --location 'http://kong-folio-dev.stanford.edu/roles?limit=500' -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul' | jq -r '.roles[] | select(.name == "adminRole") | .id')
 
-### Assign Capabilities to Role
-curl -X POST --location 'http://mod-roles-keycloak/roles/capabilities' -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul' -d@capability_ids.json
-
+### Get all of the capabilities
+```
+curl -s --location 'http://kong-folio-dev.stanford.edu/capabilities?limit=3000' -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul' > json/all-capabilities.json
+```
+```
+cat json/all-capabilities.json | jq '.capabilities[].id' > json/all-capability-ids.json
+```
+Construct a json file:
 ```
 "{
-    "roleId": \"$adminRoleId\",
-    \"capabilityIds\": [
+    "roleId": "$adminRoleId",
+    "capabilityIds": [
         \"Eureka-Capability-01-UUID\",
         \"Eureka-Capability-02-UUID\",
         \"Eureka-Capability-03-UUID\"
@@ -215,7 +216,27 @@ curl -X POST --location 'http://mod-roles-keycloak/roles/capabilities' -H "Autho
 }"
 ```
 
+### Assign Capabilities to Role
+curl -X POST --location 'http://kong-folio-dev.stanford.edu/roles/capabilities' -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul' -d@json/all-capability-ids.json
+
+#### Check the role capabilities
+```
+curl -s --location "http://kong-folio-dev.stanford.edu/roles/$adminRoleId/capabilities?limit=3000" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul'
+```
+
 ### Add Admin Role to Admin User
 ```
-curl -X POST --location 'http://mod-roles-keycloak/roles/users' -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul' -d "{ \"userId\": \"e38b316e-a83d-45b9-8cd5-1c5e3eec3582\", \"roleIds\": [\"$adminRoleId\"]}"
+curl -X POST --location 'http://kong-folio-dev.stanford.edu/roles/users' -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul' -d "{ \"userId\": \"<userId from Keycloak Attributes>\", \"roleIds\": [\"$adminRoleId\"]}"
 ```
+
+## Sidecar Client Login
+`vault login` with root credential:
+```
+kubectl -n $namespace exec -it folio-k8s-pod -- vault login
+```
+copy the sidecar secret and set as SIDECAR_SECRET
+```
+kubectl -n $namespace exec -it folio-k8s-pod -- vault kv get secret/folio/sul | grep sidecar-module-access-client
+```
+### Get the sidecar token from the tenant keycloak realm (sul)
+    TOKEN=$(curl -sX POST -d client_id="sidecar-module-access-client" -d client_secret="$SIDECAR_SECRET" -d grant_type=client_credentials http://keycloak-folio-dev.stanford.edu/realms/sul/protocol/openid-connect/token | jq -r  '.access_token')

@@ -1,9 +1,11 @@
-# integrations:
-#   systemuser:
-#       enabled: true
-#       name: "mod-users-keycloak"
+integrations:
+  systemuser:
+      enabled: true
+      name: "mod-users-keycloak"
 
 extraEnvVars:
+  - name: OKAPI_URL
+    value: "http://localhost:8082"
   - name: KC_ADMIN_TOKEN_TTL
     value: "300s"
   - name: SECRET_STORE_VAULT_TOKEN
