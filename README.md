@@ -1,7 +1,7 @@
 # folio-eureka
 
 ## Version Management
-The version tag of Ramsons is R2-2024. To get the versions of the modules for Eureka, select the appropriate tag from [folio-org/platform-lsp](https://github.com/folio-org/platform-lsp). The version for Rmasons CSP4 app-platform-minimal is 1.0.41 and for app-platform-complete it is 1.1.78.
+To get the versions of the modules for Eureka, select the appropriate flower release tag from [folio-org/platform-lsp](https://github.com/folio-org/platform-lsp). Find the app versions from the install-applications.json file and then select the versioned tag from the corresponding application name folio-org repository.
 
 ## Secrets
 Add to [Vault](https://vault.sul.stanford.edu/) key-value pairs for db-credentials, eureka-common, eureka-edge, kafka-credentials, keycloak-credentials, kong-credentials, opensearch-credentials, and s3-credentials.

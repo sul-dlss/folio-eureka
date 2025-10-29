@@ -4,7 +4,7 @@ global:
 image:
   registry: folioorg
   repository: folio-kong
-  tag: 3.9.0
+  tag: 3.9.1
   pullPolicy: Always
 useDaemonset: false
 replicaCount: 1
