@@ -135,7 +135,7 @@ kong:
       memory: 12Gi
     limits:
       ephemeral-storage: 1Gi
-      memory: 15  Gi
+      memory: 15Gi
 ingressController:
   enabled: false
 migration:

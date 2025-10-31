@@ -9,12 +9,17 @@ resources:
 integrations:
   opensearch:
     enabled: true
-    existingSecret: "db-connect-modules"
+    existingSecret: "opensearch-credentials"
 
-# initialLanguages: eng,chi,jpn,kor,rus
-# Include the extraEnvVars from the chart, and then add our KAFKA_* settings.
 extraEnvVars: |
-  - name: INDEXING_DATA_FORMAT
-    value: "json"
-  - name: INITIAL_LANGUAGES
-    value: "eng"
+  - name: OKAPI_URL
+    value: "http://kong:8000"
+  - name: SYSTEM_USER_ENABLED
+    value: "true"
+  - name: SYSTEM_USER_PASSWORD
+    valueFrom:
+      secretKeyRef:
+          name: opensearch-credentials
+          key: SYSTEM_USER_PASSWORD
+# - name: INITIAL_LANGUAGES
+#   value: "eng,chi,jpn,kor,rus"
