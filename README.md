@@ -35,9 +35,9 @@ helm upgrade --install -n folio-dev mgr-tenants -f mgr-tenants.yaml folio-helm-v
 ```
 
 ## Get a token from the master realm 
-From the folio-k8s-pod:
-
+```
 TOKEN=$(curl -sX POST -d client_id="folio-backend-admin-client" -d client_secret="$KC_ADMIN_CLIENT_SECRET" -d grant_type="client_credentials" "$KC_URL/realms/master/protocol/openid-connect/token" | jq -r '.access_token')
+```
 
 ### Expand the access token lifespan
 ```
@@ -71,12 +71,14 @@ APP_ID=$APP_ID python3 ./discovery-modules.py
 ```
 
 ## Create the tenant
+```
 curl -X POST --location "$KONG_URL/tenants" --header "Authorization: Bearer $TOKEN" --header 'Content-Type: application/json' --data '{"name": "sul", "description": "Stanford University Libraries"}'
-
-117a2ac9-0815-414d-8aed-74b8568f767f
+```
 
 ### Get the tenantUUID
+```
 tenantUUID=$(curl -sX GET "$KONG_URL/tenants" | jq -r '.tenants | .[] | .id')
+```
 
 ## Check or create sul-application redirect URIs in Keycloak
 ### 1. Get Keycloak client UUID for the tenant application
@@ -108,10 +110,12 @@ python3 ./install_modules.py $APP_FILE -n folio-dev -x install
 ## Create Entitlements
 
 ### Create entitlements for app-platform-minimal (Make sure all modules are up and running, may need to do multiple times due to timeouts)
+```
 curl -X POST --location "$KONG_URL/entitlements?async=true&tenantParameters=loadReference=true,loadSample=false" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" --data "{\"tenantId\":\"$tenantUUID\", \"applications\": [\"$APP_ID\"]}"
+```
 
 ### Create keycloak system users - mod-users-keycloak
-#### N.B. SINCE ADDING THE $OKAPI_URL ENV VAR TO mod-users-keycloak: BEFORE DOING THIS CHECK WHETHER THE mod-users-keycloak USER WAS CREATED IN KEYCLOAK, VAULT folio/sul AND mod-users. IF SO, THERE IS NO NEED TO KEEP THIS STEP.
+#### *SINCE ADDING THE $OKAPI_URL ENV VAR TO mod-users-keycloak: BEFORE DOING THIS CHECK WHETHER THE mod-users-keycloak USER WAS CREATED IN KEYCLOAK, VAULT folio/sul AND mod-users. IF SO, THERE IS NO NEED TO KEEP THIS STEP.
 
 Create the system user (mod-login-keycloak example) using the [sidecar-module-access-client](sidecar-client-login)
 
@@ -141,33 +145,44 @@ Restart the mod-*-keycloak modules.
 
 ### Create entitlements for app-platform-complete (Make sure all modules are up and running, may need to repeat due to timeouts)
 Use the folio-backend-admin-client id
-
+```
 curl -X POST --location "$KONG_URL/entitlements?async=true&ignoreErrors=true&tenantParameters=loadReference=true,loadSample=false" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" --data "{\"tenantId\":\"$tenantUUID\", \"applications\": [\"app-platform-complete-1.1.78\"]}"
-
+```
 mod-entities-links system user is failing the entitlements process due to its user missing from keycloak. However, we don't migrate users to keycloak until after the entitlements process is completed. We will skip mod-entities-links by passing the ignoreErrors=true query parameter so that the rollback operation (when ignoreErrors=false, the default) does not uninstall modules, remove   routes, and remove Keycloak resources.
-
+```
 curl -X POST --location "$KONG_URL/entitlements?async=true&tenantParameters=loadReference=true,loadSample=false" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" --data "{\"tenantId\":\"$tenantUUID\", \"applications\": [\"app-platform-complete-1.1.78\"]}"
+```
 
 ### Monitor entitlements process
 Using flowId (<flow-id> from POST respone)
-
+```
 flowId=$(curl -s "$KONG_URL/entitlement-flows/<flow-id>" | jq -r '.id')
-
+```
+```
 appFlowId=$(curl -s "$KONG_URL/entitlement-flows/$flowId" | jq -r '.applicationFlows | .[].id')
-
+```
 Using application flow ID:
+```
 curl -s "$KONG_URL/application-flows/$appFlowId?includeStages=true" | jq
+```
 
 ### Get applications entitled for tenant
+```
 curl -s "$KONG_URL/entitlements/sul/applications" -H "Authorization: Bearer $TOKEN" -H "x-okapi-tenant: sul" -H "x-okapi-token: $TOKEN"
+```
 
 ### Get entitlements for tenant
+```
 curl -s "$KONG_URL/entitlements?includeModules=true&query=tenantId==$tenantUUID"
+```
 
 ### Re-install entitlements/applications for tenant
+```
 curl -sX PUT --location "$KONG_URL/entitlements?async=true&tenantParameters=loadReference=true,loadSample=false" -H 'Content-Type: application/json' -H "Authorization: Bearer $TOKEN" -H "x-okapi-token: $TOKEN" -d "{\"tenantId\":\"$tenantUUID\", \"applications\": [\"$APP_ID\"]}"
-
+```
+```
 curl -sX DELETE "$KONG_URL/entitlements" -d "{\"tenantId\":\"$tenantUUID\", \"applications\": [\"$APP_ID\"]}" -H 'Content-Type: application/json' -H "Authorization: Bearer $TOKEN"
+```
 
 ## Create the Admin User
 Using the [sidecar-module-access-client](sidecar-client-login)
@@ -184,20 +199,23 @@ curl -X POST --location "$KONG_URL/users-keycloak/users" -H "Authorization: Bear
 ```
 
 ### Create User credentials
+```
 curl -X POST --location "$KONG_URL/authn/credentials" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul' --data '{
     "username": "eureka_admin",
     "userId": "<userId>",
     "password": "SecretPassword"
 }'
-
+```
 ### Create Admin Role
+```
 curl -X POST --location "$KONG_URL/roles" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul' --data '{
     "name": "adminRole",
     "description": "Admin role"
 }'
-
+```
+```
 adminRoleId=$(curl -s --location "$KONG_URL/roles?limit=500" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul' | jq -r '.roles[] | select(.name == "adminRole") | .id')
-
+```
 ### Get all of the capabilities
 ```
 curl -s --location "$KONG_URL/capabilities?limit=3000" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul' > json/all-capabilities.json
@@ -218,8 +236,9 @@ Construct a json file:
 ```
 
 ### Assign Capabilities to Role
+```
 curl -X POST --location "$KONG_URL/roles/capabilities" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul' -d@json/all-capability-ids.json
-
+```
 #### Check the role capabilities
 ```
 curl -s --location "$KONG_URL/roles/$adminRoleId/capabilities?limit=5000" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul'
