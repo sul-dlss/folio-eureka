@@ -5,5 +5,7 @@ replicaCount: 3
 
 # Include the extraEnvVars from the chart, and then add our REPLICATION_FACTOR.
 extraEnvVars: |
+  - name: DB_EXPLAIN_QUERY_THRESHOLD
+    value: "3000000"
   - name: REPLICATION_FACTOR
     value: {{ .Values.replicaCount | quote }}
