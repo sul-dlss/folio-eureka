@@ -36,6 +36,11 @@ def base_override(name, version):
         }
     }
     
+    if name.startswith('edge-'):
+        del data['integrations']['db']
+        del data['integrations']['kafka']
+        data['integrations']['eureka-edge'] = {"enabled": True, "existingSecret": "eureka-edge"}
+    
     return yaml.dump(data)
 
 
