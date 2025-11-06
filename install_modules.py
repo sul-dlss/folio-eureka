@@ -66,6 +66,9 @@ def resources_override(name):
 
 
 def extrafile_override(name, file):
+    if Path(f"modules/{name}/{file}-{args.namespace}.yaml").exists():
+        return f"-f modules/{name}/{file}.yaml"
+    
     if Path(f"modules/{name}/{file}.yaml").exists():
         return f"-f modules/{name}/{file}.yaml"
     

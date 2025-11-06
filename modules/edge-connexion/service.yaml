@@ -1,0 +1,6 @@
+service:
+  type: NodePort
+  port: 8080
+  containerPort: 8080
+
+# - hosts: folio-connexion-dev.stanford.edu, folio-connexion-test.stanford.edu, folio-connexion-prod.stanford.edu
