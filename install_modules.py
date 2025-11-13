@@ -33,7 +33,8 @@ def base_override(name, version):
             "db": {"enabled": True, "existingSecret": "db-credentials"},
             "kafka": {"enabled": True, "existingSecret": "kafka-credentials"},
             "okapi": {"enabled": False},
-        }
+        },
+        "deploymentStrategy": "RollingUpdate"
     }
     
     if name.startswith('edge-'):
