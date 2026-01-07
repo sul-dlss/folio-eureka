@@ -2,6 +2,8 @@ image:
   repository: folioorg/mgr-tenant-entitlements
   tag: 3.1.8
 
+deploymentStrategy: RollingUpdate
+
 eureka:
   enabled: true
 

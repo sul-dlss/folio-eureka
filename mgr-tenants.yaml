@@ -2,6 +2,8 @@ image:
   repository: folioorg/mgr-tenants
   tag: 3.0.4
 
+deploymentStrategy: RollingUpdate
+
 eureka:
   enabled: true
 
