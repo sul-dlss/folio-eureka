@@ -1,6 +1,8 @@
 image:
   repository: folioorg/mgr-tenant-entitlements
-  tag: 2.0.9
+  tag: 3.1.8
+
+deploymentStrategy: RollingUpdate
 
 eureka:
   enabled: true
@@ -22,6 +24,8 @@ resources:
     memory: 512Mi
 
 extraEnvVars:
+  - name: KC_JWKS_BASE_URL
+    value: "http://keycloak:8080"
   - name: ROUTEMANAGEMENT_ENABLE
     value: "true"
   - name: REGISTER_MODULE_IN_KONG

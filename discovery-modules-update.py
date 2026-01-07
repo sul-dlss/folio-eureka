@@ -4,16 +4,17 @@ import os
 
 def main():
     global token
+    kong_url = os.getenv('KONG_URL', 'http://mgr-applications')
+    app_id = os.getenv('APP_ID', 'applications')
     token = _token()
-    request = httpx.get('http://mgr-applications/applications')
+    request = httpx.get(f'{kong_url}/applications/{app_id}',)
     applications = json.loads(request.text)
     discovery = { "discovery": [] }
 
-    for app in applications['applicationDescriptors']:
-        for module in app['modules']:
-            module_location = f"http://{module['name']}:8082"
-            module['location'] = module_location
-            discovery['discovery'].append(module)
+    for module in applications['modules']:
+        module_location = f"http://{module['name']}:8082"
+        module['location'] = module_location
+        discovery['discovery'].append(module)
 
     # print(discovery)
     for module in discovery['discovery']:
@@ -25,10 +26,11 @@ def main():
             continue
 
 def discovery_put(module, token):
+    kong_url = os.getenv('KONG_URL', 'http://mgr-applications')
     with httpx.Client(timeout=20.0) as client:
         try:
             response = client.put(
-                f"http://mgr-applications/modules/{module['id']}/discovery", 
+                f"{kong_url}/modules/{module['id']}/discovery", 
                 headers={
                     'content-type': 'application/json',
                     'Authorization': f'Bearer {token}'
@@ -45,12 +47,14 @@ def discovery_put(module, token):
 
 def _token():
     global token
+    kc_url = os.getenv('KC_URL', 'http://keycloak:8080')
+    kc_admin_client_secret = os.getenv('KC_ADMIN_CLIENT_SECRET')
     print('fetching new token')
-    response = httpx.post('http://keycloak-headless:8080/realms/master/protocol/openid-connect/token',
+    response = httpx.post(f'{kc_url}/realms/master/protocol/openid-connect/token',
                          data={
                              "client_id": "folio-backend-admin-client",
                              "grant_type": "client_credentials",
-                             "client_secret": f"{os.getenv('KC_ADMIN_CLIENT_SECRET')}",
+                             "client_secret": f"{kc_admin_client_secret}",
                          }
                     )
 

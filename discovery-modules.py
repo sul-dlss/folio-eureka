@@ -3,23 +3,25 @@ import json
 import os
 
 def main():
+    kong_url = os.getenv('KONG_URL', 'http://mgr-applications')
+    app_id = os.getenv('APP_ID', 'applications')
     token = _token()
-    request = httpx.get('http://kong-folio-dev.stanford.edu/applications')
+    request = httpx.get(f'{kong_url}/applications/{app_id}',)
     applications = json.loads(request.text)
+    print(applications)
     discovery = { "discovery": [] }
 
-    for app in applications['applicationDescriptors']:
-        for module in app['modules']:
-            module_location = f"http://{module['name']}:8082"
-            module['location'] = module_location
-            discovery['discovery'].append(module)
+    for module in applications['modules']:
+        module_location = f"http://{module['name']}:8082"
+        module['location'] = module_location
+        discovery['discovery'].append(module)
 
-    print(discovery)
     print("POSTING to /modules/discovery")
+    print(discovery)
     with httpx.Client(timeout=20.0) as client:
         try:
             response = client.post(
-                "http://kong-folio-dev.stanford.edu/modules/discovery",
+                f"{kong_url}/modules/discovery",
                 headers={
                     "content-type": "application/json",
                     "Authorization": f"Bearer {token}"
@@ -33,12 +35,14 @@ def main():
 
 
 def _token():
-    print('fetching new token')
-    response = httpx.post('http://keycloak-folio-dev.stanford.edu/realms/master/protocol/openid-connect/token',
+    kc_url = os.getenv('KC_URL', 'http://keycloak:8080')
+    kc_admin_client_secret = os.getenv('KC_ADMIN_CLIENT_SECRET')
+    print(f'fetching new token from {kc_url}')
+    response = httpx.post(f'{kc_url}/realms/master/protocol/openid-connect/token',
         data={
             "client_id": "folio-backend-admin-client",
             "grant_type": "client_credentials",
-            "client_secret": f"{os.getenv('KC_ADMIN_CLIENT_SECRET')}",
+            "client_secret": kc_admin_client_secret,
         }
     )
 

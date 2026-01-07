@@ -7,7 +7,7 @@ global:
 image:
   registry: folioorg
   repository: folio-keycloak
-  tag: 26.3.1
+  tag: 26.3.4
   pullPolicy: Always
 
 auth:

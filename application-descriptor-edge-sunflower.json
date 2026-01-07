@@ -1,0 +1,576 @@
+{
+  "id": "app-edge-complete-2.0.12",
+  "name": "app-edge-complete",
+  "version": "2.0.12",
+  "description": "Application comprised of Folio edge modules",
+  "platform": "complete",
+  "modules":   [
+        {
+      "name": "edge-orders",
+      "version": "3.2.1"
+    },
+        {
+      "name": "edge-connexion",
+      "version": "1.4.1"
+    },
+        {
+      "name": "edge-dematic",
+      "version": "2.4.2"
+    },
+        {
+      "name": "edge-caiasoft",
+      "version": "2.4.1"
+    },
+        {
+      "name": "edge-rtac",
+      "version": "2.9.3"
+    },
+        {
+      "name": "edge-sip2",
+      "version": "3.4.2"
+    },
+        {
+      "name": "edge-fqm",
+      "version": "4.0.1"
+    },
+        {
+      "name": "edge-erm",
+      "version": "1.4.0"
+    },
+        {
+      "name": "edge-patron",
+      "version": "5.3.1"
+    },
+        {
+      "name": "edge-courses",
+      "version": "1.6.0"
+    },
+        {
+      "name": "edge-ncip",
+      "version": "1.10.2"
+    }
+  ],
+  "uiModules": [],
+  "dependencies": [  {
+    "name": "app-platform-complete",
+    "version": "^2.0.0"
+  }],
+  "moduleDescriptors":   [
+        {
+      "id": "edge-orders-3.2.1",
+      "name": "Acquisitions - Orders Edge API",
+      "provides": [],
+      "optional":       [
+                {
+          "id": "gobi",
+          "version": "1.12"
+        },
+                {
+          "id": "ebsconet",
+          "version": "2.0"
+        },
+                {
+          "id": "login",
+          "version": "5.0 6.0 7.0 7.3"
+        },
+                {
+          "id": "mosaic",
+          "version": "1.0"
+        },
+                {
+          "id": "order-templates",
+          "version": "1.0"
+        },
+                {
+          "id": "custom-fields",
+          "version": "3.0"
+        },
+                {
+          "id": "finance.funds",
+          "version": "3.0"
+        },
+                {
+          "id": "finance.expense-classes",
+          "version": "3.0"
+        },
+                {
+          "id": "finance.budgets",
+          "version": "2.0"
+        },
+                {
+          "id": "acquisitions-units",
+          "version": "1.1"
+        },
+                {
+          "id": "acquisition-methods",
+          "version": "1.0"
+        },
+                {
+          "id": "organizations.organizations",
+          "version": "1.2"
+        },
+                {
+          "id": "configuration",
+          "version": "2.0"
+        },
+                {
+          "id": "locations",
+          "version": "3.1"
+        },
+                {
+          "id": "material-types",
+          "version": "2.2"
+        },
+                {
+          "id": "identifier-types",
+          "version": "1.2"
+        },
+                {
+          "id": "contributor-name-types",
+          "version": "1.3"
+        },
+                {
+          "id": "users",
+          "version": "16.4"
+        }
+      ],
+      "permissionSets": [],
+      "launchDescriptor":       {
+        "dockerImage": "edge-orders:3.2.1",
+        "dockerPull": false,
+        "dockerArgs": {"HostConfig":         {
+          "Memory": 268435456,
+          "PortBindings": {"8081/tcp": [{"HostPort": "%p"}]}
+        }},
+        "env": [        {
+          "name": "JAVA_OPTIONS",
+          "value": "-XX:MaxRAMPercentage=66.0"
+        }]
+      }
+    },
+        {
+      "id": "edge-connexion-1.4.1",
+      "name": "edge-connexion",
+      "provides": [      {
+        "id": "connexion",
+        "version": "1.0"
+      }],
+      "requires":       [
+                {
+          "id": "login",
+          "version": "7.0"
+        },
+                {
+          "id": "copycat-imports",
+          "version": "1.0"
+        },
+                {
+          "id": "copycat-profiles",
+          "version": "1.0"
+        }
+      ],
+      "permissionSets": []
+    },
+        {
+      "id": "edge-dematic-2.4.2",
+      "name": "Edge Dematic API",
+      "requires":       [
+                {
+          "id": "login",
+          "version": "7.3"
+        },
+                {
+          "id": "remote-storage-configurations",
+          "version": "1.1"
+        },
+                {
+          "id": "remote-storage-accessions",
+          "version": "1.1"
+        },
+                {
+          "id": "remote-storage-retrievals",
+          "version": "1.1"
+        },
+                {
+          "id": "remote-storage-check-in",
+          "version": "1.2"
+        },
+                {
+          "id": "remote-storage-items",
+          "version": "1.0"
+        }
+      ],
+      "provides": [],
+      "permissionSets": [],
+      "launchDescriptor":       {
+        "dockerImage": "${artifactId}:${version}",
+        "dockerPull": false,
+        "dockerArgs": {"HostConfig":         {
+          "Memory": 268435456,
+          "PortBindings": {"8081/tcp": [{"HostPort": "%p"}]}
+        }},
+        "env": [        {
+          "name": "JAVA_OPTIONS",
+          "value": "-XX:MaxRAMPercentage=66.0 -Drequest_timeout_ms=7200000"
+        }]
+      }
+    },
+        {
+      "id": "edge-caiasoft-2.4.1",
+      "name": "Edge CaiaiSoft API",
+      "requires":       [
+                {
+          "id": "login",
+          "version": "7.3"
+        },
+                {
+          "id": "remote-storage-configurations",
+          "version": "1.1"
+        },
+                {
+          "id": "remote-storage-accessions",
+          "version": "1.1"
+        },
+                {
+          "id": "remote-storage-retrievals",
+          "version": "1.1"
+        },
+                {
+          "id": "remote-storage-check-in",
+          "version": "1.2"
+        }
+      ],
+      "provides": [],
+      "permissionSets": [],
+      "launchDescriptor":       {
+        "dockerImage": "${artifactId}:${version}",
+        "dockerPull": false,
+        "dockerArgs": {"HostConfig":         {
+          "Memory": 268435456,
+          "PortBindings": {"8081/tcp": [{"HostPort": "%p"}]}
+        }},
+        "env": [        {
+          "name": "JAVA_OPTIONS",
+          "value": "-XX:MaxRAMPercentage=66.0 -Drequest_timeout_ms=7200000"
+        }]
+      }
+    },
+        {
+      "id": "edge-rtac-2.9.3",
+      "name": "Real Time Availability Check Edge API",
+      "provides": [],
+      "requires":       [
+                {
+          "id": "rtac-batch",
+          "version": "1.1"
+        },
+                {
+          "id": "login",
+          "version": "7.0"
+        }
+      ],
+      "permissionSets": [],
+      "launchDescriptor":       {
+        "dockerImage": "edge-rtac:2.9.3",
+        "dockerPull": false,
+        "dockerArgs": {"HostConfig":         {
+          "Memory": 268435456,
+          "PortBindings": {"8081/tcp": [{"HostPort": "%p"}]}
+        }},
+        "env": [        {
+          "name": "JAVA_OPTIONS",
+          "value": "-XX:MaxRAMPercentage=66.0"
+        }]
+      }
+    },
+        {
+      "id": "edge-sip2-3.4.2",
+      "name": "SIP2 Module",
+      "provides": [],
+      "requires":       [
+                {
+          "id": "login",
+          "version": "7.3"
+        },
+                {
+          "id": "circulation",
+          "version": "14.6"
+        },
+                {
+          "id": "users",
+          "version": "16.4"
+        },
+                {
+          "id": "configuration",
+          "version": "2.0"
+        },
+                {
+          "id": "feesfines",
+          "version": "19.1"
+        },
+                {
+          "id": "search",
+          "version": "1.3"
+        }
+      ],
+      "permissionSets": [      {
+        "permissionName": "edge-sip.all",
+        "displayName": "All permission associated with edge-sip2",
+        "description": "All permissions edge-sip scope",
+        "subPermissions":         [
+          "circulation.check-in-by-barcode.post",
+          "circulation.check-out-by-barcode.post",
+          "circulation.requests.collection.get",
+          "search.instances.collection.get",
+          "search.instances.ids.collection.get",
+          "circulation.loans.collection.get",
+          "configuration.entries.collection.get",
+          "configuration.entries.item.get",
+          "manualblocks.collection.get",
+          "manualblocks.item.get",
+          "accounts.collection.get",
+          "accounts.item.get",
+          "users.collection.get",
+          "users.item.get",
+          "patron-blocks.automated-patron-blocks.collection.get",
+          "inventory-storage.holdings.item.get",
+          "inventory.instances.item.get"
+        ]
+      }],
+      "launchDescriptor":       {
+        "dockerImage": "edge-sip2:3.4.2",
+        "dockerPull": false,
+        "dockerArgs": {"HostConfig":         {
+          "Memory": 268435456,
+          "PortBindings": {"8081/tcp": [{"HostPort": "%p"}]}
+        }},
+        "env":         [
+                    {
+            "name": "JAVA_OPTIONS",
+            "value": "-XX:MaxRAMPercentage=66.0"
+          },
+                    {
+            "name": "HEALTH_CHECK_PORT",
+            "value": "8081"
+          }
+        ]
+      }
+    },
+        {
+      "id": "edge-fqm-4.0.1",
+      "name": "Edge FQM API",
+      "permissionSets": [],
+      "requires":       [
+                {
+          "id": "login",
+          "version": "7.0"
+        },
+                {
+          "id": "fqm-query",
+          "version": "2.1"
+        },
+                {
+          "id": "entity-types",
+          "version": "2.1"
+        }
+      ],
+      "launchDescriptor":       {
+        "dockerImage": "edge-fqm:4.0.1",
+        "dockerPull": false,
+        "dockerArgs": {"HostConfig":         {
+          "Memory": 357913941,
+          "PortBindings": {"8081/tcp": [{"HostPort": "%p"}]}
+        }},
+        "env":         [
+                    {
+            "name": "JAVA_OPTIONS",
+            "value": "-XX:MaxRAMPercentage=66.0"
+          },
+                    {
+            "name": "okapi_url",
+            "value": "http://okapi:9130"
+          },
+                    {
+            "name": "secure_store",
+            "value": "Ephemeral"
+          },
+                    {
+            "name": "secure_store_props",
+            "value": "src/main/resources/ephemeral.properties"
+          }
+        ]
+      }
+    },
+        {
+      "id": "edge-erm-1.4.0",
+      "name": "Retrieve license term information Edge API",
+      "provides": [],
+      "requires":       [
+                {
+          "id": "login",
+          "version": "7.1"
+        },
+                {
+          "id": "erm",
+          "version": "6.1 7.1"
+        }
+      ],
+      "permissionSets": [],
+      "launchDescriptor":       {
+        "dockerImage": "edge-erm-1.4.0",
+        "dockerPull": false,
+        "dockerArgs": {"HostConfig":         {
+          "Memory": 268435456,
+          "PortBindings": {"8081/tcp": [{"HostPort": "%p"}]}
+        }},
+        "env":         [
+                    {
+            "name": "JAVA_OPTIONS",
+            "value": "-XX:MaxRAMPercentage=66.0"
+          },
+                    {
+            "name": "secure_store",
+            "value": "Ephemeral"
+          },
+                    {
+            "name": "secure_store_props",
+            "value": "src/main/resources/ephemeral.properties"
+          },
+                    {
+            "name": "token_cache_ttl_ms",
+            "value": "3600000"
+          },
+                    {
+            "name": "null_token_cache_ttl_ms",
+            "value": "30000"
+          },
+                    {
+            "name": "token_cache_capacity",
+            "value": "100"
+          }
+        ]
+      }
+    },
+        {
+      "id": "edge-patron-5.3.1",
+      "name": "Patron Services Edge API",
+      "provides": [],
+      "requires":       [
+                {
+          "id": "patron",
+          "version": "6.5"
+        },
+                {
+          "id": "circulation",
+          "version": "9.5 10.0 11.0 12.0 13.0 14.0"
+        },
+                {
+          "id": "login",
+          "version": "5.0 6.0 7.0"
+        }
+      ],
+      "permissionSets": [],
+      "launchDescriptor":       {
+        "dockerImage": "edge-patron:5.3.1",
+        "dockerPull": false,
+        "dockerArgs": {"HostConfig":         {
+          "Memory": 268435456,
+          "PortBindings": {"8081/tcp": [{"HostPort": "%p"}]}
+        }},
+        "env":         [
+                    {
+            "name": "JAVA_OPTIONS",
+            "value": "-XX:MaxRAMPercentage=66.0"
+          },
+                    {
+            "name": "SECURE_REQUESTS_FEATURE_ENABLED",
+            "value": "false"
+          },
+                    {
+            "name": "SECURE_TENANT_ID",
+            "value": "securetenant"
+          }
+        ]
+      }
+    },
+        {
+      "id": "edge-courses-1.6.0",
+      "name": "Retrieve course-reserve information Edge API",
+      "provides": [],
+      "requires":       [
+                {
+          "id": "course-reserves-storage",
+          "version": "0.3"
+        },
+                {
+          "id": "login",
+          "version": "7.1"
+        }
+      ],
+      "permissionSets": [],
+      "launchDescriptor":       {
+        "dockerImage": "edge-courses-1.6.0",
+        "dockerPull": false,
+        "dockerArgs": {"HostConfig":         {
+          "Memory": 268435456,
+          "PortBindings": {"8080/tcp": [{"HostPort": "%p"}]}
+        }},
+        "env":         [
+                    {
+            "name": "JAVA_OPTIONS",
+            "value": "-XX:MaxRAMPercentage=66.0"
+          },
+                    {
+            "name": "secure_store",
+            "value": "Ephemeral"
+          },
+                    {
+            "name": "secure_store_props",
+            "value": "src/main/resources/ephemeral.properties"
+          },
+                    {
+            "name": "token_cache_ttl_ms",
+            "value": "3600000"
+          },
+                    {
+            "name": "null_token_cache_ttl_ms",
+            "value": "30000"
+          },
+                    {
+            "name": "token_cache_capacity",
+            "value": "100"
+          }
+        ]
+      }
+    },
+        {
+      "id": "edge-ncip-1.10.2",
+      "name": "Edge NCIP",
+      "provides": [],
+      "requires":       [
+                {
+          "id": "ncip",
+          "version": "1.0"
+        },
+                {
+          "id": "login",
+          "version": "5.0 6.0 7.0"
+        }
+      ],
+      "permissionSets": [],
+      "launchDescriptor":       {
+        "dockerImage": "edge-ncip:1.10.2",
+        "dockerPull": false,
+        "dockerArgs": {"HostConfig":         {
+          "Memory": 357913941,
+          "PortBindings": {"8081/tcp": [{"HostPort": "%p"}]}
+        }},
+        "env": [        {
+          "name": "JAVA_OPTIONS",
+          "value": "-XX:MaxRAMPercentage=66.0"
+        }]
+      }
+    }
+  ],
+  "uiModuleDescriptors": []
+}

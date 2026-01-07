@@ -4,7 +4,7 @@ global:
 image:
   registry: folioorg
   repository: folio-kong
-  tag: 3.9.0
+  tag: 3.9.1
   pullPolicy: Always
 useDaemonset: false
 replicaCount: 1
@@ -135,7 +135,7 @@ kong:
       memory: 12Gi
     limits:
       ephemeral-storage: 1Gi
-      memory: 15  Gi
+      memory: 15Gi
 ingressController:
   enabled: false
 migration:

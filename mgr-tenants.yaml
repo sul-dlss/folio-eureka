@@ -1,6 +1,8 @@
 image:
   repository: folioorg/mgr-tenants
-  tag: 2.0.1
+  tag: 3.0.4
+
+deploymentStrategy: RollingUpdate
 
 eureka:
   enabled: true
@@ -22,6 +24,8 @@ resources:
     memory: 512Mi
 
 extraEnvVars:
+  - name: KC_JWKS_BASE_URL
+    value: "http://keycloak:8080"
   - name: MODULE_URL
     value: "http://mgr-tenants"
   - name: kong.url

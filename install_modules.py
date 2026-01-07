@@ -33,8 +33,14 @@ def base_override(name, version):
             "db": {"enabled": True, "existingSecret": "db-credentials"},
             "kafka": {"enabled": True, "existingSecret": "kafka-credentials"},
             "okapi": {"enabled": False},
-        }
+        },
+        "deploymentStrategy": "RollingUpdate"
     }
+    
+    if name.startswith('edge-'):
+        del data['integrations']['db']
+        del data['integrations']['kafka']
+        data['integrations']['eureka-edge'] = {"enabled": True, "existingSecret": "eureka-edge"}
     
     return yaml.dump(data)
 
@@ -61,6 +67,9 @@ def resources_override(name):
 
 
 def extrafile_override(name, file):
+    if Path(f"modules/{name}/{file}-{args.namespace}.yaml").exists():
+        return f"-f modules/{name}/{file}.yaml"
+    
     if Path(f"modules/{name}/{file}.yaml").exists():
         return f"-f modules/{name}/{file}.yaml"
     

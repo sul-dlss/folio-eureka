@@ -12,3 +12,32 @@ integrations:
   s3:
     enabled: true
     existingSecret: "s3-credentials"
+
+# extraEnvVars: |
+#   - name: SPLIT_FILES_ENABLED
+#     value: "true"
+#   - name: AWS_SDK
+#     value: "true"
+#   - name: S3_FORCEPATHSTYLE
+#     value: "true"
+
+# extraVolumes:
+#   data-import-uploads:
+#     enabled: true
+#     name: data-import-uploads
+#     persistentVolumeClaim:
+#       claimName: data-import-uploads
+
+# extraVolumeMounts:
+#   data-import-uploads:
+#     enabled: true
+#     name: data-import-uploads
+#     mountPath: /usr/verticles/storage/upload
+
+# volumeClaims:
+#   data-import-uploads:
+#     enabled: true
+#     existingClaim: data-import-uploads
+    # storageClassName: nfs
+    # size: 2Gi
+    # accessModes: ReadWriteMany
