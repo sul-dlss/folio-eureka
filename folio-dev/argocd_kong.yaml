@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kong
+  namespace: folio-dev
+spec:
+  destination:
+    namespace: folio-dev
+    server: https://kubernetes.default.svc
+  sources:
+    - chart: kong
+      repoURL: oci://registry-1.docker.io/bitnamicharts/kong
+      targetRevision: 12.0.11
+      helm:
+        valueFiles:
+          - $values/folio-dev/kong.yaml
+    - repoURL: git@github.com:sul-dlss/folio-eureka.git
+      targetRevision: kong-gateway
+      ref: values
+  project: folio-dev
