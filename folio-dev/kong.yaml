@@ -4,7 +4,7 @@ global:
 image:
   registry: folioorg
   repository: folio-kong
-  tag: 3.9.1
+  tag: 3.9.0
   pullPolicy: Always
 useDaemonset: false
 replicaCount: 1
@@ -109,7 +109,7 @@ kong:
   - name: KONG_NGINX_HTTP_LARGE_CLIENT_HEADER_BUFFERS
     value: "4 16k"
   - name: KONG_ADMIN_GUI_API_URL
-    value: "https://kong-folio-dev.stanford.edu"
+    value: "https://folio-dev-gateway.stanford.edu"
   - name: KONG_NGINX_HTTPS_LARGE_CLIENT_HEADER_BUFFERS
     value: "4 16k"
   - name: KONG_PROXY_LISTEN
