@@ -37,15 +37,6 @@ service:
     proxyHttps: 443
     adminHttp: 8001
     adminHttps: 8444
-ingress:
-  ingressClassName: "nginx"
-  pathType: ImplementationSpecific
-  hostname: kong-folio-dev.stanford.edu
-  enabled: true
-  tls: true
-  annotations:
-    nginx.ingress.kubernetes.io/client-body-buffer-size: 512M
-    nginx.ingress.kubernetes.io/proxy-body-size: 512M
 kong:
   livenessProbe:
     enabled: false
@@ -141,3 +132,36 @@ ingressController:
 migration:
   command: ["/bin/sh", "-c"]
   args: ["echo 'Hello kong!'"]
+extraDeploy:
+  - |
+    apiVersion: gateway.networking.k8s.io/v1
+    kind: Gateway
+    metadata:
+      name: folio-gateway
+      namespace: folio-dev
+    spec:
+      gatewayClassName: folio-gateway
+      listeners:
+      - hostname: folio-dev-gateway.stanford.edu
+        name: folio-dev-gateway-stanford-edu-http
+        port: 80
+        protocol: HTTP
+  - |
+    apiVersion: gateway.networking.k8s.io/v1
+    kind: HTTPRoute
+    metadata:
+      name: folio-backend
+      namespace: folio-dev
+    spec:
+      hostnames:
+      - folio-dev-gateway.stanford.edu
+      parentRefs:
+      - name: folio-gateway
+      rules:
+      - backendRefs:
+        - name: kong
+          port: 8443
+        matches:
+        - path:
+            type: PathPrefix
+            value: /
