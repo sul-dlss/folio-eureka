@@ -160,7 +160,7 @@ extraDeploy:
       rules:
       - backendRefs:
         - name: kong
-          port: 8443
+          port: 8000
         matches:
         - path:
             type: PathPrefix
