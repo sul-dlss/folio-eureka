@@ -14,7 +14,8 @@ spec:
       helm:
         valueFiles:
           - $values/folio-dev/kong.yaml
-    - repoURL: git@github.com:sul-dlss/folio-eureka.git
+        skipCrds: true
+    - repoURL: git@github.com:sul-dlss/folio-k8s.git
       targetRevision: kong-gateway
       ref: values
   project: folio-dev
