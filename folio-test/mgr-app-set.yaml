@@ -3,33 +3,32 @@ kind: ApplicationSet
 metadata:
   name: mgr-apps
   namespace: folio-test
-operation:
-  sync:
-    syncStrategy:
-      hook: {}
 spec:
   generators:
   - list:
       elements:
       - mgr_app: mgr-applications
+        version: 0.0.16
       - mgr_app: mgr-tenants
+        version: 0.0.16
       - mgr_app: mgr-tenant-entitlements
+        version: 0.0.16
   template:
     metadata:
       name: '{{.mgr_app}}'
       namespace: folio-test
-  spec:
-    destination:
-      namespace: folio-test
-      server: https://kubernetes.default.svc
-    project: folio-test
-    sources:
-    - chart: '{{.mgr_app}}'
-      helm:
-        valueFiles:
-        - $values/folio-test/{{.mgr_app}}.yaml
-      repoURL: https://sul-dlss-labs.github.io/folio-helm-v2/
-      targetRevision: 5.9.50
-    - ref: values
-      repoURL: git@github.com:sul-dlss/folio-eureka.git
-      targetRevision: main
+    spec:
+      destination:
+        namespace: folio-test
+        server: https://kubernetes.default.svc
+      project: folio-test
+      sources:
+      - chart: '{{.mgr_app}}'
+        helm:
+          valueFiles:
+          - $values/folio-test/{{.mgr_app}}.yaml
+        repoURL: https://sul-dlss-labs.github.io/folio-helm-v2/
+        targetRevision: '{{.version}}'
+      - ref: values
+        repoURL: git@github.com:sul-dlss/folio-eureka.git
+        targetRevision: argo-cd
