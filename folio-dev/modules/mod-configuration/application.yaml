@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mod-configuration
+  namespace: folio-dev
+operation:
+  sync:
+    syncStrategy:
+      hook: {}
+spec:
+  destination:
+    namespace: folio-dev
+    server: https://kubernetes.default.svc
+  project: folio-dev
+  sources:
+  - chart: mod-configuration
+    helm:
+      valueFiles:
+      - $values/folio-dev/modules/mod-configuration/overrides.yaml
+      - $values/common/resources.yaml
+      - $values/common/sidecar.yaml
+      - $values/common/probes.yaml
+    repoURL: https://sul-dlss-labs.github.io/folio-helm-v2/
+    targetRevision: 5.9.50
+  - ref: values
+    repoURL: git@github.com:sul-dlss/folio-eureka.git
+    targetRevision: argo-cd

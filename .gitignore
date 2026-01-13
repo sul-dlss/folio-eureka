@@ -1,9 +1,0 @@
-modules/*/*
-!modules/*/replicaset-prod.y?ml
-!modules/*/resources.y?ml
-!modules/*/extra_env.y?ml
-!modules/*/java_opts.y?ml
-!modules/*/probes.y?ml
-!modules/*/service*.y?ml
-!modules/*/sidecar.y?ml
-*/[a-zA-Z0-9-_]*overrides.y?ml
