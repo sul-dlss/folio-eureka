@@ -139,10 +139,10 @@ extraDeploy:
     apiVersion: gateway.networking.k8s.io/v1
     kind: Gateway
     metadata:
-      name: folio-gateway
+      name: eg
       namespace: folio-dev
     spec:
-      gatewayClassName: folio-gateway
+      gatewayClassName: eg
       listeners:
       - hostname: folio-dev-gateway.stanford.edu
         name: folio-dev-gateway-stanford-edu-http
@@ -158,7 +158,7 @@ extraDeploy:
       hostnames:
       - folio-dev-gateway.stanford.edu
       parentRefs:
-      - name: folio-gateway
+      - name: eg
       rules:
       - backendRefs:
         - name: kong
