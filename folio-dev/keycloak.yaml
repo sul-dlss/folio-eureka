@@ -112,14 +112,6 @@ externalDatabase:
   existingSecretDatabaseKey: KC_DB_URL_DATABASE
   existingSecretPasswordKey: KC_DB_PASSWORD
 
-# externalDatabase:
-#   host: "sul-folio-db-dev.stanford.edu"
-#   port: 9999
-#   database: "keycloak-folio"
-#   user: "keycloak"
-#   existingSecret: keycloak-credentials
-#   existingSecretPasswordKey: KC_DB_PASSWORD
-
 logging:
   output: default
   level: DEBUG
@@ -137,25 +129,6 @@ service:
   ports:
     http: 8080
     https: 8443
-
-ingress:
-  enabled: true
-  hostname: keycloak-folio-dev.stanford.edu
-  ingressClassName: "nginx"
-  tls: true
-  certManager: true
-  annotations:
-    kubernetes.io/ingress.class: nginx
-
-adminIngress:
-  enabled: false
-  hostname: keycloak-admin-folio-dev.stanford.edu
-  ingressClassName: "nginx"
-  tls: true
-  certManager: true
-  annotations:
-    kubernetes.io/ingress.class: nginx
-
 
 livenessProbe:
   enabled: true
@@ -180,3 +153,57 @@ startupProbe:
   timeoutSeconds: 1
   failureThreshold: 300
   successThreshold: 1
+
+extraDeploy:
+  - |
+    apiVersion: gateway.networking.k8s.io/v1
+    kind: Gateway
+    metadata:
+      name: eg
+      namespace: folio-dev
+    spec:
+      gatewayClassName: eg
+      listeners:
+      - hostname: keycloak-folio-dev.stanford.edu
+        name: keycloak-folio-dev
+        port: 80
+        protocol: HTTP
+      - hostname: keycloak-admin-folio-dev.stanford.edu
+        name: keycloak-admin-folio-dev
+  - |
+    apiVersion: gateway.networking.k8s.io/v1
+    kind: HTTPRoute
+    metadata:
+      name: keycloak-backend
+      namespace: folio-dev
+    spec:
+      hostnames:
+      - keycloak-folio-dev.stanford.edu
+      - keycloak-admin-folio-dev.stanford.edu
+      parentRefs:
+      - name: eg
+      rules:
+      - backendRefs:
+        - name: keycloak
+          port: 8080
+        matches:
+        - path:
+            type: PathPrefix
+            value: /
+  - |
+    apiVersion: gateway.envoyproxy.io/v1alpha1
+    kind: SecurityPolicy
+    metadata:
+      name: ip-limits
+    spec:
+      targetRefs:
+        - group: gateway.networking.k8s.io
+          kind: HTTPRoute
+          name: keycloak-backend
+      authorization:
+        defaultAction: Deny
+        rules:
+          - action: Allow
+            principal:
+              clientCIDRs:
+                - "54.245.203.243, 171.64.0.0/14, 10.32.0.0/15, 10.34.0.0/15, 10.96.0.0/11, 10.98.0.0/15, 10.130.0.0/18, 10.130.64.0/18, 10.130.128.0/18, 10.130.192.0/18, 172.24.0.0/14, 172.20.206.128/25, 172.20.207.0/25, 171.66.16.0/21, 171.66.24.0/21, 171.66.176.0/20, 204.63.231.0/25, 10.109.48.0/25, 10.109.48.128/25, 171.66.1.0/24"
