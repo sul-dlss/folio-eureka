@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: mgr-apps
+  namespace: folio-dev
+operation:
+  sync:
+    syncStrategy:
+      hook: {}
+spec:
+  generators:
+  - list:
+      elements:
+      - mgr_app: mgr-applications
+      - mgr_app: mgr-tenants
+      - mgr_app: mgr-tenant-entitlements
+  template:
+    metadata:
+      name: '{{.mgr_app}}'
+      namespace: folio-dev
+  spec:
+    destination:
+      namespace: folio-dev
+      server: https://kubernetes.default.svc
+    project: folio-dev
+    sources:
+    - chart: '{{.mgr_app}}'
+      helm:
+        valueFiles:
+        - $values/folio-dev/{{.mgr_app}}.yaml
+      repoURL: https://sul-dlss-labs.github.io/folio-helm-v2/
+      targetRevision: 5.9.50
+    - ref: values
+      repoURL: git@github.com:sul-dlss/folio-eureka.git
+      targetRevision: main
