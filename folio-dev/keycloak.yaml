@@ -105,11 +105,10 @@ postgresql:
   enabled: false
 
 externalDatabase:
+  host: "sul-folio-db-dev.stanford.edu"
+  port: 9999
   existingSecret: keycloak-credentials
-  existingSecretHostKey: KC_DB_URL_HOST 
-  existingSecretPortKey: KC_DB_URL_PORT
   existingSecretUserKey: KC_DB_USERNAME
-  existingSecretDatabaseKey: KC_DB_URL_DATABASE
   existingSecretPasswordKey: KC_DB_PASSWORD
 
 logging:
