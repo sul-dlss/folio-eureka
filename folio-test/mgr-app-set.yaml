@@ -22,6 +22,9 @@ spec:
         namespace: folio-test
         server: https://kubernetes.default.svc
       project: folio-test
+      syncPolicy:
+        automated:
+          enabled: true
       sources:
       - chart: '{{mgr_app}}'
         helm:

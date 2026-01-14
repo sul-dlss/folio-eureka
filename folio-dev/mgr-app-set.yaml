@@ -22,6 +22,9 @@ spec:
         namespace: folio-dev
         server: https://kubernetes.default.svc
       project: folio-dev
+      syncPolicy:
+        automated:
+          enabled: true
       sources:
       - chart: '{{mgr_app}}'
         helm:
