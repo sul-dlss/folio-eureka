@@ -4,6 +4,8 @@ metadata:
   name: mgr-apps
   namespace: folio-dev
 spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
   generators:
   - list:
       elements:
@@ -15,23 +17,25 @@ spec:
         version: 0.0.16
   template:
     metadata:
-      name: '{{mgr_app}}'
+      name: "{{mgr_app}}"
       namespace: folio-dev
     spec:
-      destination:
-        namespace: folio-dev
-        server: https://kubernetes.default.svc
       project: folio-dev
       syncPolicy:
         automated:
           enabled: true
+        syncOptions:
+          - CreateNamespace=true
       sources:
-      - chart: '{{mgr_app}}'
+      - repoURL: https://sul-dlss.github.io/folio-helm-v2/
+        targetRevision: "{{version}}"
+        chart: "{{mgr_app}}"
         helm:
           valueFiles:
-          - $values/folio-dev/{{mgr_app}}.yaml
-        repoURL: https://sul-dlss.github.io/folio-helm-v2/
-        targetRevision: '{{version}}'
+            - $values/folio-dev/{{mgr_app}}.yaml
       - ref: values
-        repoURL: https://github.com/sul-dlss/folio-eureka
+        repoURL: https://github.com/sul-dlss/folio-eureka/
         targetRevision: argo-cd
+      destination:
+        namespace: folio-dev
+        server: https://kubernetes.default.svc
