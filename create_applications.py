@@ -44,7 +44,7 @@ def application_manifest(name, version, namespace, repo_url, values_files):
                 },
                 {
                     "ref": "values",
-                    "repoURL": "git@github.com:sul-dlss/folio-eureka.git",
+                    "repoURL": "https://github.com/sul-dlss/folio-eureka",
                     "targetRevision": args.values_branch,
                 }
             ]
