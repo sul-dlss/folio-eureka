@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: keycloak
+  namespace: folio-test
+spec:
+  destination:
+    namespace: folio-test
+    server: https://kubernetes.default.svc
+  sources:
+    - chart: keycloak
+      repoURL: oci://registry-1.docker.io/bitnamicharts/keycloak
+      targetRevision: 25.2.20
+      helm:
+        valueFiles:
+          - $values/folio-test/infrastructure/keycloak.yaml
+    - repoURL: https://github.com/sul-dlss/folio-eureka
+      targetRevision: folio-test-infrastructure
+      ref: values
+  project: folio-test

@@ -1,0 +1,9 @@
+{
+  "type": "s3",
+  "settings": {
+    "endpoint": "https://s3.us-west-1.wasabisys.com",
+    "bucket": "folio-elasticsearch",
+    "base_path": "folio-test",
+    "region": "us-west-1"
+  }
+}

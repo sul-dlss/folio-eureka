@@ -1,0 +1,44 @@
+authDelegator:
+  enabled: false
+global:
+  enabled: true
+injector:
+  enabled: false
+server:
+  agentInjector:
+    enabled: false
+  auditLog:
+    enabled: false
+  backup:
+    enabled: false
+  dataStorage:
+    enabled: false
+  dev:
+    enabled: true
+  extraEnvironmentVars:
+    VAULT_DEV_ROOT_TOKEN_ID: root
+  ha:
+    enabled: false
+  ingress:
+    enabled: false
+  logLevel: debug
+  metrics:
+    enabled: false
+  resources:
+    limits:
+      cpu: 1024m
+      memory: 1Gi
+    requests:
+      cpu: 100m
+      memory: 256Mi
+  service:
+    port: 8200
+    type: ClusterIP
+  tls:
+    auto:
+      enabled: false
+    enabled: false
+  unsealConfig:
+    enabled: false
+ui:
+  enabled: true

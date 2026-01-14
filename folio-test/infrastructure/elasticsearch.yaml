@@ -1,0 +1,114 @@
+image:
+  repository: "bitnamilegacy/elasticsearch"
+  tag: "8.6.2-debian-11-r10"
+sysctlImage:
+  repository: "bitnamilegacy/os-shell"
+metrics:
+  enabled: true
+  image:
+    repository: bitnamilegacy/elasticsearch-exporter
+    tag: 1.5.0-debian-11-r80
+  serviceMonitor:
+    enabled: true
+    namespace: folio-test
+    labels:
+      app: prometheus-elasticsearch-exporter
+      release: prometheus
+      component: folio-test-elastic
+global:
+  # Future versions will use 'defaultStorageClass'
+  # defaultStorageClass: "mayastor-3"
+  storageClass: "mayastor-3"
+coordinating:
+  replicaCount: 3
+  heapSize: 2760M
+  readinessProbe:
+    enabled: false
+  livenessProbe:
+    initialDelaySeconds: 360
+    periodSeconds: 60
+    timeoutSeconds: 20
+  resources:
+    requests:
+      cpu: 1536m
+      memory: 4608M
+    limits:
+      # no limit for cpu
+      memory: 4608M
+data:
+  replicaCount: 3
+  # heap size for full indexing:
+  # heapSize: 3680M
+  # Normal heap size:
+  heapSize: 2760M
+  persistence:
+    size: 350Gi
+  readinessProbe:
+    enabled: false
+  livenessProbe:
+    initialDelaySeconds: 360
+    periodSeconds: 60
+    timeoutSeconds: 20
+  resources:
+    requests:
+      # Normal cpu:
+      cpu: 1536m
+      # cpu for full indexing:
+      # cpu: 2944m
+      memory: 4608M
+    limits:
+      # no limit for cpu
+      memory: 4608M
+ingest:
+  replicaCount: 3
+  heapSize: 2304M
+  readinessProbe:
+    enabled: false
+  livenessProbe:
+    initialDelaySeconds: 360
+    periodSeconds: 60
+    timeoutSeconds: 20
+  resources:
+    requests:
+      cpu: 256m
+      memory: 3840M
+    limits:
+      # no limit for cpu
+      memory: 3840M
+master:
+  replicaCount: 3
+  heapSize: 2304M
+  readinessProbe:
+    enabled: false
+  livenessProbe:
+    initialDelaySeconds: 360
+    periodSeconds: 60
+    timeoutSeconds: 20
+  resources:
+    requests:
+      cpu: 512m
+      memory: 3840M
+    limits:
+      # no limit for cpu
+      memory: 3840M
+plugins: analysis-icu,analysis-kuromoji,analysis-smartcn,analysis-nori,analysis-phonetic
+extraEnvVars:
+  - name: AWS_S3_ACCESS_KEY
+    valueFrom:
+      secretKeyRef:
+        name: elasticsearch-snapshot-s3-credentials
+        key: s3.client.default.access_key
+  - name: AWS_S3_SECRET_KEY
+    valueFrom:
+      secretKeyRef:
+        name: elasticsearch-snapshot-s3-credentials
+        key: s3.client.default.secret_key
+initScripts:
+  s3.sh: |-
+    echo "Setting up S3 repository credentials"
+    env | grep AWS_S3_ACCESS_KEY | cut -d'=' -f2 > /tmp/access_key
+    env | grep AWS_S3_SECRET_KEY | cut -d'=' -f2 > /tmp/secret_key
+    cat /tmp/access_key | elasticsearch-keystore add -xvf s3.client.default.access_key
+    cat /tmp/secret_key | elasticsearch-keystore add -xvf s3.client.default.secret_key
+network:
+  host: 0.0.0.0
