@@ -2,21 +2,21 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: mod-configuration
-  namespace: folio-dev
+  namespace: folio-test
 operation:
   sync:
     syncStrategy:
       hook: {}
 spec:
   destination:
-    namespace: folio-dev
+    namespace: folio-test
     server: https://kubernetes.default.svc
-  project: folio-dev
+  project: folio-test
   sources:
   - chart: mod-configuration
     helm:
       valueFiles:
-      - $values/folio-dev/modules/mod-configuration/overrides.yaml
+      - $values/folio-test/modules/mod-configuration/overrides.yaml
       - $values/common/resources.yaml
       - $values/common/sidecar.yaml
       - $values/common/probes.yaml

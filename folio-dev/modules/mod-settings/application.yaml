@@ -20,7 +20,7 @@ spec:
       - $values/common/resources.yaml
       - $values/common/sidecar.yaml
       - $values/common/probes.yaml
-    repoURL: https://sul-dlss-labs.github.io/folio-helm-v2/
+    repoURL: https://sul-dlss.github.io/folio-helm-v2/
     targetRevision: 1.0.50
   - ref: values
     repoURL: git@github.com:sul-dlss/folio-eureka.git

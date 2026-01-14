@@ -2,8 +2,8 @@ deploymentStrategy: RollingUpdate
 eureka:
   enabled: true
 image:
-  repository: folioorg/mod-users
-  tag: 19.5.2
+  repository: folioorg/mod-tags
+  tag: 2.3.0
 integrations:
   db:
     enabled: true
@@ -13,9 +13,6 @@ integrations:
     existingSecret: kafka-credentials
   okapi:
     enabled: false
-  s3:
-    enabled: true
-    existingSecret: s3-credentials
 podSecurityContext:
   fsGroup: 2000
 securityContext:
