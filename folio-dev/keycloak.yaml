@@ -158,7 +158,7 @@ extraDeploy:
     apiVersion: gateway.networking.k8s.io/v1
     kind: Gateway
     metadata:
-      name: eg
+      name: keycloak-gateway
       namespace: folio-dev
     spec:
       gatewayClassName: eg
@@ -180,7 +180,7 @@ extraDeploy:
       - keycloak-folio-dev.stanford.edu
       - keycloak-admin-folio-dev.stanford.edu
       parentRefs:
-      - name: eg
+      - name: keycloak-gateway
       rules:
       - backendRefs:
         - name: keycloak
@@ -193,7 +193,7 @@ extraDeploy:
     apiVersion: gateway.envoyproxy.io/v1alpha1
     kind: SecurityPolicy
     metadata:
-      name: ip-limits
+      name: keycloak-ip-limits
     spec:
       targetRefs:
         - group: gateway.networking.k8s.io

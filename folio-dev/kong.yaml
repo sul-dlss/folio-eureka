@@ -139,7 +139,7 @@ extraDeploy:
     apiVersion: gateway.networking.k8s.io/v1
     kind: Gateway
     metadata:
-      name: eg
+      name: kong-gateway
       namespace: folio-dev
     spec:
       gatewayClassName: eg
@@ -152,13 +152,13 @@ extraDeploy:
     apiVersion: gateway.networking.k8s.io/v1
     kind: HTTPRoute
     metadata:
-      name: folio-backend
+      name: kong-backend
       namespace: folio-dev
     spec:
       hostnames:
       - folio-dev-gateway.stanford.edu
       parentRefs:
-      - name: eg
+      - name: kong-gateway
       rules:
       - backendRefs:
         - name: kong
@@ -171,12 +171,12 @@ extraDeploy:
     apiVersion: gateway.envoyproxy.io/v1alpha1
     kind: SecurityPolicy
     metadata:
-      name: ip-limits
+      name: kong-ip-limits
     spec:
       targetRefs:
         - group: gateway.networking.k8s.io
           kind: HTTPRoute
-          name: folio-backend
+          name: kong-backend
       authorization:
         defaultAction: Deny
         rules:
