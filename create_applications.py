@@ -67,8 +67,6 @@ modules = data['modules']
 if args.modules:
     modules = [obj for obj in data['modules'] if obj['name'] in args.modules]
 
-repo_url = os.popen(f"helm repo list | grep {args.helm_repo} | awk '{{print $2}}'").read().strip()
-
 for module in modules:
     module_name = module['name']
     dir = Path(f"{args.namespace}/modules/{module_name}")
@@ -93,15 +91,17 @@ for module in modules:
 
     if Path(f"{args.namespace}/modules/{module_name}/service.yaml").exists():
         values_files.append(f"$values/{args.namespace}/modules/{module_name}/service.yaml")
+    
     if Path(f"{args.namespace}/modules/{module_name}/java_opts.yaml").exists():
         values_files.append(f"$values/{args.namespace}/modules/{module_name}/java_opts.yaml")
-    if Path(f"{args.namespace}/modules/{module_name}/extra_integrations.yaml").exists():
-        values_files.append(f"$values/{args.namespace}/modules/{module_name}/extra_integrations.yaml")
+    
     if Path(f"{args.namespace}/modules/{module_name}/extra_env.yaml").exists():
         values_files.append(f"$values/{args.namespace}/modules/{module_name}/extra_env.yaml")
 
     
     chart_version = os.popen(f"helm show chart {args.helm_repo}/{module_name} | grep '^version' | awk '{{print $2}}'").read().strip()
+    
+    repo_url = os.popen(f"helm repo list | grep {args.helm_repo} | awk '{{print $2}}'").read().strip()
 
     filename = f"{args.namespace}/modules/{module_name}/application.yaml"
     with open(filename, 'w') as file:

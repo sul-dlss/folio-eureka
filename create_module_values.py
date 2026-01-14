@@ -16,6 +16,18 @@ parser.add_argument('-n', '--namespace', required=True, help='the Kubernetes nam
 
 args = parser.parse_args()
 
+S3_MODULES = [
+    "mod-bulk-operations",
+    "mod-data-export",
+    "mod-data-export-worker",
+    "mod-data-import",
+    "mod-entities-links",
+    "mod-lists",
+    "mod-oai-pmh",
+    "mod-reporting",
+    "mod-users",
+]
+
 def base_override(name, version):
     data = {
         "image": {"repository": f"folioorg/{name}", "tag": f"{version}"},
@@ -34,6 +46,8 @@ def base_override(name, version):
         "deploymentStrategy": "RollingUpdate"
     }
     
+    if name in S3_MODULES:
+        data['integrations']['s3'] = {"enabled": True, "existingSecret": "s3-credentials"}
     if name.startswith('edge-'):
         del data['integrations']['db']
         del data['integrations']['kafka']
