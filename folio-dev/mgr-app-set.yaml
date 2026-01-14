@@ -15,20 +15,24 @@ spec:
         version: 0.0.16
   template:
     metadata:
-      name: '{{.mgr_app}}'
+      name: '{{mgr_app}}'
       namespace: folio-dev
+    operation:
+      sync:
+        syncStrategy:
+          hook: {}
     spec:
       destination:
         namespace: folio-dev
         server: https://kubernetes.default.svc
       project: folio-dev
       sources:
-      - chart: '{{.mgr_app}}'
+      - chart: '{{mgr_app}}'
         helm:
           valueFiles:
-          - $values/folio-dev/{{.mgr_app}}.yaml
-        repoURL: https://sul-dlss-labs.github.io/folio-helm-v2/
-        targetRevision: '{{.version}}'
+          - $values/folio-dev/{{mgr_app}}.yaml
+        repoURL: https://sul-dlss.github.io/folio-helm-v2/
+        targetRevision: '{{version}}'
       - ref: values
         repoURL: git@github.com:sul-dlss/folio-eureka.git
         targetRevision: argo-cd

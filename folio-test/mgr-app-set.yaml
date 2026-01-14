@@ -15,7 +15,7 @@ spec:
         version: 0.0.16
   template:
     metadata:
-      name: '{{.mgr_app}}'
+      name: '{{mgr_app}}'
       namespace: folio-test
     spec:
       destination:
@@ -23,12 +23,12 @@ spec:
         server: https://kubernetes.default.svc
       project: folio-test
       sources:
-      - chart: '{{.mgr_app}}'
+      - chart: '{{mgr_app}}'
         helm:
           valueFiles:
-          - $values/folio-test/{{.mgr_app}}.yaml
-        repoURL: https://sul-dlss-labs.github.io/folio-helm-v2/
-        targetRevision: '{{.version}}'
+          - $values/folio-test/{{mgr_app}}.yaml
+        repoURL: https://sul-dlss.github.io/folio-helm-v2/
+        targetRevision: '{{version}}'
       - ref: values
         repoURL: git@github.com:sul-dlss/folio-eureka.git
         targetRevision: argo-cd
