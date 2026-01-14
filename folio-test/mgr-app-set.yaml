@@ -17,6 +17,10 @@ spec:
     metadata:
       name: '{{mgr_app}}'
       namespace: folio-test
+    operation:
+      sync:
+        syncStrategy:
+          hook: {}
     spec:
       destination:
         namespace: folio-test
