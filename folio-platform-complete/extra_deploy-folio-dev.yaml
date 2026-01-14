@@ -1,0 +1,87 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: platform-complete-gateway
+  namespace: folio-dev
+spec:
+  gatewayClassName: eg
+  listeners:
+  - hostname: folio-dev.stanford.edu
+    name: platform-complete
+    port: 80
+    protocol: HTTP
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: platform-complete-backend
+  namespace: folio-dev
+spec:
+  hostnames:
+  - folio-dev.stanford.edu
+  parentRefs:
+  - name: platform-complete-gateway
+  rules:
+  - backendRefs:
+    - name: platform-complete
+      port: 80
+    matches:
+    - path:
+        type: PathPrefix
+        value: /
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: folio-ip-limits
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: platform-complete-backend
+  authorization:
+    defaultAction: Deny
+    rules:
+      - action: Allow
+        principal:
+          clientCIDRs:
+            - "54.245.203.243, 171.64.0.0/14, 10.32.0.0/15, 10.34.0.0/15, 10.96.0.0/11, 10.98.0.0/15, 10.130.0.0/18, 10.130.64.0/18, 10.130.128.0/18, 10.130.192.0/18, 172.24.0.0/14, 172.20.206.128/25, 172.20.207.0/25, 171.66.16.0/21, 171.66.24.0/21, 171.66.176.0/20, 204.63.231.0/25, 10.109.48.0/25, 10.109.48.128/25, 171.66.1.0/24"
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: folio-cors
+spec:
+  targetRefs:
+  - group: gateway.networking.k8s.io
+    kind: HTTPRoute
+    name: platform-complete-backend
+  cors:
+    allowOrigins:
+    - "http://kong:8000"
+    allowMethods:
+    - GET
+    - OPTIONS
+    - POST
+    - PUT
+    allowCredentials: true
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: BackendTrafficPolicy
+metadata:
+  name: custom-error-page
+spec:
+  targetRef:
+    group: gateway.networking.k8s.io
+    kind: HTTPRoute
+    name: platform-complete-backend
+  responseOverride:
+    - match:
+        statusCodes:
+          - type: Value
+            value: 403
+      response:
+        contentType: text/html
+        body:
+          type: Inline
+          inline: "You are not authorized to access FOLIO. A connection to the Stanford Network is required."
