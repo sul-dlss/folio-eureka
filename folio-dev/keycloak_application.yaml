@@ -15,7 +15,7 @@ spec:
         valueFiles:
           - $values/folio-dev/keycloak.yaml
         skipCrds: true
-    - repoURL: git@github.com:sul-dlss/folio-eureka.git
+    - repoURL: https://github.com/sul-dlss/folio-eureka
       targetRevision: kong-gateway
       ref: values
   project: folio-dev
