@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mod-orders
+  namespace: folio-test
+operation:
+  sync:
+    syncStrategy:
+      hook: {}
+spec:
+  destination:
+    namespace: folio-test
+    server: https://kubernetes.default.svc
+  project: folio-test
+  sources:
+  - chart: mod-orders
+    helm:
+      valueFiles:
+      - $values/folio-test/modules/mod-orders/overrides.yaml
+      - $values/folio-test/modules/mod-orders/resources.yaml
+      - $values/common/sidecar.yaml
+      - $values/common/probes.yaml
+      - $values/folio-test/modules/mod-orders/java_opts.yaml
+    repoURL: https://sul-dlss.github.io/folio-helm-v2/
+    targetRevision: 12.7.49
+  - ref: values
+    repoURL: https://github.com/sul-dlss/folio-eureka
+    targetRevision: argo-cd

@@ -1,0 +1,3 @@
+extraJavaOpts:
+  - "-XX:MaxRAMPercentage=75.0"
+  - "-DSYSTEM_USER_ENABLED=false"

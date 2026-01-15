@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mod-record-specifications
+  namespace: folio-test
+operation:
+  sync:
+    syncStrategy:
+      hook: {}
+spec:
+  destination:
+    namespace: folio-test
+    server: https://kubernetes.default.svc
+  project: folio-test
+  sources:
+  - chart: mod-record-specifications
+    helm:
+      valueFiles:
+      - $values/folio-test/modules/mod-record-specifications/overrides.yaml
+      - $values/common/resources.yaml
+      - $values/common/sidecar.yaml
+      - $values/common/probes.yaml
+    repoURL: https://sul-dlss.github.io/folio-helm-v2/
+    targetRevision: 1.0.49
+  - ref: values
+    repoURL: https://github.com/sul-dlss/folio-eureka
+    targetRevision: argo-cd

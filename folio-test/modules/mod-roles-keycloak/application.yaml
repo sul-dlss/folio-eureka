@@ -17,9 +17,10 @@ spec:
     helm:
       valueFiles:
       - $values/folio-test/modules/mod-roles-keycloak/overrides.yaml
-      - $values/common/resources.yaml
-      - $values/common/sidecar.yaml
+      - $values/folio-test/modules/mod-roles-keycloak/resources.yaml
+      - $values/folio-test/modules/mod-roles-keycloak/sidecar.yaml
       - $values/common/probes.yaml
+      - $values/folio-test/modules/mod-roles-keycloak/extra_env.yaml
     repoURL: https://sul-dlss.github.io/folio-helm-v2/
     targetRevision: 0.0.51
   - ref: values

@@ -1,0 +1,18 @@
+sidecarContainers:
+  eureka:
+    image:
+      tag: 3.0.13
+    resources:
+      requests:
+        cpu: 100m
+        memory: 512M
+      limits:
+        cpu: 150m
+        memory: 1024M
+    extraEnvVars:
+      - name: KC_JWKS_BASE_URL
+        value: "http://keycloak:8080"
+      - name: SECRET_STORE_VAULT_TOKEN
+        value: root
+      - name: SECRET_STORE_VAULT_ADDRESS
+        value: http://vault-internal:8200

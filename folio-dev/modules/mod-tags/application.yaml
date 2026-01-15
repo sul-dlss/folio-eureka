@@ -17,7 +17,7 @@ spec:
     helm:
       valueFiles:
       - $values/folio-dev/modules/mod-tags/overrides.yaml
-      - $values/common/resources.yaml
+      - $values/folio-dev/modules/mod-tags/resources.yaml
       - $values/common/sidecar.yaml
       - $values/common/probes.yaml
     repoURL: https://sul-dlss.github.io/folio-helm-v2/

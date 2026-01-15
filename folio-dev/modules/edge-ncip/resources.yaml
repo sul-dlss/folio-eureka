@@ -1,0 +1,11 @@
+resources:
+  requests:
+    cpu: 50m
+    memory: 512M
+  limits:
+    cpu: 100m
+    memory: 1024M
+
+configMaps:
+  ephemeral:
+    existingConfig: "edge-ncip-ephemeral.properties"

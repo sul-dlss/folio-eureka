@@ -1,0 +1,9 @@
+extraEnvVars: |
+  - name: DB_CONNECTION_TIMEOUT
+    value: "300"
+  - name: DB_QUERYTIMEOUT
+    value: "300000"
+  - name: REPLICATION_FACTOR
+    value: "3"
+  - name: "MAX_REQUEST_SIZE"
+    value: "10485760"

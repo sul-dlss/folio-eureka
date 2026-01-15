@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mod-courses
+  namespace: folio-dev
+operation:
+  sync:
+    syncStrategy:
+      hook: {}
+spec:
+  destination:
+    namespace: folio-dev
+    server: https://kubernetes.default.svc
+  project: folio-dev
+  sources:
+  - chart: mod-courses
+    helm:
+      valueFiles:
+      - $values/folio-dev/modules/mod-courses/overrides.yaml
+      - $values/folio-dev/modules/mod-courses/resources.yaml
+      - $values/common/sidecar.yaml
+      - $values/common/probes.yaml
+    repoURL: https://sul-dlss.github.io/folio-helm-v2/
+    targetRevision: 1.5.43
+  - ref: values
+    repoURL: https://github.com/sul-dlss/folio-eureka
+    targetRevision: argo-cd

@@ -1,0 +1,26 @@
+resources:
+  requests:
+    cpu: 150m
+    memory: 512M
+  limits:
+    cpu: 200m
+    memory: 1024M
+
+configMaps:
+  ephemeral:
+    existingConfig: "sip2-ephemeral-properties"
+
+sip2TenantsConfig: |-
+  {
+    "scTenants": [
+      {
+        "scSubnet": "0.0.0.0/0",
+        "tenant": "sul",
+        "errorDetectionEnabled": true,
+        "messageDelimiter": "\r",
+        "charset": "ISO-8859-1"
+      }
+    ]
+  }
+
+okapiUrl: http://kong:8000

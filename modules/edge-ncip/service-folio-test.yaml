@@ -1,0 +1,11 @@
+ingress:
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+  tls:
+    - hosts:
+      - folio-ncip-test.stanford.edu
+      secretName: folio-ncip-test-tls
+  hosts:
+    - host: folio-ncip-test.stanford.edu
+      paths: ['/']

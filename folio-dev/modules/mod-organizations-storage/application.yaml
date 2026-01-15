@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mod-organizations-storage
+  namespace: folio-dev
+operation:
+  sync:
+    syncStrategy:
+      hook: {}
+spec:
+  destination:
+    namespace: folio-dev
+    server: https://kubernetes.default.svc
+  project: folio-dev
+  sources:
+  - chart: mod-organizations-storage
+    helm:
+      valueFiles:
+      - $values/folio-dev/modules/mod-organizations-storage/overrides.yaml
+      - $values/folio-dev/modules/mod-organizations-storage/resources.yaml
+      - $values/common/sidecar.yaml
+      - $values/common/probes.yaml
+    repoURL: https://sul-dlss.github.io/folio-helm-v2/
+    targetRevision: 4.6.49
+  - ref: values
+    repoURL: https://github.com/sul-dlss/folio-eureka
+    targetRevision: argo-cd
