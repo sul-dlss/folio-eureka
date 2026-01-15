@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mod-entities-links
+  namespace: folio-test
+operation:
+  sync:
+    syncStrategy:
+      hook: {}
+spec:
+  destination:
+    namespace: folio-test
+    server: https://kubernetes.default.svc
+  project: folio-test
+  sources:
+  - chart: mod-entities-links
+    helm:
+      valueFiles:
+      - $values/folio-test/modules/mod-entities-links/overrides.yaml
+      - $values/folio-test/modules/mod-entities-links/resources.yaml
+      - $values/common/sidecar.yaml
+      - $values/common/probes.yaml
+      - $values/folio-test/modules/mod-entities-links/java_opts.yaml
+      - $values/folio-test/modules/mod-entities-links/extra_env.yaml
+    repoURL: https://sul-dlss.github.io/folio-helm-v2/
+    targetRevision: 2.1.43
+  - ref: values
+    repoURL: https://github.com/sul-dlss/folio-eureka
+    targetRevision: main

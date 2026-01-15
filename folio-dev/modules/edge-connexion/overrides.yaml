@@ -1,0 +1,21 @@
+deploymentStrategy: RollingUpdate
+eureka:
+  enabled: true
+image:
+  repository: folioorg/edge-connexion
+  tag: 1.4.1
+integrations:
+  eureka-edge:
+    enabled: true
+    existingSecret: eureka-edge
+  okapi:
+    enabled: false
+podSecurityContext:
+  fsGroup: 2000
+securityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+    - ALL
+  runAsNonRoot: true
+  runAsUser: 1000

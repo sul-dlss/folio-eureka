@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: edge-ncip
+  namespace: folio-dev
+operation:
+  sync:
+    syncStrategy:
+      hook: {}
+spec:
+  destination:
+    namespace: folio-dev
+    server: https://kubernetes.default.svc
+  project: folio-dev
+  sources:
+  - chart: edge-ncip
+    helm:
+      valueFiles:
+      - $values/folio-dev/modules/edge-ncip/overrides.yaml
+      - $values/folio-dev/modules/edge-ncip/resources.yaml
+      - $values/common/sidecar.yaml
+      - $values/common/probes.yaml
+    repoURL: https://sul-dlss.github.io/folio-helm-v2/
+    targetRevision: 1.9.50
+  - ref: values
+    repoURL: https://github.com/sul-dlss/folio-eureka
+    targetRevision: argo-cd

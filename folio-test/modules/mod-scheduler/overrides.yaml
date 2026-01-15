@@ -1,0 +1,24 @@
+deploymentStrategy: RollingUpdate
+eureka:
+  enabled: true
+image:
+  repository: folioorg/mod-scheduler
+  tag: 2.0.1
+integrations:
+  db:
+    enabled: true
+    existingSecret: db-credentials
+  kafka:
+    enabled: true
+    existingSecret: kafka-credentials
+  okapi:
+    enabled: false
+podSecurityContext:
+  fsGroup: 2000
+securityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+    - ALL
+  runAsNonRoot: true
+  runAsUser: 1000

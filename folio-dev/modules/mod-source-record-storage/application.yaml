@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mod-source-record-storage
+  namespace: folio-dev
+operation:
+  sync:
+    syncStrategy:
+      hook: {}
+spec:
+  destination:
+    namespace: folio-dev
+    server: https://kubernetes.default.svc
+  project: folio-dev
+  sources:
+  - chart: mod-source-record-storage
+    helm:
+      valueFiles:
+      - $values/folio-dev/modules/mod-source-record-storage/overrides.yaml
+      - $values/folio-dev/modules/mod-source-record-storage/resources.yaml
+      - $values/common/sidecar.yaml
+      - $values/common/probes.yaml
+      - $values/folio-dev/modules/mod-source-record-storage/java_opts.yaml
+      - $values/folio-dev/modules/mod-source-record-storage/extra_env.yaml
+    repoURL: https://sul-dlss.github.io/folio-helm-v2/
+    targetRevision: 5.8.44
+  - ref: values
+    repoURL: https://github.com/sul-dlss/folio-eureka
+    targetRevision: argo-cd

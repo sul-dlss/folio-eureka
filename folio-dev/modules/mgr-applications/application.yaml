@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mgr-applications
+  namespace: folio-dev
+operation:
+  sync:
+    syncStrategy:
+      hook: {}
+spec:
+  destination:
+    namespace: folio-dev
+    server: https://kubernetes.default.svc
+  project: folio-dev
+  sources:
+  - chart: mgr-applications
+    helm:
+      valueFiles:
+      - $values/folio-dev/modules/mgr-applications/mgr-applications.yaml
+    repoURL: https://sul-dlss.github.io/folio-helm-v2/
+    targetRevision: 0.0.16
+  - ref: values
+    repoURL: https://github.com/sul-dlss/folio-eureka
+    targetRevision: argo-cd

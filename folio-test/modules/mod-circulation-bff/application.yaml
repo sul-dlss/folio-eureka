@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mod-circulation-bff
+  namespace: folio-test
+operation:
+  sync:
+    syncStrategy:
+      hook: {}
+spec:
+  destination:
+    namespace: folio-test
+    server: https://kubernetes.default.svc
+  project: folio-test
+  sources:
+  - chart: mod-circulation-bff
+    helm:
+      valueFiles:
+      - $values/folio-test/modules/mod-circulation-bff/overrides.yaml
+      - $values/common/resources.yaml
+      - $values/common/sidecar.yaml
+      - $values/common/probes.yaml
+      - $values/folio-test/modules/mod-circulation-bff/java_opts.yaml
+    repoURL: https://sul-dlss.github.io/folio-helm-v2/
+    targetRevision: 1.0.40
+  - ref: values
+    repoURL: https://github.com/sul-dlss/folio-eureka
+    targetRevision: main

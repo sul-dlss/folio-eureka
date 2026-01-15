@@ -1,0 +1,25 @@
+# Default module probe setting
+livenessProbe:
+  httpGet:
+    path: "/admin/health"
+    port: 8081
+  periodSeconds: 90
+  failureThreshold: 10
+  initialDelaySeconds: 5
+  timeoutSeconds: 30
+readinessProbe:
+  httpGet:
+    path: "/admin/health"
+    port: 8081
+  periodSeconds: 90
+  failureThreshold: 10
+  initialDelaySeconds: 8
+  timeoutSeconds: 30
+startupProbe:
+  httpGet:
+    path: "/admin/health"
+    port: 8081
+  periodSeconds: 30
+  failureThreshold: 100
+  initialDelaySeconds: 8
+  timeoutSeconds: 30

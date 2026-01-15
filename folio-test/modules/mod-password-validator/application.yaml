@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mod-password-validator
+  namespace: folio-test
+operation:
+  sync:
+    syncStrategy:
+      hook: {}
+spec:
+  destination:
+    namespace: folio-test
+    server: https://kubernetes.default.svc
+  project: folio-test
+  sources:
+  - chart: mod-password-validator
+    helm:
+      valueFiles:
+      - $values/folio-test/modules/mod-password-validator/overrides.yaml
+      - $values/folio-test/modules/mod-password-validator/resources.yaml
+      - $values/common/sidecar.yaml
+      - $values/common/probes.yaml
+    repoURL: https://sul-dlss.github.io/folio-helm-v2/
+    targetRevision: 3.1.48
+  - ref: values
+    repoURL: https://github.com/sul-dlss/folio-eureka
+    targetRevision: main

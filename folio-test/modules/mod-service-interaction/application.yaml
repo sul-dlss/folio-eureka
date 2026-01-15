@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mod-service-interaction
+  namespace: folio-test
+operation:
+  sync:
+    syncStrategy:
+      hook: {}
+spec:
+  destination:
+    namespace: folio-test
+    server: https://kubernetes.default.svc
+  project: folio-test
+  sources:
+  - chart: mod-service-interaction
+    helm:
+      valueFiles:
+      - $values/folio-test/modules/mod-service-interaction/overrides.yaml
+      - $values/folio-test/modules/mod-service-interaction/resources.yaml
+      - $values/common/sidecar.yaml
+      - $values/folio-test/modules/mod-service-interaction/probes.yaml
+    repoURL: https://sul-dlss.github.io/folio-helm-v2/
+    targetRevision: 3.0.50
+  - ref: values
+    repoURL: https://github.com/sul-dlss/folio-eureka
+    targetRevision: main

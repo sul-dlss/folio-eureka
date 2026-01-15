@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mod-users
+  namespace: folio-test
+operation:
+  sync:
+    syncStrategy:
+      hook: {}
+spec:
+  destination:
+    namespace: folio-test
+    server: https://kubernetes.default.svc
+  project: folio-test
+  sources:
+  - chart: mod-users
+    helm:
+      valueFiles:
+      - $values/folio-test/modules/mod-users/overrides.yaml
+      - $values/folio-test/modules/mod-users/resources.yaml
+      - $values/common/sidecar.yaml
+      - $values/common/probes.yaml
+      - $values/folio-test/modules/mod-users/extra_env.yaml
+    repoURL: https://sul-dlss.github.io/folio-helm-v2/
+    targetRevision: 19.3.41
+  - ref: values
+    repoURL: https://github.com/sul-dlss/folio-eureka
+    targetRevision: main
