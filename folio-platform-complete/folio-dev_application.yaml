@@ -19,7 +19,7 @@ spec:
       targetRevision: kong-gateway
       ref: values
     - repoURL: https://github.com/sul-dlss/folio-eureka
-      path: folio-platform-complete/extra_deploy-folio-dev.yaml
+      path: folio-platform-complete
       targetRevision: kong-gateway
 operation:
   sync:
