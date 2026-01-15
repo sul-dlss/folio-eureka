@@ -1,6 +1,0 @@
-service:
-  type: NodePort
-  port: 8080
-  containerPort: 8080
-
-# - hosts: folio-sip2-dev.stanford.edu, folio-sip2-prod.stanford.edu

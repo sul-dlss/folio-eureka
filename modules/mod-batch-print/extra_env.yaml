@@ -1,4 +1,0 @@
-integrations:
-  systemuser:
-      enabled: true
-      name: "mod-batch-print"

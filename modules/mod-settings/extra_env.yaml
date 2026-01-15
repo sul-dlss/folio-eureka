@@ -1,4 +1,0 @@
-integrations:
-  eureka:
-    enabled: true
-    existingSecret: "eureka-common"

@@ -1,4 +1,0 @@
-integrations:
-  s3:
-    enabled: true
-    existingSecret: "s3-credentials"
