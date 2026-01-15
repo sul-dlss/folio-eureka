@@ -4,7 +4,7 @@ global:
 image:
   registry: folioorg
   repository: folio-kong
-  tag: 3.9.1
+  tag: 3.9.0
   pullPolicy: Always
 useDaemonset: false
 replicaCount: 1
@@ -25,6 +25,8 @@ database: postgresql
 postgresql:
   enabled: false
   external:
+    host: "sul-folio-db-dev.stanford.edu"
+    port: 9999
     existingSecret: "kong-credentials"
     existingSecretPasswordKey: "KONG_PG_PASSWORD"
 networkPolicy:
@@ -37,15 +39,6 @@ service:
     proxyHttps: 443
     adminHttp: 8001
     adminHttps: 8444
-ingress:
-  ingressClassName: "nginx"
-  pathType: ImplementationSpecific
-  hostname: kong-folio-dev.stanford.edu
-  enabled: true
-  tls: true
-  annotations:
-    nginx.ingress.kubernetes.io/client-body-buffer-size: 512M
-    nginx.ingress.kubernetes.io/proxy-body-size: 512M
 kong:
   livenessProbe:
     enabled: false
@@ -118,7 +111,7 @@ kong:
   - name: KONG_NGINX_HTTP_LARGE_CLIENT_HEADER_BUFFERS
     value: "4 16k"
   - name: KONG_ADMIN_GUI_API_URL
-    value: "https://kong-folio-dev.stanford.edu"
+    value: "https://folio-dev-gateway.stanford.edu"
   - name: KONG_NGINX_HTTPS_LARGE_CLIENT_HEADER_BUFFERS
     value: "4 16k"
   - name: KONG_PROXY_LISTEN
@@ -141,3 +134,53 @@ ingressController:
 migration:
   command: ["/bin/sh", "-c"]
   args: ["echo 'Hello kong!'"]
+extraDeploy:
+  - |
+    apiVersion: gateway.networking.k8s.io/v1
+    kind: Gateway
+    metadata:
+      name: kong-gateway
+      namespace: folio-dev
+    spec:
+      gatewayClassName: eg
+      listeners:
+      - hostname: folio-dev-gateway.stanford.edu
+        name: folio-dev-gateway-stanford-edu-http
+        port: 80
+        protocol: HTTP
+  - |
+    apiVersion: gateway.networking.k8s.io/v1
+    kind: HTTPRoute
+    metadata:
+      name: kong-backend
+      namespace: folio-dev
+    spec:
+      hostnames:
+      - folio-dev-gateway.stanford.edu
+      parentRefs:
+      - name: kong-gateway
+      rules:
+      - backendRefs:
+        - name: kong
+          port: 8000
+        matches:
+        - path:
+            type: PathPrefix
+            value: /
+  - |
+    apiVersion: gateway.envoyproxy.io/v1alpha1
+    kind: SecurityPolicy
+    metadata:
+      name: kong-ip-limits
+    spec:
+      targetRefs:
+        - group: gateway.networking.k8s.io
+          kind: HTTPRoute
+          name: kong-backend
+      authorization:
+        defaultAction: Deny
+        rules:
+          - action: Allow
+            principal:
+              clientCIDRs:
+                - "54.245.203.243/32, 171.64.0.0/14, 10.32.0.0/15, 10.34.0.0/15, 10.96.0.0/11, 10.98.0.0/15, 10.130.0.0/18, 10.130.64.0/18, 10.130.128.0/18, 10.130.192.0/18, 172.24.0.0/14, 172.20.206.128/25, 172.20.207.0/25, 171.66.16.0/21, 171.66.24.0/21, 171.66.176.0/20, 204.63.231.0/25, 10.109.48.0/25, 10.109.48.128/25, 171.66.1.0/24"
