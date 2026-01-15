@@ -27,10 +27,6 @@ extraEnvVars:
     value: "INFO"
   - name: KC_HOSTNAME_BACKCHANNEL_DYNAMIC
     value: "true"
-  # - name: KC_HOSTNAME_STRICT_HTTPS
-  #   value: "true"
-  # - name: KC_PROXY
-  #   value: "edge"
   - name: FIPS
     value: "false"
   - name: KC_HOSTNAME  

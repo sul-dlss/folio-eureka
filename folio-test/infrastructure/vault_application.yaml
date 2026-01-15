@@ -15,6 +15,6 @@ spec:
         valueFiles:
           - $values/folio-test/infrastructure/vault.yaml
     - repoURL: https://github.com/sul-dlss/folio-eureka
-      targetRevision: folio-test-infrastructure
+      targetRevision: main
       ref: values
   project: folio-test

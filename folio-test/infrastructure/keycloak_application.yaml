@@ -14,7 +14,8 @@ spec:
       helm:
         valueFiles:
           - $values/folio-test/infrastructure/keycloak.yaml
+          - $values/folio-test/infrastructure/allowed_ips.yaml
     - repoURL: https://github.com/sul-dlss/folio-eureka
-      targetRevision: folio-test-infrastructure
+      targetRevision: main
       ref: values
   project: folio-test
