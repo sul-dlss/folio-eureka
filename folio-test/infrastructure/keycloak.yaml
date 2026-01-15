@@ -1,0 +1,148 @@
+global: 
+  security: 
+    allowInsecureImages: true
+image:
+  registry: folioorg
+  repository: folio-keycloak
+  tag: 26.1.3
+  pullPolicy: Always
+auth:
+  adminUser: admin
+  existingSecret: keycloak-credentials
+  passwordSecretKey: KC_BOOTSTRAP_ADMIN_PASSWORD
+usePasswordFiles: false
+hostnameStrict: true
+extraEnvVars:
+  - name: KEYCLOAK_PROXY_ADDRESS_FORWARDING
+    value: "true"
+  - name: PROXY_ADDRESS_FORWARDING
+    value: "true"
+  - name: KC_HTTP_ENABLED
+    value: "true"
+  - name: KC_HTTP_PORT
+    value: "8080"
+  - name: KC_HEALTH_ENABLED
+    value: "true"
+  - name: KC_LOG_LEVEL
+    value: "INFO"
+  - name: KC_HOSTNAME_BACKCHANNEL_DYNAMIC
+    value: "true"
+  - name: FIPS
+    value: "false"
+  - name: KC_HOSTNAME  
+    value: "https://keycloak-folio-test.stanford.edu"
+  - name: KC_HOSTNAME_DEBUG
+    value: "true"
+  - name: KC_FOLIO_BE_ADMIN_CLIENT_ID
+    valueFrom:
+      secretKeyRef:
+        name: eureka-common
+        key: KC_ADMIN_CLIENT_ID
+  - name: KC_FOLIO_BE_ADMIN_CLIENT_SECRET
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-credentials
+        key: KC_FOLIO_BE_ADMIN_CLIENT_SECRET
+  - name: KC_HTTPS_KEY_STORE_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-credentials
+        key: KC_HTTPS_KEY_STORE_PASSWORD
+  - name: KC_DB_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-credentials
+        key: KC_DB_PASSWORD
+  - name: KC_DB_URL_DATABASE
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-credentials
+        key: KC_DB_URL_DATABASE
+  - name: KC_DB_URL_HOST
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-credentials
+        key: KC_DB_URL_HOST
+  - name: KC_DB_URL_PORT
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-credentials
+        key: KC_DB_URL_PORT
+  - name: KC_DB_USERNAME
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-credentials
+        key: KC_DB_USERNAME
+  - name: KC_BOOTSTRAP_ADMIN_USERNAME
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-credentials
+        key: KC_BOOTSTRAP_ADMIN_USERNAME
+  - name: KC_BOOTSTRAP_ADMIN_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-credentials
+        key: KC_BOOTSTRAP_ADMIN_PASSWORD
+proxy: "edge"
+resources:
+  requests:
+    memory: 3072Mi
+  limits:
+    memory: 4096Mi
+postgresql:
+  enabled: false
+externalDatabase:
+  host: "sul-folio-db-test.stanford.edu"
+  port: 9999
+  database: "keycloak"
+  user: "keycloak"
+  existingSecret: keycloak-credentials
+  existingSecretUserKey: KC_DB_USERNAME
+  existingSecretPasswordKey: KC_DB_PASSWORD
+  name: "keycloak" 
+logging:
+  output: default
+  level: DEBUG
+enableDefaultInitContainers: false
+containerSecurityContext:
+  enabled: false
+networkPolicy:
+  enabled: false
+service:
+  type: "LoadBalancer"
+  ports:
+    http: 8080
+    https: 8443
+ingress:
+  enabled: true
+  hostname: keycloak-folio-test.stanford.edu
+  ingressClassName: "nginx"
+  annotations:
+    kubernetes.io/ingress.class: nginx
+adminIngress:
+  enabled: false
+  hostname: keycloak-admin-folio-test.stanford.edu
+  ingressClassName: "nginx"
+  annotations:
+    kubernetes.io/ingress.class: nginx
+livenessProbe:
+  enabled: true
+  initialDelaySeconds: 60
+  periodSeconds: 1
+  timeoutSeconds: 10
+  failureThreshold: 5
+  successThreshold: 1
+readinessProbe:
+  enabled: true
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 10
+  failureThreshold: 10
+  successThreshold: 1
+startupProbe:
+  enabled: false
+  initialDelaySeconds: 30
+  periodSeconds: 5
+  timeoutSeconds: 1
+  failureThreshold: 300
+  successThreshold: 1

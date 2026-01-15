@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kafka-folio-dev
+  namespace: folio-dev
+spec:
+  project: folio-dev
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: folio-dev
+  sources:
+    - repoURL: oci://registry-1.docker.io/bitnamicharts/kafka
+      chart: kafka
+      targetRevision: 31.1.0
+      helm:
+        valueFiles:
+        - $values/folio-dev/infrastructure/kafka.yaml
+    - repoURL: https://github.com/sul-dlss/folio-eureka
+      targetRevision: main
+      ref: values

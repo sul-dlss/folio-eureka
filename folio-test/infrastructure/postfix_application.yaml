@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mail
+  namespace: folio-test
+spec:
+  destination:
+    namespace: folio-test
+    server: https://kubernetes.default.svc
+  sources:
+    - chart: mail
+      repoURL: https://bokysan.github.io/docker-postfix/
+      targetRevision: 4.4.0
+      helm:
+        valueFiles:
+          - $values/folio-test/infrastructure/postfix.yaml
+    - repoURL: https://github.com/sul-dlss/folio-eureka
+      targetRevision: main
+      ref: values
+  project: folio-test

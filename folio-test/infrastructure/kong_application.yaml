@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kong
+  namespace: folio-test
+spec:
+  destination:
+    namespace: folio-test
+    server: https://kubernetes.default.svc
+  sources:
+    - chart: kong
+      repoURL: oci://registry-1.docker.io/bitnamicharts/kong
+      targetRevision: 12.0.11
+      helm:
+        valueFiles:
+          - $values/folio-test/infrastructure/kong.yaml
+          - $values/folio-test/infrastructure/allowed_ips.yaml
+        skipCrds: true
+    - repoURL: https://github.com/sul-dlss/folio-eureka
+      targetRevision: main
+      ref: values
+  project: folio-test
