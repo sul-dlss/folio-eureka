@@ -25,4 +25,4 @@ spec:
     targetRevision: 5.8.41
   - ref: values
     repoURL: https://github.com/sul-dlss/folio-eureka
-    targetRevision: argo-cd
+    targetRevision: main
