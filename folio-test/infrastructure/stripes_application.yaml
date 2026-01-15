@@ -13,7 +13,7 @@ spec:
       targetRevision: 2.23.14
       helm:
         valueFiles:
-          - $values/folio-platform-complete/overrides-folio-test.yaml
+          - $values/folio-test/infrastructure/stripes.yaml
           - $values/folio-test/infrastructure/allowed_ips.yaml
       chart: platform-complete
     - repoURL: https://github.com/sul-dlss/folio-eureka
