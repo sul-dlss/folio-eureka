@@ -1,6 +1,6 @@
 image:
   repository: folioorg/mgr-tenant-entitlements
-  tag: 3.1.8
+  tag: 2.0.9
 
 deploymentStrategy: RollingUpdate
 

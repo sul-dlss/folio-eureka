@@ -1,7 +1,7 @@
 {
-  "id": "app-platform-complete-1.1.78",
+  "id": "app-platform-complete-1.1.89",
   "name": "app-platform-complete",
-  "version": "1.1.78",
+  "version": "1.1.89",
   "description": "Application comprised of most Folio modules not present in app-platform-minimal",
   "platform": "base",
   "modules":   [
@@ -19,7 +19,7 @@
     },
         {
       "name": "mod-orders",
-      "version": "12.9.12"
+      "version": "12.9.13"
     },
         {
       "name": "mod-orders-storage",
@@ -27,7 +27,7 @@
     },
         {
       "name": "mod-invoice",
-      "version": "5.9.2"
+      "version": "5.9.3"
     },
         {
       "name": "mod-invoice-storage",
@@ -55,15 +55,15 @@
     },
         {
       "name": "mod-search",
-      "version": "4.0.13"
+      "version": "4.0.14"
     },
         {
       "name": "mod-inventory",
-      "version": "21.0.15"
+      "version": "21.0.17"
     },
         {
       "name": "mod-circulation",
-      "version": "24.3.20"
+      "version": "24.3.22"
     },
         {
       "name": "mod-feesfines",
@@ -75,7 +75,7 @@
     },
         {
       "name": "mod-entities-links",
-      "version": "3.1.4"
+      "version": "3.1.5"
     },
         {
       "name": "mod-source-record-manager",
@@ -103,7 +103,7 @@
     },
         {
       "name": "mod-bulk-operations",
-      "version": "2.1.13"
+      "version": "2.1.16"
     },
         {
       "name": "mod-oai-pmh",
@@ -111,7 +111,7 @@
     },
         {
       "name": "mod-rtac",
-      "version": "3.7.0"
+      "version": "3.7.1"
     },
         {
       "name": "mod-remote-storage",
@@ -131,11 +131,11 @@
     },
         {
       "name": "mod-source-record-storage",
-      "version": "5.9.16"
+      "version": "5.9.17"
     },
         {
       "name": "mod-data-import",
-      "version": "3.2.4"
+      "version": "3.2.5"
     },
         {
       "name": "mod-agreements",
@@ -203,7 +203,7 @@
     },
         {
       "name": "mod-fqm-manager",
-      "version": "3.0.14"
+      "version": "3.0.17"
     },
         {
       "name": "mod-lists",
@@ -219,11 +219,11 @@
     },
         {
       "name": "mod-record-specifications",
-      "version": "1.0.4"
+      "version": "1.0.5"
     },
         {
       "name": "mod-circulation-bff",
-      "version": "1.0.20"
+      "version": "1.0.23"
     }
   ],
   "uiModules":   [
@@ -429,7 +429,7 @@
     },
         {
       "name": "folio_users",
-      "version": "11.0.13"
+      "version": "11.0.14"
     },
         {
       "name": "folio_lists",
@@ -441,7 +441,7 @@
     },
         {
       "name": "folio_stripes-marc-components",
-      "version": "1.1.0"
+      "version": "1.1.1"
     },
         {
       "name": "folio_stripes-inventory-components",
@@ -450,7 +450,7 @@
   ],
   "dependencies": [  {
     "name": "app-platform-minimal",
-    "version": "1.0.41"
+    "version": "^1.0.0-SNAPSHOT"
   }],
   "moduleDescriptors":   [
         {
@@ -1728,7 +1728,7 @@
       }
     },
         {
-      "id": "mod-orders-12.9.12",
+      "id": "mod-orders-12.9.13",
       "name": "Orders Business Logic Module",
       "provides":       [
                 {
@@ -3806,7 +3806,7 @@
         ]
       }},
       "launchDescriptor":       {
-        "dockerImage": "mod-orders:12.9.12",
+        "dockerImage": "mod-orders:12.9.13",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 1073741824,
@@ -5408,7 +5408,7 @@
       }
     },
         {
-      "id": "mod-invoice-5.9.2",
+      "id": "mod-invoice-5.9.3",
       "name": "Invoice business logic module",
       "provides":       [
                 {
@@ -6486,7 +6486,7 @@
         ]
       }},
       "launchDescriptor":       {
-        "dockerImage": "mod-invoice:5.9.2",
+        "dockerImage": "mod-invoice:5.9.3",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 838860800,
@@ -14313,7 +14313,7 @@
       }
     },
         {
-      "id": "mod-search-4.0.13",
+      "id": "mod-search-4.0.14",
       "name": "Search Module",
       "provides":       [
                 {
@@ -15029,7 +15029,7 @@
         ]
       }},
       "launchDescriptor":       {
-        "dockerImage": "mod-search:4.0.13",
+        "dockerImage": "mod-search:4.0.14",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 1073741824,
@@ -15208,6 +15208,11 @@
             "description": "Format for passing data to elasticsearch (json/smile)"
           },
                     {
+            "name": "INSTANCE_CHILDREN_INDEX_ENABLED",
+            "value": "true",
+            "description": "Defines if module should process subjects/contributors/classifications/call-numbers in a background"
+          },
+                    {
             "name": "INSTANCE_CHILDREN_INDEX_DELAY_MS",
             "value": "60000",
             "description": "Scheduler delay for indexing subjects/contributors/classifications"
@@ -15351,7 +15356,7 @@
       }
     },
         {
-      "id": "mod-inventory-21.0.15",
+      "id": "mod-inventory-21.0.17",
       "name": "Inventory Module",
       "provides":       [
                 {
@@ -16307,7 +16312,7 @@
         ]
       }},
       "launchDescriptor":       {
-        "dockerImage": "mod-inventory:21.0.15",
+        "dockerImage": "mod-inventory:21.0.17",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 715827883,
@@ -16362,7 +16367,7 @@
       }
     },
         {
-      "id": "mod-circulation-24.3.20",
+      "id": "mod-circulation-24.3.22",
       "name": "Circulation Module",
       "provides":       [
                 {
@@ -18717,7 +18722,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-circulation:24.3.20",
+        "dockerImage": "mod-circulation:24.3.22",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 1073741824,
@@ -20304,7 +20309,7 @@
       }
     },
         {
-      "id": "mod-entities-links-3.1.4",
+      "id": "mod-entities-links-3.1.5",
       "name": "Entities Links",
       "requires":       [
                 {
@@ -20844,7 +20849,7 @@
         ]
       }},
       "launchDescriptor":       {
-        "dockerImage": "mod-entities-links:3.1.4",
+        "dockerImage": "mod-entities-links:3.1.5",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 536870912,
@@ -24411,7 +24416,7 @@
       }
     },
         {
-      "id": "mod-bulk-operations-2.1.13",
+      "id": "mod-bulk-operations-2.1.16",
       "name": "Bulk operations API.",
       "provides":       [
                 {
@@ -25029,7 +25034,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-bulk-operations:2.1.13",
+        "dockerImage": "mod-bulk-operations:2.1.16",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 3072000000,
@@ -25550,7 +25555,7 @@
       }
     },
         {
-      "id": "mod-rtac-3.7.0",
+      "id": "mod-rtac-3.7.1",
       "name": "Real Time Availability Check Module",
       "provides":       [
                 {
@@ -25564,7 +25569,9 @@
               "circulation-storage.loans.collection.get",
               "inventory-storage.inventory-hierarchy.items-and-holdings.collection.post",
               "circulation.requests.collection.get",
-              "orders.pieces.collection.get"
+              "orders.pieces.collection.get",
+              "mod-settings.entries.collection.get",
+              "mod-settings.global.read.mod-rtac"
             ]
           }]
         },
@@ -25581,7 +25588,9 @@
               "circulation.requests.collection.get",
               "orders.pieces.collection.get",
               "user-tenants.collection.get",
-              "search.facets.collection.get"
+              "search.facets.collection.get",
+              "mod-settings.entries.collection.get",
+              "mod-settings.global.read.mod-rtac"
             ]
           }]
         }
@@ -25610,9 +25619,23 @@
                 {
           "id": "search",
           "version": "1.2"
+        },
+                {
+          "id": "settings",
+          "version": "1.1 1.2"
         }
       ],
       "permissionSets":       [
+                {
+          "permissionName": "mod-settings.global.read.mod-rtac",
+          "displayName": "Read settings for mod-rtac",
+          "description": "Read settings for mod-rtac"
+        },
+                {
+          "permissionName": "mod-settings.global.write.mod-rtac",
+          "displayName": "Write settings for mod-rtac",
+          "description": "Write settings for mod-rtac"
+        },
                 {
           "permissionName": "rtac.holdings.item.get",
           "displayName": "Legacy RTAC - Get individual holding",
@@ -25634,7 +25657,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-rtac:3.7.0",
+        "dockerImage": "mod-rtac:3.7.1",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 357913941,
@@ -27724,7 +27747,7 @@
       }
     },
         {
-      "id": "mod-source-record-storage-5.9.16",
+      "id": "mod-source-record-storage-5.9.17",
       "name": "Source Record Storage Module",
       "provides":       [
                 {
@@ -28131,7 +28154,7 @@
         ]
       }},
       "launchDescriptor":       {
-        "dockerImage": "mod-source-record-storage:5.9.16",
+        "dockerImage": "mod-source-record-storage:5.9.17",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 1073741824,
@@ -28190,7 +28213,7 @@
       }
     },
         {
-      "id": "mod-data-import-3.2.4",
+      "id": "mod-data-import-3.2.5",
       "name": "Data Import Module",
       "requires":       [
                 {
@@ -28663,7 +28686,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-data-import:3.2.4",
+        "dockerImage": "mod-data-import:3.2.5",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 542293850,
@@ -35196,7 +35219,7 @@
       }
     },
         {
-      "id": "mod-fqm-manager-3.0.14",
+      "id": "mod-fqm-manager-3.0.17",
       "name": "FQM Manager Module",
       "provides":       [
                 {
@@ -35727,7 +35750,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-fqm-manager:3.0.14",
+        "dockerImage": "mod-fqm-manager:3.0.17",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 629145600,
@@ -36891,7 +36914,7 @@
       }
     },
         {
-      "id": "mod-record-specifications-1.0.4",
+      "id": "mod-record-specifications-1.0.5",
       "name": "Record Specifications",
       "provides":       [
                 {
@@ -37146,7 +37169,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-record-specifications:1.0.4",
+        "dockerImage": "mod-record-specifications:1.0.5",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 542293850,
@@ -37266,7 +37289,7 @@
       }
     },
         {
-      "id": "mod-circulation-bff-1.0.20",
+      "id": "mod-circulation-bff-1.0.23",
       "name": "Folio mod-circulation-bff module",
       "provides":       [
                 {
@@ -37380,7 +37403,7 @@
         },
                 {
           "id": "circulation-bff-loans",
-          "version": "1.3",
+          "version": "1.4",
           "handlers":           [
                         {
               "methods": ["GET"],
@@ -37456,6 +37479,16 @@
                 "circulation.check-out-by-barcode.post",
                 "tlr.loans.check-out-by-barcode.execute",
                 "requests-mediated.loans.check-out-by-barcode.execute"
+              ]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/circulation-bff/loans/{loanId}/declare-item-lost",
+              "permissionsRequired": ["circulation-bff.loans.declare-item-lost.execute"],
+              "modulePermissions":               [
+                "tlr.loans.declare-item-lost.execute",
+                "requests-mediated.loans.declare-item-lost.execute",
+                "circulation.loans.declare-item-lost.post"
               ]
             }
           ]
@@ -37549,6 +37582,11 @@
           "permissionName": "circulation-bff.loans.collection.get",
           "displayName": "circulation BFF - circulation loans by query",
           "description": "circulation loans by query with extended instance/holding information"
+        },
+                {
+          "permissionName": "circulation-bff.loans.declare-item-lost.execute",
+          "displayName": "circulation BFF - declare item lost",
+          "description": "declare item lost"
         }
       ],
       "requires":       [
@@ -37656,7 +37694,7 @@
         },
                 {
           "id": "requests-mediated-loans",
-          "version": "1.0"
+          "version": "1.1"
         },
                 {
           "id": "ecs-tlr-allowed-service-points",
@@ -37669,6 +37707,10 @@
                 {
           "id": "allowed-service-points",
           "version": "1.2"
+        },
+                {
+          "id": "ecs-loans",
+          "version": "1.1"
         }
       ],
       "metadata": {"user":       {
@@ -37710,7 +37752,7 @@
         ]
       }},
       "launchDescriptor":       {
-        "dockerImage": "mod-circulation-bff:1.0.20",
+        "dockerImage": "mod-circulation-bff:1.0.23",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 357913941,
@@ -44728,7 +44770,7 @@
       ]
     },
         {
-      "id": "folio_users-11.0.13",
+      "id": "folio_users-11.0.14",
       "name": "User management",
       "requires":       [
                 {
@@ -44815,7 +44857,7 @@
         },
                 {
           "id": "circulation-bff-loans",
-          "version": "1.3"
+          "version": "1.4"
         },
                 {
           "id": "users-keycloak",
@@ -45518,6 +45560,7 @@
           "description": "Also includes backend permissions to declare items lost",
           "subPermissions":           [
             "circulation.loans.declare-item-lost.post",
+            "circulation-bff.loans.declare-item-lost.execute",
             "circulation-storage.loans.item.get",
             "inventory-storage.items.item.get",
             "inventory-storage.holdings.item.get",
@@ -46139,7 +46182,7 @@
       ]
     },
         {
-      "id": "folio_stripes-marc-components-1.1.0",
+      "id": "folio_stripes-marc-components-1.1.1",
       "name": "Component library for Stripes Marc modules",
       "requires": [      {
         "id": "instance-authority-linking-rules",

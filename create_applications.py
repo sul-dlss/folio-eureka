@@ -77,17 +77,17 @@ for module in modules:
     if Path(f"{args.namespace}/modules/{module_name}/resources.yaml").exists():
         values_files.append(f"$values/{args.namespace}/modules/{module_name}/resources.yaml")
     else:
-        values_files.append(f"$values/common/resources.yaml")
+        values_files.append(f"$values/{args.namespace}/common/resources.yaml")
 
     if Path(f"{args.namespace}/modules/{module_name}/sidecar.yaml").exists():
         values_files.append(f"$values/{args.namespace}/modules/{module_name}/sidecar.yaml")
     else:
-        values_files.append(f"$values/common/sidecar.yaml")
+        values_files.append(f"$values/{args.namespace}/common/sidecar.yaml")
 
     if Path(f"{args.namespace}/modules/{module_name}/probes.yaml").exists():
         values_files.append(f"$values/{args.namespace}/modules/{module_name}/probes.yaml")
     else:
-        values_files.append(f"$values/common/probes.yaml")
+        values_files.append(f"$values/{args.namespace}/common/probes.yaml")
 
     if Path(f"{args.namespace}/modules/{module_name}/service.yaml").exists():
         values_files.append(f"$values/{args.namespace}/modules/{module_name}/service.yaml")
