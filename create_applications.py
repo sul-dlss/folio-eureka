@@ -13,8 +13,8 @@ parser = argparse.ArgumentParser(
 parser.add_argument('filename')
 parser.add_argument('-m', '--modules', help='a list of modules to install, each with -m flag', nargs="+", action='extend')
 parser.add_argument('-n', '--namespace', required=True, help='the Kubernetes namespace for the applications')
-parser.add_argument('-r', '--helm_repo', default='folio-helm-v2', help='the Helm repository to use for the applications')
-parser.add_argument('-v', '--values_branch', default='main', required=True, help='the branch in the values repository to use for the applications')
+parser.add_argument('-r', '--helm_repo', default='folio-helm-v2-dlss', help='the Helm repository to use for the applications')
+parser.add_argument('-v', '--values_branch', default='main', help='the branch in the values repository to use for the applications')
 parser.add_argument('-x', '--execute', required=True, default='dry-run', choices=['apply', 'dry-run'], help='whether to apply the applications to ArgoCD or just do a dry-run')
 
 args = parser.parse_args()
