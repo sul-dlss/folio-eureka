@@ -9,7 +9,7 @@ spec:
     server: https://kubernetes.default.svc
   sources:
     - chart: mail
-      repoURL: https://bokysan.github.io/docker-postfix/
+      repoURL: https://bokysan.github.io/docker-postfix
       targetRevision: 4.4.0
       helm:
         valueFiles:
