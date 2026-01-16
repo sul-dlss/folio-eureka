@@ -18,7 +18,7 @@ spec:
       valueFiles:
       - $values/folio-test/modules/mod-agreements/overrides.yaml
       - $values/folio-test/modules/mod-agreements/resources.yaml
-      - $values/common/sidecar.yaml
+      - $values/folio-test/common/sidecar.yaml
       - $values/folio-test/modules/mod-agreements/probes.yaml
     repoURL: https://sul-dlss.github.io/folio-helm-v2/
     targetRevision: 6.0.55

@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: mod-users-keycloak
+  name: edge-ncip
   namespace: folio-test
 operation:
   sync:
@@ -13,16 +13,15 @@ spec:
     server: https://kubernetes.default.svc
   project: folio-test
   sources:
-  - chart: mod-users-keycloak
+  - chart: edge-ncip
     helm:
       valueFiles:
-      - $values/folio-test/modules/mod-users-keycloak/overrides.yaml
-      - $values/folio-test/modules/mod-users-keycloak/resources.yaml
-      - $values/folio-test/modules/mod-users-keycloak/sidecar.yaml
+      - $values/folio-test/modules/edge-ncip/overrides.yaml
+      - $values/folio-test/common/resources.yaml
+      - $values/folio-test/common/sidecar.yaml
       - $values/folio-test/common/probes.yaml
-      - $values/folio-test/modules/mod-users-keycloak/extra_env.yaml
     repoURL: https://sul-dlss.github.io/folio-helm-v2/
-    targetRevision: 0.0.51
+    targetRevision: 1.9.50
   - ref: values
     repoURL: https://github.com/sul-dlss/folio-eureka
     targetRevision: main

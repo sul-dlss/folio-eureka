@@ -18,8 +18,8 @@ spec:
       valueFiles:
       - $values/folio-test/modules/mod-data-import/overrides.yaml
       - $values/folio-test/modules/mod-data-import/resources.yaml
-      - $values/common/sidecar.yaml
-      - $values/common/probes.yaml
+      - $values/folio-test/common/sidecar.yaml
+      - $values/folio-test/common/probes.yaml
       - $values/folio-test/modules/mod-data-import/java_opts.yaml
     repoURL: https://sul-dlss.github.io/folio-helm-v2/
     targetRevision: 3.1.44
