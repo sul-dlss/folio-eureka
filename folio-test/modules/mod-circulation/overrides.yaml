@@ -3,7 +3,7 @@ eureka:
   enabled: true
 image:
   repository: folioorg/mod-circulation
-  tag: 24.3.20
+  tag: 24.3.22
 integrations:
   db:
     enabled: true

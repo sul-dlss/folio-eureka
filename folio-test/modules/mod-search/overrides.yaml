@@ -3,7 +3,7 @@ eureka:
   enabled: true
 image:
   repository: folioorg/mod-search
-  tag: 4.0.13
+  tag: 4.0.14
 integrations:
   db:
     enabled: true

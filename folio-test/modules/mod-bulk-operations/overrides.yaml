@@ -3,7 +3,7 @@ eureka:
   enabled: true
 image:
   repository: folioorg/mod-bulk-operations
-  tag: 2.1.13
+  tag: 2.1.16
 integrations:
   db:
     enabled: true

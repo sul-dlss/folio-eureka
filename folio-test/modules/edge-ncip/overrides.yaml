@@ -2,15 +2,12 @@ deploymentStrategy: RollingUpdate
 eureka:
   enabled: true
 image:
-  repository: folioorg/mod-rtac
-  tag: 3.7.1
+  repository: folioorg/edge-ncip
+  tag: 1.10.1
 integrations:
-  db:
+  eureka-edge:
     enabled: true
-    existingSecret: db-credentials
-  kafka:
-    enabled: true
-    existingSecret: kafka-credentials
+    existingSecret: eureka-edge
   okapi:
     enabled: false
 podSecurityContext:
