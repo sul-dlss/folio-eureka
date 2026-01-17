@@ -1,7 +1,7 @@
 {
-  "id": "app-platform-minimal-1.0.41",
+  "id": "app-platform-minimal-1.0.43",
   "name": "app-platform-minimal",
-  "version": "1.0.41",
+  "version": "1.0.43",
   "description": "Minimal FOLIO platform installation",
   "platform": "base",
   "modules":   [
@@ -69,7 +69,7 @@
     },
         {
       "name": "folio_stripes-core",
-      "version": "10.2.7"
+      "version": "10.2.9"
     },
         {
       "name": "folio_notes",
@@ -2116,7 +2116,7 @@
             }
           ]
         },
-        {
+                {
           "id": "authtoken",
           "version": "2.1",
           "handlers":           [
@@ -2782,7 +2782,7 @@
         }]
       }
     },
-    {
+        {
       "id": "mod-roles-keycloak-2.0.15",
       "name": "roles-keycloak",
       "provides":       [
@@ -5073,7 +5073,7 @@
       ]
     },
         {
-      "id": "folio_stripes-core-10.2.7",
+      "id": "folio_stripes-core-10.2.9",
       "name": "The starting point for Stripes applications",
       "requires":       [
                 {

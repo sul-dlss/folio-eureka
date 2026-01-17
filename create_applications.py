@@ -13,9 +13,9 @@ parser = argparse.ArgumentParser(
 parser.add_argument('filename')
 parser.add_argument('-m', '--modules', help='a list of modules to install, each with -m flag', nargs="+", action='extend')
 parser.add_argument('-n', '--namespace', required=True, help='the Kubernetes namespace for the applications')
-parser.add_argument('-r', '--helm_repo', default='folio-helm-v2-dlss', help='the Helm repository to use for the applications')
-parser.add_argument('-v', '--values_branch', default='main', help='the branch in the values repository to use for the applications')
-parser.add_argument('-x', '--execute', required=True, default='dry-run', choices=['apply', 'dry-run'], help='whether to apply the applications to ArgoCD or just do a dry-run')
+parser.add_argument('-r', '--helm_repo', default='folio-helm-v2-dlss', help='the Helm repository to use for the applications (folio-helm-v2-dlss by default)')
+parser.add_argument('-v', '--values_branch', default='main', help='the branch in the values repository to use for the applications (main by default)')
+parser.add_argument('-x', '--execute', required=True, default='dry-run', choices=['apply', 'dry-run'], help='whether to apply the applications to ArgoCD or just do a dry-run (dry-run by default)')
 
 args = parser.parse_args()
 
@@ -77,17 +77,17 @@ for module in modules:
     if Path(f"{args.namespace}/modules/{module_name}/resources.yaml").exists():
         values_files.append(f"$values/{args.namespace}/modules/{module_name}/resources.yaml")
     else:
-        values_files.append(f"$values/common/resources.yaml")
+        values_files.append(f"$values/{args.namespace}/common/resources.yaml")
 
     if Path(f"{args.namespace}/modules/{module_name}/sidecar.yaml").exists():
         values_files.append(f"$values/{args.namespace}/modules/{module_name}/sidecar.yaml")
     else:
-        values_files.append(f"$values/common/sidecar.yaml")
+        values_files.append(f"$values/{args.namespace}/common/sidecar.yaml")
 
     if Path(f"{args.namespace}/modules/{module_name}/probes.yaml").exists():
         values_files.append(f"$values/{args.namespace}/modules/{module_name}/probes.yaml")
     else:
-        values_files.append(f"$values/common/probes.yaml")
+        values_files.append(f"$values/{args.namespace}/common/probes.yaml")
 
     if Path(f"{args.namespace}/modules/{module_name}/service.yaml").exists():
         values_files.append(f"$values/{args.namespace}/modules/{module_name}/service.yaml")

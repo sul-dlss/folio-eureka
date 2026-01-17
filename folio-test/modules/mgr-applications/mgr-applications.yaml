@@ -1,6 +1,6 @@
 image:
   repository: folioorg/mgr-applications
-  tag: 3.0.5
+  tag: 2.1.0
 
 deploymentStrategy: RollingUpdate
 

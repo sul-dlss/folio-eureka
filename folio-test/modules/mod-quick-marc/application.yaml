@@ -18,8 +18,8 @@ spec:
       valueFiles:
       - $values/folio-test/modules/mod-quick-marc/overrides.yaml
       - $values/folio-test/modules/mod-quick-marc/resources.yaml
-      - $values/common/sidecar.yaml
-      - $values/common/probes.yaml
+      - $values/folio-test/common/sidecar.yaml
+      - $values/folio-test/common/probes.yaml
     repoURL: https://sul-dlss.github.io/folio-helm-v2/
     targetRevision: 5.0.50
   - ref: values
