@@ -1,10 +1,10 @@
-authDelegator:
-  enabled: false
 global:
   enabled: true
 injector:
   enabled: false
 server:
+  authDelegator:
+    enabled: false
   agentInjector:
     enabled: false
   auditLog:
