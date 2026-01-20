@@ -10,29 +10,22 @@ Create k8s VaultStaticSecrets by applying the secrets.yaml file:
 envsubst < secrets.yaml | kubectl -n ${namespace} apply -f -
 ```
 
-## Kong, Keycloak, Vault
-Install Keycloak:
+## Install Infrastructire in the cluster namespace (Kong, Keycloak, Elasticsearch, Postfix)
 ```
-helm upgrade --install -n folio-dev --version v21.0.4 keycloak bitnami/keycloak -f folio-keycloak.yaml
+for I in `ls ${namespace}/infrastructure/*_application.yaml`; do kubectl -n ${namespace} apply -f $I; done
 ```
 
-Ask Operations to install Kong provided the overrides in kong.yaml. Recommended chart version is 12.0.11.
-
-After Kong is installed with its custom resources definitions you can upgrade the chart using:
+## Install Vault in the cluster namespace
 ```
-helm -n ${namespace} upgrade -f kong.yaml kong bitnami/kong
+helm -n ${namespace} install -f folio-test/infrastructure/vault.yaml vault hashicorp/vault
 ```
+Then create the folio-backend-admin-client secret in cluster namespace vault under `secret/folio/master`
 
 ## Deploy mgr-* modules
 ```
-helm upgrade --install -n folio-dev mgr-applications -f mgr-applications.yaml folio-helm-v2/mgr-applications
+for M in `ls ${namespace}/modules/mgr-*/application.yaml`; do kubectl -n ${namespace} apply -f $M; done
 ```
-```
-helm upgrade --install -n folio-dev mgr-tenant-entitlements -f mgr-tenant-entitlements.yaml folio-helm-v2/mgr-tenant-entitlements
-```
-```
-helm upgrade --install -n folio-dev mgr-tenants -f mgr-tenants.yaml folio-helm-v2/mgr-tenants
-```
+
 
 ## Get a token from the master realm 
 ```
