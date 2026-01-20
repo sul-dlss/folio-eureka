@@ -9,8 +9,6 @@ server:
     enabled: false
   auditLog:
     enabled: false
-  authDelegator:
-    enabled: false
   backup:
     enabled: false
   dataStorage:
