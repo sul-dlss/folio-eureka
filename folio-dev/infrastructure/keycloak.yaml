@@ -115,6 +115,7 @@ service:
     https: 8443
 ingress:
   enabled: true
+  hostnameStrict: false
   hostname: keycloak-folio-dev.stanford.edu
   ingressClassName: "nginx"
   annotations:
