@@ -17,7 +17,7 @@ for I in `ls ${namespace}/infrastructure/*_application.yaml`; do kubectl -n ${na
 
 ### keycloak helm install commands if there are issues with the ArgoCD app
 ```
-helm upgrade --install -n folio-test --version v21.0.4 keycloak bitnami/keycloak -f folio-test/infrastructure/keycloak.yaml
+helm upgrade --install -n folio-test --version v24.7.4 keycloak bitnami/keycloak -f folio-test/infrastructure/keycloak.yaml
 ```
 
 ## Install Vault in the cluster namespace
