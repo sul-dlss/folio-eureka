@@ -10,7 +10,7 @@ spec:
   sources:
     - chart: keycloak
       repoURL: oci://registry-1.docker.io/bitnamicharts/keycloak
-      targetRevision: 25.2.20
+      targetRevision: 24.7.4
       helm:
         valueFiles:
           - $values/folio-dev/infrastructure/keycloak.yaml

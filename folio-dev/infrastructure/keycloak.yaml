@@ -4,7 +4,7 @@ global:
 image:
   registry: folioorg
   repository: folio-keycloak
-  tag: 26.3.4
+  tag: 26.2.2
   pullPolicy: Always
 auth:
   adminUser: admin
@@ -115,6 +115,7 @@ service:
     https: 8443
 ingress:
   enabled: true
+  hostnameStrict: false
   hostname: keycloak-folio-dev.stanford.edu
   ingressClassName: "nginx"
   annotations:
