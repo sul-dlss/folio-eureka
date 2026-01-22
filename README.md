@@ -144,7 +144,7 @@ curl -X POST --location "$KONG_URL/authn/credentials" -H "Authorization: Bearer 
 Restart the mod-*-keycloak modules.
 
 ### Create entitlements for app-platform-complete (Make sure all modules are up and running, may need to repeat due to timeouts)
-Use the [get-a-token-from-the-master-realm](folio-backend-admin-client) id 
+Use the [folio-backend-admin-client](#get-a-token-from-the-master-realm) id 
 ```
 curl -X POST --location "$KONG_URL/entitlements?async=true&ignoreErrors=true&tenantParameters=loadReference=true,loadSample=false" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" --data "{\"tenantId\":\"$tenantUUID\", \"applications\": [\"app-platform-complete-1.1.78\"]}"
 ```
@@ -185,7 +185,7 @@ curl -sX DELETE "$KONG_URL/entitlements" -d "{\"tenantId\":\"$tenantUUID\", \"ap
 ```
 
 ## Create the Admin User
-Using the [sidecar-module-access-client](sidecar-client-login)
+Using the [sidecar-module-access-client](#sidecar-client-login)
 ```
 curl -X POST --location "$KONG_URL/users-keycloak/users" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul' --data-raw '{
     "username": "eureka_admin",
@@ -262,7 +262,9 @@ kubectl -n $namespace exec -it folio-k8s-pod -- vault kv get secret/folio/sul | 
 ```
 
 ### Get the sidecar token from the tenant (sul) keycloak realm
+```
 TOKEN=$(curl -sX POST -d client_id="sidecar-module-access-client" -d client_secret="$SIDECAR_SECRET" -d grant_type=client_credentials "$KC_URL/realms/sul/protocol/openid-connect/token" | jq -r  '.access_token')
+```
 
 ## Upgrading to a new Flower Release
 1. Fetch and save new application descriptors.
