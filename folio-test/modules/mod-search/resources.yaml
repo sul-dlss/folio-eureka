@@ -10,6 +10,9 @@ integrations:
   opensearch:
     enabled: true
     existingSecret: "opensearch-credentials"
+  systemuser:
+      enabled: true
+      name: "modsearch"
 
 extraEnvVars: |
   - name: OKAPI_URL
