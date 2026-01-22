@@ -144,7 +144,7 @@ curl -X POST --location "$KONG_URL/authn/credentials" -H "Authorization: Bearer 
 Restart the mod-*-keycloak modules.
 
 ### Create entitlements for app-platform-complete (Make sure all modules are up and running, may need to repeat due to timeouts)
-Use the [folio-backend-admin-client](get-a-token-from-the-master-realm) id
+Use the [get-a-token-from-the-master-realm](folio-backend-admin-client) id 
 ```
 curl -X POST --location "$KONG_URL/entitlements?async=true&ignoreErrors=true&tenantParameters=loadReference=true,loadSample=false" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" --data "{\"tenantId\":\"$tenantUUID\", \"applications\": [\"app-platform-complete-1.1.78\"]}"
 ```
