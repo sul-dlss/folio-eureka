@@ -18,7 +18,7 @@ def main():
 
     print("POSTING to /modules/discovery")
     print(discovery)
-    with httpx.Client(timeout=20.0) as client:
+    with httpx.Client(timeout=60.0) as client:
         try:
             response = client.post(
                 f"{kong_url}/modules/discovery",
