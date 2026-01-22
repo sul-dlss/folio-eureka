@@ -9,8 +9,6 @@ RUN apk add vim
 RUN apk add coreutils
 RUN apk add python3
 RUN apk add py3-pip
-# RUN apt-get install -y python3-requests
-# RUN apt-get install -y python3-httpx
 RUN apk add lsb-release
 
 WORKDIR /home/folio-eureka
