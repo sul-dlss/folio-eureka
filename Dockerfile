@@ -1,21 +1,34 @@
-RUN apt update
-RUN apt-get install -y curl
-RUN apt-get install -y jq
-RUN apt-get install -y bash
-RUN apt-get install -y less
-RUN apt-get install -y vim
-RUN apt-get install -y coreutils
-RUN apt-get install -y python3
-RUN apt-get install -y python3-requests
-RUN apt-get install -y python3-httpx
-RUN apt-get install -y lsb-release
+FROM alpine:latest
+
+RUN apk add curl
+RUN apk add jq
+RUN apk add jq
+RUN apk add bash
+RUN apk add less
+RUN apk add vim
+RUN apk add coreutils
+RUN apk add python3
+RUN apk add py3-pip
+# RUN apt-get install -y python3-requests
+# RUN apt-get install -y python3-httpx
+RUN apk add lsb-release
 
 WORKDIR /home/folio-eureka
 
+COPY folio-dev ./folio-dev/
+COPY folio-test ./folio-test/
 COPY ./*.yaml .
 COPY ./*.json .
-COPY ./*.txt .
 COPY ./*.py .
+COPY requirements.txt .
+
+# Create venv
+RUN python3 -m venv venv
+RUN chmod +x venv/bin/activate
+RUN source venv/bin/activate
+ENV PATH="venv/bin:$PATH"
+RUN pip3 install -r requirements.txt
+
 
 ENV TENANT_DESC="Stanford University Libraries" 
 ENV TENANT_ID="sul"
