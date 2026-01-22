@@ -32,7 +32,7 @@ for M in `ls ${namespace}/modules/mgr-*/application.yaml`; do kubectl -n ${names
 ```
 
 
-## Get a token from the master realm 
+## Get a token from the master realm
 ```
 TOKEN=$(curl -sX POST -d client_id="folio-backend-admin-client" -d client_secret="$KC_ADMIN_CLIENT_SECRET" -d grant_type="client_credentials" "$KC_URL/realms/master/protocol/openid-connect/token" | jq -r '.access_token')
 ```
@@ -43,11 +43,13 @@ curl -sX PUT "$KC_URL/admin/realms/master" -H "Authorization: Bearer $TOKEN" -H 
 ```
 
 ## Post the applications
-Get the application descriptors for app-platform-minimal from the repository [folio-org/app-platform-minimal](https://github.com/folio-org/app-platform-minimal) and select the version tag 1.0.41. Copy the application-descriptor.json file from there and save as application-descriptor-minimal-ramsons.json.
+Get the application descriptors for app-platform-minimal from the repository [folio-org/app-platform-minimal](https://github.com/folio-org/app-platform-minimal) and select the version tag 1.0.43 for Ramsons R2-2024-csp-8. Copy the application-descriptor.json file from there and save as $namespace/application-descriptor-minimal.json.
 
-Get the application descriptors for app-platform-complete from the repository [folio-org/app-platform-complete](https://github.com/folio-org/app-platform-complete) and select the version tag 1.1.78. Copy the application-descriptor.json file from there and save as application-descriptor-complete-ramsons.json. Make sure the tag value for app-platform-minimal matches the version saved to application-descriptor-minimal-ramsons.json (listed in the depencies array of the app-platform-complete descriptor).
+Get the application descriptors for app-platform-complete from the repository [folio-org/app-platform-complete](https://github.com/folio-org/app-platform-complete) and select the version tag 1.1.89 for Ramsons R2-2024-csp-8. Copy the application-descriptor.json file from there and save as $namespace/application-descriptor-complete.json. 
 
-Get the application descriptors for other requires apps and repeat the process:
+Make sure the tag value for app-platform-minimal matches the version saved to application-descriptor-minimal.json (listed in the depencies array of the app-platform-complete descriptor).
+
+Get the application descriptors for other required apps and repeat the process:
 ```
 curl -X POST --location "$KONG_URL/applications" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -d@"$APP_FILE"
 ```
@@ -57,13 +59,18 @@ Check the applications posted by logging into the folio-k8s-pod shell and doing:
 curl "$KONG_URL/applications"
 ```
 
-Delete any extra applications if desired, e.g.:
+Delete any extra applications as needed, e.g.:
 ```
 curl -X DELETE --location "$KONG_URL/applications/$APP_ID" -H "Authorization: Bearer $TOKEN"
 ```
 
+## Deploy backend modules for each application
+```
+python ./create_module_values.py $APP_FILE -n $namespace
+python ./create_applications.py $APP_FILE -n $namespace -x apply
+```
+
 ## Register the applications
-...with modules/discovery endpoint from the folio-k8s-pod shell:
 ```
 APP_ID=$APP_ID python3 ./discovery-modules.py
 ```
@@ -89,22 +96,18 @@ curl -X PUT \
   "$KC_URL/admin/realms/$TENANT_ID/clients/$CLIENT_UUID" \
   -H "Authorization: Bearer $TOKEN" \
   -H 'Content-Type: application/json' \
-  --data '{
-    "rootUrl": "https://folio-dev.stanford.edu",
-    "baseUrl": "https://folio-dev.stanford.edu",
-    "adminUrl": "https://folio-dev.stanford.edu",
-    "redirectUris": ["https://folio-dev.stanford.edu/*", "http://localhost:3000/*"],
-    "webOrigins": ["/*"],
-    "authorizationServicesEnabled": true,
-    "serviceAccountsEnabled": true,
-    "attributes": {"post.logout.redirect.uris": "/*##https://folio-dev.stanford.edu/*"}
-  }'
+  --data "{
+    \"rootUrl\": \"https://${namespace}.stanford.edu\",
+    \"baseUrl\": \"https://${namespace}.stanford.edu\",
+    \"adminUrl\": \"https://${namespace}.stanford.edu\",
+    \"redirectUris\": [\"https://${namespace}.stanford.edu/*\", \"http://localhost:3000/*\"],
+    \"webOrigins\": [\"/*\"],
+    \"authorizationServicesEnabled\": true,
+    \"serviceAccountsEnabled\": true,
+    \"attributes\": {\"post.logout.redirect.uris\": \"/*##https://${namespace}.stanford.edu/*\"}
+  }"
 ```
 
-## Deploy backend modules for each application
-```
-python3 ./install_modules.py $APP_FILE -n folio-dev -x install
-```
 ## Create Entitlements
 
 ### Create entitlements for app-platform-minimal (Make sure all modules are up and running, may need to do multiple times due to timeouts)
@@ -112,11 +115,10 @@ python3 ./install_modules.py $APP_FILE -n folio-dev -x install
 curl -X POST --location "$KONG_URL/entitlements?async=true&tenantParameters=loadReference=true,loadSample=false" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" --data "{\"tenantId\":\"$tenantUUID\", \"applications\": [\"$APP_ID\"]}"
 ```
 
-### Create keycloak system users - mod-users-keycloak
-#### *SINCE ADDING THE $OKAPI_URL ENV VAR TO mod-users-keycloak: BEFORE DOING THIS CHECK WHETHER THE mod-users-keycloak USER WAS CREATED IN KEYCLOAK, VAULT folio/sul AND mod-users. IF SO, THERE IS NO NEED TO KEEP THIS STEP.
+### Create keycloak system users - mod-users-keycloak and mod-login-keycloak
+#### After entitling app-platform-minimal a keycloak user in the sul realm and a vault secret is created for mod-roles-keycloak only.
 
-Create the system user (mod-login-keycloak example) using the [sidecar-module-access-client](sidecar-client-login)
-
+Create system users for mod-users-keycloak and mod-login-keycloak, example using the [sidecar-module-access-client](sidecar-client-login)
 ```
 curl -X POST --location "$KONG_URL/users-keycloak/users" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul' --data-raw '{
     "username": "mod-users-keycloak",
@@ -128,13 +130,13 @@ curl -X POST --location "$KONG_URL/users-keycloak/users" -H "Authorization: Bear
 ```
 Add a password to vault
 ```
-vault kv patch secret/folio/sul mod-login-keycloak="<random 32 characters>"
+vault kv patch secret/folio/sul mod-users-keycloak="<random 32 characters>"
 ```
 Add the password to keycloak
 ```
 curl -X POST --location "$KONG_URL/authn/credentials" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul' --data '{
-    "username": "mod-login-keycloak",
-    "userId": "<select * from sul_mod_users.users where jsonb ->> 'username' like 'mod-%-keycloak';>",
+    "username": "mod-users-keycloak",
+    "userId": "<userId from users-keycloak/users POST response>",
     "password": "<random 32 character password from vault: secret/folio/sul>"
 }'
 ```
@@ -142,7 +144,7 @@ curl -X POST --location "$KONG_URL/authn/credentials" -H "Authorization: Bearer 
 Restart the mod-*-keycloak modules.
 
 ### Create entitlements for app-platform-complete (Make sure all modules are up and running, may need to repeat due to timeouts)
-Use the folio-backend-admin-client id
+Use the [folio-backend-admin-client](get-a-token-from-the-master-realm) id
 ```
 curl -X POST --location "$KONG_URL/entitlements?async=true&ignoreErrors=true&tenantParameters=loadReference=true,loadSample=false" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" --data "{\"tenantId\":\"$tenantUUID\", \"applications\": [\"app-platform-complete-1.1.78\"]}"
 ```
@@ -248,6 +250,8 @@ curl -X POST --location "$KONG_URL/roles/users" -H "Authorization: Bearer $TOKEN
 ```
 
 ## Sidecar Client Login
+Get the sidecar client secret. 
+
 `vault login` with root credential:
 ```
 kubectl -n $namespace exec -it folio-k8s-pod -- vault login
@@ -256,8 +260,9 @@ copy the sidecar secret and set as SIDECAR_SECRET
 ```
 kubectl -n $namespace exec -it folio-k8s-pod -- vault kv get secret/folio/sul | grep sidecar-module-access-client
 ```
-### Get the sidecar token from the tenant keycloak realm (sul)
-    TOKEN=$(curl -sX POST -d client_id="sidecar-module-access-client" -d client_secret="$SIDECAR_SECRET" -d grant_type=client_credentials "$KC_URL/realms/sul/protocol/openid-connect/token" | jq -r  '.access_token')
+
+### Get the sidecar token from the tenant (sul) keycloak realm
+TOKEN=$(curl -sX POST -d client_id="sidecar-module-access-client" -d client_secret="$SIDECAR_SECRET" -d grant_type=client_credentials "$KC_URL/realms/sul/protocol/openid-connect/token" | jq -r  '.access_token')
 
 ## Upgrading to a new Flower Release
 1. Fetch and save new application descriptors.
