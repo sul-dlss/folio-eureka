@@ -37,11 +37,19 @@ def base_override(name, version):
             "runAsUser": 1000,
             "allowPrivilegeEscalation": False
         },
-        "eureka": {"enabled": True},
+        "eureka": {
+            "enabled": True,
+            "extraEnvVars": [
+                {"name": "FOLIO_SYSTEM_USER_ENABLED", "value": False},
+                {"name": "SYSTEM_USER_CREATED", "value": False},
+                {"name": "SYSTEM_USER_ENABLED", "value": False},
+            ]
+        },
         "integrations": {
             "db": {"enabled": True, "existingSecret": "db-credentials"},
             "kafka": {"enabled": True, "existingSecret": "kafka-credentials"},
             "okapi": {"enabled": False},
+            "systemuser": {"enabled": False},
         },
         "deploymentStrategy": "RollingUpdate"
     }

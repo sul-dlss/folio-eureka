@@ -1,8 +1,3 @@
-integrations:
-  systemuser:
-      enabled: true
-      name: "mod-users-keycloak"
-
 extraEnvVars:
   - name: OKAPI_URL
     value: "http://localhost:8082"
