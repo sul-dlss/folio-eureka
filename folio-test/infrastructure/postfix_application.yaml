@@ -10,7 +10,7 @@ spec:
   sources:
     - chart: mail
       repoURL: https://bokysan.github.io/docker-postfix
-      targetRevision: 4.4.0
+      targetRevision: 5.1.0
       helm:
         valueFiles:
           - $values/folio-test/infrastructure/postfix.yaml
