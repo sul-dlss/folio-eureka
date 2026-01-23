@@ -1,0 +1,7 @@
+extraEnvVars: |
+  - name: SYSTEM_USER_NAME
+    value: "pub-sub"
+  - name: SYSTEM_USER_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: folio-k8s
