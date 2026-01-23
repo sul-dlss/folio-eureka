@@ -39,11 +39,6 @@ def base_override(name, version):
         },
         "eureka": {
             "enabled": True,
-            "extraEnvVars": [
-                {"name": "FOLIO_SYSTEM_USER_ENABLED", "value": False},
-                {"name": "SYSTEM_USER_CREATED", "value": False},
-                {"name": "SYSTEM_USER_ENABLED", "value": False},
-            ]
         },
         "integrations": {
             "db": {"enabled": True, "existingSecret": "db-credentials"},
@@ -56,6 +51,12 @@ def base_override(name, version):
     
     if name in S3_MODULES:
         data['integrations']['s3'] = {"enabled": True, "existingSecret": "s3-credentials"}
+    if not name.startswith('mod-pubsub'):
+        data['eureka']['extraEnvVars'] = [
+            {"name": "FOLIO_SYSTEM_USER_ENABLED", "value": "false"},
+            {"name": "SYSTEM_USER_CREATED", "value": "false"},
+            {"name": "SYSTEM_USER_ENABLED", "value": "false"},
+        ]
     if name.startswith('edge-'):
         del data['integrations']['db']
         del data['integrations']['kafka']
