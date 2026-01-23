@@ -118,7 +118,7 @@ curl -X POST --location "$KONG_URL/entitlements?async=true&tenantParameters=load
 ### Create keycloak system users - mod-users-keycloak and mod-login-keycloak
 #### After entitling app-platform-minimal a keycloak user in the sul realm and a vault secret is created for mod-roles-keycloak only.
 
-Create system users for mod-users-keycloak and mod-login-keycloak, example using the [sidecar-module-access-client](sidecar-client-login)
+Create system users for mod-users-keycloak and mod-login-keycloak, example using the [sidecar-module-access-client](#sidecar-client-login)
 ```
 curl -X POST --location "$KONG_URL/users-keycloak/users" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul' --data-raw '{
     "username": "mod-users-keycloak",
