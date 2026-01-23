@@ -6,5 +6,5 @@ extraEnvVars: |
   - name: SYSTEM_USER_PASSWORD
     valueFrom:
       secretKeyRef:
-          name: folio-k8s
+          name: mod-pubsub-system-user
           key: SYSTEM_USER_PASSWORD

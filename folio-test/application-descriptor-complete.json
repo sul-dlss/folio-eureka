@@ -336,10 +336,6 @@
       "version": "5.2.0"
     },
         {
-      "name": "folio_remote-storage",
-      "version": "6.0.0"
-    },
-        {
       "name": "folio_circulation-log",
       "version": "5.0.1"
     },
@@ -42082,74 +42078,6 @@
             "ui-oai-pmh.settings.view",
             "oai-pmh.request-metadata.collection.get",
             "oai-pmh.request-metadata.logs.item.get"
-          ],
-          "visible": true
-        }
-      ]
-    },
-        {
-      "id": "folio_remote-storage-6.0.0",
-      "name": "Description for remote storage",
-      "requires":       [
-                {
-          "id": "locations",
-          "version": "3.0"
-        },
-                {
-          "id": "remote-storage-configurations",
-          "version": "1.1"
-        },
-                {
-          "id": "remote-storage-mappings",
-          "version": "1.0"
-        },
-                {
-          "id": "remote-storage-extended-mappings",
-          "version": "1.0"
-        },
-                {
-          "id": "remote-storage-providers",
-          "version": "1.0"
-        }
-      ],
-      "optional": [],
-      "permissionSets":       [
-                {
-          "permissionName": "settings.remote-storage.enabled",
-          "displayName": "Settings (Remote storages): Module is enabled.",
-          "subPermissions": ["settings.enabled"],
-          "visible": false
-        },
-                {
-          "permissionName": "ui-remote-storage.settings.remote-storages.view",
-          "displayName": "Remote storage: View",
-          "subPermissions":           [
-            "inventory-storage.locations.collection.get",
-            "inventory-storage.locations.item.get",
-            "remote-storage.configurations.collection.get",
-            "remote-storage.configurations.item.get",
-            "remote-storage.mappings.item.get",
-            "remote-storage.mappings.collection.get",
-            "remote-storage.extended-mappings.collection.get",
-            "remote-storage.extended-mappings.item.get",
-            "remote-storage.extended-mappings-locations.collection.get",
-            "remote-storage.providers.collection.get",
-            "settings.remote-storage.enabled"
-          ],
-          "visible": true
-        },
-                {
-          "permissionName": "ui-remote-storage.settings.remote-storages.edit",
-          "displayName": "Remote storage: Create, edit, delete",
-          "subPermissions":           [
-            "ui-remote-storage.settings.remote-storages.view",
-            "remote-storage.configurations.item.post",
-            "remote-storage.configurations.item.put",
-            "remote-storage.configurations.item.delete",
-            "remote-storage.mappings.item.post",
-            "remote-storage.mappings.item.delete",
-            "remote-storage.extended-mappings.item.post",
-            "remote-storage.extended-mappings.item.delete"
           ],
           "visible": true
         }

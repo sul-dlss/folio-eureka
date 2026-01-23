@@ -118,7 +118,7 @@ curl -X POST --location "$KONG_URL/entitlements?async=true&tenantParameters=load
 ### Create keycloak system users - mod-users-keycloak and mod-login-keycloak
 #### After entitling app-platform-minimal a keycloak user in the sul realm and a vault secret is created for mod-roles-keycloak only.
 
-Create system users for mod-users-keycloak and mod-login-keycloak, example using the [sidecar-module-access-client](sidecar-client-login)
+Create system users for mod-users-keycloak and mod-login-keycloak, example using the [sidecar-module-access-client](#sidecar-client-login)
 ```
 curl -X POST --location "$KONG_URL/users-keycloak/users" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul' --data-raw '{
     "username": "mod-users-keycloak",
@@ -250,15 +250,9 @@ curl -X POST --location "$KONG_URL/roles/users" -H "Authorization: Bearer $TOKEN
 ```
 
 ## Sidecar Client Login
-Get the sidecar client secret. 
-
-`vault login` with root credential:
+### Get the sidecar client vault secret from secret/folio/sul and set the sidecar secret as SIDECAR_SECRET
 ```
-kubectl -n $namespace exec -it folio-k8s-pod -- vault login
-```
-copy the sidecar secret and set as SIDECAR_SECRET
-```
-kubectl -n $namespace exec -it folio-k8s-pod -- vault kv get secret/folio/sul | grep sidecar-module-access-client
+export SIDECAR_SECRET=$(kubectl -n $namespace exec -it vault-0 -- vault kv get secret/folio/sul | grep sidecar-module-access-client | awk '{print $2}')
 ```
 
 ### Get the sidecar token from the tenant (sul) keycloak realm
