@@ -6,12 +6,48 @@
   "platform": "complete",
   "modules":   [
     {
+      "name": "edge-orders",
+      "version": "3.1.0"
+    },
+        {
       "name": "edge-connexion",
       "version": "1.3.1"
     },
         {
+      "name": "edge-oai-pmh",
+      "version": "2.10.0"
+    },
+        {
+      "name": "edge-dematic",
+      "version": "2.3.1"
+    },
+        {
+      "name": "edge-caiasoft",
+      "version": "2.3.3"
+    },
+        {
+      "name": "edge-rtac",
+      "version": "2.8.1"
+    },
+        {
       "name": "edge-sip2",
       "version": "3.3.3"
+    },
+        {
+      "name": "edge-fqm",
+      "version": "3.0.2"
+    },
+        {
+      "name": "edge-erm",
+      "version": "1.3.0"
+    },
+        {
+      "name": "edge-patron",
+      "version": "5.2.2"
+    },
+        {
+      "name": "edge-courses",
+      "version": "1.5.1"
     },
         {
       "name": "edge-ncip",
