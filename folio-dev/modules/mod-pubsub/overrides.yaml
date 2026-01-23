@@ -13,6 +13,8 @@ integrations:
     existingSecret: kafka-credentials
   okapi:
     enabled: false
+  systemuser:
+    enabled: false
 podSecurityContext:
   fsGroup: 2000
 securityContext:
