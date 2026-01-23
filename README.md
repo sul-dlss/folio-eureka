@@ -260,6 +260,11 @@ export SIDECAR_SECRET=$(kubectl -n $namespace exec -it vault-0 -- vault kv get s
 TOKEN=$(curl -sX POST -d client_id="sidecar-module-access-client" -d client_secret="$SIDECAR_SECRET" -d grant_type=client_credentials "$KC_URL/realms/sul/protocol/openid-connect/token" | jq -r  '.access_token')
 ```
 
+## Notes
+ - All modules must have all possible "SYSTEM_USER_ENABLED" vars set to false. This is handled in the `create_module_values.py` script by setting: `{"name": "FOLIO_SYSTEM_USER_ENABLED", "value": "false"}, {"name": "SYSTEM_USER_CREATED", "value": "false"}, {"name": "SYSTEM_USER_ENABLED", "value": "false"}`
+ - In the stripes.config.js, module.exports["config"]["hasAllPerms"] must be "true" in order for the user to be able to see the app settings.
+
+
 ## Upgrading to a new Flower Release
 1. Fetch and save new application descriptors.
 1. Update versions of mgr-apps, kong and keycloak in yaml files.
