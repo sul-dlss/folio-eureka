@@ -1,0 +1,1424 @@
+{
+  "id": "app-erm-usage-2.0.4",
+  "name": "app-erm-usage",
+  "version": "2.0.4",
+  "description": "Application for ERM Usage platform installation for Sunflower",
+  "platform": "complete",
+  "modules":   [
+        {
+      "id": "mod-erm-usage-5.1.1",
+      "name": "mod-erm-usage",
+      "version": "5.1.1",
+      "url": "https://mdr-folio-eis-us-east-1-dev.s3.amazonaws.com/mod-erm-usage-5.1.1"
+    },
+        {
+      "id": "mod-erm-usage-harvester-5.1.1",
+      "name": "mod-erm-usage-harvester",
+      "version": "5.1.1",
+      "url": "https://mdr-folio-eis-us-east-1-dev.s3.amazonaws.com/mod-erm-usage-harvester-5.1.1"
+    },
+        {
+      "id": "mod-eusage-reports-3.0.0",
+      "name": "mod-eusage-reports",
+      "version": "3.0.0",
+      "url": null
+    }
+  ],
+  "uiModules":   [
+        {
+      "id": "folio_plugin-eusage-reports-4.0.1",
+      "name": "folio_plugin-eusage-reports",
+      "version": "4.0.1",
+      "url": null
+    },
+        {
+      "id": "folio_erm-comparisons-8.0.1",
+      "name": "folio_erm-comparisons",
+      "version": "8.0.1",
+      "url": null
+    },
+        {
+      "id": "folio_erm-usage-11.0.1",
+      "name": "folio_erm-usage",
+      "version": "11.0.1",
+      "url": null
+    },
+        {
+      "id": "folio_plugin-find-erm-usage-data-provider-7.0.0",
+      "name": "folio_plugin-find-erm-usage-data-provider",
+      "version": "7.0.0",
+      "url": null
+    }
+  ],
+  "dependencies":   [
+        {
+      "name": "app-platform-complete",
+      "version": "^2.0.0"
+    },
+        {
+      "name": "app-acquisitions",
+      "version": "^1.0.0"
+    }
+  ],
+  "moduleDescriptors":   [
+        {
+      "id": "mod-erm-usage-5.1.1",
+      "name": "erm-usage",
+      "provides":       [
+                {
+          "id": "usage-data-providers",
+          "version": "3.1",
+          "handlers":           [
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/usage-data-providers",
+              "permissionsRequired": ["usagedataproviders.collection.get"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/usage-data-providers/{id}",
+              "permissionsRequired": ["usagedataproviders.item.get"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/usage-data-providers",
+              "permissionsRequired": ["usagedataproviders.item.post"]
+            },
+                        {
+              "methods": ["PUT"],
+              "pathPattern": "/usage-data-providers/{id}",
+              "permissionsRequired": ["usagedataproviders.item.put"]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/usage-data-providers/{id}",
+              "permissionsRequired": ["usagedataproviders.item.delete"]
+            }
+          ]
+        },
+                {
+          "id": "aggregator-settings",
+          "version": "2.0",
+          "handlers":           [
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/aggregator-settings",
+              "permissionsRequired": ["aggregatorsettings.collection.get"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/aggregator-settings/{id}",
+              "permissionsRequired": ["aggregatorsettings.item.get"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/aggregator-settings",
+              "permissionsRequired": ["aggregatorsettings.item.post"]
+            },
+                        {
+              "methods": ["PUT"],
+              "pathPattern": "/aggregator-settings/{id}",
+              "permissionsRequired": ["aggregatorsettings.item.put"]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/aggregator-settings/{id}",
+              "permissionsRequired": ["aggregatorsettings.item.delete"]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/aggregator-settings/{id}",
+              "permissionsRequired": ["aggregatorsettings.item.delete"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/aggregator-settings/{id}/exportcredentials",
+              "permissionsRequired": ["aggregatorsettings.exportcredentials.item.get"]
+            }
+          ]
+        },
+                {
+          "id": "counter-reports",
+          "version": "4.1",
+          "handlers":           [
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/counter-reports",
+              "permissionsRequired": ["counterreports.collection.get"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/counter-reports/{id}",
+              "permissionsRequired": ["counterreports.item.get"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/counter-reports/{id}/download",
+              "permissionsRequired": ["counterreports.download.item.get"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/counter-reports",
+              "permissionsRequired": ["counterreports.item.post"]
+            },
+                        {
+              "methods": ["PUT"],
+              "pathPattern": "/counter-reports/{id}",
+              "permissionsRequired": ["counterreports.item.put"]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/counter-reports/{id}",
+              "permissionsRequired": ["counterreports.item.delete"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/counter-reports/sorted/{udpId}",
+              "permissionsRequired": ["counterreports.sorted.collection.get"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/counter-reports/export/{id}",
+              "permissionsRequired": ["counterreports.export.item.get"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/counter-reports/export/provider/{id}/report/{name}/version/{version}/from/{begin}/to/{end}",
+              "permissionsRequired": ["counterreports.export.collection.get"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/counter-reports/multipartupload/provider/{id}",
+              "permissionsRequired": ["counterreports.upload.item.post"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/counter-reports/errors/codes",
+              "permissionsRequired": ["counterreports.errorcodes.collection.get"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/counter-reports/reports/types",
+              "permissionsRequired": ["counterreports.reporttypes.collection.get"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/counter-reports/reports/releases",
+              "permissionsRequired": ["counterreports.reportreleases.collection.get"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/counter-reports/reports/delete",
+              "permissionsRequired": ["counterreports.collection.delete"]
+            }
+          ]
+        },
+                {
+          "id": "custom-reports",
+          "version": "2.0",
+          "handlers":           [
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/custom-reports",
+              "permissionsRequired": ["customreports.collection.get"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/custom-reports/{id}",
+              "permissionsRequired": ["customreports.item.get"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/custom-reports",
+              "permissionsRequired": ["customreports.item.post"]
+            },
+                        {
+              "methods": ["PUT"],
+              "pathPattern": "/custom-reports/{id}",
+              "permissionsRequired": ["customreports.item.put"]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/custom-reports/{id}",
+              "permissionsRequired": ["customreports.item.delete"]
+            }
+          ]
+        },
+                {
+          "id": "erm-usage-files",
+          "version": "1.0",
+          "handlers":           [
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/erm-usage/files/{id}",
+              "permissionsRequired": ["erm-usage.files.item.get"]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/erm-usage/files/{id}",
+              "permissionsRequired": ["erm-usage.files.item.delete"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/erm-usage/files",
+              "permissionsRequired": ["erm-usage.files.item.post"]
+            }
+          ]
+        },
+                {
+          "id": "_tenant",
+          "version": "2.0",
+          "interfaceType": "system",
+          "handlers":           [
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/_/tenant"
+            },
+                        {
+              "methods":               [
+                "GET",
+                "DELETE"
+              ],
+              "pathPattern": "/_/tenant/{id}"
+            }
+          ]
+        }
+      ],
+      "permissionSets":       [
+                {
+          "permissionName": "usagedataproviders.collection.get",
+          "displayName": "usage data providers collection get",
+          "description": "Get a collection of usage data providers"
+        },
+                {
+          "permissionName": "usagedataproviders.item.get",
+          "displayName": "usage data providers item get",
+          "description": "Get a single usage data provider"
+        },
+                {
+          "permissionName": "usagedataproviders.item.post",
+          "displayName": "usage data providers item post",
+          "description": "Create a new usage data provider"
+        },
+                {
+          "permissionName": "usagedataproviders.item.put",
+          "displayName": "usage data providers item put",
+          "description": "Edit an usage data provider"
+        },
+                {
+          "permissionName": "usagedataproviders.item.delete",
+          "displayName": "usage data providers item delete",
+          "description": "Delete an usage data provider"
+        },
+                {
+          "permissionName": "aggregatorsettings.collection.get",
+          "displayName": "aggregator settings collection get",
+          "description": "Get a collection of aggregator setting"
+        },
+                {
+          "permissionName": "aggregatorsettings.item.get",
+          "displayName": "aggregator settings item get",
+          "description": "Get a single aggregator setting"
+        },
+                {
+          "permissionName": "aggregatorsettings.item.post",
+          "displayName": "aggregator settings item post",
+          "description": "Create a new aggregator setting"
+        },
+                {
+          "permissionName": "aggregatorsettings.item.put",
+          "displayName": "aggregator settings item put",
+          "description": "Edit an aggregator setting"
+        },
+                {
+          "permissionName": "aggregatorsettings.item.delete",
+          "displayName": "aggregator settings item delete",
+          "description": "Delete an aggregator setting"
+        },
+                {
+          "permissionName": "aggregatorsettings.exportcredentials.item.get",
+          "displayName": "aggregator settings export credentials item get",
+          "description": "Export credentials for an aggregator setting"
+        },
+                {
+          "permissionName": "counterreports.collection.delete",
+          "displayName": "counter reports collection delete",
+          "description": "Delete a collection of counter reports"
+        },
+                {
+          "permissionName": "counterreports.collection.get",
+          "displayName": "counter reports collection get",
+          "description": "Get a collection of counter reports"
+        },
+                {
+          "permissionName": "counterreports.errorcodes.collection.get",
+          "displayName": "counter reports error codes collection get",
+          "description": "Get a collection of counter report error codes"
+        },
+                {
+          "permissionName": "counterreports.export.collection.get",
+          "displayName": "counter reports export collection get",
+          "description": "Export a collection of counter reports"
+        },
+                {
+          "permissionName": "counterreports.export.item.get",
+          "displayName": "counter reports export item get",
+          "description": "Export a counter report"
+        },
+                {
+          "permissionName": "counterreports.download.item.get",
+          "displayName": "counter reports download item get",
+          "description": "Download a counter report"
+        },
+                {
+          "permissionName": "counterreports.item.get",
+          "displayName": "counter reports item get",
+          "description": "Get a single counter report"
+        },
+                {
+          "permissionName": "counterreports.item.post",
+          "displayName": "counter reports item post",
+          "description": "Create a new counter report"
+        },
+                {
+          "permissionName": "counterreports.item.put",
+          "displayName": "counter reports item put",
+          "description": "Edit a counter report"
+        },
+                {
+          "permissionName": "counterreports.item.delete",
+          "displayName": "counter reports item delete",
+          "description": "Delete a counter report"
+        },
+                {
+          "permissionName": "counterreports.reportreleases.collection.get",
+          "displayName": "counter reports report releases collection get",
+          "description": "Get a counter report report releases collection"
+        },
+                {
+          "permissionName": "counterreports.reporttypes.collection.get",
+          "displayName": "counter reports report types collection get",
+          "description": "Get a counter report report types collection"
+        },
+                {
+          "permissionName": "counterreports.sorted.collection.get",
+          "displayName": "counter reports sorted collection get",
+          "description": "Get a sorted counter report collection for a provider"
+        },
+                {
+          "permissionName": "counterreports.upload.item.post",
+          "displayName": "counter reports upload item post",
+          "description": "Upload a counter report"
+        },
+                {
+          "permissionName": "customreports.collection.get",
+          "displayName": "custom reports collection get",
+          "description": "Get a collection of custom reports"
+        },
+                {
+          "permissionName": "customreports.item.get",
+          "displayName": "custom reports item get",
+          "description": "Get a single custom report"
+        },
+                {
+          "permissionName": "customreports.item.post",
+          "displayName": "custom reports item post",
+          "description": "Create a new custom report"
+        },
+                {
+          "permissionName": "customreports.item.put",
+          "displayName": "custom reports item put",
+          "description": "Edit a custom report"
+        },
+                {
+          "permissionName": "customreports.item.delete",
+          "displayName": "custom reports item delete",
+          "description": "Delete a custom report"
+        },
+                {
+          "permissionName": "erm-usage.files.item.get",
+          "displayName": "erm-usage files item get",
+          "description": "Get a single file"
+        },
+                {
+          "permissionName": "erm-usage.files.item.post",
+          "displayName": "erm-usage files item post",
+          "description": "Post a single file"
+        },
+                {
+          "permissionName": "erm-usage.files.item.delete",
+          "displayName": "erm-usage files item delete",
+          "description": "Delete a single file"
+        },
+                {
+          "permissionName": "eusage.all",
+          "displayName": "eusage all",
+          "description": "All permissions for the mod-erm-usage module",
+          "subPermissions":           [
+            "usagedataproviders.collection.get",
+            "usagedataproviders.item.get",
+            "usagedataproviders.item.post",
+            "usagedataproviders.item.put",
+            "usagedataproviders.item.delete",
+            "aggregatorsettings.collection.get",
+            "aggregatorsettings.item.get",
+            "aggregatorsettings.item.post",
+            "aggregatorsettings.item.put",
+            "aggregatorsettings.item.delete",
+            "aggregatorsettings.exportcredentials.item.get",
+            "counterreports.collection.delete",
+            "counterreports.collection.get",
+            "counterreports.errorcodes.collection.get",
+            "counterreports.export.collection.get",
+            "counterreports.export.item.get",
+            "counterreports.download.item.get",
+            "counterreports.item.get",
+            "counterreports.item.post",
+            "counterreports.item.put",
+            "counterreports.item.delete",
+            "counterreports.reportreleases.collection.get",
+            "counterreports.reporttypes.collection.get",
+            "counterreports.sorted.collection.get",
+            "counterreports.upload.item.post",
+            "customreports.collection.get",
+            "customreports.item.get",
+            "customreports.item.post",
+            "customreports.item.put",
+            "customreports.item.delete",
+            "erm-usage.files.item.get",
+            "erm-usage.files.item.post",
+            "erm-usage.files.item.delete"
+          ]
+        }
+      ],
+      "launchDescriptor":       {
+        "dockerImage": "mod-erm-usage:5.1.1",
+        "dockerPull": false,
+        "dockerArgs": {"HostConfig":         {
+          "Memory": 2147483648,
+          "PortBindings": {"8081/tcp": [{"HostPort": "%p"}]}
+        }},
+        "env":         [
+                    {
+            "name": "JAVA_OPTIONS",
+            "value": "-XX:MaxRAMPercentage=66.0"
+          },
+                    {
+            "name": "DB_HOST",
+            "value": "postgres"
+          },
+                    {
+            "name": "DB_PORT",
+            "value": "5432"
+          },
+                    {
+            "name": "DB_USERNAME",
+            "value": "folio_admin"
+          },
+                    {
+            "name": "DB_PASSWORD",
+            "value": "folio_admin"
+          },
+                    {
+            "name": "DB_DATABASE",
+            "value": "okapi_modules"
+          },
+                    {
+            "name": "DB_QUERYTIMEOUT",
+            "value": "60000"
+          },
+                    {
+            "name": "DB_CHARSET",
+            "value": "UTF-8"
+          },
+                    {
+            "name": "DB_MAXPOOLSIZE",
+            "value": "5"
+          }
+        ]
+      }
+    },
+        {
+      "id": "mod-erm-usage-harvester-5.1.1",
+      "name": "erm-usage-harvester",
+      "provides":       [
+                {
+          "id": "erm-usage-harvester",
+          "version": "2.0",
+          "handlers":           [
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/erm-usage-harvester/start",
+              "permissionsRequired": ["ermusageharvester.start-all.get"],
+              "modulePermissions":               [
+                "usagedataproviders.collection.get",
+                "usagedataproviders.item.get",
+                "usagedataproviders.item.put",
+                "aggregatorsettings.collection.get",
+                "aggregatorsettings.item.get",
+                "counterreports.collection.get",
+                "counterreports.item.get",
+                "counterreports.item.post",
+                "counterreports.item.put",
+                "counterreports.item.delete",
+                "configuration.entries.collection.get"
+              ]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/erm-usage-harvester/start/{id}",
+              "permissionsRequired": ["ermusageharvester.start-single.get"],
+              "modulePermissions":               [
+                "usagedataproviders.collection.get",
+                "usagedataproviders.item.get",
+                "usagedataproviders.item.put",
+                "aggregatorsettings.collection.get",
+                "aggregatorsettings.item.get",
+                "counterreports.collection.get",
+                "counterreports.item.get",
+                "counterreports.item.post",
+                "counterreports.item.put",
+                "counterreports.item.delete",
+                "configuration.entries.collection.get"
+              ]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/erm-usage-harvester/impl",
+              "permissionsRequired": ["ermusageharvester.impl.get"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/erm-usage-harvester/periodic",
+              "permissionsRequired": ["ermusageharvester.periodic.get"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/erm-usage-harvester/periodic",
+              "permissionsRequired": ["ermusageharvester.periodic.post"]
+            },
+                        {
+              "methods": ["DELETE"],
+              "pathPattern": "/erm-usage-harvester/periodic",
+              "permissionsRequired": ["ermusageharvester.periodic.delete"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/erm-usage-harvester/jobs",
+              "permissionsRequired": ["ermusageharvester.jobs.get"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/erm-usage-harvester/jobs/purgefinished",
+              "permissionsRequired": ["ermusageharvester.jobs.purge-finished.post"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/erm-usage-harvester/jobs/purgestale",
+              "permissionsRequired": ["ermusageharvester.jobs.purge-stale.post"]
+            }
+          ]
+        },
+                {
+          "id": "_tenant",
+          "version": "2.0",
+          "interfaceType": "system",
+          "handlers":           [
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/_/tenant"
+            },
+                        {
+              "methods":               [
+                "GET",
+                "DELETE"
+              ],
+              "pathPattern": "/_/tenant/{id}"
+            }
+          ]
+        },
+                {
+          "id": "_timer",
+          "version": "1.0",
+          "interfaceType": "system",
+          "handlers": [          {
+            "methods": ["POST"],
+            "pathPattern": "/erm-usage-harvester/jobs/cleanup",
+            "unit": "minute",
+            "delay": "30",
+            "modulePermissions":             [
+              "configuration.entries.collection.get",
+              "ermusageharvester.jobs.purge-finished.post",
+              "ermusageharvester.jobs.purge-stale.post"
+            ]
+          }]
+        }
+      ],
+      "requires":       [
+                {
+          "id": "usage-data-providers",
+          "version": "3.0"
+        },
+                {
+          "id": "aggregator-settings",
+          "version": "2.0"
+        },
+                {
+          "id": "counter-reports",
+          "version": "4.0"
+        },
+                {
+          "id": "login",
+          "version": "7.0"
+        }
+      ],
+      "optional":       [
+                {
+          "id": "configuration",
+          "version": "2.0"
+        },
+                {
+          "id": "okapi",
+          "version": "1.9"
+        }
+      ],
+      "permissionSets":       [
+                {
+          "permissionName": "ermusageharvester.start-all.get",
+          "displayName": "erm-usage-harvester start harvesting all providers",
+          "description": "Start harvesting for all providers",
+          "replaces": ["ermusageharvester.start"]
+        },
+                {
+          "permissionName": "ermusageharvester.start-single.get",
+          "displayName": "erm-usage-harvester start harvesting single provider",
+          "description": "Start harvesting for a single provider",
+          "replaces": ["ermusageharvester.start.single"]
+        },
+                {
+          "permissionName": "ermusageharvester.impl.get",
+          "displayName": "erm-usage-harvester get implementations",
+          "description": "Read available harvester implementations"
+        },
+                {
+          "permissionName": "ermusageharvester.periodic.get",
+          "displayName": "erm-usage-harvester get periodic setting",
+          "description": "Read harvester periodic setting"
+        },
+                {
+          "permissionName": "ermusageharvester.periodic.post",
+          "displayName": "erm-usage-harvester post periodic setting",
+          "description": "Save harvester periodic setting"
+        },
+                {
+          "permissionName": "ermusageharvester.periodic.delete",
+          "displayName": "erm-usage-harvester delete periodic setting",
+          "description": "Delete harvester periodic setting"
+        },
+                {
+          "permissionName": "ermusageharvester.jobs.get",
+          "displayName": "erm-usage-harvester get jobs",
+          "description": "Get harvester jobs"
+        },
+                {
+          "permissionName": "ermusageharvester.jobs.purge-finished.post",
+          "displayName": "erm-usage-harvester purge finished jobs",
+          "description": "Purge finished harvester jobs",
+          "replaces": ["ermusageharvester.jobs.purge"]
+        },
+                {
+          "permissionName": "ermusageharvester.jobs.purge-stale.post",
+          "displayName": "erm-usage-harvester purge stale jobs",
+          "description": "Purge stale harvester jobs",
+          "replaces": ["ermusageharvester.jobs.purge"]
+        },
+                {
+          "permissionName": "ermusageharvester.all",
+          "displayName": "erm-usage-harvester all",
+          "description": "All permissions for the mod-erm-harvester module",
+          "subPermissions":           [
+            "ermusageharvester.start-all.get",
+            "ermusageharvester.start-single.get",
+            "ermusageharvester.impl.get",
+            "ermusageharvester.periodic.get",
+            "ermusageharvester.periodic.post",
+            "ermusageharvester.periodic.delete",
+            "ermusageharvester.jobs.get",
+            "ermusageharvester.jobs.purge-finished.post",
+            "ermusageharvester.jobs.purge-stale.post"
+          ]
+        }
+      ],
+      "metadata": {"user":       {
+        "type": "system",
+        "permissions": ["ermusageharvester.start.single"]
+      }},
+      "launchDescriptor":       {
+        "dockerImage": "mod-erm-usage-harvester:5.1.1",
+        "dockerPull": false,
+        "dockerArgs": {"HostConfig":         {
+          "Memory": 3145728000,
+          "PortBindings": {"8081/tcp": [{"HostPort": "%p"}]}
+        }},
+        "env":         [
+                    {
+            "name": "JAVA_OPTIONS",
+            "value": "-XX:MaxRAMPercentage=66.0"
+          },
+                    {
+            "name": "DB_HOST",
+            "value": "postgres"
+          },
+                    {
+            "name": "DB_PORT",
+            "value": "5432"
+          },
+                    {
+            "name": "DB_USERNAME",
+            "value": "folio_admin"
+          },
+                    {
+            "name": "DB_PASSWORD",
+            "value": "folio_admin"
+          },
+                    {
+            "name": "DB_DATABASE",
+            "value": "okapi_modules"
+          },
+                    {
+            "name": "DB_QUERYTIMEOUT",
+            "value": "60000"
+          },
+                    {
+            "name": "DB_CHARSET",
+            "value": "UTF-8"
+          },
+                    {
+            "name": "DB_MAXPOOLSIZE",
+            "value": "5"
+          },
+                    {
+            "name": "OKAPI_URL",
+            "value": "http://10.0.2.15:9130",
+            "description": "Okapi URL"
+          },
+                    {
+            "name": "SYSTEM_USER_ENABLED",
+            "value": "true",
+            "description": "Defines if system user login call is enabled or not (true if not defined)"
+          },
+                    {
+            "name": "DIKU_USER_NAME",
+            "value": "mod-erm-usage-harvester",
+            "description": "System user username for tenant diku"
+          },
+                    {
+            "name": "DIKU_USER_PASS",
+            "value": "mod-erm-usage-harvester",
+            "description": "System user password for tenant diku"
+          }
+        ]
+      }
+    },
+        {
+      "id": "mod-eusage-reports-3.0.0",
+      "name": "eusage reports",
+      "provides":       [
+                {
+          "id": "_tenant",
+          "version": "2.0",
+          "interfaceType": "system",
+          "handlers":           [
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/_/tenant"
+            },
+                        {
+              "methods":               [
+                "GET",
+                "DELETE"
+              ],
+              "pathPattern": "/_/tenant/{id}"
+            }
+          ]
+        },
+                {
+          "id": "eusage-reports",
+          "version": "1.0",
+          "handlers":           [
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/eusage-reports/report-titles",
+              "permissionsRequired": ["eusage-reports-report-titles.collection.get"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/eusage-reports/report-titles",
+              "permissionsRequired": ["eusage-reports-report-titles.collection.post"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/eusage-reports/report-packages",
+              "permissionsRequired": ["eusage-reports-report-packages.collection.get"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/eusage-reports/report-titles/from-counter",
+              "permissionsRequired": ["eusage-reports-report-titles-from-counter.post"],
+              "modulePermissions":               [
+                "counterreports.collection.get",
+                "counterreports.item.get",
+                "erm.entitlements.collection.get",
+                "erm.entitlements.item.get",
+                "erm.packages.collection.get",
+                "erm.packages.item.get",
+                "erm.resources.collection.get",
+                "erm.resources.item.entitlement.get",
+                "erm.resources.item.get"
+              ]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/eusage-reports/title-data",
+              "permissionsRequired": ["eusage-reports-title-data.collection.get"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/eusage-reports/report-data",
+              "permissionsRequired": ["eusage-reports-report-data.collection.get"]
+            },
+                        {
+              "methods": ["POST"],
+              "pathPattern": "/eusage-reports/report-data/from-agreement",
+              "permissionsRequired": ["eusage-reports-report-data-from-agreement.post"],
+              "modulePermissions":               [
+                "erm.agreements.collection.get",
+                "erm.agreements.item.resources.get",
+                "erm.agreements.item.get",
+                "erm.entitlements.collection.get",
+                "erm.entitlements.item.get",
+                "erm.packages.collection.get",
+                "erm.packages.item.get",
+                "erm.resources.collection.get",
+                "erm.resources.item.entitlement.get",
+                "erm.resources.item.get",
+                "orders.item.get",
+                "orders.po-lines.item.get",
+                "invoice-storage.invoice-lines.collection.get",
+                "invoice-storage.invoice-lines.item.get",
+                "invoice-storage.invoices.item.get",
+                "finance-storage.fiscal-years.item.get",
+                "finance-storage.budgets.collection.get",
+                "finance-storage.transactions.item.get"
+              ]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/eusage-reports/stored-reports/use-over-time",
+              "permissionsRequired": ["eusage-reports-report-use-over-time.get"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/eusage-reports/stored-reports/reqs-by-date-of-use",
+              "permissionsRequired": ["eusage-reports-report-reqs-by-date-of-use.get"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/eusage-reports/stored-reports/reqs-by-pub-year",
+              "permissionsRequired": ["eusage-reports-report-reqs-by-pub-year.get"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/eusage-reports/stored-reports/cost-per-use",
+              "permissionsRequired": ["eusage-reports-report-cost-per-use.get"]
+            },
+                        {
+              "methods": ["GET"],
+              "pathPattern": "/eusage-reports/report-data/status/{id}",
+              "permissionsRequired": ["eusage-reports-report-status.get"]
+            }
+          ]
+        }
+      ],
+      "requires":       [
+                {
+          "id": "erm",
+          "version": "6.0 7.0"
+        },
+                {
+          "id": "counter-reports",
+          "version": "3.1 4.0"
+        },
+                {
+          "id": "order-lines",
+          "version": "2.0 3.0"
+        },
+                {
+          "id": "invoice-storage.invoice-lines",
+          "version": "4.0"
+        },
+                {
+          "id": "invoice-storage.invoices",
+          "version": "5.0"
+        },
+                {
+          "id": "finance-storage.budgets",
+          "version": "3.0"
+        },
+                {
+          "id": "finance-storage.fiscal-years",
+          "version": "3.0"
+        },
+                {
+          "id": "finance-storage.transactions",
+          "version": "4.0 5.0"
+        }
+      ],
+      "permissionSets":       [
+                {
+          "permissionName": "eusage-reports-report-titles.collection.get",
+          "displayName": "eUsage reports - titles get",
+          "description": "Get Counter report titles"
+        },
+                {
+          "permissionName": "eusage-reports-report-titles.collection.post",
+          "displayName": "eUsage reports - titles post",
+          "description": "Post Counter report titles"
+        },
+                {
+          "permissionName": "eusage-reports-report-packages.collection.get",
+          "displayName": "eUsage reports - packages get",
+          "description": "Get report packages"
+        },
+                {
+          "permissionName": "eusage-reports-report-titles-from-counter.post",
+          "displayName": "eUsage reports - Counter reports parse",
+          "description": "Parse counter reports and return them"
+        },
+                {
+          "permissionName": "eusage-reports-title-data.collection.get",
+          "displayName": "eUsage reports - title data get",
+          "description": "Get title data"
+        },
+                {
+          "permissionName": "eusage-reports-report-data.collection.get",
+          "displayName": "eUsage reports - data get",
+          "description": "Get report data"
+        },
+                {
+          "permissionName": "eusage-reports-report-data-from-agreement.post",
+          "displayName": "eUsage reports - Agreement lines parse",
+          "description": "Parse agreement lines and populate report data"
+        },
+                {
+          "permissionName": "eusage-reports-report-use-over-time.get",
+          "displayName": "eUsage reports - use over time",
+          "description": "Get eUsage report for use over time"
+        },
+                {
+          "permissionName": "eusage-reports-report-reqs-by-date-of-use.get",
+          "displayName": "eUsage reports - reqs by date of use",
+          "description": "Get eUsage report for requests by date of use"
+        },
+                {
+          "permissionName": "eusage-reports-report-reqs-by-pub-year.get",
+          "displayName": "eUsage reports - reqs by pub year",
+          "description": "Get eUsage report for requests by publication year"
+        },
+                {
+          "permissionName": "eusage-reports-report-cost-per-use.get",
+          "displayName": "eUsage reports - cost per use",
+          "description": "Get eUsage report for cost per use"
+        },
+                {
+          "permissionName": "eusage-reports-report-status.get",
+          "displayName": "eUsage reports - status",
+          "description": "Get eUsage report metadata (like lastUpdated)"
+        },
+                {
+          "permissionName": "eusage-reports.get-all",
+          "displayName": "eUsage reports - all read only permissions",
+          "description": "Entire set of permissions needed to use all eUsage report GET APIs",
+          "subPermissions":           [
+            "eusage-reports-report-titles.collection.get",
+            "eusage-reports-report-packages.collection.get",
+            "eusage-reports-title-data.collection.get",
+            "eusage-reports-report-data.collection.get",
+            "eusage-reports-report-use-over-time.get",
+            "eusage-reports-report-reqs-by-date-of-use.get",
+            "eusage-reports-report-reqs-by-pub-year.get",
+            "eusage-reports-report-cost-per-use.get",
+            "eusage-reports-report-status.get"
+          ]
+        },
+                {
+          "permissionName": "eusage-reports.all",
+          "displayName": "eUsage reports - all permissions",
+          "description": "Entire set of permissions needed to use all eUsage report APIs",
+          "subPermissions":           [
+            "eusage-reports.get-all",
+            "eusage-reports-report-titles.collection.post",
+            "eusage-reports-report-titles-from-counter.post",
+            "eusage-reports-report-data-from-agreement.post"
+          ]
+        }
+      ],
+      "launchDescriptor":       {
+        "dockerImage": "mod-eusage-reports:3.0.0",
+        "dockerPull": false,
+        "dockerArgs": {"HostConfig":         {
+          "Memory": 536870912,
+          "PortBindings": {"8081/tcp": [{"HostPort": "%p"}]}
+        }},
+        "env":         [
+                    {
+            "name": "JAVA_OPTIONS",
+            "value": "-XX:MaxRAMPercentage=66.0"
+          },
+                    {
+            "name": "DB_HOST",
+            "value": "postgres"
+          },
+                    {
+            "name": "DB_PORT",
+            "value": "5432"
+          },
+                    {
+            "name": "DB_USERNAME",
+            "value": "folio_admin"
+          },
+                    {
+            "name": "DB_PASSWORD",
+            "value": "folio_admin"
+          },
+                    {
+            "name": "DB_DATABASE",
+            "value": "okapi_modules"
+          },
+                    {
+            "name": "DB_QUERYTIMEOUT",
+            "value": "60000"
+          },
+                    {
+            "name": "DB_CHARSET",
+            "value": "UTF-8"
+          },
+                    {
+            "name": "DB_MAXPOOLSIZE",
+            "value": "5"
+          }
+        ]
+      }
+    }
+  ],
+  "uiModuleDescriptors":   [
+        {
+      "id": "folio_plugin-eusage-reports-4.0.1",
+      "name": "Stripes plugin module to View eUsage reports",
+      "requires": [      {
+        "id": "eusage-reports",
+        "version": "1.0"
+      }],
+      "optional": [],
+      "permissionSets":       [
+                {
+          "permissionName": "module.ui-plugin-eusage-reports.enabled",
+          "displayName": "UI: eusage-reports plugin is enabled"
+        },
+                {
+          "permissionName": "plugin-eusage-reports.view-charts",
+          "displayName": "eUsage reports: charts may be viewed",
+          "subPermissions":           [
+            "module.ui-plugin-eusage-reports.enabled",
+            "eusage-reports-report-use-over-time.get",
+            "eusage-reports-report-reqs-by-date-of-use.get",
+            "eusage-reports-report-reqs-by-pub-year.get",
+            "eusage-reports-report-cost-per-use.get",
+            "eusage-reports-report-status.get",
+            "eusage-reports-report-data-from-agreement.post"
+          ],
+          "visible": true
+        },
+                {
+          "permissionName": "plugin-eusage-reports.edit-matches",
+          "displayName": "eUsage reports: title matches may be viewed and edited",
+          "subPermissions":           [
+            "module.ui-plugin-eusage-reports.enabled",
+            "eusage-reports-report-status.get",
+            "eusage-reports-report-titles.collection.get",
+            "eusage-reports-report-titles.collection.post",
+            "eusage-reports-report-titles-from-counter.post"
+          ],
+          "visible": true
+        }
+      ]
+    },
+        {
+      "id": "folio_erm-comparisons-8.0.1",
+      "name": "ERM app for comparison of Agreement and Package objects",
+      "requires": [      {
+        "id": "erm",
+        "version": "7.0"
+      }],
+      "optional": [],
+      "permissionSets":       [
+                {
+          "permissionName": "module.erm-comparisons.enabled",
+          "displayName": "UI: ui-erm-comparisons module is enabled"
+        },
+                {
+          "permissionName": "ui-erm-comparisons.jobs.view",
+          "displayName": "ERM comparisons: View jobs",
+          "description": "A user with this permission can search and view ERM Comparison \"jobs\" which are used to compare lists of resources in the Agreements local knowledgebase. This includes the permission to see and access the ERM Comparisons app in the Folio interface",
+          "subPermissions":           [
+            "module.erm-comparisons.enabled",
+            "erm.jobs.view",
+            "erm.refdata.view"
+          ],
+          "visible": true
+        },
+                {
+          "permissionName": "ui-erm-comparisons.jobs.edit",
+          "displayName": "ERM Comparisons: Create jobs",
+          "description": "Grants all permissions in \"ERM comparisons: View jobs\" plus the ability to create new jobs (i.e. compare two lists of resources in the Agreements local knowledgebase)",
+          "subPermissions":           [
+            "ui-erm-comparisons.jobs.view",
+            "erm.jobs.edit"
+          ],
+          "visible": true
+        },
+                {
+          "permissionName": "ui-erm-comparisons.jobs.delete",
+          "displayName": "ERM Comparisons: Delete jobs",
+          "description": "Grants all permissions in \"ERM comparisons: View jobs\" plus the ability to delete jobs that have already run",
+          "subPermissions":           [
+            "ui-erm-comparisons.jobs.view",
+            "erm.jobs.item.delete"
+          ],
+          "visible": true
+        },
+                {
+          "permissionName": "settings.erm-comparisons.enabled",
+          "displayName": "Settings (ERM comparisons): display list of settings pages",
+          "subPermissions": ["settings.enabled"]
+        }
+      ]
+    },
+        {
+      "id": "folio_erm-usage-11.0.1",
+      "name": "eUsage Module",
+      "requires":       [
+                {
+          "id": "aggregator-settings",
+          "version": "2.0"
+        },
+                {
+          "id": "configuration",
+          "version": "2.0"
+        },
+                {
+          "id": "counter-reports",
+          "version": "4.0"
+        },
+                {
+          "id": "custom-reports",
+          "version": "1.0 2.0"
+        },
+                {
+          "id": "erm-usage-files",
+          "version": "1.0"
+        },
+                {
+          "id": "usage-data-providers",
+          "version": "3.1"
+        },
+                {
+          "id": "tags",
+          "version": "1.0"
+        },
+                {
+          "id": "erm-usage-harvester",
+          "version": "2.0"
+        }
+      ],
+      "optional": [],
+      "permissionSets":       [
+                {
+          "permissionName": "module.erm-usage.enabled",
+          "displayName": "UI: eUsage module is enabled",
+          "subPermissions":           [
+            "configuration.entries.collection.get",
+            "configuration.entries.item.get",
+            "tags.collection.get",
+            "ermusageharvester.impl.get"
+          ],
+          "visible": false
+        },
+                {
+          "permissionName": "settings.erm-usage.enabled",
+          "displayName": "Settings (eUsage): Display list of settings pages",
+          "subPermissions": ["settings.enabled"],
+          "visible": false
+        },
+                {
+          "permissionName": "ui-erm-usage.generalSettings.manage",
+          "displayName": "Settings (eUsage): Can view and edit all settings",
+          "subPermissions":           [
+            "settings.erm-usage.enabled",
+            "aggregatorsettings.collection.get",
+            "aggregatorsettings.exportcredentials.item.get",
+            "aggregatorsettings.item.get",
+            "aggregatorsettings.item.post",
+            "aggregatorsettings.item.put",
+            "aggregatorsettings.item.delete",
+            "configuration.entries.collection.get",
+            "configuration.entries.item.get",
+            "configuration.entries.item.put",
+            "configuration.entries.item.post",
+            "ermusageharvester.impl.get",
+            "ermusageharvester.periodic.get",
+            "ermusageharvester.periodic.post",
+            "ermusageharvester.periodic.delete",
+            "ermusageharvester.start-all.get"
+          ],
+          "visible": true
+        },
+                {
+          "permissionName": "ui-erm-usage.all",
+          "displayName": "eUsage: All permissions",
+          "description": "All permissions of eUsage module",
+          "subPermissions":           [
+            "ui-erm-usage.view",
+            "ui-erm-usage.udp.create-edit",
+            "ui-erm-usage.reports.create",
+            "ui-erm-usage.udp.delete",
+            "ui-erm-usage.reports.delete",
+            "ui-erm-usage.generalSettings.manage",
+            "ui-erm-usage-harvester.start.single",
+            "ui-erm-usage-harvester.jobs.view"
+          ],
+          "visible": true
+        },
+                {
+          "permissionName": "ui-erm-usage.view",
+          "displayName": "eUsage: Can view usage data providers and view/download usage reports",
+          "description": "Can view usage data providers and view/download usage reports",
+          "subPermissions":           [
+            "module.erm-usage.enabled",
+            "usagedataproviders.collection.get",
+            "usagedataproviders.item.get",
+            "counterreports.collection.get",
+            "counterreports.download.item.get",
+            "counterreports.errorcodes.collection.get",
+            "counterreports.export.collection.get",
+            "counterreports.export.item.get",
+            "counterreports.item.get",
+            "counterreports.reportreleases.collection.get",
+            "counterreports.reporttypes.collection.get",
+            "counterreports.sorted.collection.get",
+            "aggregatorsettings.collection.get",
+            "aggregatorsettings.item.get",
+            "customreports.collection.get",
+            "customreports.item.get",
+            "erm-usage.files.item.get",
+            "ui-erm-usage-harvester.jobs.view"
+          ],
+          "visible": true
+        },
+                {
+          "permissionName": "ui-erm-usage.udp.create",
+          "displayName": "eUsage: Can create usage data providers",
+          "description": "Can create usage data providers",
+          "subPermissions": ["usagedataproviders.item.post"],
+          "visible": false
+        },
+                {
+          "permissionName": "ui-erm-usage.reports.create",
+          "displayName": "eUsage: Can upload usage reports",
+          "description": "Can upload usage reports",
+          "subPermissions":           [
+            "counterreports.upload.item.post",
+            "customreports.item.post",
+            "erm-usage.files.item.post"
+          ],
+          "visible": true
+        },
+                {
+          "permissionName": "ui-erm-usage.udp.edit",
+          "displayName": "eUsage: Can edit usage data providers",
+          "description": "Can edit usage data providers",
+          "subPermissions":           [
+            "usagedataproviders.item.put",
+            "tags.item.post"
+          ],
+          "visible": false
+        },
+                {
+          "permissionName": "ui-erm-usage.udp.create-edit",
+          "displayName": "eUsage: Can create and edit usage data providers",
+          "description": "Can create and edit usage data providers",
+          "subPermissions":           [
+            "ui-erm-usage.udp.create",
+            "ui-erm-usage.udp.edit"
+          ],
+          "visible": true
+        },
+                {
+          "permissionName": "ui-erm-usage.udp.delete",
+          "displayName": "eUsage: Can delete usage data providers",
+          "description": "Can delete usage data providers",
+          "subPermissions": ["usagedataproviders.item.delete"],
+          "visible": true
+        },
+                {
+          "permissionName": "ui-erm-usage.reports.delete",
+          "displayName": "eUsage: Can delete usage reports",
+          "description": "Can delete usage reports",
+          "subPermissions":           [
+            "counterreports.collection.delete",
+            "counterreports.item.delete",
+            "customreports.item.delete",
+            "erm-usage.files.item.delete"
+          ],
+          "visible": true
+        },
+                {
+          "permissionName": "ui-erm-usage.harvester.start.single",
+          "replaces": ["ui-erm-usage-harvester.start.single"],
+          "displayName": "eUsage: Can start harvesting for a single provider",
+          "description": "Can start harvesting for a single provider",
+          "subPermissions": ["ermusageharvester.start-single.get"],
+          "visible": true
+        },
+                {
+          "permissionName": "ui-erm-usage.harvester.jobs.view",
+          "replaces": ["ui-erm-usage-harvester.jobs.view"],
+          "displayName": "eUsage: Can view harvesting jobs",
+          "description": "Can view harvesting jobs",
+          "subPermissions": ["ermusageharvester.jobs.get"],
+          "visible": false
+        }
+      ]
+    },
+        {
+      "id": "folio_plugin-find-erm-usage-data-provider-7.0.0",
+      "name": "ERM-Usage-data-provider-finder for Stripes",
+      "requires":       [
+                {
+          "id": "aggregator-settings",
+          "version": "1.0 2.0"
+        },
+                {
+          "id": "erm-usage-harvester",
+          "version": "1.1 2.0"
+        },
+                {
+          "id": "usage-data-providers",
+          "version": "2.0 3.0"
+        }
+      ],
+      "optional": [],
+      "permissionSets": []
+    }
+  ]
+}

@@ -262,12 +262,12 @@ TOKEN=$(curl -sX POST -d client_id="sidecar-module-access-client" -d client_secr
 
 ## Notes
  - All modules must have all possible "SYSTEM_USER_ENABLED" vars set to false. This is handled in the `create_module_values.py` script by setting: `{"name": "FOLIO_SYSTEM_USER_ENABLED", "value": "false"}, {"name": "SYSTEM_USER_CREATED", "value": "false"}, {"name": "SYSTEM_USER_ENABLED", "value": "false"}`
- - In the stripes.config.js, module.exports["config"]["hasAllPerms"] must be "true" in order for the user to be able to see the app settings.
+ - In `platform-complete` the `stripes.config.js`, `module.exports["config"]["hasAllPerms"]` setting must be "true" in order for the user to be able to see the app settings.
 
 
 ## Upgrading to a new Flower Release
 1. Fetch and save new application descriptors.
-1. Update versions of mgr-apps, kong and keycloak in yaml files.
+1. Update versions of mgr-apps, sidecar, kong and keycloak in yaml files.
 1. Add any new env vars or configs as needed and specified in release notes for new modules.
 1. Upgrade kong, keycloak, the mgr-apps using helm.
 1. Uninstall all of the modules.

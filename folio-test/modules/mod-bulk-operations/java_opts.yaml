@@ -1,0 +1,3 @@
+extraJavaOpts:
+  - "-XX:MaxRAMPercentage=75.0"
+  - "-XX:MetaspaceSize=384m -XX:MaxMetaspaceSize=512m -Xmx2048m"
