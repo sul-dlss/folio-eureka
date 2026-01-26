@@ -1,0 +1,66 @@
+image:
+  repository: "bitnamilegacy/kafka"
+  tag: "3.9.0-debian-12-r1"
+global:
+  security:
+    allowInsecureImages: true
+controller:
+  resources:
+    requests:
+      cpu: 1
+      memory: 2823M
+    limits:
+      cpu: 2
+      memory: 2958M
+  persistence:
+    size: 80Gi
+  startupProbe:
+    enabled: true
+    initialDelaySeconds: 5
+    periodSeconds: 10
+    timeoutSeconds: 10
+    failureThreshold: 300
+  readinessProbe:
+    enabled: true
+    initialDelaySeconds: 5
+    periodSeconds: 30
+    timeoutSeconds: 10
+    failureThreshold: 30
+  livenessProbe:
+    enabled: true
+    initialDelaySeconds: 5
+    periodSeconds: 30
+    timeoutSeconds: 10
+    failureThreshold: 30
+heapOpts: "-XX:MaxRAMPercentage=80 -XX:MinRAMPercentage=80 -XX:+UseG1GC"
+
+extraConfig: |
+  num.partitions=12
+  default.replication.factor=3
+  log.retention.hours=72
+  log.retention.bytes=6442000000
+  num.network.threads=5
+
+# Add to extraConfig to delete topics if needed
+# deleteTopicEnable=true
+
+listeners:
+  client:
+    protocol: PLAINTEXT
+  interbroker:
+    protocol: PLAINTEXT
+metrics:
+  jmx:
+    image:
+      repository: bitnamilegacy/jmx-exporter
+      tag: 1.0.1-debian-12-r9
+    enabled: true
+    resources:
+      limits:
+        cpu: "1"
+        memory: 4Gi
+      requests:
+        cpu: 50m
+        memory: 24Mi
+  serviceMonitor:
+    enabled: true

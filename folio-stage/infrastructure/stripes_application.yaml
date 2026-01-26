@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: platform-complete
+  namespace: folio-stage
+spec:
+  project: folio-stage
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: folio-stage
+  sources:
+    - repoURL: https://sul-dlss.github.io/folio-helm-v2/
+      targetRevision: 2.23.14
+      helm:
+        valueFiles:
+          - $values/folio-stage/infrastructure/stripes.yaml
+          - $values/folio-stage/infrastructure/allowed_ips.yaml
+      chart: platform-complete
+    - repoURL: https://github.com/sul-dlss/folio-eureka
+      targetRevision: main
+      ref: values
+operation:
+  sync:
+    syncStrategy:
+      hook: {}

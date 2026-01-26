@@ -1,0 +1,147 @@
+{
+  "id": "app-edge-complete-1.0.11",
+  "name": "app-edge-complete",
+  "version": "1.0.11",
+  "description": "Application comprised of Folio edge modules",
+  "platform": "complete",
+  "modules":   [    
+    {
+      "name": "edge-connexion",
+      "version": "1.3.1"
+    },
+    {
+      "name": "edge-sip2",
+      "version": "3.3.3"
+    },
+    {
+      "name": "edge-ncip",
+      "version": "1.10.1"
+    }
+  ],
+  "uiModules": [],
+  "dependencies": [  {
+    "name": "app-platform-complete",
+    "version": "^1.0.0"
+  }],
+  "moduleDescriptors":   [
+  {
+      "id": "edge-connexion-1.3.1",
+      "name": "edge-connexion",
+      "provides": [      {
+        "id": "connexion",
+        "version": "1.0"
+      }],
+      "requires":       [
+                {
+          "id": "login",
+          "version": "7.0"
+        },
+                {
+          "id": "copycat-imports",
+          "version": "1.0"
+        },
+                {
+          "id": "copycat-profiles",
+          "version": "1.0"
+        }
+      ],
+      "permissionSets": []
+  },
+  {
+    "id": "edge-sip2-3.3.3",
+    "name": "SIP2 Module",
+    "provides": [],
+    "requires":       [
+                {
+          "id": "login",
+          "version": "7.3"
+        },
+                {
+          "id": "circulation",
+          "version": "14.4"
+        },
+                {
+          "id": "users",
+          "version": "16.3"
+        },
+                {
+          "id": "configuration",
+          "version": "2.0"
+        },
+                {
+          "id": "feesfines",
+          "version": "19.0"
+        },
+                {
+          "id": "search",
+          "version": "1.3"
+        }
+      ],
+      "permissionSets": [      {
+        "permissionName": "edge-sip.all",
+        "displayName": "All permission associated with edge-sip2",
+        "description": "All permissions edge-sip scope",
+        "subPermissions":         [
+          "circulation.check-in-by-barcode.post",
+          "circulation.check-out-by-barcode.post",
+          "circulation.requests.collection.get",
+          "search.instances.collection.get",
+          "search.instances.ids.collection.get",
+          "circulation.loans.collection.get",
+          "configuration.entries.collection.get",
+          "configuration.entries.item.get",
+          "manualblocks.collection.get",
+          "manualblocks.item.get",
+          "accounts.collection.get",
+          "accounts.item.get",
+          "users.collection.get",
+          "users.item.get",
+          "automated-patron-blocks.collection.get",
+          "inventory-storage.holdings.item.get",
+          "inventory.instances.item.get"
+        ]
+      }],
+      "launchDescriptor":       {
+        "dockerImage": "edge-sip2:3.3.3",
+        "dockerPull": false,
+        "dockerArgs": {"HostConfig":         {
+          "Memory": 268435456,
+          "PortBindings": {"8081/tcp": [{"HostPort": "%p"}]}
+        }},
+        "env": [        {
+          "name": "JAVA_OPTIONS",
+          "value": "-XX:MaxRAMPercentage=66.0"
+        }]
+      }
+  },
+  {
+      "id": "edge-ncip-1.10.1",
+      "name": "Edge NCIP",
+      "provides": [],
+      "requires":       [
+                {
+          "id": "ncip",
+          "version": "1.0"
+        },
+                {
+          "id": "login",
+          "version": "5.0 6.0 7.0"
+        }
+      ],
+      "permissionSets": [],
+      "launchDescriptor":       {
+        "dockerImage": "edge-ncip:1.10.1",
+        "dockerPull": false,
+        "dockerArgs": {"HostConfig":         {
+          "Memory": 357913941,
+          "PortBindings": {"8081/tcp": [{"HostPort": "%p"}]}
+        }},
+        "env": [        {
+          "name": "JAVA_OPTIONS",
+          "value": "-XX:MaxRAMPercentage=66.0"
+        }]
+      }
+  }
+  ],
+  "uiModuleDescriptors": []
+}
