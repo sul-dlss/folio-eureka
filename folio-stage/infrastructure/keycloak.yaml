@@ -91,7 +91,7 @@ resources:
 postgresql:
   enabled: false
 externalDatabase:
-  host: "sul-folio-db-test.stanford.edu"
+  host: "sul-folio-db-stage.stanford.edu"
   port: 9999
   database: "keycloak"
   user: "keycloak"
