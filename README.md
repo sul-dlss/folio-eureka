@@ -269,16 +269,23 @@ TOKEN=$(curl -sX POST -d client_id="sidecar-module-access-client" -d client_secr
 1. Fetch and save new application descriptors.
 1. Update versions of mgr-apps, sidecar, kong and keycloak in yaml files.
 1. Add any new env vars or configs as needed and specified in release notes for new modules.
-1. Upgrade kong, keycloak, the mgr-apps using helm.
-1. Uninstall all of the modules.
+1. Run the create_module_values.py script to update the override.yaml files with the new image tags. And create any new module folders for new apps.
+1. Run the create_applications.py script with `-x dry-run` for each application descriptor to create ArgoCD application specs.
+1. Commit all files to a flower release branch and open a pull request to merge to main.
+1. After the PR is merged, upgrade modules by syncing in ArgoCD. ArgoCD should show which are now out of sync. For any new modules, an application will need to be created first using `kubectl -n ${namespace} apply -f path/to/module/application.yaml`.
+1. Check the logs for the mgr modules to see that they upgraded themselves (or do we need to do something to upgrade them?).
 1. [Post the new applications](#post-the-applications).
 1. [Register the applications](#register-the-applications). You will probably need to use the update script if there are modules in the descriptor file that are the same as the currently registered module version. 
-1. [Reinstall](#deploy-backend-modules) modules at new versions.
-1. Delete entitlements for existing applications
-1. Delete old applications
-1. [Create entitlements](#create-entitlements) for all applications.
+1. Upgrade existing applications:
     ```
-    APP_IDS="\"app-acquisitions-1.0.24\", \"app-platform-complete-2.2.0\""
+    APP_IDS="\"app-platform-minimal-2.0.38\", \"app-platform-complete-2.2.13\""
+    ```
+    ```
+    curl -X PUT --location "$KONG_URL/entitlements?async=true&tenantParameters=loadReference=true,loadSample=false" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" --data "{\"tenantId\":\"$tenantUUID\", \"applications\": [$APP_IDS]}"
+    ```
+1. [Create entitlements](#create-entitlements) for the new applications.
+    ```
+    APP_IDS="\"app-acquisitions-1.0.25\", \"app-bulk-edit-1.0.8\", \"app-erm-usage-2.0.4\", "app-fqm-1.0.14\", "app-linked-data-1.1.6\", "app-marc-migrations-2.0.4\", "app-reading-room-2.0.2\""
     ```
     ```
     curl -X POST --location "$KONG_URL/entitlements?async=true&tenantParameters=loadReference=true,loadSample=false" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" --data "{\"tenantId\":\"$tenantUUID\", \"applications\": [$APP_IDS]}"
