@@ -1,0 +1,364 @@
+{
+  "id": "app-marc-migrations-2.0.4",
+  "name": "app-marc-migrations",
+  "version": "2.0.4",
+  "description": "MARC Migrations Application",
+  "platform": "complete",
+  "modules": [  {
+    "id": "mod-marc-migrations-2.0.4",
+    "name": "mod-marc-migrations",
+    "version": "2.0.4",
+    "url": "https://mdr-folio-eis-us-east-1-dev.s3.amazonaws.com/mod-marc-migrations-2.0.4"
+  }],
+  "uiModules": [],
+  "dependencies": [  {
+    "name": "app-platform-complete",
+    "version": "^2.0.0"
+  }],
+  "moduleDescriptors": [  {
+    "id": "mod-marc-migrations-2.0.4",
+    "name": "MARC Migrations",
+    "requires":     [
+            {
+        "id": "login",
+        "version": "7.3"
+      },
+            {
+        "id": "permissions",
+        "version": "5.6"
+      },
+            {
+        "id": "users",
+        "version": "16.0"
+      },
+            {
+        "id": "authority-storage",
+        "version": "2.0"
+      },
+            {
+        "id": "instance-storage",
+        "version": "11.0"
+      },
+            {
+        "id": "source-storage-records",
+        "version": "3.3"
+      },
+            {
+        "id": "mapping-metadata-provider",
+        "version": "1.1"
+      },
+            {
+        "id": "instance-storage-bulk",
+        "version": "1.0"
+      }
+    ],
+    "provides":     [
+            {
+        "id": "marc-migrations",
+        "version": "1.1",
+        "handlers":         [
+                    {
+            "methods": ["POST"],
+            "pathPattern": "/marc-migrations",
+            "permissionsRequired": ["marc-migrations.operations.item.post"],
+            "modulePermissions": ["mapping-metadata.type.item.get"]
+          },
+                    {
+            "methods": ["POST"],
+            "pathPattern": "/marc-migrations/{id}/retry",
+            "permissionsRequired": ["marc-migrations.operations.retry.item.post"],
+            "modulePermissions": ["mapping-metadata.type.item.get"]
+          },
+                    {
+            "methods": ["POST"],
+            "pathPattern": "/marc-migrations/{id}/save/retry",
+            "permissionsRequired": ["marc-migrations.operations.save.retry.item.post"],
+            "modulePermissions": ["mapping-metadata.type.item.get"]
+          },
+                    {
+            "methods": ["GET"],
+            "pathPattern": "/marc-migrations/{id}",
+            "permissionsRequired": ["marc-migrations.operations.item.get"]
+          },
+                    {
+            "methods": ["PUT"],
+            "pathPattern": "/marc-migrations/{id}",
+            "permissionsRequired": ["marc-migrations.operations.item.put"],
+            "modulePermissions":             [
+              "inventory-storage.authorities.bulk.post",
+              "inventory-storage.instances.bulk.post"
+            ]
+          },
+                    {
+            "methods": ["POST"],
+            "pathPattern": "/marc-migrations/{id}/error-report",
+            "permissionsRequired": ["marc-migrations.operations.error-report.post"]
+          },
+                    {
+            "methods": ["GET"],
+            "pathPattern": "/marc-migrations/{operationId}/error-report/status",
+            "permissionsRequired": ["marc-migrations.operations.error-report.status.item.get"]
+          },
+                    {
+            "methods": ["GET"],
+            "pathPattern": "/marc-migrations/{operationId}/error-report/errors",
+            "permissionsRequired": ["marc-migrations.operations.error-report.errors.collection.get"]
+          }
+        ]
+      },
+            {
+        "id": "_tenant",
+        "version": "2.0",
+        "interfaceType": "system",
+        "handlers":         [
+                    {
+            "methods": ["POST"],
+            "pathPattern": "/_/tenant",
+            "permissionsRequired": [],
+            "modulePermissions":             [
+              "users.collection.get",
+              "users.item.post",
+              "users.item.put",
+              "login.item.post",
+              "login.item.delete",
+              "perms.users.get",
+              "perms.users.item.post",
+              "perms.users.assign.immutable",
+              "perms.users.assign.mutable"
+            ]
+          },
+                    {
+            "methods":             [
+              "GET",
+              "DELETE"
+            ],
+            "pathPattern": "/_/tenant/{id}",
+            "permissionsRequired": []
+          }
+        ]
+      }
+    ],
+    "permissionSets":     [
+            {
+        "permissionName": "marc-migrations.operations.item.post",
+        "displayName": "MARC Migrations - Create operation",
+        "description": "Create MARC Migrations Operation"
+      },
+            {
+        "permissionName": "marc-migrations.operations.retry.item.post",
+        "displayName": "MARC Migrations - Retry operation",
+        "description": "Retry MARC Migrations Operation"
+      },
+            {
+        "permissionName": "marc-migrations.operations.save.retry.item.post",
+        "displayName": "MARC Migrations - Retry saving operation",
+        "description": "Retry saving the MARC Migrations Operation"
+      },
+            {
+        "permissionName": "marc-migrations.operations.item.get",
+        "displayName": "MARC Migrations - Get operation",
+        "description": "Get MARC Migrations Operation by ID"
+      },
+            {
+        "permissionName": "marc-migrations.operations.item.put",
+        "displayName": "MARC Migrations - Put operation",
+        "description": "Save MARC Migrations Operation by ID"
+      },
+            {
+        "permissionName": "marc-migrations.operations.error-report.post",
+        "displayName": "MARC Migrations - Initialize error report",
+        "description": "Initialize error report for MARC Migrations Operation"
+      },
+            {
+        "permissionName": "marc-migrations.operations.error-report.status.item.get",
+        "displayName": "MARC Migrations - Get error report status",
+        "description": "Get error report status for MARC Migrations Operation"
+      },
+            {
+        "permissionName": "marc-migrations.operations.error-report.errors.collection.get",
+        "displayName": "MARC Migrations - Get error report errors collection",
+        "description": "Get error report errors collection for MARC Migrations Operation"
+      },
+            {
+        "permissionName": "marc-migrations.all",
+        "displayName": "MARC Migrations - all permissions",
+        "description": "Entire set of permissions needed to use MARC migrations",
+        "subPermissions":         [
+          "marc-migrations.operations.item.post",
+          "marc-migrations.operations.item.get",
+          "marc-migrations.operations.item.put",
+          "marc-migrations.operations.retry.item.post",
+          "marc-migrations.operations.save.retry.item.post",
+          "marc-migrations.operations.error-report.post",
+          "marc-migrations.operations.error-report.status.item.get",
+          "marc-migrations.operations.error-report.errors.collection.get"
+        ]
+      }
+    ],
+    "launchDescriptor":     {
+      "dockerImage": "mod-marc-migrations:2.0.4",
+      "dockerPull": false,
+      "dockerArgs": {"HostConfig":       {
+        "Memory": 536870912,
+        "PortBindings": {"8081/tcp": [{"HostPort": "%p"}]}
+      }},
+      "env":       [
+                {
+          "name": "JAVA_OPTIONS",
+          "value": "-XX:MaxRAMPercentage=85.0"
+        },
+                {
+          "name": "ENV",
+          "value": "folio",
+          "description": "The logical name of the deployment, must be unique across all environments using the same shared Kafka/Elasticsearch clusters, `a-z (any case)`, `0-9`, `-`, `_` symbols only allowed"
+        },
+                {
+          "name": "DB_HOST",
+          "value": "localhost",
+          "description": "Postgres hostname"
+        },
+                {
+          "name": "DB_PORT",
+          "value": "5432",
+          "description": "Postgres port"
+        },
+                {
+          "name": "DB_USERNAME",
+          "value": "folio_admin",
+          "description": "Postgres username"
+        },
+                {
+          "name": "DB_PASSWORD",
+          "value": "folio_admin",
+          "description": "Postgres username password"
+        },
+                {
+          "name": "DB_DATABASE",
+          "value": "okapi_modules",
+          "description": "Postgres database name"
+        },
+                {
+          "name": "DB_MAXPOOLSIZE",
+          "value": "10",
+          "description": "This property controls the maximum size that the pool is allowed to reach, including both idle and in-use connections"
+        },
+                {
+          "name": "DB_MINIMUM_IDLE",
+          "value": "10",
+          "description": "This property controls the minimum number of idle connections that HikariCP tries to maintain in the pool"
+        },
+                {
+          "name": "DB_CONNECTION_TIMEOUT",
+          "value": "30000",
+          "description": "This property controls the maximum number of milliseconds that a client will wait for a connection from the pool"
+        },
+                {
+          "name": "DB_IDLE_TIMEOUT",
+          "value": "600000",
+          "description": "This property controls the maximum amount of time that a connection is allowed to sit idle in the pool. This setting only applies when `DB_MINIMUM_IDLE` is defined to be less than `DB_MAXPOOLSIZE`"
+        },
+                {
+          "name": "DB_KEEPALIVE_TIME",
+          "value": "0",
+          "description": "This property controls how frequently HikariCP will attempt to keep a connection alive, in order to prevent it from being timed out by the database or network infrastructure (0 - disabled)"
+        },
+                {
+          "name": "DB_MAX_LIFETIME",
+          "value": "1800000",
+          "description": "This property controls the maximum lifetime of a connection in the pool"
+        },
+                {
+          "name": "DB_VALIDATION_TIMEOUT",
+          "value": "5000",
+          "description": "This property controls the maximum amount of time that a connection will be tested for aliveness. This value must be less than the `DB_CONNECTION_TIMEOUT`"
+        },
+                {
+          "name": "DB_INITIALIZATION_FAIL_TIMEOUT",
+          "value": "30000",
+          "description": "This property controls whether the pool will \"fail fast\" if the pool cannot be seeded with an initial connection successfully"
+        },
+                {
+          "name": "DB_LEAK_DETECTION_THRESHOLD",
+          "value": "30000",
+          "description": "This property controls the amount of time that a connection can be out of the pool before a message is logged indicating a possible connection leak (0 - disabled)"
+        },
+                {
+          "name": "OKAPI_URL",
+          "value": "okapi",
+          "description": "Okapi URL"
+        },
+                {
+          "name": "SYSTEM_USER_USERNAME",
+          "value": "mod-marc-migrations",
+          "description": "Username for system user"
+        },
+                {
+          "name": "RECORDS_CHUNK_SIZE",
+          "value": "500",
+          "description": "Number of records in one chunk for operation processing"
+        },
+                {
+          "name": "CHUNK_FETCH_IDS_COUNT",
+          "value": "500",
+          "description": " Number of record ids to fetch per query on chunks preparation phase. RECORDS_CHUNK_SIZE should be a divisor for this in order to maintain proper chunk size                                          "
+        },
+                {
+          "name": "CHUNK_RETRYING_MAX_IDS_COUNT",
+          "value": "1000",
+          "description": "Maximum number of chunk IDs for retrying"
+        },
+                {
+          "name": "CHUNK_PERSIST_COUNT",
+          "value": "1_000",
+          "description": "Number of chunks to be constructed before persisting to db"
+        },
+                {
+          "name": "CHUNK_PROCESSING_MAX_PARALLELISM",
+          "value": "4",
+          "description": "Max thread pool size for chunks processing"
+        },
+                {
+          "name": "S3_URL",
+          "value": "http://localhost:9000/",
+          "description": "S3 compatible service url"
+        },
+                {
+          "name": "S3_REGION",
+          "value": "",
+          "description": "S3 compatible service region"
+        },
+                {
+          "name": "S3_BUCKET",
+          "value": "marc-migrations",
+          "description": "S3 compatible service bucket"
+        },
+                {
+          "name": "S3_ACCESS_KEY_ID",
+          "value": "",
+          "description": "S3 compatible service access key"
+        },
+                {
+          "name": "S3_SECRET_ACCESS_KEY",
+          "value": "",
+          "description": "S3 compatible service secret key"
+        },
+                {
+          "name": "S3_IS_AWS",
+          "value": "false",
+          "description": "Specify if AWS S3 is used as files storage"
+        },
+                {
+          "name": "S3_RETRY_COUNT",
+          "value": "3",
+          "description": "Specify number of retries if S3 client return any kind of error"
+        },
+                {
+          "name": "S3_RETRY_DELAY_MS",
+          "value": "500",
+          "description": "Specify millisecond delay between retries if S3 client return any kind of error"
+        }
+      ]
+    }
+  }],
+  "uiModuleDescriptors": []
+}
