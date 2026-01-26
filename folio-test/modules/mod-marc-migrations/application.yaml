@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: mod-record-specifications
+  name: mod-marc-migrations
   namespace: folio-test
 operation:
   sync:
@@ -13,10 +13,10 @@ spec:
     server: https://kubernetes.default.svc
   project: folio-test
   sources:
-  - chart: mod-record-specifications
+  - chart: mod-marc-migrations
     helm:
       valueFiles:
-      - $values/folio-test/modules/mod-record-specifications/overrides.yaml
+      - $values/folio-test/modules/mod-marc-migrations/overrides.yaml
       - $values/folio-test/common/resources.yaml
       - $values/folio-test/common/sidecar.yaml
       - $values/folio-test/common/probes.yaml
