@@ -10,7 +10,7 @@ eureka:
     value: 'false'
 image:
   repository: folioorg/mod-rtac
-  tag: 3.7.1
+  tag: 3.8.2
 integrations:
   db:
     enabled: true

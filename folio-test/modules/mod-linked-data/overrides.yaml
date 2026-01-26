@@ -9,8 +9,8 @@ eureka:
   - name: SYSTEM_USER_ENABLED
     value: 'false'
 image:
-  repository: folioorg/mod-data-export-spring
-  tag: 3.5.2
+  repository: folioorg/mod-linked-data
+  tag: 1.0.4
 integrations:
   db:
     enabled: true

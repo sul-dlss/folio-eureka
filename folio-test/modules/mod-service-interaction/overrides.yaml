@@ -10,7 +10,7 @@ eureka:
     value: 'false'
 image:
   repository: folioorg/mod-service-interaction
-  tag: 4.1.4
+  tag: 4.2.3
 integrations:
   db:
     enabled: true

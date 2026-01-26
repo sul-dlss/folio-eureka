@@ -10,7 +10,7 @@ eureka:
     value: 'false'
 image:
   repository: folioorg/mod-audit
-  tag: 2.10.2
+  tag: 2.11.1
 integrations:
   db:
     enabled: true

@@ -10,7 +10,7 @@ eureka:
     value: 'false'
 image:
   repository: folioorg/mod-batch-print
-  tag: 1.2.0
+  tag: 1.3.0
 integrations:
   db:
     enabled: true

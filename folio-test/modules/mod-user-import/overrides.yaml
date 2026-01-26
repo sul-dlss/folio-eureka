@@ -10,7 +10,7 @@ eureka:
     value: 'false'
 image:
   repository: folioorg/mod-user-import
-  tag: 3.9.0
+  tag: 3.10.2
 integrations:
   db:
     enabled: true

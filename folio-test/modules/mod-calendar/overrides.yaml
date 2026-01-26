@@ -10,7 +10,7 @@ eureka:
     value: 'false'
 image:
   repository: folioorg/mod-calendar
-  tag: 3.2.0
+  tag: 3.3.1
 integrations:
   db:
     enabled: true
