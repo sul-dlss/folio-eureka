@@ -10,7 +10,7 @@ eureka:
     value: 'false'
 image:
   repository: folioorg/mod-data-export-spring
-  tag: 3.4.4
+  tag: 3.5.2
 integrations:
   db:
     enabled: true

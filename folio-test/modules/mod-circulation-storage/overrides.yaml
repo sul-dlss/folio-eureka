@@ -10,7 +10,7 @@ eureka:
     value: 'false'
 image:
   repository: folioorg/mod-circulation-storage
-  tag: 17.3.6
+  tag: 17.4.1
 integrations:
   db:
     enabled: true

@@ -23,6 +23,7 @@ S3_MODULES = [
     "mod-data-import",
     "mod-entities-links",
     "mod-lists",
+    "mod-marc-migrations",
     "mod-oai-pmh",
     "mod-reporting",
     "mod-users",

@@ -10,7 +10,7 @@ eureka:
     value: 'false'
 image:
   repository: folioorg/mod-orders
-  tag: 12.9.13
+  tag: 13.0.8
 integrations:
   db:
     enabled: true

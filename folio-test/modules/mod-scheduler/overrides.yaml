@@ -10,7 +10,7 @@ eureka:
     value: 'false'
 image:
   repository: folioorg/mod-scheduler
-  tag: 2.0.1
+  tag: 3.0.5
 integrations:
   db:
     enabled: true

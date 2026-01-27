@@ -1,6 +1,6 @@
 image:
   repository: folioorg/mgr-tenants
-  tag: 2.0.1
+  tag: 3.0.5
 
 deploymentStrategy: RollingUpdate
 
