@@ -1,0 +1,195 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: zserver.conf
+data:
+  config.sul.json: |
+    {
+      "okapi": {
+        "url": "https://okapi-test.stanford.edu",
+        "tenant": "sul"
+      },
+      "login": {
+        "username": "${FOLIO_USER}",
+        "password": "${FOLIO_PASSWORD}"
+      },
+      "indexMap": {
+          "default": "keyword",
+          "1": "contributors/@name",
+          "4": "title",
+          "7": "isbn",
+          "8": "issn",
+          "12": {
+            "cql": "hrid",
+            "relation": "==",
+            "omitSortIndexModifiers": [ "missing", "case" ]
+          },
+          "21": "subjects",
+          "31": "publication.dateOfPublication",
+          "1003": "contributors/@name",
+          "1016": "keyword",
+          "1019": "source",
+          "1108": "source",
+          "1155": "source",
+          "1211": "oclc",
+          "9997": "allTitles",
+          "9998": {
+            "cql": "item.barcode",
+            "relation": "=="
+          },
+          "9999": "contributors/@name,title,hrid,subjects"
+        },
+        "marcHoldings": {
+          "restrictToItem": 1,
+          "field": "952",
+          "indicators": [" ", " "],
+          "holdingsElements": {
+            "t": "copyNumber"
+          },
+          "fieldPerItem": 1,
+          "itemElements": {
+            "f": "availableNow",
+            "b": "itemId",
+            "r": "renewable",
+            "o": "onHold",
+            "e": "enumAndChron",
+            "l": "temporaryLocation",
+            "k": "_callNumberPrefix",
+            "h": "_callNumber",
+            "p": "_permanentLocation",
+            "m": "_callNumberSuffix",
+            "v": "_volume",
+            "y": "_yearCaption",
+            "c": "_chronology"
+          }
+        },
+        "postProcessing": {
+          "marc": {
+            "100$a": [
+              {
+                "op": "stripDiacritics"
+              },
+              {
+                "op": "regsub",
+                "pattern": ",.*$",
+                "replacement": "",
+                "flags": ""
+              }
+            ],
+            "100$c": [
+              {
+                "op": "stripDiacritics"
+              },
+              {
+                "op": "regsub",
+                "pattern": ",.*$",
+                "replacement": "",
+                "flags": ""
+              }
+            ],
+            "245$a": [
+              {
+                "op": "stripDiacritics"
+              },
+              {
+                "op": "regsub",
+                "pattern": "[/]*$",
+                "replacement": "",
+                "flags": ""
+              }
+            ],
+            "245$b": [
+              {
+                "op": "stripDiacritics"
+              },
+              {
+                "op": "regsub",
+                "pattern": "[ :/=]*$",
+                "replacement": "",
+                "flags": ""
+              }
+            ],
+            "245$n": [
+              {
+                "op": "stripDiacritics"
+              },
+              {
+                "op": "regsub",
+                "pattern": "[ :/=]*$",
+                "replacement": "",
+                "flags": ""
+              }
+            ],
+            "245$p": [
+              {
+                "op": "stripDiacritics"
+              },
+              {
+                "op": "regsub",
+                "pattern": "[ :/=]*$",
+                "replacement": "",
+                "flags": ""
+              }
+            ],
+            "952$k": [
+            {
+              "op": "regsub",
+              "pattern": "",
+              "replacement": "",
+              "flags": ""
+            }
+            ],
+            "952$p": [
+              {
+                "op": "regsub",
+                "pattern": "(^Earth\\s)+(.*$)",
+                "replacement": " EARTH-SCI",
+                "flags": ""
+              },
+              {
+                "op": "regsub",
+                "pattern": "(^East\\s)+(.*$)",
+                "replacement": " EAST-ASIA",
+                "flags": ""
+              },
+              {
+                "op": "regsub",
+                "pattern": "(^\\w+\\s)+(.*$)",
+                "replacement": "\\U $1",
+                "flags": ""
+              }
+            ],
+            "952$t": [
+              {
+                "op": "regsub",
+                "pattern": "^$",
+                "replacement": "%{952$9}"
+              }
+            ]
+          },
+          "opac": {
+            "holding": {
+              "callNumber": [
+                {
+                  "op": "regsub",
+                  "pattern": "(.*)",
+                  "replacement": "%{_callNumberPrefix} $1 %{_callNumberSuffix} %{enumAndChron}"
+                },
+                {
+                  "op": "regsub",
+                  "pattern": "^\\s+",
+                  "replacement": ""
+                },
+                {
+                  "op": "regsub",
+                  "pattern": "\\s+$",
+                  "replacement": ""
+                }
+              ]
+            }
+          }
+        },
+        "graphqlQuery": "mod-search.graphql-query",
+        "queryFilter": "cql.allRecords=1 NOT discoverySuppress=true",
+        "chunkSize": 5
+    }
