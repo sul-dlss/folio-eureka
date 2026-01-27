@@ -1,0 +1,19 @@
+{
+  "id": "app-z3950-1.0.1",
+  "name": "app-z3950",
+  "version": "1.0.1",
+  "description": "Application for mod-z3950",
+  "platform": "complete",
+  "dependencies": [
+    {
+      "name": "app-platform-complete",
+      "version": "^2.0.0"
+    }
+  ],
+  "modules": [
+    {
+      "name": "mod-z3950",
+      "version": "latest"
+    }
+  ]
+}
