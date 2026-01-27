@@ -1,0 +1,30 @@
+sidecarContainers:
+  eureka:
+    image:
+      tag: 2.0.12
+    resources:
+      requests:
+        cpu: 100m
+        memory: 512M
+      limits:
+        cpu: 150m
+        memory: 1024M
+    extraEnvVars:
+      - name: SECRET_STORE_VAULT_TOKEN
+        value: "root"
+      - name: SECRET_STORE_VAULT_ADDRESS
+        value: "http://vault-internal:8200"
+      - name: ROOT_LOG_LEVEL
+        value: "DEBUG"
+      - name: SC_LOG_LEVEL
+        value: "DEBUG"
+      # - name: FILTERS_TRACING_ON_ERROR
+      #   valueFrom:
+      #     secretKeyRef:
+      #       name: extra-secrets
+      #       key: FILTERS_TRACING_ON_ERROR
+#      - name:  KC_AUTHORIZATION_CACHE_TTL_OFFSET
+#        valueFrom:
+#          secretKeyRef:
+#            name: extra-secrets
+#            key: KC_AUTHORIZATION_CACHE_TTL_OFFSET

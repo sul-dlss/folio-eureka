@@ -1,0 +1,8 @@
+integrations:
+  s3:
+    enabled: true
+    existingSecret: "s3-credentials"
+
+extraEnvVars: |
+  - name: S3_IS_AWS
+    value: 'true'

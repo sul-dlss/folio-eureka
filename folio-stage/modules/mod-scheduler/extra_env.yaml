@@ -1,0 +1,16 @@
+extraEnvVars:
+  - name: SECRET_STORE_VAULT_TOKEN
+    valueFrom:
+      secretKeyRef:
+        name: folio-vault
+        key: SECRET_STORE_VAULT_TOKEN
+  - name: SECRET_STORE_VAULT_ADDRESS
+    valueFrom:
+      secretKeyRef:
+        name: folio-vault
+        key: SECRET_STORE_VAULT_ADDRESS
+  - name: SECRET_STORE_VAULT_ENABLE_SSL
+    valueFrom:
+      secretKeyRef:
+        name: folio-vault
+        key: SECRET_STORE_VAULT_ENABLE_SSL
