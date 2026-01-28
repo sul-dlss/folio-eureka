@@ -274,21 +274,28 @@ TOKEN=$(curl -sX POST -d client_id="sidecar-module-access-client" -d client_secr
 1. Commit all files to a flower release branch and open a pull request to merge to main.
 1. After the PR is merged, upgrade modules by syncing in ArgoCD. ArgoCD should show which are now out of sync. For any new modules, an application will need to be created first using `kubectl -n ${namespace} apply -f path/to/module/application.yaml`.
 1. Check the logs for the mgr modules to see that they upgraded themselves (or do we need to do something to upgrade them?).
+1. Delete existing entitlements and applications in order to upgrade. The database schema keeps track of versions so any database migrations that need to happen for module upgrades will happen.
+ - Get app IDs that were entitled:
+    ```
+    TOKEN=$(curl -sX POST -d client_id="folio-backend-admin-client" -d client_secret="$KC_ADMIN_CLIENT_SECRET" -d grant_type="client_credentials" "$KC_URL/realms/master/protocol/openid-connect/token" | jq -r '.access_token')
+    curl -sX GET "$KONG_URL/entitlements" -H "Authorization: Bearer $TOKEN"
+    ```
+ - Delete the entitlements for those apps
+    ```
+    tenantUUID=$(curl -sX GET "$KONG_URL/tenants" | jq -r '.tenants | .[] | .id')
+    APP_IDS=$(curl -sX GET "$KONG_URL/entitlements" -H "Authorization: Bearer $TOKEN" | jq -jr '.entitlements[] | "\"" + .applicationId + "\"" + "," ' | sed 's/.$//')
+    curl -sX DELETE "$KONG_URL/entitlements" -d "{\"tenantId\":\"$tenantUUID\", \"applications\": [$APP_IDS]}" -H 'Content-Type: application/json' -H "Authorization: Bearer $TOKEN"
+    ```
+  - Delete the applications. Copy/paste application ID into $ID, e.g.:
+    ```
+    curl -sX DELETE "$KONG_URL/applications/$ID" -H "Authorization: Bearer $TOKEN"
 1. [Post the new applications](#post-the-applications).
 1. [Register the applications](#register-the-applications). You will probably need to use the update script if there are modules in the descriptor file that are the same as the currently registered module version. 
-1. Upgrade existing applications:
-    ```
-    APP_IDS="\"app-platform-minimal-2.0.38\", \"app-platform-complete-2.2.13\""
-    ```
-    ```
-    curl -X PUT --location "$KONG_URL/entitlements/state?async=true&tenantParameters=loadReference=true,loadSample=false" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" --data "{\"tenantId\":\"$tenantUUID\", \"applications\": [$APP_IDS]}"
-    ```
 1. [Create entitlements](#create-entitlements) for the new applications.
     ```
-    APP_IDS="\"app-acquisitions-1.0.25\", \"app-bulk-edit-1.0.8\", \"app-erm-usage-2.0.4\", \"app-fqm-1.0.14\", \"app-linked-data-1.1.6\", \"app-marc-migrations-2.0.4\", \"app-reading-room-2.0.2\", \"app-platform-complete-2.2.13\", \"app-reporting-1.4.0\", \"app-z3950-1.0.1\""
-    ```
-    ```
-    curl -X POST --location "$KONG_URL/entitlements/state?async=true&tenantParameters=loadReference=true,loadSample=false" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" --data "{\"tenantId\":\"$tenantUUID\", \"applications\": [$APP_IDS]}"
+    APP_IDS="\"app-acquisitions-1.0.25\", \"app-bulk-edit-1.0.8\", \"app-platform-complete-2.2.13\", \"app-edge-complete-3.0.0\", \"app-erm-usage-2.0.4\", \"app-fqm-1.0.14\", \"app-linked-data-1.1.6\", \"app-marc-migrations-2.0.4\", \"app-platform-minimal-2.0.38\", \"app-reading-room-2.0.2\", \"app-reporting-1.4.0\", \"app-z3950-1.0.1\""
+
+    curl -X POST --location "$KONG_URL/entitlements?async=true&tenantParameters=loadReference=true,loadSample=false" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" --data "{\"tenantId\":\"$tenantUUID\", \"applications\": [$APP_IDS]}"
     ```
 1. [Get all of the capabilities](#get-all-of-the-capabilities)
 1. [Assign capabilities to the adminRole](#assign-capabilities-to-role) using PUT instead of POST.
