@@ -58,6 +58,8 @@ def base_override(name, version):
             {"name": "SYSTEM_USER_CREATED", "value": "false"},
             {"name": "SYSTEM_USER_ENABLED", "value": "false"},
         ]
+    if name.startswith('mod-reporting'):
+        del data['securityContext']['runAsUser']
     if name.startswith('edge-'):
         del data['integrations']['db']
         del data['integrations']['kafka']
