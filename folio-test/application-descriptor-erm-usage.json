@@ -9,13 +9,13 @@
       "id": "mod-erm-usage-5.1.1",
       "name": "mod-erm-usage",
       "version": "5.1.1",
-      "url": "https://mdr-folio-eis-us-east-1-dev.s3.amazonaws.com/mod-erm-usage-5.1.1"
+      "url": null
     },
         {
       "id": "mod-erm-usage-harvester-5.1.1",
       "name": "mod-erm-usage-harvester",
       "version": "5.1.1",
-      "url": "https://mdr-folio-eis-us-east-1-dev.s3.amazonaws.com/mod-erm-usage-harvester-5.1.1"
+      "url": null
     },
         {
       "id": "mod-eusage-reports-3.0.0",

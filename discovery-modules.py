@@ -7,10 +7,11 @@ def main():
     app_id = os.getenv('APP_ID', 'applications')
     token = _token()
     request = httpx.get(f'{kong_url}/applications/{app_id}',)
+    print(request)
     applications = json.loads(request.text)
     print(applications)
     discovery = { "discovery": [] }
-
+    
     for module in applications['modules']:
         module_location = f"http://{module['name']}:8082"
         module['location'] = module_location

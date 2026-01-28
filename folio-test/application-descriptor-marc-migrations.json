@@ -8,7 +8,7 @@
     "id": "mod-marc-migrations-2.0.4",
     "name": "mod-marc-migrations",
     "version": "2.0.4",
-    "url": "https://mdr-folio-eis-us-east-1-dev.s3.amazonaws.com/mod-marc-migrations-2.0.4"
+    "url": null
   }],
   "uiModules": [],
   "dependencies": [  {

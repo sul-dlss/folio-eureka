@@ -13,7 +13,58 @@
   "modules": [
     {
       "name": "mod-z3950",
-      "version": "latest"
+      "version": "4.3.0"
+    }
+  ],
+  "moduleDescriptors": [
+    {
+      "id": "mod-z3950-4.3.0",
+      "name": "Z39.50/SRU/SRW server for FOLIO",
+      "provides": [
+        {
+          "id": "sru",
+          "version": "1.4",
+          "handlers": [
+            {
+              "methods": [
+                "GET"
+              ],
+              "pathPattern": "/sru",
+              "permissionsRequired": []
+            }
+          ]
+        }
+      ],
+      "requires": [
+        {
+          "id": "login",
+          "version": "7.3"
+        },
+        {
+          "id": "graphql",
+          "version": "1.5"
+        },
+        {
+          "id": "source-storage-source-records",
+          "version": "3.0"
+        }
+      ],
+      "launchDescriptor": {
+        "dockerImage": "folioorg/mod-z3950:4.3.0",
+        "dockerPull": true,
+        "dockerArgs": {
+          "HostConfig": {
+            "Memory": 402653184,
+            "PortBindings": {
+              "9997/tcp": [
+                {
+                  "HostPort": "%p"
+                }
+              ]
+            }
+          }
+        }
+      }
     }
   ]
 }

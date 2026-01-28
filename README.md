@@ -281,14 +281,14 @@ TOKEN=$(curl -sX POST -d client_id="sidecar-module-access-client" -d client_secr
     APP_IDS="\"app-platform-minimal-2.0.38\", \"app-platform-complete-2.2.13\""
     ```
     ```
-    curl -X PUT --location "$KONG_URL/entitlements?async=true&tenantParameters=loadReference=true,loadSample=false" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" --data "{\"tenantId\":\"$tenantUUID\", \"applications\": [$APP_IDS]}"
+    curl -X PUT --location "$KONG_URL/entitlements/state?async=true&tenantParameters=loadReference=true,loadSample=false" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" --data "{\"tenantId\":\"$tenantUUID\", \"applications\": [$APP_IDS]}"
     ```
 1. [Create entitlements](#create-entitlements) for the new applications.
     ```
-    APP_IDS="\"app-acquisitions-1.0.25\", \"app-bulk-edit-1.0.8\", \"app-erm-usage-2.0.4\", "app-fqm-1.0.14\", "app-linked-data-1.1.6\", "app-marc-migrations-2.0.4\", "app-reading-room-2.0.2\""
+    APP_IDS="\"app-acquisitions-1.0.25\", \"app-bulk-edit-1.0.8\", \"app-erm-usage-2.0.4\", \"app-fqm-1.0.14\", \"app-linked-data-1.1.6\", \"app-marc-migrations-2.0.4\", \"app-reading-room-2.0.2\", \"app-platform-complete-2.2.13\", \"app-reporting-1.4.0\", \"app-z3950-1.0.1\""
     ```
     ```
-    curl -X POST --location "$KONG_URL/entitlements?async=true&tenantParameters=loadReference=true,loadSample=false" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" --data "{\"tenantId\":\"$tenantUUID\", \"applications\": [$APP_IDS]}"
+    curl -X POST --location "$KONG_URL/entitlements/state?async=true&tenantParameters=loadReference=true,loadSample=false" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" --data "{\"tenantId\":\"$tenantUUID\", \"applications\": [$APP_IDS]}"
     ```
 1. [Get all of the capabilities](#get-all-of-the-capabilities)
 1. [Assign capabilities to the adminRole](#assign-capabilities-to-role) using PUT instead of POST.
