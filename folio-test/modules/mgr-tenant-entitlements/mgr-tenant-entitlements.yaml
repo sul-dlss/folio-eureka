@@ -1,6 +1,8 @@
 image:
   repository: folioorg/mgr-tenant-entitlements
-  tag: 3.1.9
+  # Only the master branch has the /entitlements/state endpoint required for upgrading modules in eureka
+  tag: latest
+  # tag: 3.1.9
 
 deploymentStrategy: RollingUpdate
 

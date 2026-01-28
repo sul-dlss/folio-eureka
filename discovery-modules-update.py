@@ -8,6 +8,7 @@ def main():
     app_id = os.getenv('APP_ID', 'applications')
     token = _token()
     request = httpx.get(f'{kong_url}/applications/{app_id}',)
+    print(request)
     applications = json.loads(request.text)
     discovery = { "discovery": [] }
 
