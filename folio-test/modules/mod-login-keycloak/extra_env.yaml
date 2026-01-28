@@ -1,6 +1,8 @@
 extraEnvVars:
   - name: KC_LOGIN_CLIENT_SUFFIX
     value: "-application"
+  - name: INCLUDE_ONLY_VISIBLE_PERMISSIONS
+    value: "false"
   - name: SECRET_STORE_VAULT_TOKEN
     valueFrom:
       secretKeyRef:
