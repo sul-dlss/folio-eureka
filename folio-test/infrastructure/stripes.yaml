@@ -1,7 +1,7 @@
 image:
   pullPolicy: Always
   repository: ghcr.io/sul-dlss/folio-platform-complete
-  tag: R2-2024-csp-8-eureka-test
+  tag: R1-2025-csp-4-eureka-test
 ingress:
   className: nginx
   annotations:
