@@ -6,16 +6,16 @@ import yaml
 from pathlib import Path
 
 parser = argparse.ArgumentParser(
-                    prog='CreateApplications',
-                    description='Create ArgoCD applications for FOLIO using application descriptors',
-                    epilog='-------')
+                    prog="CreateApplications",
+                    description="Create ArgoCD applications for FOLIO using application descriptors",
+                    epilog="-------")
 
-parser.add_argument('filename')
-parser.add_argument('-m', '--modules', help='a list of modules to install, each with -m flag', nargs="+", action='extend')
-parser.add_argument('-n', '--namespace', required=True, help='the Kubernetes namespace for the applications')
-parser.add_argument('-r', '--helm_repo', default='folio-helm-v2-dlss', help='the Helm repository to use for the applications (folio-helm-v2-dlss by default)')
-parser.add_argument('-v', '--values_branch', default='main', help='the branch in the values repository to use for the applications (main by default)')
-parser.add_argument('-x', '--execute', required=True, default='dry-run', choices=['apply', 'dry-run'], help='whether to apply the applications to ArgoCD or just do a dry-run (dry-run by default)')
+parser.add_argument("filename")
+parser.add_argument("-m", "--modules", help="a list of modules to install, each with -m flag", nargs="+", action="extend")
+parser.add_argument("-n", "--namespace", required=True, help="the Kubernetes namespace for the applications")
+parser.add_argument("-r", "--helm_repo", default="folio-helm-v2-dlss", help="the Helm repository to use for the applications (folio-helm-v2-dlss by default)")
+parser.add_argument("-v", "--values_branch", default="main", help="the branch in the values repository to use for the applications (main by default)")
+parser.add_argument("-x", "--execute", required=True, default="dry-run", choices=["apply", "dry-run"], help="whether to apply the applications to ArgoCD or just do a dry-run (dry-run by default)")
 
 args = parser.parse_args()
 
@@ -60,15 +60,15 @@ def application_manifest(name, version, namespace, repo_url, values_files):
     return yaml.dump(data)
 
 
-with open(args.filename, 'r') as file:
+with open(args.filename, "r") as file:
     data = json.load(file)
 
-modules = data['modules']
+modules = data["modules"]
 if args.modules:
-    modules = [obj for obj in data['modules'] if obj['name'] in args.modules]
+    modules = [obj for obj in data["modules"] if obj["name"] in args.modules]
 
 for module in modules:
-    module_name = module['name']
+    module_name = module["name"]
     dir = Path(f"{args.namespace}/modules/{module_name}")
     dir.mkdir(parents=True, exist_ok=True)
     values_files = []
@@ -99,12 +99,12 @@ for module in modules:
         values_files.append(f"$values/{args.namespace}/modules/{module_name}/extra_env.yaml")
 
     
-    chart_version = os.popen(f"helm show chart {args.helm_repo}/{module_name} | grep '^version' | awk '{{print $2}}'").read().strip()
+    chart_version = os.popen(f"helm show chart {args.helm_repo}/{module_name} | grep \"^version\" | awk '{{print $2}}'").read().strip()
     
     repo_url = os.popen(f"helm repo list | grep {args.helm_repo} | awk '{{print $2}}'").read().strip()
 
     filename = f"{args.namespace}/modules/{module_name}/application.yaml"
-    with open(filename, 'w') as file:
+    with open(filename, "w") as file:
         file.write(application_manifest(
             name=module_name,
             version=chart_version,
@@ -115,7 +115,7 @@ for module in modules:
 
     print(f"Generated application manifest for {module_name}")
 
-    if args.execute == 'apply':
+    if args.execute == "apply":
         kubectl_command = f"kubectl -n {args.namespace} apply -f {filename}"
         print(f"Applying application manifest for {module_name}")
         os.system(kubectl_command)
