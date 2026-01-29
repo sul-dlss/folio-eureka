@@ -3,6 +3,10 @@ global:
 injector:
   enabled: false
 server:
+  dataStorage:
+    enabled: true
+    storageClass: "mayastor-3"
+    size: 50Gi
   authDelegator:
     enabled: false
   agentInjector:
