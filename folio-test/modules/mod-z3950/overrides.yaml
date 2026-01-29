@@ -10,7 +10,7 @@ eureka:
     value: 'false'
 image:
   repository: folioorg/mod-z3950
-  tag: latest
+  tag: 4.3.0
 integrations:
   db:
     enabled: true
@@ -24,6 +24,7 @@ integrations:
     enabled: false
 podSecurityContext:
   fsGroup: 2000
+replicaCount: 2
 securityContext:
   allowPrivilegeEscalation: false
   capabilities:
