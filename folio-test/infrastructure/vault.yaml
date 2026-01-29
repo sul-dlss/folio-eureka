@@ -5,8 +5,12 @@ injector:
 server:
   dataStorage:
     enabled: true
+    size: 10Gi
+    mountPath: "/vault/data"
     storageClass: "mayastor-3"
-    size: 50Gi
+    accessMode: ReadWriteOnce
+    annotations: {}
+    labels: {}
   authDelegator:
     enabled: false
   agentInjector:
