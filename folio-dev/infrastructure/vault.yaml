@@ -3,6 +3,14 @@ global:
 injector:
   enabled: false
 server:
+  dataStorage:
+    enabled: true
+    size: 10Gi
+    mountPath: "/vault/data"
+    storageClass: "mayastor-3"
+    accessMode: ReadWriteOnce
+    annotations: {}
+    labels: {}
   authDelegator:
     enabled: false
   agentInjector:
