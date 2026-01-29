@@ -16,7 +16,7 @@ server:
   extraEnvironmentVars:
     VAULT_DEV_ROOT_TOKEN_ID: root
   ha:
-    enabled: false
+    enabled: true
   ingress:
     enabled: false
   logLevel: debug
