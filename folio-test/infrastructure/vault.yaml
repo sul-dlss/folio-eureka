@@ -13,16 +13,6 @@ server:
     labels: {}
   authDelegator:
     enabled: false
-  agentInjector:
-    enabled: false
-  auditLog:
-    enabled: false
-  backup:
-    enabled: false
-  dataStorage:
-    enabled: false
-  dev:
-    enabled: true
   extraEnvironmentVars:
     VAULT_DEV_ROOT_TOKEN_ID: root
   ha:
@@ -42,11 +32,5 @@ server:
   service:
     port: 8200
     type: ClusterIP
-  tls:
-    auto:
-      enabled: false
-    enabled: false
-  unsealConfig:
-    enabled: false
 ui:
   enabled: true
