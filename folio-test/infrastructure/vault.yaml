@@ -15,6 +15,16 @@ server:
     enabled: false
   extraEnvironmentVars:
     VAULT_DEV_ROOT_TOKEN_ID: root
+  extraSecretEnvironmentVars:
+    - envName: UNSEAL_KEY
+      secretName: folio-vault
+      secretKey: UNSEAL_KEY
+  postStart:
+    - /bin/sh
+    - -c
+    - > 
+      sleep 10;
+      if [ -n "$UNSEAL_KEY" ]; then vault operator unseal $UNSEAL_KEY; fi
   ha:
     enabled: false
   ingress:
