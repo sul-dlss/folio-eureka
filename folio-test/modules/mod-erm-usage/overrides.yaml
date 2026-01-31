@@ -24,7 +24,6 @@ integrations:
     enabled: false
 podSecurityContext:
   fsGroup: 2000
-replicaCount: 2
 securityContext:
   allowPrivilegeEscalation: false
   capabilities:

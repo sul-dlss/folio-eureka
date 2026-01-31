@@ -20,6 +20,7 @@ spec:
       - $values/folio-test/modules/mod-inventory/resources.yaml
       - $values/folio-test/common/sidecar.yaml
       - $values/folio-test/modules/mod-inventory/probes.yaml
+      - $values/folio-test/modules/mod-inventory/replicas.yaml
     repoURL: https://sul-dlss.github.io/folio-helm-v2
     targetRevision: 20.2.43
   - ref: values

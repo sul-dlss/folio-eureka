@@ -22,7 +22,7 @@ spec:
       - $values/folio-dev/common/probes.yaml
       - $values/folio-dev/modules/mod-source-record-storage/java_opts.yaml
       - $values/folio-dev/modules/mod-source-record-storage/extra_env.yaml
-    repoURL: https://sul-dlss.github.io/folio-helm-v2/
+    repoURL: https://sul-dlss.github.io/folio-helm-v2
     targetRevision: 5.8.44
   - ref: values
     repoURL: https://github.com/sul-dlss/folio-eureka
