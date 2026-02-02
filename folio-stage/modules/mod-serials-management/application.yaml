@@ -20,7 +20,7 @@ spec:
       - $values/folio-stage/modules/mod-serials-management/resources.yaml
       - $values/folio-stage/common/sidecar.yaml
       - $values/folio-stage/modules/mod-serials-management/probes.yaml
-    repoURL: https://sul-dlss.github.io/folio-helm-v2/
+    repoURL: https://sul-dlss.github.io/folio-helm-v2
     targetRevision: 1.0.48
   - ref: values
     repoURL: https://github.com/sul-dlss/folio-eureka

@@ -21,7 +21,7 @@ spec:
       - $values/folio-dev/modules/mod-users-keycloak/sidecar.yaml
       - $values/folio-dev/common/probes.yaml
       - $values/folio-dev/modules/mod-users-keycloak/extra_env.yaml
-    repoURL: https://sul-dlss.github.io/folio-helm-v2/
+    repoURL: https://sul-dlss.github.io/folio-helm-v2
     targetRevision: 0.0.51
   - ref: values
     repoURL: https://github.com/sul-dlss/folio-eureka

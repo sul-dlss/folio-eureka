@@ -13,9 +13,10 @@ parser = argparse.ArgumentParser(
 parser.add_argument("filename")
 parser.add_argument("-m", "--modules", help="a list of modules to install, each with -m flag", nargs="+", action="extend")
 parser.add_argument("-n", "--namespace", required=True, help="the Kubernetes namespace for the applications")
+parser.add_argument("-p", "--prod_replicasets", action="store_true", default=False, help="use production-level replicaset counts, else replicaCount=1")
 parser.add_argument("-r", "--helm_repo", default="folio-helm-v2-dlss", help="the Helm repository to use for the applications (folio-helm-v2-dlss by default)")
 parser.add_argument("-v", "--values_branch", default="main", help="the branch in the values repository to use for the applications (main by default)")
-parser.add_argument("-x", "--execute", required=True, default="dry-run", choices=["apply", "dry-run"], help="whether to apply the applications to ArgoCD or just do a dry-run (dry-run by default)")
+parser.add_argument("-x", "--execute", required=False, default="dry-run", choices=["apply", "dry-run"], help="whether to apply the applications to ArgoCD or just do a dry-run (dry-run by default)")
 
 args = parser.parse_args()
 
@@ -89,6 +90,9 @@ for module in modules:
     else:
         values_files.append(f"$values/{args.namespace}/common/probes.yaml")
 
+    if args.prod_replicasets and Path(f"{args.namespace}/modules/{module_name}/replicas.yaml").exists():
+        values_files.append(f"$values/{args.namespace}/modules/{module_name}/replicas.yaml")
+
     if Path(f"{args.namespace}/modules/{module_name}/service.yaml").exists():
         values_files.append(f"$values/{args.namespace}/modules/{module_name}/service.yaml")
     
@@ -97,7 +101,6 @@ for module in modules:
     
     if Path(f"{args.namespace}/modules/{module_name}/extra_env.yaml").exists():
         values_files.append(f"$values/{args.namespace}/modules/{module_name}/extra_env.yaml")
-
     
     chart_version = os.popen(f"helm show chart {args.helm_repo}/{module_name} | grep \"^version\" | awk '{{print $2}}'").read().strip()
     
