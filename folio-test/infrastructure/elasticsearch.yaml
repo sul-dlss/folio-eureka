@@ -38,9 +38,9 @@ coordinating:
 data:
   replicaCount: 3
   # heap size for full indexing:
-  # heapSize: 3680M
+  heapSize: 3680M
   # Normal heap size:
-  heapSize: 2760M
+  # heapSize: 2760M
   persistence:
     size: 350Gi
   readinessProbe:
@@ -52,9 +52,9 @@ data:
   resources:
     requests:
       # Normal cpu:
-      cpu: 1536m
+      # cpu: 1536m
       # cpu for full indexing:
-      # cpu: 2944m
+      cpu: 2944m
       memory: 4608M
     limits:
       # no limit for cpu
