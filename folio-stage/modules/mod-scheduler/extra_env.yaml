@@ -1,4 +1,6 @@
 extraEnvVars:
+  - name: OKAPI_URL
+    value: "http://localhost:8082"
   - name: SECRET_STORE_VAULT_TOKEN
     valueFrom:
       secretKeyRef:
