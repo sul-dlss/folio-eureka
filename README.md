@@ -295,3 +295,21 @@ TOKEN=$(curl -sX POST -d client_id="sidecar-module-access-client" -d client_secr
     ```
 1. [Get all of the capabilities](#get-all-of-the-capabilities)
 1. [Assign capabilities to the adminRole](#assign-capabilities-to-role) using PUT instead of POST.
+
+## Elasticsearch Indexing
+### recreate resource index (drops index): [authority, location]
+```
+curl -sX POST --location "$KONG_URL/search/index/inventory/reindex" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul' --data "{ \"recreateIndex\": \"true\", \"resourceName\": \"$RESOURCE\"}"
+```
+### recreate instances index (build new data model)
+```
+curl -sX POST --location "$KONG_URL/search/index/instance-records/reindex/full" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul'
+```
+### monitor status for resource reindexing
+```
+curl -s --location "$KONG_URL/search/index/instance-records/reindex/status" -H "Authorization: Bearer $TOKEN" -H 'x-okapi-tenant: sul' | jq
+```
+### reindex failed merge ranges
+```
+curl -sX POST --location "$KONG_URL/search/index/instance-records/reindex/merge/failed" -H "Authorization: Bearer $TOKEN" -H 'x-okapi-tenant: sul'
+```
