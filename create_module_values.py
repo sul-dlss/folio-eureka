@@ -10,9 +10,9 @@ parser = argparse.ArgumentParser(
                     description='Create FOLIO Eureka module values using application descriptors',
                     epilog='-------')
 
-parser.add_argument('filename', nargs='*', help='the application descriptor JSON file to process')
+parser.add_argument('filename', nargs='*', help='The application descriptor JSON file or files to process. If not provided, all JSON files in the namespace directory will be processed.')
 parser.add_argument('-m', '--modules', help='a list of modules to install, each with -m flag', nargs="+", action='extend')
-parser.add_argument('-n', '--namespace', required=True, help='the Kubernetes namespace for the applications')
+parser.add_argument('-n', '--namespace', required=True, help='the Kubernetes namespace for the applications.')
 
 args = parser.parse_args()
 
