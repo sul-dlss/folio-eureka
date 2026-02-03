@@ -20,10 +20,3 @@ extraEnvVars: |
     value: "eureka"
   - name: S3_SUB_PATH
     value: "mod-lists"  
-  - name: SYSTEM_USER_PASSWORD
-    valueFrom:
-      secretKeyRef:
-          name: folio-k8s
-          key: SYSTEM_USER_PASSWORD
-# - name: SYSTEM_USER_ENABLED
-#   value: "true"

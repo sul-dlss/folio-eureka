@@ -2,3 +2,7 @@ integrations:
   s3:
     enabled: true
     existingSecret: "s3-credentials"
+
+extraEnvVars: |
+  - name: OKAPI_URL
+    value: "http://localhost:8082"
