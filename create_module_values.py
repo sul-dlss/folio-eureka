@@ -10,7 +10,7 @@ parser = argparse.ArgumentParser(
                     description='Create FOLIO Eureka module values using application descriptors',
                     epilog='-------')
 
-parser.add_argument('filename')
+parser.add_argument('filename', nargs='*', help='the application descriptor JSON file to process')
 parser.add_argument('-m', '--modules', help='a list of modules to install, each with -m flag', nargs="+", action='extend')
 parser.add_argument('-n', '--namespace', required=True, help='the Kubernetes namespace for the applications')
 
@@ -68,20 +68,31 @@ def base_override(name, version):
     return yaml.dump(data)
 
 
-with open(args.filename, 'r') as file:
-    data = json.load(file)
+def create_module_values(filename):
+    with open(filename, 'r') as file:
+        data = json.load(file)
 
-modules = data['modules']
+    modules = data['modules']
 
-if args.modules:
-    modules = [obj for obj in data['modules'] if obj['name'] in args.modules]
+    if args.modules:
+        modules = [obj for obj in data['modules'] if obj['name'] in args.modules]
+            
+    for module in modules:
+        print (f"Creating values for module {module['name']} version {module['version']}")
+        name = module['name']
+        version = module['version']
+        dir = Path(f"{args.namespace}/modules/{name}")
+        dir.mkdir(parents=True, exist_ok=True)
         
-for module in modules:
-    name = module['name']
-    version = module['version']
-    dir = Path(f"{args.namespace}/modules/{name}")
-    dir.mkdir(parents=True, exist_ok=True)
-    
-    filename = f"{dir}/overrides.yaml"
-    with open(filename, 'w') as file:
-        file.write(base_override(name, version))
+        filename = f"{dir}/overrides.yaml"
+        with open(filename, 'w') as file:
+            file.write(base_override(name, version))
+
+
+if args.filename:
+    for file in args.filename:
+        create_module_values(file)
+else:
+    descriptor_files = Path(args.namespace).glob('*.json')
+    for file in descriptor_files:
+        create_module_values(file)
