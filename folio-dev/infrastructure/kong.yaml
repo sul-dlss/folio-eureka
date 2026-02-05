@@ -153,7 +153,7 @@ extraDeploy:
       hostnames:
       - kong-folio-dev.stanford.edu
       parentRefs:
-      - name: kong-gateway
+      - name: envoy-gateway
       rules:
       - backendRefs:
         - name: kong
