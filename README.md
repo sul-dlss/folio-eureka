@@ -313,3 +313,7 @@ curl -s --location "$KONG_URL/search/index/instance-records/reindex/status" -H "
 ```
 curl -sX POST --location "$KONG_URL/search/index/instance-records/reindex/merge/failed" -H "Authorization: Bearer $TOKEN" -H 'x-okapi-tenant: sul'
 ```
+### reindex "instance" "subject" "contributor" "classification" "call-number"
+```
+curl -sX POST --location "$KONG_URL/search/index/instance-records/reindex/upload" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul' --data "{ \"entityTypes\": [ \"$ENTITY\" ] }"
+```
