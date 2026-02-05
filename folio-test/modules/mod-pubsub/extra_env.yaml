@@ -5,3 +5,8 @@ extraEnvVars: |
     value: "false"
   - name: SYSTEM_USER_NAME
     value: "mod-pubsub"
+  - name: SYSTEM_USER_PASSWORD
+    valueFrom:
+      secretKeyRef:
+          name: mod-pubsub-system-user
+          key: SYSTEM_USER_PASSWORD
