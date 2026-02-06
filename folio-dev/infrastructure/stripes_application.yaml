@@ -14,7 +14,6 @@ spec:
       helm:
         valueFiles:
           - $values/folio-dev/infrastructure/stripes.yaml
-          - $values/folio-dev/infrastructure/allowed_ips.yaml
       chart: platform-complete
     - repoURL: https://github.com/sul-dlss/folio-eureka
       targetRevision: main
