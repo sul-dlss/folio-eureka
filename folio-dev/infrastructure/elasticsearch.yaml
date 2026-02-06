@@ -37,9 +37,6 @@ coordinating:
       memory: 4608M
 data:
   replicaCount: 3
-  # heap size for full indexing:
-  # heapSize: 3680M
-  # Normal heap size:
   heapSize: 2760M
   persistence:
     size: 350Gi
