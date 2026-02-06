@@ -45,7 +45,10 @@ extraDeploy:
               type: PathPrefix
               value: /
       hostnames:
+      - folio-dev.stanford.edu
       parentRefs:
+      - name: envoy-gateway
+        namespace: envoy-gateway-system
     ---
     apiVersion: gateway.envoyproxy.io/v1alpha1
     kind: SecurityPolicy

@@ -159,6 +159,7 @@ extraDeploy:
       - keycloak-folio-dev.stanford.edu
       parentRefs:
       - name: envoy-gateway
+        namespace: envoy-gateway-system
       rules:
       - backendRefs:
         - name: keycloak

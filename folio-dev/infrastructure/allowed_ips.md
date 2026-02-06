@@ -1,6 +1,6 @@
 # Allowed CIDRs for API Gateway, Keycloak, and folio-platform-complete
 ## AWS EC2 for Sinopia Stage Airflow
-- 54.245.203.243
+- 54.245.203.243/32
 ## General Stanford network range
 - 171.64.0.0/14
 - 171.66.1.0/24
