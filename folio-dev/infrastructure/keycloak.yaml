@@ -73,16 +73,6 @@ extraEnvVars:
       secretKeyRef:
         name: keycloak-credentials
         key: KC_DB_USERNAME
-  - name: KC_BOOTSTRAP_ADMIN_USERNAME
-    valueFrom:
-      secretKeyRef:
-        name: keycloak-credentials
-        key: KC_BOOTSTRAP_ADMIN_USERNAME
-  - name: KC_BOOTSTRAP_ADMIN_PASSWORD
-    valueFrom:
-      secretKeyRef:
-        name: keycloak-credentials
-        key: KC_BOOTSTRAP_ADMIN_PASSWORD
 proxy: "edge"
 resources:
   requests:

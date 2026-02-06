@@ -248,7 +248,7 @@ curl -X POST --location "$KONG_URL/roles/users" -H "Authorization: Bearer $TOKEN
 ## Sidecar Client Login
 ### Get the sidecar client vault secret from secret/folio/sul and set the sidecar secret as SIDECAR_SECRET
 ```
-export SIDECAR_SECRET=$(kubectl -n $namespace exec -it vault-0 -- vault kv get secret/folio/sul | grep sidecar-module-access-client | awk '{print $2}')
+export SIDECAR_SECRET=$(kubectl -n $namespace exec -it vault-0 -- vault kv get -format=json secret/folio/sul | jq -jrc '.data.data."sidecar-module-access-client"')
 ```
 
 ### Get the sidecar token from the tenant (sul) keycloak realm
@@ -312,4 +312,8 @@ curl -s --location "$KONG_URL/search/index/instance-records/reindex/status" -H "
 ### reindex failed merge ranges
 ```
 curl -sX POST --location "$KONG_URL/search/index/instance-records/reindex/merge/failed" -H "Authorization: Bearer $TOKEN" -H 'x-okapi-tenant: sul'
+```
+### reindex "instance" "subject" "contributor" "classification" "call-number"
+```
+curl -sX POST --location "$KONG_URL/search/index/instance-records/reindex/upload" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul' --data "{ \"entityTypes\": [ \"$ENTITY\" ] }"
 ```

@@ -44,6 +44,10 @@ extraConfig: |
 # Add to extraConfig to delete topics if needed
 # deleteTopicEnable=true
 
+kraft:
+  existingClusterIdSecret: kafka-credentials
+sasl:
+  existingSecret: kafka-credentials
 listeners:
   client:
     protocol: PLAINTEXT
