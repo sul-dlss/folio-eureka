@@ -47,7 +47,7 @@ extraDeploy:
       hostnames:
       - folio-dev.stanford.edu
       parentRefs:
-      - name: envoy-eg-d8c59e83
+      - name: gateway-merged
         namespace: envoy-gateway-system
     ---
     apiVersion: gateway.envoyproxy.io/v1alpha1
