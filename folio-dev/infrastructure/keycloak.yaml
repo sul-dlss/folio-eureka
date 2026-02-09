@@ -99,7 +99,7 @@ containerSecurityContext:
 networkPolicy:
   enabled: false
 service:
-  type: "LoadBalancer"
+  type: "ClusterIP"
   ports:
     http: 8080
     https: 8443
