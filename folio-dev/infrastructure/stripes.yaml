@@ -39,7 +39,7 @@ extraDeploy:
       rules:
       - backendRefs:
         - name: platform-complete
-          port: 8443
+          port: 80
         matches:
           - path:
               type: PathPrefix
