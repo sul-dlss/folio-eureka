@@ -7,6 +7,16 @@ startupProbeEnabled : true
 livenessProbeEnabled : true
 readinessProbeEnabled : true
 
+service:
+  type: ClusterIP
+  ports:
+    - name: https
+      protocol: TCP
+      port: 8443
+      containerPort: 8443
+      targetPort: https
+  annotations: {}
+
 extraDeploy:
   - |
     apiVersion: gateway.envoyproxy.io/v1alpha1
