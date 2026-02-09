@@ -10,7 +10,7 @@ eureka:
     value: 'false'
 image:
   repository: folioorg/mod-sender
-  tag: 1.14.1
+  tag: 1.14.2
 integrations:
   db:
     enabled: true

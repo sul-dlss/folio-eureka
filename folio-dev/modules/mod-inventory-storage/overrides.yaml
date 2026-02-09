@@ -10,7 +10,7 @@ eureka:
     value: 'false'
 image:
   repository: folioorg/mod-inventory-storage
-  tag: 29.0.12
+  tag: 29.0.16
 integrations:
   db:
     enabled: true

@@ -10,7 +10,7 @@ eureka:
     value: 'false'
 image:
   repository: folioorg/mod-copycat
-  tag: 1.8.0
+  tag: 1.8.1
 integrations:
   db:
     enabled: true

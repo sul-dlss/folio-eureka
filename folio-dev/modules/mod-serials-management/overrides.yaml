@@ -10,7 +10,7 @@ eureka:
     value: 'false'
 image:
   repository: folioorg/mod-serials-management
-  tag: 2.0.3
+  tag: 2.0.4
 integrations:
   db:
     enabled: true

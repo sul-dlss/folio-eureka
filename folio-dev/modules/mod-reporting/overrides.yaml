@@ -9,8 +9,8 @@ eureka:
   - name: SYSTEM_USER_ENABLED
     value: 'false'
 image:
-  repository: folioorg/mod-calendar
-  tag: 3.3.1
+  repository: folioorg/mod-reporting
+  tag: 1.5.0
 integrations:
   db:
     enabled: true
@@ -20,6 +20,9 @@ integrations:
     existingSecret: kafka-credentials
   okapi:
     enabled: false
+  s3:
+    enabled: true
+    existingSecret: s3-credentials
   systemuser:
     enabled: false
 podSecurityContext:
@@ -30,4 +33,3 @@ securityContext:
     drop:
     - ALL
   runAsNonRoot: true
-  runAsUser: 1000
