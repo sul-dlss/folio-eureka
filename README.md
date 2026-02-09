@@ -180,6 +180,11 @@ curl -sX PUT --location "$KONG_URL/entitlements?async=true&tenantParameters=load
     curl -sX DELETE "$KONG_URL/entitlements" -d "{\"tenantId\":\"$tenantUUID\", \"applications\": [\"$APP_ID\"]}" -H 'Content-Type: application/json' -H "Authorization: Bearer $TOKEN"
 ```
 
+### Reinstall a single module
+```
+curl -X POST --location "$KONG_URL/reinstall/modules?async=true&tenantParameters=loadReference=true,loadSample=false"  -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" --data "{\"tenantId\": \"$tenantUUID\", \"applicationId\": \"$APP_ID\", \"modules\": [$MODULE_IDS]}"
+```
+
 ## Create the Admin User
 Using the [sidecar-module-access-client](#sidecar-client-login)
 ```
@@ -316,4 +321,8 @@ curl -sX POST --location "$KONG_URL/search/index/instance-records/reindex/merge/
 ### reindex "instance" "subject" "contributor" "classification" "call-number"
 ```
 curl -sX POST --location "$KONG_URL/search/index/instance-records/reindex/upload" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul' --data "{ \"entityTypes\": [ \"$ENTITY\" ] }"
+```
+### Upload Re-Index
+```
+curl -sX POST --location "$KONG_URL/search/index/instance-records/reindex/upload" -H "Authorization: Bearer $TOKEN" -H 'x-okapi-tenant: sul' -H 'Content-Type: application/json' --data "{ \"entityTypes\": [ \"instance\" ]}"
 ```
