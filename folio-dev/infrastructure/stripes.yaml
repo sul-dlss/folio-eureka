@@ -39,7 +39,7 @@ extraDeploy:
       rules:
       - backendRefs:
         - name: platform-complete
-          port: 80
+          port: 8443
         matches:
           - path:
               type: PathPrefix
@@ -47,7 +47,7 @@ extraDeploy:
       hostnames:
       - folio-dev.stanford.edu
       parentRefs:
-      - name: envoy-gateway
+      - name: default
         namespace: envoy-gateway-system
     ---
     apiVersion: gateway.envoyproxy.io/v1alpha1
