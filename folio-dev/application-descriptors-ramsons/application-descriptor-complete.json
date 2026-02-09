@@ -1,503 +1,331 @@
 {
-  "id": "app-platform-complete-2.2.13",
+  "id": "app-platform-complete-2.2.0",
   "name": "app-platform-complete",
-  "version": "2.2.13",
+  "version": "2.2.0",
   "description": "Application comprised of most Folio modules not present in app-platform-minimal",
   "platform": "base",
   "modules":   [
         {
-      "id": "mod-graphql-1.13.1",
       "name": "mod-graphql",
-      "version": "1.13.1",
-      "url": null
+      "version": "1.13.1"
     },
         {
-      "id": "mod-quick-marc-7.0.0",
       "name": "mod-quick-marc",
-      "version": "7.0.0",
-      "url": null
+      "version": "7.0.0"
     },
         {
-      "id": "mod-inventory-storage-29.0.16",
       "name": "mod-inventory-storage",
-      "version": "29.0.16",
-      "url": null
+      "version": "29.0.12"
     },
         {
-      "id": "mod-circulation-storage-17.4.1",
       "name": "mod-circulation-storage",
-      "version": "17.4.1",
-      "url": null
+      "version": "17.4.0"
     },
         {
-      "id": "mod-search-5.0.8",
       "name": "mod-search",
-      "version": "5.0.8",
-      "url": null
+      "version": "5.0.7"
     },
         {
-      "id": "mod-inventory-21.1.16",
       "name": "mod-inventory",
-      "version": "21.1.16",
-      "url": null
+      "version": "21.1.11"
     },
         {
-      "id": "mod-circulation-24.4.13",
       "name": "mod-circulation",
-      "version": "24.4.13",
-      "url": null
+      "version": "24.4.11"
     },
         {
-      "id": "mod-feesfines-19.3.2",
       "name": "mod-feesfines",
-      "version": "19.3.2",
-      "url": null
+      "version": "19.3.2"
     },
         {
-      "id": "mod-patron-blocks-1.12.2",
       "name": "mod-patron-blocks",
-      "version": "1.12.2",
-      "url": null
+      "version": "1.12.2"
     },
         {
-      "id": "mod-entities-links-4.0.3",
       "name": "mod-entities-links",
-      "version": "4.0.3",
-      "url": null
+      "version": "4.0.3"
     },
         {
-      "id": "mod-source-record-manager-3.10.9",
       "name": "mod-source-record-manager",
-      "version": "3.10.9",
-      "url": null
+      "version": "3.10.7"
     },
         {
-      "id": "mod-di-converter-storage-2.4.2",
       "name": "mod-di-converter-storage",
-      "version": "2.4.2",
-      "url": null
+      "version": "2.4.2"
     },
         {
-      "id": "mod-patron-6.3.3",
       "name": "mod-patron",
-      "version": "6.3.3",
-      "url": null
+      "version": "6.3.2"
     },
         {
-      "id": "mod-data-export-5.2.3",
       "name": "mod-data-export",
-      "version": "5.2.3",
-      "url": null
+      "version": "5.2.2"
     },
         {
-      "id": "mod-data-export-spring-3.5.2",
       "name": "mod-data-export-spring",
-      "version": "3.5.2",
-      "url": null
+      "version": "3.5.2"
     },
         {
-      "id": "mod-data-export-worker-3.4.10",
       "name": "mod-data-export-worker",
-      "version": "3.4.10",
-      "url": null
+      "version": "3.4.7"
     },
         {
-      "id": "mod-rtac-3.8.2",
       "name": "mod-rtac",
-      "version": "3.8.2",
-      "url": null
+      "version": "3.8.1"
     },
         {
-      "id": "mod-remote-storage-3.4.3",
-      "name": "mod-remote-storage",
-      "version": "3.4.3",
-      "url": null
-    },
-        {
-      "id": "mod-calendar-3.3.1",
       "name": "mod-calendar",
-      "version": "3.3.1",
-      "url": null
+      "version": "3.3.0"
     },
         {
-      "id": "mod-audit-2.11.1",
       "name": "mod-audit",
-      "version": "2.11.1",
-      "url": null
+      "version": "2.11.1"
     },
         {
-      "id": "mod-courses-1.4.12",
       "name": "mod-courses",
-      "version": "1.4.12",
-      "url": null
+      "version": "1.4.12"
     },
         {
-      "id": "mod-source-record-storage-5.10.13",
       "name": "mod-source-record-storage",
-      "version": "5.10.13",
-      "url": null
+      "version": "5.10.10"
     },
         {
-      "id": "mod-data-import-3.3.5",
       "name": "mod-data-import",
-      "version": "3.3.5",
-      "url": null
+      "version": "3.3.5"
     },
         {
-      "id": "mod-agreements-7.2.3",
       "name": "mod-agreements",
-      "version": "7.2.3",
-      "url": null
+      "version": "7.2.2"
     },
         {
-      "id": "mod-licenses-6.2.3",
       "name": "mod-licenses",
-      "version": "6.2.3",
-      "url": null
+      "version": "6.2.2"
     },
         {
-      "id": "mod-email-1.19.1",
       "name": "mod-email",
-      "version": "1.19.1",
-      "url": null
+      "version": "1.19.0"
     },
         {
-      "id": "mod-event-config-2.9.0",
       "name": "mod-event-config",
-      "version": "2.9.0",
-      "url": null
+      "version": "2.9.0"
     },
         {
-      "id": "mod-notify-3.4.1",
       "name": "mod-notify",
-      "version": "3.4.1",
-      "url": null
+      "version": "3.4.0"
     },
         {
-      "id": "mod-sender-1.14.2",
       "name": "mod-sender",
-      "version": "1.14.2",
-      "url": null
+      "version": "1.14.1"
     },
         {
-      "id": "mod-template-engine-1.22.0",
       "name": "mod-template-engine",
-      "version": "1.22.0",
-      "url": null
+      "version": "1.22.0"
     },
         {
-      "id": "mod-pubsub-2.16.1",
       "name": "mod-pubsub",
-      "version": "2.16.1",
-      "url": null
+      "version": "2.16.1"
     },
         {
-      "id": "mod-gobi-3.0.1",
       "name": "mod-gobi",
-      "version": "3.0.1",
-      "url": null
+      "version": "3.0.1"
     },
         {
-      "id": "mod-copycat-1.8.1",
       "name": "mod-copycat",
-      "version": "1.8.1",
-      "url": null
+      "version": "1.8.0"
     },
         {
-      "id": "mod-kb-ebsco-java-6.0.1",
       "name": "mod-kb-ebsco-java",
-      "version": "6.0.1",
-      "url": null
+      "version": "6.0.0"
     },
         {
-      "id": "mod-ncip-1.16.1",
       "name": "mod-ncip",
-      "version": "1.16.1",
-      "url": null
+      "version": "1.16.1"
     },
         {
-      "id": "mod-inventory-update-4.1.0",
       "name": "mod-inventory-update",
-      "version": "4.1.0",
-      "url": null
+      "version": "4.1.0"
     },
         {
-      "id": "mod-user-import-3.10.2",
       "name": "mod-user-import",
-      "version": "3.10.2",
-      "url": null
+      "version": "3.10.2"
     },
         {
-      "id": "mod-service-interaction-4.2.3",
       "name": "mod-service-interaction",
-      "version": "4.2.3",
-      "url": null
+      "version": "4.2.2"
     },
         {
-      "id": "mod-ebsconet-2.4.0",
       "name": "mod-ebsconet",
-      "version": "2.4.0",
-      "url": null
+      "version": "2.4.0"
     },
         {
-      "id": "mod-batch-print-1.3.0",
       "name": "mod-batch-print",
-      "version": "1.3.0",
-      "url": null
+      "version": "1.3.0"
     },
         {
-      "id": "mod-serials-management-2.0.4",
       "name": "mod-serials-management",
-      "version": "2.0.4",
-      "url": null
+      "version": "2.0.3"
     },
         {
-      "id": "mod-record-specifications-2.0.2",
       "name": "mod-record-specifications",
-      "version": "2.0.2",
-      "url": null
+      "version": "2.0.2"
     }
   ],
   "uiModules":   [
         {
-      "id": "folio_marc-authorities-7.0.3",
       "name": "folio_marc-authorities",
-      "version": "7.0.3",
-      "url": null
+      "version": "7.0.3"
     },
         {
-      "id": "folio_stripes-authority-components-6.0.3",
       "name": "folio_stripes-authority-components",
-      "version": "6.0.3",
-      "url": null
+      "version": "6.0.3"
     },
         {
-      "id": "folio_quick-marc-10.0.4",
       "name": "folio_quick-marc",
-      "version": "10.0.4",
-      "url": null
+      "version": "10.0.4"
     },
         {
-      "id": "folio_inventory-13.0.11",
       "name": "folio_inventory",
-      "version": "13.0.11",
-      "url": null
+      "version": "13.0.10"
     },
         {
-      "id": "folio_servicepoints-8.0.0",
       "name": "folio_servicepoints",
-      "version": "8.0.0",
-      "url": null
+      "version": "8.0.0"
     },
         {
-      "id": "folio_plugin-create-inventory-records-6.0.0",
       "name": "folio_plugin-create-inventory-records",
-      "version": "6.0.0",
-      "url": null
+      "version": "6.0.0"
     },
         {
-      "id": "folio_plugin-find-instance-9.0.2",
       "name": "folio_plugin-find-instance",
-      "version": "9.0.2",
-      "url": null
+      "version": "9.0.2"
     },
         {
-      "id": "folio_plugin-find-package-title-7.0.0",
       "name": "folio_plugin-find-package-title",
-      "version": "7.0.0",
-      "url": null
+      "version": "7.0.0"
     },
         {
-      "id": "folio_checkin-11.0.3",
       "name": "folio_checkin",
-      "version": "11.0.3",
-      "url": null
+      "version": "11.0.2"
     },
         {
-      "id": "folio_checkout-12.0.2",
       "name": "folio_checkout",
-      "version": "12.0.2",
-      "url": null
+      "version": "12.0.1"
     },
         {
-      "id": "folio_circulation-11.0.4",
       "name": "folio_circulation",
-      "version": "11.0.4",
-      "url": null
+      "version": "11.0.2"
     },
         {
-      "id": "folio_plugin-find-user-8.0.0",
       "name": "folio_plugin-find-user",
-      "version": "8.0.0",
-      "url": null
+      "version": "8.0.0"
     },
         {
-      "id": "folio_data-export-7.0.0",
       "name": "folio_data-export",
-      "version": "7.0.0",
-      "url": null
+      "version": "7.0.0"
     },
         {
-      "id": "folio_export-manager-4.0.0",
       "name": "folio_export-manager",
-      "version": "4.0.0",
-      "url": null
+      "version": "4.0.0"
     },
         {
-      "id": "folio_plugin-bursar-export-5.0.1",
       "name": "folio_plugin-bursar-export",
-      "version": "5.0.1",
-      "url": null
+      "version": "4.0.3"
     },
         {
-      "id": "folio_remote-storage-7.0.1",
-      "name": "folio_remote-storage",
-      "version": "7.0.1",
-      "url": null
-    },
-        {
-      "id": "folio_circulation-log-6.0.2",
       "name": "folio_circulation-log",
-      "version": "6.0.2",
-      "url": null
+      "version": "6.0.1"
     },
         {
-      "id": "folio_calendar-12.0.0",
       "name": "folio_calendar",
-      "version": "12.0.0",
-      "url": null
+      "version": "12.0.0"
     },
         {
-      "id": "folio_courses-7.0.3",
       "name": "folio_courses",
-      "version": "7.0.3",
-      "url": null
+      "version": "7.0.3"
     },
         {
-      "id": "folio_requests-12.0.4",
       "name": "folio_requests",
-      "version": "12.0.4",
-      "url": null
+      "version": "12.0.3"
     },
         {
-      "id": "folio_data-import-9.0.2",
       "name": "folio_data-import",
-      "version": "9.0.2",
-      "url": null
+      "version": "9.0.2"
     },
         {
-      "id": "folio_plugin-find-import-profile-9.0.0",
       "name": "folio_plugin-find-import-profile",
-      "version": "9.0.0",
-      "url": null
+      "version": "9.0.0"
     },
         {
-      "id": "folio_agreements-12.0.2",
       "name": "folio_agreements",
-      "version": "12.0.2",
-      "url": null
+      "version": "12.0.2"
     },
         {
-      "id": "folio_plugin-find-agreement-12.0.0",
       "name": "folio_plugin-find-agreement",
-      "version": "12.0.0",
-      "url": null
+      "version": "12.0.0"
     },
         {
-      "id": "folio_eholdings-11.0.1",
       "name": "folio_eholdings",
-      "version": "11.0.1",
-      "url": null
+      "version": "11.0.1"
     },
         {
-      "id": "folio_licenses-12.0.1",
       "name": "folio_licenses",
-      "version": "12.0.1",
-      "url": null
+      "version": "12.0.1"
     },
         {
-      "id": "folio_plugin-find-license-12.0.0",
       "name": "folio_plugin-find-license",
-      "version": "12.0.0",
-      "url": null
+      "version": "12.0.0"
     },
         {
-      "id": "folio_local-kb-admin-9.0.0",
       "name": "folio_local-kb-admin",
-      "version": "9.0.0",
-      "url": null
+      "version": "9.0.0"
     },
         {
-      "id": "folio_plugin-find-eresource-8.0.0",
       "name": "folio_plugin-find-eresource",
-      "version": "8.0.0",
-      "url": null
+      "version": "8.0.0"
     },
         {
-      "id": "folio_dashboard-7.0.0",
       "name": "folio_dashboard",
-      "version": "7.0.0",
-      "url": null
+      "version": "7.0.0"
     },
         {
-      "id": "folio_tenant-settings-10.0.0",
       "name": "folio_tenant-settings",
-      "version": "10.0.0",
-      "url": null
+      "version": "10.0.0"
     },
         {
-      "id": "folio_gobi-settings-4.0.0",
       "name": "folio_gobi-settings",
-      "version": "4.0.0",
-      "url": null
+      "version": "4.0.0"
     },
         {
-      "id": "folio_handler-stripes-registry-3.0.0",
       "name": "folio_handler-stripes-registry",
-      "version": "3.0.0",
-      "url": null
+      "version": "3.0.0"
     },
         {
-      "id": "folio_myprofile-10.0.0",
       "name": "folio_myprofile",
-      "version": "10.0.0",
-      "url": null
+      "version": "10.0.0"
     },
         {
-      "id": "folio_plugin-find-authority-5.0.1",
       "name": "folio_plugin-find-authority",
-      "version": "5.0.1",
-      "url": null
+      "version": "5.0.1"
     },
         {
-      "id": "folio_service-interaction-4.0.0",
       "name": "folio_service-interaction",
-      "version": "4.0.0",
-      "url": null
+      "version": "4.0.0"
     },
         {
-      "id": "folio_users-12.1.14",
       "name": "folio_users",
-      "version": "12.1.14",
-      "url": null
+      "version": "12.1.14"
     },
         {
-      "id": "folio_serials-management-2.0.4",
       "name": "folio_serials-management",
-      "version": "2.0.4",
-      "url": null
+      "version": "2.0.4"
     },
         {
-      "id": "folio_stripes-marc-components-2.0.2",
       "name": "folio_stripes-marc-components",
-      "version": "2.0.2",
-      "url": null
+      "version": "2.0.2"
     },
         {
-      "id": "folio_stripes-inventory-components-2.0.8",
       "name": "folio_stripes-inventory-components",
-      "version": "2.0.8",
-      "url": null
+      "version": "2.0.8"
     }
   ],
   "dependencies": [  {
@@ -772,7 +600,7 @@
       }
     },
         {
-      "id": "mod-inventory-storage-29.0.16",
+      "id": "mod-inventory-storage-29.0.12",
       "name": "Inventory Storage Module",
       "replaces": ["inventory-storage"],
       "requires": [      {
@@ -946,7 +774,7 @@
         },
                 {
           "id": "instance-storage",
-          "version": "11.2",
+          "version": "11.1",
           "handlers":           [
                         {
               "methods": ["GET"],
@@ -1072,7 +900,7 @@
         },
                 {
           "id": "instance-storage-batch-sync",
-          "version": "3.1",
+          "version": "3.0",
           "handlers": [          {
             "methods": ["POST"],
             "pathPattern": "/instance-storage/batch/synchronous",
@@ -1081,7 +909,7 @@
         },
                 {
           "id": "instance-storage-batch-sync-unsafe",
-          "version": "3.1",
+          "version": "3.0",
           "handlers": [          {
             "methods": ["POST"],
             "pathPattern": "/instance-storage/batch/synchronous-unsafe",
@@ -1090,7 +918,7 @@
         },
                 {
           "id": "instance-storage-bulk",
-          "version": "1.1",
+          "version": "1.0",
           "handlers": [          {
             "methods": ["POST"],
             "pathPattern": "/instance-storage/instances/bulk",
@@ -1161,7 +989,7 @@
         },
                 {
           "id": "location-units",
-          "version": "2.1",
+          "version": "2.0",
           "handlers":           [
                         {
               "methods": ["GET"],
@@ -1242,7 +1070,7 @@
         },
                 {
           "id": "locations",
-          "version": "3.2",
+          "version": "3.1",
           "handlers":           [
                         {
               "methods": ["GET"],
@@ -1463,7 +1291,7 @@
         },
                 {
           "id": "inventory-record-bulk",
-          "version": "1.1",
+          "version": "1.0",
           "handlers": [          {
             "methods": ["GET"],
             "pathPattern": "/record-bulk/ids",
@@ -2009,7 +1837,7 @@
         },
                 {
           "id": "service-points",
-          "version": "3.5",
+          "version": "3.4",
           "handlers":           [
                         {
               "methods": ["GET"],
@@ -2225,7 +2053,7 @@
         },
                 {
           "id": "inventory-view",
-          "version": "3.1",
+          "version": "3.0",
           "handlers": [          {
             "methods": ["GET"],
             "pathPattern": "/inventory-view/instances",
@@ -2234,7 +2062,7 @@
         },
                 {
           "id": "inventory-view-instance-set",
-          "version": "3.1",
+          "version": "3.0",
           "handlers": [          {
             "methods": ["GET"],
             "pathPattern": "/inventory-view/instance-set",
@@ -3752,7 +3580,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-inventory-storage:29.0.16",
+        "dockerImage": "mod-inventory-storage:29.0.12",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 715827883,
@@ -3919,7 +3747,7 @@
       }
     },
         {
-      "id": "mod-circulation-storage-17.4.1",
+      "id": "mod-circulation-storage-17.4.0",
       "name": "Circulation Storage Module",
       "requires":       [
                 {
@@ -5183,7 +5011,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-circulation-storage:17.4.1",
+        "dockerImage": "mod-circulation-storage:17.4.0",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 536870912,
@@ -5246,7 +5074,7 @@
       }
     },
         {
-      "id": "mod-search-5.0.8",
+      "id": "mod-search-5.0.7",
       "name": "Search Module",
       "provides":       [
                 {
@@ -5952,7 +5780,7 @@
         ]
       }},
       "launchDescriptor":       {
-        "dockerImage": "mod-search:5.0.8",
+        "dockerImage": "mod-search:5.0.7",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 1073741824,
@@ -6279,12 +6107,12 @@
       }
     },
         {
-      "id": "mod-inventory-21.1.16",
+      "id": "mod-inventory-21.1.11",
       "name": "Inventory Module",
       "provides":       [
                 {
           "id": "inventory",
-          "version": "14.3",
+          "version": "14.2",
           "handlers":           [
                         {
               "methods": ["GET"],
@@ -6903,7 +6731,7 @@
         },
                 {
           "id": "instance-storage",
-          "version": "11.2"
+          "version": "11.1"
         },
                 {
           "id": "instance-storage-batch-sync",
@@ -7257,7 +7085,7 @@
         ]
       }},
       "launchDescriptor":       {
-        "dockerImage": "mod-inventory:21.1.16",
+        "dockerImage": "mod-inventory:21.1.11",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 715827883,
@@ -7312,7 +7140,7 @@
       }
     },
         {
-      "id": "mod-circulation-24.4.13",
+      "id": "mod-circulation-24.4.11",
       "name": "Circulation Module",
       "provides":       [
                 {
@@ -8256,7 +8084,7 @@
         },
                 {
           "id": "locations",
-          "version": "3.2"
+          "version": "3.0"
         },
                 {
           "id": "material-types",
@@ -8312,7 +8140,7 @@
         },
                 {
           "id": "location-units",
-          "version": "2.1"
+          "version": "2.0"
         },
                 {
           "id": "patron-action-session-storage",
@@ -9686,7 +9514,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-circulation:24.4.13",
+        "dockerImage": "mod-circulation:24.4.11",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 1073741824,
@@ -12048,7 +11876,7 @@
       }
     },
         {
-      "id": "mod-source-record-manager-3.10.9",
+      "id": "mod-source-record-manager-3.10.7",
       "name": "Source Record Manager Module",
       "requires":       [
                 {
@@ -12841,7 +12669,7 @@
         ]
       }},
       "launchDescriptor":       {
-        "dockerImage": "mod-source-record-manager:3.10.9",
+        "dockerImage": "mod-source-record-manager:3.10.7",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 1073741824,
@@ -13493,7 +13321,7 @@
       }
     },
         {
-      "id": "mod-patron-6.3.3",
+      "id": "mod-patron-6.3.2",
       "name": "Patron Services Module",
       "provides": [      {
         "id": "patron",
@@ -13739,7 +13567,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-patron:6.3.3",
+        "dockerImage": "mod-patron:6.3.2",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 357913941,
@@ -13752,7 +13580,7 @@
       }
     },
         {
-      "id": "mod-data-export-5.2.3",
+      "id": "mod-data-export-5.2.2",
       "name": "Data Export Module",
       "requires":       [
                 {
@@ -14836,7 +14664,7 @@
       }
     },
         {
-      "id": "mod-data-export-worker-3.4.10",
+      "id": "mod-data-export-worker-3.4.7",
       "name": "Data Export Worker Module",
       "requires":       [
                 {
@@ -15269,7 +15097,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-data-export-worker:3.4.10",
+        "dockerImage": "mod-data-export-worker:3.4.7",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 3072000000,
@@ -15372,7 +15200,7 @@
       }
     },
         {
-      "id": "mod-rtac-3.8.2",
+      "id": "mod-rtac-3.8.1",
       "name": "Real Time Availability Check Module",
       "provides":       [
                 {
@@ -15474,7 +15302,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-rtac:3.8.2",
+        "dockerImage": "mod-rtac:3.8.1",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 357913941,
@@ -15487,592 +15315,7 @@
       }
     },
         {
-      "id": "mod-remote-storage-3.4.3",
-      "name": "Remote storage API module",
-      "requires":       [
-                {
-          "id": "inventory",
-          "version": "14.1"
-        },
-                {
-          "id": "inventory-move",
-          "version": "0.2"
-        },
-                {
-          "id": "holdings-storage",
-          "version": "8.0"
-        },
-                {
-          "id": "identifier-types",
-          "version": "1.2"
-        },
-                {
-          "id": "contributor-types",
-          "version": "2.0"
-        },
-                {
-          "id": "users",
-          "version": "16.4"
-        },
-                {
-          "id": "authtoken",
-          "version": "2.1"
-        },
-                {
-          "id": "login",
-          "version": "7.3"
-        },
-                {
-          "id": "permissions",
-          "version": "5.8"
-        },
-                {
-          "id": "locations",
-          "version": "3.1"
-        },
-                {
-          "id": "circulation",
-          "version": "14.6"
-        },
-                {
-          "id": "item-storage",
-          "version": "10.1"
-        },
-                {
-          "id": "service-points",
-          "version": "3.4"
-        },
-                {
-          "id": "pubsub-event-types",
-          "version": "0.1"
-        },
-                {
-          "id": "pubsub-publishers",
-          "version": "0.1"
-        },
-                {
-          "id": "pubsub-subscribers",
-          "version": "0.1"
-        }
-      ],
-      "optional": [      {
-        "id": "item-note-types",
-        "version": "1.0"
-      }],
-      "provides":       [
-                {
-          "id": "remote-storage-configurations",
-          "version": "1.1",
-          "handlers":           [
-                        {
-              "methods": ["POST"],
-              "pathPattern": "/remote-storage/configurations",
-              "permissionsRequired": ["remote-storage.configurations.item.post"]
-            },
-                        {
-              "methods": ["PUT"],
-              "pathPattern": "/remote-storage/configurations/{configurationId}",
-              "permissionsRequired": ["remote-storage.configurations.item.put"]
-            },
-                        {
-              "methods": ["GET"],
-              "pathPattern": "/remote-storage/configurations",
-              "permissionsRequired": ["remote-storage.configurations.collection.get"]
-            },
-                        {
-              "methods": ["GET"],
-              "pathPattern": "/remote-storage/configurations/{configurationId}",
-              "permissionsRequired": ["remote-storage.configurations.item.get"]
-            },
-                        {
-              "methods": ["DELETE"],
-              "pathPattern": "/remote-storage/configurations/{configurationId}",
-              "permissionsRequired": ["remote-storage.configurations.item.delete"]
-            }
-          ]
-        },
-                {
-          "id": "remote-storage-mappings",
-          "version": "1.0",
-          "handlers":           [
-                        {
-              "methods": ["POST"],
-              "pathPattern": "/remote-storage/mappings",
-              "permissionsRequired": ["remote-storage.mappings.item.post"]
-            },
-                        {
-              "methods": ["GET"],
-              "pathPattern": "/remote-storage/mappings",
-              "permissionsRequired": ["remote-storage.mappings.collection.get"]
-            },
-                        {
-              "methods": ["GET"],
-              "pathPattern": "/remote-storage/mappings/{finalLocationId}",
-              "permissionsRequired": ["remote-storage.mappings.item.get"]
-            },
-                        {
-              "methods": ["DELETE"],
-              "pathPattern": "/remote-storage/mappings/{finalLocationId}",
-              "permissionsRequired": ["remote-storage.mappings.item.delete"]
-            }
-          ]
-        },
-                {
-          "id": "remote-storage-extended-mappings",
-          "version": "1.0",
-          "handlers":           [
-                        {
-              "methods": ["POST"],
-              "pathPattern": "/remote-storage/extended-mappings",
-              "permissionsRequired": ["remote-storage.extended-mappings.item.post"]
-            },
-                        {
-              "methods": ["GET"],
-              "pathPattern": "/remote-storage/extended-mappings",
-              "permissionsRequired": ["remote-storage.extended-mappings.collection.get"]
-            },
-                        {
-              "methods": ["GET"],
-              "pathPattern": "/remote-storage/extended-mappings/{finalLocationId}",
-              "permissionsRequired": ["remote-storage.extended-mappings.item.get"]
-            },
-                        {
-              "methods": ["GET"],
-              "pathPattern": "/remote-storage/extended-mappings/locations",
-              "permissionsRequired": ["remote-storage.extended-mappings-locations.collection.get"],
-              "modulePermissions": ["inventory-storage.locations.collection.get"]
-            },
-                        {
-              "methods": ["DELETE"],
-              "pathPattern": "/remote-storage/extended-mappings/{finalLocationId}/{originalLocationId}",
-              "permissionsRequired": ["remote-storage.extended-mappings.item.delete"]
-            }
-          ]
-        },
-                {
-          "id": "remote-storage-providers",
-          "version": "1.0",
-          "handlers": [          {
-            "methods": ["GET"],
-            "pathPattern": "/remote-storage/providers",
-            "permissionsRequired": ["remote-storage.providers.collection.get"]
-          }]
-        },
-                {
-          "id": "remote-storage-accessions",
-          "version": "1.1",
-          "handlers":           [
-                        {
-              "methods": ["POST"],
-              "pathPattern": "/remote-storage/accessions",
-              "permissionsRequired": ["remote-storage.accessions.item.post"],
-              "modulePermissions":               [
-                "inventory.items.collection.get",
-                "inventory.items.item.put",
-                "inventory.instances.collection.get",
-                "inventory.items.move.item.post",
-                "inventory-storage.holdings.collection.get",
-                "inventory-storage.holdings.item.put",
-                "inventory-storage.holdings.item.post",
-                "inventory-storage.identifier-types.collection.get",
-                "inventory-storage.contributor-types.collection.get",
-                "inventory-storage.item-note-types.item.get"
-              ]
-            },
-                        {
-              "methods": ["GET"],
-              "pathPattern": "/remote-storage/accessions",
-              "permissionsRequired": ["remote-storage.accessions.collection.get"]
-            },
-                        {
-              "methods": ["PUT"],
-              "pathPattern": "/remote-storage/accessions/id/{accessionId}",
-              "permissionsRequired": ["remote-storage.accessions.item.put"]
-            },
-                        {
-              "methods": ["PUT"],
-              "pathPattern": "/remote-storage/accessions/barcode/{barcode}",
-              "permissionsRequired": ["remote-storage.accessions.item-barcode.put"]
-            }
-          ]
-        },
-                {
-          "id": "remote-storage-retrievals",
-          "version": "1.1",
-          "handlers":           [
-                        {
-              "methods": ["GET"],
-              "pathPattern": "/remote-storage/retrievals",
-              "permissionsRequired": ["remote-storage.retrievals.collection.get"]
-            },
-                        {
-              "methods": ["PUT"],
-              "pathPattern": "/remote-storage/retrievals/id/{retrievalId}",
-              "permissionsRequired": ["remote-storage.retrievals.item.put"]
-            },
-                        {
-              "methods": ["PUT"],
-              "pathPattern": "/remote-storage/retrievals/barcode/{barcode}",
-              "permissionsRequired": ["remote-storage.retrievals.item-barcode.put"]
-            }
-          ]
-        },
-                {
-          "id": "remote-storage-check-in",
-          "version": "1.2",
-          "handlers":           [
-                        {
-              "methods": ["POST"],
-              "pathPattern": "/remote-storage/retrieve/{remoteStorageConfigurationId}/checkInItem",
-              "permissionsRequired": ["remote-storage.check-in.item.post"],
-              "modulePermissions":               [
-                "inventory-storage.locations.item.get",
-                "circulation.check-in-by-barcode.post"
-              ]
-            },
-                        {
-              "methods": ["POST"],
-              "pathPattern": "/remote-storage/retrieve/{remoteStorageConfigurationId}/checkInItemByHoldId",
-              "permissionsRequired": ["remote-storage.check-in.item-hold.post"],
-              "modulePermissions":               [
-                "inventory-storage.locations.item.get",
-                "circulation.check-in-by-barcode.post"
-              ]
-            },
-                        {
-              "methods": ["POST"],
-              "pathPattern": "/remote-storage/return/{remoteStorageConfigurationId}",
-              "permissionsRequired": ["remote-storage.return.item.post"],
-              "modulePermissions":               [
-                "inventory.items.collection.get",
-                "circulation.requests.queue-item.collection.get",
-                "circulation.requests.queue-instance.collection.get",
-                "inventory-storage.locations.item.get",
-                "circulation.check-in-by-barcode.post",
-                "inventory-storage.service-points.item.get",
-                "users.collection.get"
-              ]
-            }
-          ]
-        },
-                {
-          "id": "remote-storage-event-handlers",
-          "version": "1.1",
-          "handlers": [          {
-            "methods": ["POST"],
-            "pathPattern": "/remote-storage/pub-sub-handlers/log-record-event",
-            "permissionsRequired": ["remote-storage.pub-sub-handlers.log-record-event.post"],
-            "modulePermissions":             [
-              "inventory.items.collection.get",
-              "users.collection.get",
-              "inventory-storage.service-points.item.get",
-              "circulation.requests.queue-item.collection.get",
-              "circulation.requests.queue-instance.collection.get"
-            ]
-          }]
-        },
-                {
-          "id": "remote-storage-items",
-          "version": "1.0",
-          "handlers": [          {
-            "methods": ["POST"],
-            "pathPattern": "/remote-storage/items/barcode/{barcode}/markAsMissing",
-            "permissionsRequired": ["remote-storage.items.item.mark-as-missing.post"],
-            "modulePermissions":             [
-              "inventory.items.collection.get",
-              "inventory.items.item.mark-missing.post",
-              "inventory-storage.items.item.get"
-            ]
-          }]
-        },
-                {
-          "id": "_tenant",
-          "version": "2.0",
-          "interfaceType": "system",
-          "handlers":           [
-                        {
-              "methods": ["POST"],
-              "pathPattern": "/_/tenant",
-              "modulePermissions":               [
-                "users.collection.get",
-                "users.item.post",
-                "users.item.put",
-                "login.item.post",
-                "login.item.delete",
-                "perms.users.get",
-                "perms.users.item.post",
-                "perms.users.assign.immutable",
-                "perms.users.assign.mutable",
-                "pubsub.event-types.post",
-                "pubsub.subscribers.post",
-                "pubsub.publishers.post"
-              ]
-            },
-                        {
-              "methods":               [
-                "GET",
-                "DELETE"
-              ],
-              "pathPattern": "/_/tenant/{id}"
-            }
-          ]
-        }
-      ],
-      "permissionSets":       [
-                {
-          "permissionName": "remote-storage.configurations.item.post",
-          "displayName": "create a remote storage configuration",
-          "description": "Add a remote storage configuration"
-        },
-                {
-          "permissionName": "remote-storage.configurations.item.put",
-          "displayName": "modify a remote storage configuration",
-          "description": "Modify a remote storage configuration"
-        },
-                {
-          "permissionName": "remote-storage.configurations.collection.get",
-          "displayName": "get remote storage configurations collection",
-          "description": "Get a list of remote storage configurations"
-        },
-                {
-          "permissionName": "remote-storage.configurations.item.get",
-          "displayName": "get remote storage configuration",
-          "description": "Get a remote storage configuration by id"
-        },
-                {
-          "permissionName": "remote-storage.configurations.item.delete",
-          "displayName": "delete a remote storage configuration",
-          "description": "Delete a remote storage configuration by id"
-        },
-                {
-          "permissionName": "remote-storage.mappings.item.post",
-          "displayName": "create/update location mapping",
-          "description": "Create new or update existing location mapping"
-        },
-                {
-          "permissionName": "remote-storage.mappings.collection.get",
-          "displayName": "get location mappings collection",
-          "description": "Get list of location mappings"
-        },
-                {
-          "permissionName": "remote-storage.mappings.item.get",
-          "displayName": "get location mapping by Folio location id",
-          "description": "Get location mapping by Folio location id"
-        },
-                {
-          "permissionName": "remote-storage.mappings.item.delete",
-          "displayName": "Delete location mapping",
-          "description": "Delete a location mapping by id"
-        },
-                {
-          "permissionName": "remote-storage.extended-mappings.item.post",
-          "displayName": "create/update extended location mapping",
-          "description": "Create new or update existing extended location mapping"
-        },
-                {
-          "permissionName": "remote-storage.extended-mappings.collection.get",
-          "displayName": "get extended location mappings collection",
-          "description": "Get list of extended location mappings"
-        },
-                {
-          "permissionName": "remote-storage.extended-mappings.item.get",
-          "displayName": "get extended location mapping by Folio location id",
-          "description": "Get extended location mapping by Folio location id"
-        },
-                {
-          "permissionName": "remote-storage.extended-mappings-locations.collection.get",
-          "displayName": "get extended location mapping by Folio location id",
-          "description": "Get extended location mapping by Folio location id"
-        },
-                {
-          "permissionName": "remote-storage.extended-mappings.item.delete",
-          "displayName": "Delete extended location mapping",
-          "description": "Delete extended location mapping by id"
-        },
-                {
-          "permissionName": "remote-storage.providers.collection.get",
-          "displayName": "get remote storage providers collection",
-          "description": "Get list of remote storage providers"
-        },
-                {
-          "permissionName": "remote-storage.accessions.item.post",
-          "displayName": "post remote storage accession item",
-          "description": "Perform item accession initiated by remote storage"
-        },
-                {
-          "permissionName": "remote-storage.accessions.collection.get",
-          "displayName": "get remote storage accession queues collection",
-          "description": "Get list of remote storage accession queues"
-        },
-                {
-          "permissionName": "remote-storage.accessions.item.put",
-          "displayName": "modify a remote storage accession queue",
-          "description": "Modify a remote storage accession queue by changing accessioned date time"
-        },
-                {
-          "permissionName": "remote-storage.accessions.item-barcode.put",
-          "displayName": "modify a remote storage accession queue by barcode",
-          "description": "Modify a remote storage accession queue by barcode and changing accessioned date time"
-        },
-                {
-          "permissionName": "remote-storage.retrievals.collection.get",
-          "displayName": "get remote storage retrieval queues collection",
-          "description": "Get list of remote storage retrieval queue records"
-        },
-                {
-          "permissionName": "remote-storage.retrievals.item.put",
-          "displayName": "modify a remote storage retrieval queue record",
-          "description": "Modify a remote storage retrieval queue record by changing retrieved date time"
-        },
-                {
-          "permissionName": "remote-storage.retrievals.item-barcode.put",
-          "displayName": "modify a remote storage retrieval queue record by barcode",
-          "description": "Modify a remote storage retrieval queue record by barcode by changing retrieved date time"
-        },
-                {
-          "permissionName": "remote-storage.check-in.item.post",
-          "displayName": "check-in item by barcode",
-          "description": "Check-in item by barcode"
-        },
-                {
-          "permissionName": "remote-storage.check-in.item-hold.post",
-          "displayName": "check-in item by hold id",
-          "description": "Check-in item by hold id"
-        },
-                {
-          "permissionName": "remote-storage.return.item.post",
-          "displayName": "return item by barcode",
-          "description": "Return item by barcode"
-        },
-                {
-          "permissionName": "remote-storage.items.item.mark-as-missing.post",
-          "displayName": "mark item as missing by barcode",
-          "description": "Mark item as missing by barcode"
-        },
-                {
-          "permissionName": "remote-storage.all",
-          "displayName": "remote storage API module - all permissions",
-          "description": "All permissions for remote storage",
-          "subPermissions":           [
-            "remote-storage.configurations.item.post",
-            "remote-storage.configurations.item.put",
-            "remote-storage.configurations.collection.get",
-            "remote-storage.configurations.item.get",
-            "remote-storage.configurations.item.delete",
-            "remote-storage.mappings.item.post",
-            "remote-storage.mappings.collection.get",
-            "remote-storage.mappings.item.get",
-            "remote-storage.mappings.item.delete",
-            "remote-storage.extended-mappings.item.post",
-            "remote-storage.extended-mappings.collection.get",
-            "remote-storage.extended-mappings.item.get",
-            "remote-storage.extended-mappings-locations.collection.get",
-            "remote-storage.extended-mappings.item.delete",
-            "remote-storage.providers.collection.get",
-            "remote-storage.accessions.item.post",
-            "remote-storage.accessions.collection.get",
-            "remote-storage.accessions.item.put",
-            "remote-storage.accessions.item-barcode.put",
-            "remote-storage.retrievals.collection.get",
-            "remote-storage.retrievals.item.put",
-            "remote-storage.retrievals.item-barcode.put",
-            "remote-storage.check-in.item.post",
-            "remote-storage.check-in.item-hold.post",
-            "remote-storage.return.item.post",
-            "remote-storage.items.item.mark-as-missing.post"
-          ]
-        }
-      ],
-      "metadata": {"user":       {
-        "type": "system",
-        "permissions":         [
-          "users.collection.get",
-          "users.item.get",
-          "inventory.instances.collection.get",
-          "inventory-storage.contributor-types.collection.get",
-          "inventory-storage.holdings.collection.get",
-          "inventory-storage.items.collection.get",
-          "inventory-storage.identifier-types.collection.get",
-          "inventory-storage.item-note-types.item.get"
-        ]
-      }},
-      "launchDescriptor":       {
-        "dockerImage": "mod-remote-storage:3.4.3",
-        "dockerPull": false,
-        "dockerArgs": {"HostConfig":         {
-          "Memory": 712673984,
-          "PortBindings": {"8081/tcp": [{"HostPort": "%p"}]}
-        }},
-        "env":         [
-                    {
-            "name": "JAVA_OPTIONS",
-            "value": "-XX:MaxRAMPercentage=75.0"
-          },
-                    {
-            "name": "DB_HOST",
-            "value": "postgres"
-          },
-                    {
-            "name": "DB_PORT",
-            "value": "5432"
-          },
-                    {
-            "name": "KAFKA_HOST",
-            "value": "kafka"
-          },
-                    {
-            "name": "KAFKA_PORT",
-            "value": "9092"
-          },
-                    {
-            "name": "KAFKA_SECURITY_PROTOCOL",
-            "value": "PLAINTEXT"
-          },
-                    {
-            "name": "KAFKA_SSL_KEYSTORE_LOCATION",
-            "value": ""
-          },
-                    {
-            "name": "KAFKA_SSL_KEYSTORE_PASSWORD",
-            "value": ""
-          },
-                    {
-            "name": "KAFKA_SSL_TRUSTSTORE_LOCATION",
-            "value": ""
-          },
-                    {
-            "name": "KAFKA_SSL_TRUSTSTORE_PASSWORD",
-            "value": ""
-          },
-                    {
-            "name": "DB_USERNAME",
-            "value": "folio_admin"
-          },
-                    {
-            "name": "DB_PASSWORD",
-            "value": "folio_admin"
-          },
-                    {
-            "name": "DB_DATABASE",
-            "value": "okapi_modules"
-          },
-                    {
-            "name": "DB_QUERYTIMEOUT",
-            "value": "60000"
-          },
-                    {
-            "name": "DB_CHARSET",
-            "value": "UTF-8"
-          },
-                    {
-            "name": "DB_MAXPOOLSIZE",
-            "value": "5"
-          }
-        ]
-      }
-    },
-        {
-      "id": "mod-calendar-3.3.1",
+      "id": "mod-calendar-3.3.0",
       "name": "Calendar for Service Point Opening Hours",
       "provides":       [
                 {
@@ -16237,7 +15480,7 @@
       ],
       "requires": [],
       "launchDescriptor":       {
-        "dockerImage": "mod-calendar:3.3.1",
+        "dockerImage": "mod-calendar:3.3.0",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 514572800,
@@ -17774,7 +17017,7 @@
       }
     },
         {
-      "id": "mod-source-record-storage-5.10.13",
+      "id": "mod-source-record-storage-5.10.10",
       "name": "Source Record Storage Module",
       "provides":       [
                 {
@@ -18192,7 +17435,7 @@
         ]
       }},
       "launchDescriptor":       {
-        "dockerImage": "mod-source-record-storage:5.10.13",
+        "dockerImage": "mod-source-record-storage:5.10.10",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 1073741824,
@@ -18856,7 +18099,7 @@
       }
     },
         {
-      "id": "mod-agreements-7.2.3",
+      "id": "mod-agreements-7.2.2",
       "name": "mod-agreements",
       "provides":       [
                 {
@@ -20446,7 +19689,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-agreements:7.2.3",
+        "dockerImage": "mod-agreements:7.2.2",
         "dockerArgs": {"HostConfig":         {
           "Memory": 4294967296,
           "PortBindings": {"8080/tcp": [{"HostPort": "%p"}]}
@@ -20485,7 +19728,7 @@
       }
     },
         {
-      "id": "mod-licenses-6.2.3",
+      "id": "mod-licenses-6.2.2",
       "name": "mod-licenses",
       "requires": [      {
         "id": "okapi",
@@ -21166,7 +20409,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-licenses:6.2.3",
+        "dockerImage": "mod-licenses:6.2.2",
         "dockerArgs": {"HostConfig":         {
           "Memory": 805306368,
           "PortBindings": {"8080/tcp": [{"HostPort": "%p"}]}
@@ -21205,7 +20448,7 @@
       }
     },
         {
-      "id": "mod-email-1.19.1",
+      "id": "mod-email-1.19.0",
       "name": "email",
       "requires": [      {
         "id": "configuration",
@@ -21381,7 +20624,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-email:1.19.1",
+        "dockerImage": "mod-email:1.19.0",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 357913941,
@@ -21570,7 +20813,7 @@
       }
     },
         {
-      "id": "mod-notify-3.4.1",
+      "id": "mod-notify-3.4.0",
       "name": "Notify",
       "requires":       [
                 {
@@ -21756,7 +20999,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-notify:3.4.1",
+        "dockerImage": "mod-notify:3.4.0",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 357913941,
@@ -21803,7 +21046,7 @@
       }
     },
         {
-      "id": "mod-sender-1.14.2",
+      "id": "mod-sender-1.14.1",
       "name": "Mod sender",
       "requires":       [
                 {
@@ -21840,7 +21083,7 @@
         "replaces": ["sender.message-delivery"]
       }],
       "launchDescriptor":       {
-        "dockerImage": "mod-sender:1.14.2",
+        "dockerImage": "mod-sender:1.14.1",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 536870912,
@@ -22662,7 +21905,7 @@
       }
     },
         {
-      "id": "mod-copycat-1.8.1",
+      "id": "mod-copycat-1.8.0",
       "name": "copycat",
       "provides":       [
                 {
@@ -22800,7 +22043,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-copycat:1.8.1",
+        "dockerImage": "mod-copycat:1.8.0",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 536870912,
@@ -22847,7 +22090,7 @@
       }
     },
         {
-      "id": "mod-kb-ebsco-java-6.0.1",
+      "id": "mod-kb-ebsco-java-6.0.0",
       "name": "kb-ebsco",
       "provides":       [
                 {
@@ -23792,7 +23035,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-kb-ebsco-java:6.0.1",
+        "dockerImage": "mod-kb-ebsco-java:6.0.0",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 536870912,
@@ -24491,7 +23734,7 @@
       }
     },
         {
-      "id": "mod-service-interaction-4.2.3",
+      "id": "mod-service-interaction-4.2.2",
       "name": "mod-service-interaction",
       "provides":       [
                 {
@@ -25174,7 +24417,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-service-interaction:4.2.3",
+        "dockerImage": "mod-service-interaction:4.2.2",
         "dockerArgs": {"HostConfig":         {
           "Memory": 1073741824,
           "PortBindings": {"8080/tcp": [{"HostPort": "%p"}]}
@@ -25490,7 +24733,7 @@
       }
     },
         {
-      "id": "mod-serials-management-2.0.4",
+      "id": "mod-serials-management-2.0.3",
       "name": "mod-serials-management",
       "provides":       [
                 {
@@ -26016,7 +25259,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-serials-management:2.0.4",
+        "dockerImage": "mod-serials-management:2.0.3",
         "dockerArgs": {"HostConfig":         {
           "Memory": 1073741824,
           "PortBindings": {"8080/tcp": [{"HostPort": "%p"}]}
@@ -26808,7 +26051,7 @@
       ]
     },
         {
-      "id": "folio_inventory-13.0.11",
+      "id": "folio_inventory-13.0.10",
       "name": "Inventory manager",
       "requires":       [
                 {
@@ -28179,7 +27422,7 @@
       }]
     },
         {
-      "id": "folio_checkin-11.0.3",
+      "id": "folio_checkin-11.0.2",
       "name": "Item Check-in",
       "requires":       [
                 {
@@ -28249,7 +27492,7 @@
       ]
     },
         {
-      "id": "folio_checkout-12.0.2",
+      "id": "folio_checkout-12.0.1",
       "name": "Item Check-out",
       "requires":       [
                 {
@@ -28351,7 +27594,7 @@
       ]
     },
         {
-      "id": "folio_circulation-11.0.4",
+      "id": "folio_circulation-11.0.2",
       "name": "Circulation manager",
       "requires":       [
                 {
@@ -28957,7 +28200,7 @@
       ]
     },
         {
-      "id": "folio_plugin-bursar-export-5.0.1",
+      "id": "folio_plugin-bursar-export-4.0.3",
       "name": "Bursar export",
       "requires":       [
                 {
@@ -29028,75 +28271,7 @@
       ]
     },
         {
-      "id": "folio_remote-storage-7.0.1",
-      "name": "Description for remote storage",
-      "requires":       [
-                {
-          "id": "locations",
-          "version": "3.0"
-        },
-                {
-          "id": "remote-storage-configurations",
-          "version": "1.1"
-        },
-                {
-          "id": "remote-storage-mappings",
-          "version": "1.0"
-        },
-                {
-          "id": "remote-storage-extended-mappings",
-          "version": "1.0"
-        },
-                {
-          "id": "remote-storage-providers",
-          "version": "1.0"
-        }
-      ],
-      "optional": [],
-      "permissionSets":       [
-                {
-          "permissionName": "settings.remote-storage.enabled",
-          "displayName": "Settings (Remote storages): Module is enabled.",
-          "subPermissions": ["settings.enabled"],
-          "visible": false
-        },
-                {
-          "permissionName": "ui-remote-storage.settings.remote-storages.view",
-          "displayName": "Remote storage: View",
-          "subPermissions":           [
-            "inventory-storage.locations.collection.get",
-            "inventory-storage.locations.item.get",
-            "remote-storage.configurations.collection.get",
-            "remote-storage.configurations.item.get",
-            "remote-storage.mappings.item.get",
-            "remote-storage.mappings.collection.get",
-            "remote-storage.extended-mappings.collection.get",
-            "remote-storage.extended-mappings.item.get",
-            "remote-storage.extended-mappings-locations.collection.get",
-            "remote-storage.providers.collection.get",
-            "settings.remote-storage.enabled"
-          ],
-          "visible": true
-        },
-                {
-          "permissionName": "ui-remote-storage.settings.remote-storages.edit",
-          "displayName": "Remote storage: Create, edit, delete",
-          "subPermissions":           [
-            "ui-remote-storage.settings.remote-storages.view",
-            "remote-storage.configurations.item.post",
-            "remote-storage.configurations.item.put",
-            "remote-storage.configurations.item.delete",
-            "remote-storage.mappings.item.post",
-            "remote-storage.mappings.item.delete",
-            "remote-storage.extended-mappings.item.post",
-            "remote-storage.extended-mappings.item.delete"
-          ],
-          "visible": true
-        }
-      ]
-    },
-        {
-      "id": "folio_circulation-log-6.0.2",
+      "id": "folio_circulation-log-6.0.1",
       "name": "Description for circulation logs",
       "requires":       [
                 {
@@ -29430,7 +28605,7 @@
       ]
     },
         {
-      "id": "folio_requests-12.0.4",
+      "id": "folio_requests-12.0.3",
       "name": "Requests manager",
       "requires":       [
                 {
