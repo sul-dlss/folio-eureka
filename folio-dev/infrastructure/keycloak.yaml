@@ -6,10 +6,10 @@ image:
   repository: folio-keycloak
   tag: 26.2.2
   pullPolicy: Always
-auth:
-  adminUser: admin
-  existingSecret: keycloak-credentials
-  passwordSecretKey: KC_BOOTSTRAP_ADMIN_PASSWORD
+# auth:
+#   adminUser: admin
+#   existingSecret: keycloak-credentials
+#   passwordSecretKey: KC_BOOTSTRAP_ADMIN_PASSWORD
 usePasswordFiles: false
 hostnameStrict: true
 extraEnvVars:
