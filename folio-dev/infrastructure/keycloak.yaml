@@ -140,7 +140,7 @@ extraDeploy:
       rules:
       - backendRefs:
         - name: keycloak
-          port: 8443
+          port: 8080
         matches:
         - path:
             type: PathPrefix
