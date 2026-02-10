@@ -1,0 +1,70 @@
+{
+  "id": "app-z3950-1.0.1",
+  "name": "app-z3950",
+  "version": "1.0.1",
+  "description": "Application for mod-z3950",
+  "platform": "complete",
+  "dependencies": [
+    {
+      "name": "app-platform-complete",
+      "version": "^2.0.0"
+    }
+  ],
+  "modules": [
+    {
+      "name": "mod-z3950",
+      "version": "4.3.0"
+    }
+  ],
+  "moduleDescriptors": [
+    {
+      "id": "mod-z3950-4.3.0",
+      "name": "Z39.50/SRU/SRW server for FOLIO",
+      "provides": [
+        {
+          "id": "sru",
+          "version": "1.4",
+          "handlers": [
+            {
+              "methods": [
+                "GET"
+              ],
+              "pathPattern": "/sru",
+              "permissionsRequired": []
+            }
+          ]
+        }
+      ],
+      "requires": [
+        {
+          "id": "login",
+          "version": "7.3"
+        },
+        {
+          "id": "graphql",
+          "version": "1.4"
+        },
+        {
+          "id": "source-storage-source-records",
+          "version": "3.0"
+        }
+      ],
+      "launchDescriptor": {
+        "dockerImage": "folioorg/mod-z3950:4.3.0",
+        "dockerPull": true,
+        "dockerArgs": {
+          "HostConfig": {
+            "Memory": 402653184,
+            "PortBindings": {
+              "9997/tcp": [
+                {
+                  "HostPort": "%p"
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  ]
+}

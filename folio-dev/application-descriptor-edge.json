@@ -1,21 +1,27 @@
 {
-  "id": "app-edge-complete-2.0.12",
+  "id": "app-edge-complete-3.0.0",
   "name": "app-edge-complete",
-  "version": "2.0.12",
+  "version": "3.0.0",
   "description": "Application comprised of Folio edge modules",
   "platform": "complete",
   "modules":   [
-    {
+        {
+      "id": "edge-connexion-1.4.1",
       "name": "edge-connexion",
-      "version": "1.4.1"
+      "version": "1.4.1",
+      "url": null
     },
-    {
+        {
+      "id": "edge-sip2-3.4.2",
       "name": "edge-sip2",
-      "version": "3.4.2"
+      "version": "3.4.2",
+      "url": null
     },
-    {
+        {
+      "id": "edge-ncip-1.10.2",
       "name": "edge-ncip",
-      "version": "1.10.2"
+      "version": "1.10.2",
+      "url": null
     }
   ],
   "uiModules": [],
@@ -24,7 +30,7 @@
     "version": "^2.0.0"
   }],
   "moduleDescriptors":   [
-    {
+        {
       "id": "edge-connexion-1.4.1",
       "name": "edge-connexion",
       "provides": [      {
@@ -47,7 +53,7 @@
       ],
       "permissionSets": []
     },
-    {
+        {
       "id": "edge-sip2-3.4.2",
       "name": "SIP2 Module",
       "provides": [],
@@ -120,7 +126,7 @@
         ]
       }
     },
-    {
+        {
       "id": "edge-ncip-1.10.2",
       "name": "Edge NCIP",
       "provides": [],

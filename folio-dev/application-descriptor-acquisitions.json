@@ -1,91 +1,131 @@
 {
-  "id": "app-acquisitions-1.0.24",
+  "id": "app-acquisitions-1.0.25",
   "name": "app-acquisitions",
-  "version": "1.0.24",
+  "version": "1.0.25",
   "description": "Application Descriptor Repository for the FOLIO Acquisitions application",
   "platform": "complete",
   "modules":   [
         {
+      "id": "mod-organizations-2.1.0",
       "name": "mod-organizations",
-      "version": "2.1.0"
+      "version": "2.1.0",
+      "url": null
     },
         {
+      "id": "mod-organizations-storage-4.9.1",
       "name": "mod-organizations-storage",
-      "version": "4.9.1"
+      "version": "4.9.1",
+      "url": null
     },
         {
+      "id": "mod-orders-13.0.8",
       "name": "mod-orders",
-      "version": "13.0.7"
+      "version": "13.0.8",
+      "url": null
     },
         {
+      "id": "mod-orders-storage-13.9.5",
       "name": "mod-orders-storage",
-      "version": "13.9.5"
+      "version": "13.9.5",
+      "url": null
     },
         {
+      "id": "mod-invoice-6.0.3",
       "name": "mod-invoice",
-      "version": "6.0.3"
+      "version": "6.0.3",
+      "url": null
     },
         {
+      "id": "mod-invoice-storage-6.0.0",
       "name": "mod-invoice-storage",
-      "version": "6.0.0"
+      "version": "6.0.0",
+      "url": null
     },
         {
+      "id": "mod-finance-5.1.1",
       "name": "mod-finance",
-      "version": "5.1.1"
+      "version": "5.1.1",
+      "url": null
     },
         {
+      "id": "mod-finance-storage-8.8.4",
       "name": "mod-finance-storage",
-      "version": "8.8.4"
+      "version": "8.8.4",
+      "url": null
     }
   ],
   "uiModules":   [
         {
+      "id": "folio_organizations-6.0.1",
       "name": "folio_organizations",
-      "version": "6.0.1"
+      "version": "6.0.1",
+      "url": null
     },
         {
+      "id": "folio_orders-8.0.5",
       "name": "folio_orders",
-      "version": "8.0.5"
+      "version": "8.0.5",
+      "url": null
     },
         {
+      "id": "folio_invoice-7.0.5",
       "name": "folio_invoice",
-      "version": "7.0.5"
+      "version": "7.0.5",
+      "url": null
     },
         {
+      "id": "folio_finance-8.0.4",
       "name": "folio_finance",
-      "version": "8.0.4"
+      "version": "8.0.4",
+      "url": null
     },
         {
+      "id": "folio_receiving-7.0.2",
       "name": "folio_receiving",
-      "version": "7.0.2"
+      "version": "7.0.2",
+      "url": null
     },
         {
+      "id": "folio_claims-1.0.0",
       "name": "folio_claims",
-      "version": "1.0.0"
+      "version": "1.0.0",
+      "url": null
     },
         {
+      "id": "folio_acquisition-units-6.0.0",
       "name": "folio_acquisition-units",
-      "version": "6.0.0"
+      "version": "6.0.0",
+      "url": null
     },
         {
+      "id": "folio_plugin-find-organization-6.0.0",
       "name": "folio_plugin-find-organization",
-      "version": "6.0.0"
+      "version": "6.0.0",
+      "url": null
     },
         {
+      "id": "folio_plugin-find-contact-6.0.0",
       "name": "folio_plugin-find-contact",
-      "version": "6.0.0"
+      "version": "6.0.0",
+      "url": null
     },
         {
+      "id": "folio_plugin-find-interface-6.0.0",
       "name": "folio_plugin-find-interface",
-      "version": "6.0.0"
+      "version": "6.0.0",
+      "url": null
     },
         {
+      "id": "folio_plugin-find-fund-4.0.0",
       "name": "folio_plugin-find-fund",
-      "version": "4.0.0"
+      "version": "4.0.0",
+      "url": null
     },
         {
+      "id": "folio_plugin-find-po-line-6.0.1",
       "name": "folio_plugin-find-po-line",
-      "version": "6.0.1"
+      "version": "6.0.1",
+      "url": null
     }
   ],
   "dependencies": [  {
@@ -1389,7 +1429,7 @@
       }
     },
         {
-      "id": "mod-orders-13.0.7",
+      "id": "mod-orders-13.0.8",
       "name": "Orders Business Logic Module",
       "provides":       [
                 {
@@ -3628,7 +3668,7 @@
         ]
       }},
       "launchDescriptor":       {
-        "dockerImage": "mod-orders:13.0.7",
+        "dockerImage": "mod-orders:13.0.8",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 1073741824,

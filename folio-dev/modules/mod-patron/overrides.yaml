@@ -10,7 +10,7 @@ eureka:
     value: 'false'
 image:
   repository: folioorg/mod-patron
-  tag: 6.3.2
+  tag: 6.3.3
 integrations:
   db:
     enabled: true

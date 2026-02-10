@@ -10,7 +10,7 @@ eureka:
     value: 'false'
 image:
   repository: folioorg/mod-search
-  tag: 5.0.7
+  tag: 5.0.8
 integrations:
   db:
     enabled: true

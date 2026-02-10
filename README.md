@@ -176,8 +176,9 @@ curl -s "$KONG_URL/entitlements?includeModules=true&query=tenantId==$tenantUUID"
 ```
 curl -sX PUT --location "$KONG_URL/entitlements?async=true&tenantParameters=loadReference=true,loadSample=false" -H 'Content-Type: application/json' -H "Authorization: Bearer $TOKEN" -H "x-okapi-token: $TOKEN" -d "{\"tenantId\":\"$tenantUUID\", \"applications\": [\"$APP_ID\"]}"
 ```
+### Delete entitlements
 ```
-    curl -sX DELETE "$KONG_URL/entitlements" -d "{\"tenantId\":\"$tenantUUID\", \"applications\": [\"$APP_ID\"]}" -H 'Content-Type: application/json' -H "Authorization: Bearer $TOKEN"
+curl -sX DELETE "$KONG_URL/entitlements" -d "{\"tenantId\":\"$tenantUUID\", \"applications\": [\"$APP_IDS\"]}" -H 'Content-Type: application/json' -H "Authorization: Bearer $TOKEN"
 ```
 
 ### Reinstall a single module
