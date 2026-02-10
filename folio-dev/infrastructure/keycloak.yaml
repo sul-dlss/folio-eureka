@@ -9,7 +9,8 @@ image:
 auth:
   adminUser: admin
   existingSecret: keycloak-credentials
-  passwordSecretKey: KC_BOOTSTRAP_ADMIN_PASSWORD
+  # passwordSecretKey: KC_BOOTSTRAP_ADMIN_PASSWORD
+  passwordSecretKey: KEYCLOAK_ADMIN_PASSWORD
 usePasswordFiles: false
 hostnameStrict: true
 extraEnvVars:
@@ -30,7 +31,7 @@ extraEnvVars:
   - name: FIPS
     value: "false"
   - name: KC_HOSTNAME  
-    value: "https://keycloak-folio-dev.stanford.edu:8443" 
+    value: "https://keycloak-folio-dev.stanford.edu:8443"
   - name: KC_HOSTNAME_DEBUG
     value: "true"
   - name: KC_FOLIO_BE_ADMIN_CLIENT_ID
@@ -99,7 +100,6 @@ containerSecurityContext:
 networkPolicy:
   enabled: false
 service:
-  type: "ClusterIP"
   ports:
     http: 8080
     https: 8443

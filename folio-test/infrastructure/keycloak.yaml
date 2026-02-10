@@ -9,7 +9,8 @@ image:
 auth:
   adminUser: admin
   existingSecret: keycloak-credentials
-  passwordSecretKey: KC_BOOTSTRAP_ADMIN_PASSWORD
+  # passwordSecretKey: KC_BOOTSTRAP_ADMIN_PASSWORD
+  passwordSecretKey: KEYCLOAK_ADMIN_PASSWORD
 usePasswordFiles: false
 extraEnvVars:
   - name: KEYCLOAK_PROXY_ADDRESS_FORWARDING

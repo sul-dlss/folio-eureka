@@ -10,14 +10,32 @@ Create k8s VaultStaticSecrets by applying the secrets.yaml file:
 envsubst < secrets.yaml | kubectl -n ${namespace} apply -f -
 ```
 
-## Install Infrastructire in the cluster namespace (Kong, Keycloak, Elasticsearch, Postfix)
+## Keycloak
+#### Initial deploy of keycloak using passwordSecretKey: KC_BOOTSTRAP_ADMIN_PASSWORD
+Bootstrap the keycloak admin user using the KC_BOOTSTRAP_ADMIN_PASSWORD variable in keycloak-credentials secret:
+- In the $namespace infrascructure/keycloak.yaml file, comment out the line for KEYCLOAK_ADMIN_PASSWORD
+- Uncomment the line for KC_BOOTSTRAP_ADMIN_PASSWORD
+```
+auth:
+  adminUser: admin
+  existingSecret: keycloak-credentials
+  passwordSecretKey: KC_BOOTSTRAP_ADMIN_PASSWORD
+  # passwordSecretKey: KEYCLOAK_ADMIN_PASSWORD
+```
+- Deploy keycloak
+```
+helm upgrade --install -n folio-test --version v24.7.4 keycloak bitnami/keycloak -f $namespace/infrastructure/keycloak.yaml
+```
+### Create keycloak admin users
+- When keycloak is running, log in using the KC_BOOTSTRAP_ADMIN_PASSWORD and create a new libsys_admin superuser
+- Log in as libsys_admin and delete the `admin` user
+- Make sure KEYCLOAK_ADMIN_PASSWORD is a secret in keycloak-credentials, and in eureka-common as KC_ADMIN_PASSWORD
+- create a new `admin` superuser with password that matches the secret KEYCLOAK_ADMIN_PASSWORD
+- reset the $namespace infrascructure/keycloak.yaml file
+
+## Install Infrastructure in the cluster namespace (Kong, Keycloak, Elasticsearch, Postfix)
 ```
 for I in `ls ${namespace}/infrastructure/*_application.yaml`; do kubectl -n ${namespace} apply -f $I; done
-```
-
-### keycloak helm install commands if there are issues with the ArgoCD app
-```
-helm upgrade --install -n folio-test --version v24.7.4 keycloak bitnami/keycloak -f folio-test/infrastructure/keycloak.yaml
 ```
 
 ## Install Vault in the cluster namespace
