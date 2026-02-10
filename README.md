@@ -144,7 +144,7 @@ Add a password to vault
 ```
 vault kv patch secret/folio/sul mod-users-keycloak="<random 32 characters>"
 ```
-Add the password to keycloak
+Add the password to keycloak via UI or curl
 ```
 curl -X POST --location "$KONG_URL/authn/credentials" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul' --data '{
     "username": "mod-users-keycloak",
@@ -157,8 +157,14 @@ Restart the mod-*-keycloak modules.
 
 ### Create entitlements for app-platform-complete (Make sure all modules are up and running, may need to repeat due to timeouts)
 Use the [folio-backend-admin-client](#get-a-token-from-the-master-realm) id 
+Set the APP_IDS to all except app-platform-minimal, e.g
 ```
-curl -X POST --location "$KONG_URL/entitlements?async=true&tenantParameters=loadReference=true,loadSample=false" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" --data "{\"tenantId\":\"$tenantUUID\", \"applications\": [\"$APP_ID\"]}"
+APP_IDS="\"app-acquisitions-1.0.25\", \"app-bulk-edit-1.0.8\", \"app-platform-complete-2.2.13\", 
+\"app-edge-complete-3.0.0\", \"app-erm-usage-2.0.4\", \"app-fqm-1.0.14\", \"app-linked-data-1.1.6\", \"app-marc-migrations-2.0.4\", \"app-reading-room-2.0.2\", \"app-reporting-1.4.0\", \"app-z3950-1.0.1\""
+```
+POST the entitlements
+```
+curl -X POST --location "$KONG_URL/entitlements?async=true&tenantParameters=loadReference=true,loadSample=false" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" --data "{\"tenantId\":\"$tenantUUID\", \"applications\": [\"$APP_IDS\"]}"
 ```
 
 ### Monitor entitlements process
@@ -190,7 +196,7 @@ curl -sX PUT --location "$KONG_URL/entitlements?async=true&tenantParameters=load
 ```
 ### Delete entitlements
 ```
-curl -sX DELETE "$KONG_URL/entitlements" -d "{\"tenantId\":\"$tenantUUID\", \"applications\": [\"$APP_IDS\"]}" -H 'Content-Type: application/json' -H "Authorization: Bearer $TOKEN"
+curl -sX DELETE "$KONG_URL/entitlements" -d "{\"tenantId\":\"$tenantUUID\", \"applications\": [$APP_IDS]}" -H 'Content-Type: application/json' -H "Authorization: Bearer $TOKEN"
 ```
 
 ### Reinstall a single module
