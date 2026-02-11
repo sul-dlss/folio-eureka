@@ -2,6 +2,7 @@ import argparse
 import httpx
 import json
 import os
+import sys
 
 
 parser = argparse.ArgumentParser(
@@ -9,23 +10,14 @@ parser = argparse.ArgumentParser(
                     description="Bootstrap admin role and user for FOLIO Eureka platform",
                     epilog="-------")
 
-parser.add_argument("-c", "--create_user", action="store_true", default=False, help="create user, else just add new capabilities to admin role")
-parser.add_argument("-e", "--email", help="admin user email address")
-parser.add_argument("-f", "--first_name", help="admin user first name")
-parser.add_argument("-l", "--last_name", help="admin user last name")
-parser.add_argument("-p", "--password", help="password for admin user")
-parser.add_argument("-u", "--username", required=True, help="username for admin user")
+parser.add_argument("-c", "--create_user", required=False, action="store_true", default=False, help="create user, else just add new capabilities to admin role")
+parser.add_argument("-e", "--email", required="--create_user" or "-c" in sys.argv, help="admin user email address, required if -c is used")
+parser.add_argument("-f", "--first_name", required="--create_user" or "-c" in sys.argv, help="admin user first name, required if -c is used")
+parser.add_argument("-l", "--last_name", required="--create_user" or "-c" in sys.argv, help="admin user last name, required if -c is used")
+parser.add_argument("-p", "--password", required="--create_user" or "-c" in sys.argv, help="password for admin user, required if -c is used")
+parser.add_argument("-u", "--username", required="--create_user" or "-c" in sys.argv, help="username for admin user, required if -c is used")
 
 args = parser.parse_args()
-
-if args.create_user and args.email is None:
-    parser.error("<email> required with --create_user")
-if args.create_user and args.first_name is None:
-    parser.error("<first_name> required with --create_user")
-if args.create_user and args.first_name is None:
-    parser.error("<last_name> required with --create_user")
-if args.create_user and args.password is None:
-    parser.error("<password> required with --create_user")
 
 
 def main():
