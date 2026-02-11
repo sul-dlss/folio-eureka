@@ -7,26 +7,27 @@ import sys
 
 parser = argparse.ArgumentParser(
                     prog="BootstrapAdminRole",
-                    description="Bootstrap admin role and user for FOLIO Eureka platform",
+                    description="Bootstrap adminRole and user for FOLIO Eureka platform",
                     epilog="-------")
 
-parser.add_argument("-c", "--create_user", required=False, action="store_true", default=False, help="create user, else just add new capabilities to admin role")
-parser.add_argument("-e", "--email", required="--create_user" or "-c" in sys.argv, help="admin user email address, required if -c is used")
-parser.add_argument("-f", "--first_name", required="--create_user" or "-c" in sys.argv, help="admin user first name, required if -c is used")
-parser.add_argument("-l", "--last_name", required="--create_user" or "-c" in sys.argv, help="admin user last name, required if -c is used")
-parser.add_argument("-p", "--password", required="--create_user" or "-c" in sys.argv, help="password for admin user, required if -c is used")
-parser.add_argument("-u", "--username", required="--create_user" or "-c" in sys.argv, help="username for admin user, required if -c is used")
+parser.add_argument("--create_user", required=False, action="store_true", default=False, help="create user, else just add new capabilities to adminRole")
+parser.add_argument("-e", "--email", required="--create_user" in sys.argv, help="admin user email address, required if --create_user is used")
+parser.add_argument("-f", "--first_name", required="--create_user" in sys.argv, help="admin user first name, required if --create_user is used")
+parser.add_argument("-l", "--last_name", required="--create_user" in sys.argv, help="admin user last name, required if --create_user is used")
+parser.add_argument("-p", "--password", required="--create_user" in sys.argv, help="password for admin user, required if --create_user is used")
+parser.add_argument("-u", "--username", required="--create_user" in sys.argv, help="username for admin user, required if --create_user is used")
+parser.add_argument("-n", "--namespace", required=True, help="the Kubernetes namespace for the vault secret lookup")
 
 args = parser.parse_args()
 
 
 def main():
     global token
-    token = _token()
+    token = _token(args.namespace)
     create_user: bool = args.create_user
     if create_user:
         print("Creating admin user")
-        user_id = create_user(token, args)
+        user_id = create_kc_user(token, args)
         print("Creating admin user credentials")
         create_credentials(token, user_id, args)
         print("Creating adminRole")
@@ -41,9 +42,10 @@ def main():
         print("Adding all capabilities to adminRole")
         role_id = admin_role_id(token)
         capabilities = all_capabilities(token)
+        assign_capabilities(token, role_id, capabilities)
 
 
-def create_user(token, args):
+def create_kc_user(token, args):
     data = { "username": args.username,
              "active": True,
              "personal": {
@@ -64,9 +66,8 @@ def create_user(token, args):
                 },
                 data=json.dumps(data)
             )
-            print(response)
-            response = json.loads(response.text)
-            user_id = response.get("id", None)
+            user_data = json.loads(response.text)
+            user_id = user_data.get("id", None)
             response.raise_for_status()
         except httpx.HTTPStatusError as exc:
             print(exc)
@@ -129,8 +130,8 @@ def admin_role_id(token):
                     "x-okapi-tenant": "sul"
                 }
             )
-            response = json.loads(response.text)
-            role_id = response["roles"][0].get("id", None)
+            role_data = json.loads(response.text)
+            role_id = role_data["roles"][0].get("id", None)
             response.raise_for_status()
         except httpx.HTTPStatusError as exc:
             print(exc)
@@ -166,8 +167,8 @@ def all_capabilities(token) -> list:
                                 "x-okapi-tenant": "sul"
                             }
                         )
-                        response = json.loads(response.text)
-                        for i in response["capabilities"]:
+                        capabilities_dict = json.loads(response.text)
+                        for i in capabilities_dict["capabilities"]:
                             capabilities.append(i["id"])
                         response.raise_for_status()
                     except httpx.HTTPStatusError as exc:
@@ -181,14 +182,14 @@ def all_capabilities(token) -> list:
 
 def assign_capabilities(token, role_id, capabilities):
     kong_url = os.getenv("KONG_URL", "http://kong:8001")
-    with httpx.Client(timeout=20.0) as client:
+    with httpx.Client(timeout=None) as client:
         try:
             data = {
                 "roleId": role_id,
                 "capabilityIds": capabilities
             }
             response = client.post(
-                f"{kong_url}/roles/capablities",
+                f"{kong_url}/roles/capabilities",
                 headers={
                     "content-type": "application/json",
                     "Authorization": f"Bearer {token}",
@@ -196,18 +197,18 @@ def assign_capabilities(token, role_id, capabilities):
                 },
                 data=json.dumps(data)
             )
-            response.raise_for_status()
             if response.status_code != httpx.codes.OK:
-                data = {capabilities}
+                print("Capability assignment already exists; doing an update")
+                data = {"capabilityIds": capabilities}
                 response = client.put(
-                f"{kong_url}/roles/{role_id}/capablities",
-                headers={
-                    "content-type": "application/json",
-                    "Authorization": f"Bearer {token}",
-                    "x-okapi-tenant": "sul"
-                },
-                data=json.dumps(data)
-            )
+                    f"{kong_url}/roles/{role_id}/capabilities",
+                    headers={
+                        "content-type": "application/json",
+                        "Authorization": f"Bearer {token}",
+                        "x-okapi-tenant": "sul"
+                    },
+                    data=json.dumps(data)
+                )
                 response.raise_for_status()
         except httpx.HTTPStatusError as exc:
             print(exc)
@@ -239,11 +240,11 @@ def chunks(start, stop, step) -> list:
     return [(i, min(i + step - 1, stop)) for i in range(start, stop + 1, step)]
 
 
-def _token():
+def _token(namespace):
     global token
     kc_url = os.getenv("KC_URL", "http://keycloak:8080")
     kc_client_id = "sidecar-module-access-client"
-    kc_client_secret = os.popen(f"kubectl exec -it vault-0 -- vault kv get -format=json secret/folio/sul | jq -jrc '.data.data.\"sidecar-module-access-client\"'").read().strip()
+    kc_client_secret = os.popen(f"kubectl -n {namespace} exec -it vault-0 -- vault kv get -format=json secret/folio/sul | jq -jrc '.data.data.\"sidecar-module-access-client\"'").read().strip()
     print('fetching new token')
     response = httpx.post(f'{kc_url}/realms/sul/protocol/openid-connect/token',
                          data={
