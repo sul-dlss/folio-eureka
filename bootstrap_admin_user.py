@@ -65,7 +65,7 @@ def create_kc_user(token, args):
                 "email": args.email
               }
             }
-    kong_url = os.getenv("KONG_URL", "http://kong:8001")
+    kong_url = os.getenv("KONG_URL", "http://kong:8000")
     with httpx.Client(timeout=20.0) as client:
         try:
             response = client.post(
@@ -91,7 +91,7 @@ def create_credentials(token, user_id, args):
              "userId": user_id,
              "password": args.password
            }
-    kong_url = os.getenv("KONG_URL", "http://kong:8001")
+    kong_url = os.getenv("KONG_URL", "http://kong:8000")
     with httpx.Client(timeout=20.0) as client:
         try:
             response = client.post(
@@ -112,7 +112,7 @@ def create_role(token):
     data = { "name": "adminRole",
              "description": "Admin role"
            }
-    kong_url = os.getenv("KONG_URL", "http://kong:8001")
+    kong_url = os.getenv("KONG_URL", "http://kong:8000")
     with httpx.Client(timeout=20.0) as client:
         try:
             response = client.post(
@@ -130,7 +130,7 @@ def create_role(token):
 
 
 def admin_role_id(token):
-    kong_url = os.getenv("KONG_URL", "http://kong:8001")
+    kong_url = os.getenv("KONG_URL", "http://kong:8000")
     with httpx.Client(timeout=20.0) as client:
         try:
             response = client.get(
@@ -151,7 +151,7 @@ def admin_role_id(token):
 
 
 def all_capabilities(token) -> list:
-    kong_url = os.getenv("KONG_URL", "http://kong:8001")
+    kong_url = os.getenv("KONG_URL", "http://kong:8000")
     capabilities: list = []
     with httpx.Client(timeout=20.0) as client:
         try:
