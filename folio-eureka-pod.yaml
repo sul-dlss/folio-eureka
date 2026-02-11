@@ -13,7 +13,7 @@ spec:
     args: [ "while true; do sleep 60; done;" ]
     envFrom:
       - secretRef:
-          name: folio-k8s
+          name: folio-eureka
     resources:
       limits:
         cpu: 128m
