@@ -2,7 +2,6 @@ import argparse
 import httpx
 import json
 import os
-import sys
 
 
 parser = argparse.ArgumentParser(
@@ -10,20 +9,32 @@ parser = argparse.ArgumentParser(
                     description="Bootstrap adminRole and user for FOLIO Eureka platform",
                     epilog="-------")
 
-parser.add_argument("--create_user", required=False, action="store_true", default=False, help="create user, else just add new capabilities to adminRole")
-parser.add_argument("-e", "--email", required="--create_user" in sys.argv, help="admin user email address, required if --create_user is used")
-parser.add_argument("-f", "--first_name", required="--create_user" in sys.argv, help="admin user first name, required if --create_user is used")
-parser.add_argument("-l", "--last_name", required="--create_user" in sys.argv, help="admin user last name, required if --create_user is used")
-parser.add_argument("-p", "--password", required="--create_user" in sys.argv, help="password for admin user, required if --create_user is used")
-parser.add_argument("-u", "--username", required="--create_user" in sys.argv, help="username for admin user, required if --create_user is used")
-parser.add_argument("-n", "--namespace", required=True, help="the Kubernetes namespace for the vault secret lookup")
+parser.add_argument("-c", "--create_user", action="store_true", default=False, help="create user, else just add new capabilities to adminRole")
+parser.add_argument("-e", "--email", help="admin user email address")
+parser.add_argument("-f", "--first_name", help="admin user first name")
+parser.add_argument("-l", "--last_name", help="admin user last name")
+parser.add_argument("-p", "--password", help="password for admin user")
+parser.add_argument("-u", "--username", help="username for admin user")
 
 args = parser.parse_args()
+
+if args.create_user and args.email is None:
+    parser.error("<email> required with --create_user")
+if args.create_user and args.first_name is None:
+    parser.error("<first_name> required with --create_user")
+if args.create_user and args.last_name is None:
+    parser.error("<last_name> required with --create_user")
+if args.create_user and args.password is None:
+    parser.error("<password> required with --create_user")
+if args.create_user and args.username is None:
+    parser.error("<username> required with --create_user")
+if os.getenv("SIDECAR_SECRET") is None or len(os.getenv("SIDECAR_SECRET")) == 0:
+    parser.error("set SIDECAR_SECRET env var to get token")
 
 
 def main():
     global token
-    token = _token(args.namespace)
+    token = _token()
     create_user: bool = args.create_user
     if create_user:
         print("Creating admin user")
@@ -152,8 +163,8 @@ def all_capabilities(token) -> list:
                     "x-okapi-tenant": "sul"
                 }
             )
-            response = json.loads(response.text)
-            total_recs = response["totalRecords"]
+            response_text = json.loads(response.text)
+            total_recs = response_text["totalRecords"]
             rec_range = chunks(0, total_recs, 500)
             for range in rec_range:
                 start, _ = range
@@ -181,7 +192,7 @@ def all_capabilities(token) -> list:
     
 
 def assign_capabilities(token, role_id, capabilities):
-    kong_url = os.getenv("KONG_URL", "http://kong:8001")
+    kong_url = os.getenv("KONG_URL", "http://kong:8000")
     with httpx.Client(timeout=None) as client:
         try:
             data = {
@@ -219,7 +230,7 @@ def assign_role(token, user_id, role_id):
         "userId": user_id,
         "roleIds": [role_id]
     }
-    kong_url = os.getenv("KONG_URL", "http://kong:8001")
+    kong_url = os.getenv("KONG_URL", "http://kong:8000")
     with httpx.Client(timeout=20.0) as client:
         try:
             response = client.post(
@@ -240,11 +251,11 @@ def chunks(start, stop, step) -> list:
     return [(i, min(i + step - 1, stop)) for i in range(start, stop + 1, step)]
 
 
-def _token(namespace):
+def _token():
     global token
     kc_url = os.getenv("KC_URL", "http://keycloak:8080")
     kc_client_id = "sidecar-module-access-client"
-    kc_client_secret = os.popen(f"kubectl -n {namespace} exec -it vault-0 -- vault kv get -format=json secret/folio/sul | jq -jrc '.data.data.\"sidecar-module-access-client\"'").read().strip()
+    kc_client_secret = os.getenv("SIDECAR_SECRET", "SecretPassword")
     print('fetching new token')
     response = httpx.post(f'{kc_url}/realms/sul/protocol/openid-connect/token',
                          data={
