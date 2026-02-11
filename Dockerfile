@@ -20,6 +20,7 @@ COPY folio-stage ./folio-stage/
 COPY ./*.yaml .
 COPY ./*.json .
 COPY ./*.py .
+COPY ./*.sh .
 COPY requirements.txt .
 
 # Create venv
