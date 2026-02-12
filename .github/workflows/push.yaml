@@ -11,7 +11,7 @@ jobs:
           - name: folio-eureka-pod
             dockerfile: ./Dockerfile
           - name: folio-custom-theme
-            dockerfile: custome-theme/Dockerfile
+            dockerfile: custom-theme/Dockerfile
     
     permissions:
       contents: read
