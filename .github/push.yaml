@@ -32,3 +32,10 @@ jobs:
         push: true
         tags: ghcr.io/sul-dlss/folio-eureka:${{ steps.extract_branch.outputs.branch }}
         file: Dockerfile
+
+    - name: Build folio-custom-theme image and push to and GitHub Container Registry
+      uses: docker/build-push-action@v2
+      with:
+        push: true
+        tags: ghcr.io/sul-dlss/folio-eureka:${{ steps.extract_branch.outputs.branch }}
+        file: custom-theme/Dockerfile
