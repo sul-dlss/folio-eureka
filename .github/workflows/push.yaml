@@ -20,7 +20,7 @@ jobs:
     steps:
       - name: Extract branch name
         id: extract_branch
-        run: echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >> GITHUB_OUTPUT
+        run: echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >> "$GITHUB_OUTPUT"
 
       - uses: actions/checkout@v4
       
@@ -36,8 +36,10 @@ jobs:
       
       - name: Build and push ${{ matrix.image.name }}
         uses: docker/build-push-action@v4
+        env:
+          branch: ${{ steps.extract_branch.outputs.branch }}
         with:
           context: .
           file: ${{ matrix.image.dockerfile }}
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/${{ matrix.image.name }}:${{ steps.extract_branch.outputs.branch }}
+          tags: ghcr.io/${{ github.repository_owner }}/${{ matrix.image.name }}:${{ env.branch }}
