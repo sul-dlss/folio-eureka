@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         image:
-          - name: folio-eureka-pod
+          - name: folio-eureka
             dockerfile: ./Dockerfile
           - name: folio-custom-theme
             dockerfile: custom-theme/Dockerfile
