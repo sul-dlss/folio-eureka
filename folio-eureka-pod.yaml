@@ -11,6 +11,9 @@ spec:
     # Just spin & wait forever
     command: [ "/bin/bash", "-c", "--" ]
     args: [ "while true; do sleep 60; done;" ]
+    envFrom:
+      - secretRef:
+          name: folio-eureka
     resources:
       limits:
         cpu: 128m
