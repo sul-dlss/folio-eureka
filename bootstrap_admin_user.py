@@ -77,6 +77,7 @@ def create_kc_user(token, args):
                 },
                 data=json.dumps(data)
             )
+            print(response.status_code)
             user_data = json.loads(response.text)
             user_id = user_data.get("id", None)
             response.raise_for_status()
@@ -103,6 +104,7 @@ def create_credentials(token, user_id, args):
                 },
                 data=json.dumps(data)
             )
+            print(response.status_code)
             response.raise_for_status()
         except httpx.HTTPStatusError as exc:
             print(exc)
@@ -124,6 +126,7 @@ def create_role(token):
                 },
                 data=json.dumps(data)
             )
+            print(response.status_code)
             response.raise_for_status()
         except httpx.HTTPStatusError as exc:
             print(exc)
@@ -141,6 +144,7 @@ def admin_role_id(token):
                     "x-okapi-tenant": "sul"
                 }
             )
+            print(response.status_code)
             role_data = json.loads(response.text)
             role_id = role_data["roles"][0].get("id", None)
             response.raise_for_status()
@@ -163,6 +167,7 @@ def all_capabilities(token) -> list:
                     "x-okapi-tenant": "sul"
                 }
             )
+            print(response.status_code)
             response_text = json.loads(response.text)
             total_recs = response_text["totalRecords"]
             rec_range = chunks(0, total_recs, 500)
@@ -178,6 +183,7 @@ def all_capabilities(token) -> list:
                                 "x-okapi-tenant": "sul"
                             }
                         )
+                        print(response.status_code)
                         capabilities_dict = json.loads(response.text)
                         for i in capabilities_dict["capabilities"]:
                             capabilities.append(i["id"])
@@ -208,6 +214,7 @@ def assign_capabilities(token, role_id, capabilities):
                 },
                 data=json.dumps(data)
             )
+            print(response.status_code)
             if response.status_code != httpx.codes.OK:
                 print("Capability assignment already exists; doing an update")
                 data = {"capabilityIds": capabilities}
@@ -242,6 +249,7 @@ def assign_role(token, user_id, role_id):
                 },
                 data=json.dumps(data)
             )
+            print(response.status_code)
             response.raise_for_status()
         except httpx.HTTPStatusError as exc:
             print(exc)
@@ -265,6 +273,7 @@ def _token():
                          }
                     )
 
+    print(response.status_code)
     token = response.json()['access_token']
     return token
 
