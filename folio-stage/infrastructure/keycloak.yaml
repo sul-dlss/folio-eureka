@@ -82,6 +82,8 @@ extraEnvVars:
       secretKeyRef:
         name: keycloak-credentials
         key: KC_BOOTSTRAP_ADMIN_PASSWORD
+  - name: BASE_LOGO_FILES_URL
+    value: "http://folio-stage.stanford.edu"
 proxy: "edge"
 resources:
   requests:
