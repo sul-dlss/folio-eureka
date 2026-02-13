@@ -73,6 +73,8 @@ extraEnvVars:
       secretKeyRef:
         name: keycloak-credentials
         key: KC_DB_USERNAME
+  - name: BASE_LOGO_FILES_URL
+    value: "http://folio-dev.stanford.edu"
 proxy: "edge"
 resources:
   requests:
