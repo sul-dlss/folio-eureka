@@ -9,7 +9,3 @@ ingress:
         - path: '/'
           pathType: Prefix
           servicePort: 80
-  tls:
-    - secretName: folio-ncip-test-tls
-      hosts:
-        - folio-ncip-test.stanford.edu

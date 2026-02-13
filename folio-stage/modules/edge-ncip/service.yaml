@@ -4,12 +4,8 @@ ingress:
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
   hosts:
-    - host: "folio-ncip-test.stanford.edu"
+    - host: "folio-ncip-stage.stanford.edu"
       paths:
         - path: '/'
           pathType: Prefix
           servicePort: 80
-  tls:
-    - secretName: folio-ncip-test-tls
-      hosts:
-        - folio-ncip-test.stanford.edu

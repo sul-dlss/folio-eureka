@@ -2,6 +2,6 @@ extraJavaOpts:
 - "-XX:MaxRAMPercentage=80"
 - "-XX:MinRAMPercentage=80"
 - "-Dsecure_store=Ephemeral"
-- "-Dokapi_url=http://okapi:9130"
+- "-Dokapi_url=http://kong:8000"
 - "-Dport=8080"
 # - "-Dsecure_store_props=/etc/edge/edge-ephemeral.properties"
