@@ -17,9 +17,11 @@ spec:
     helm:
       valueFiles:
       - $values/folio-stage/modules/edge-sip2/overrides.yaml
-      - $values/folio-stage/common/resources.yaml
-      - $values/folio-stage/common/sidecar.yaml
-      - $values/folio-stage/common/probes.yaml
+      - $values/folio-stage/modules/edge-sip2/resources.yaml
+      - $values/folio-stage/modules/edge-sip2/probes.yaml
+      - $values/folio-stage/modules/edge-sip2/service.yaml
+      - $values/folio-stage/modules/edge-sip2/java_opts.yaml
+      - $values/folio-stage/modules/edge-sip2/extra_env.yaml
     repoURL: https://sul-dlss.github.io/folio-helm-v2
     targetRevision: 3.1.50
   - ref: values

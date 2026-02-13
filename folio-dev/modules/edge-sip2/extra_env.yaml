@@ -1,0 +1,21 @@
+configMaps:
+  ephemeral:
+    enabled: true
+    fileName: ephemeral.properties
+    mountPath: /etc/edge
+    existingConfig: edge-sip2-ephemeral.properties
+    
+sip2TenantsConfig: |-
+  {
+    "scTenants": [
+      {
+        "scSubnet": "0.0.0.0/0",
+        "tenant": "sul",
+        "errorDetectionEnabled": true,
+        "messageDelimiter": "\r",
+        "charset": "ISO-8859-1"
+      }
+    ]
+  }
+
+okapiUrl: http://kong:8000
