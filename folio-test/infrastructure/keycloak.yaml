@@ -83,7 +83,7 @@ extraEnvVars:
         name: keycloak-credentials
         key: KC_BOOTSTRAP_ADMIN_PASSWORD
   - name: BASE_LOGO_FILES_URL
-    value: "http://folio-custom-theme/sul/logo.png"
+    value: "http://folio-custom-theme"
 proxy: "edge"
 resources:
   requests:
