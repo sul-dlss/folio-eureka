@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: folio-custom-theme
-          image: ghcr.io/sul-dlss/folio-custom-theme:main
+          image: ghcr.io/sul-dlss/folio-custom-theme:customize-keycloak
           imagePullPolicy: Always
           ports:
             - name: http
