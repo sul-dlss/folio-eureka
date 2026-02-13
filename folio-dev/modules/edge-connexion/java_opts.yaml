@@ -4,4 +4,3 @@ extraJavaOpts:
 - "-Dsecure_store=Ephemeral"
 - "-Dokapi_url=http://kong:8000"
 - "-Dport=8080"
-# - "-Dsecure_store_props=/etc/edge/edge-ephemeral.properties"
