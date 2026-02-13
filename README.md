@@ -7,7 +7,7 @@ To get the versions of the modules for Eureka, select the appropriate flower rel
 Add to [Vault](https://vault.sul.stanford.edu/) key-value pairs for db-credentials, eureka-common, eureka-edge, folio-eureka, folio-vault, kafka-credentials, keycloak-credentials, kong-credentials, mod-pubsub-system-user, opensearch-credentials, and s3-credentials.
 Create k8s VaultStaticSecrets by applying the secrets.yaml file:
 ```
-envsubst < secrets.yaml | kubectl -n ${namespace} apply -f -
+kubectl -n ${namespace} apply -f ${namespace}/infrastructure/secrets.yaml
 ```
 
 ## Install Infrastructure in the cluster namespace (Kong, Keycloak, Elasticsearch, Postfix)
