@@ -4,13 +4,13 @@
 To get the versions of the modules for Eureka, select the appropriate flower release tag from [folio-org/platform-lsp](https://github.com/folio-org/platform-lsp). Find the app versions from the install-applications.json file and then select the versioned tag from the corresponding application name folio-org repository.
 
 ## Secrets
-Add to [Vault](https://vault.sul.stanford.edu/) key-value pairs for db-credentials, eureka-common, eureka-edge, kafka-credentials, keycloak-credentials, kong-credentials, opensearch-credentials, and s3-credentials.
+Add to [Vault](https://vault.sul.stanford.edu/) key-value pairs for db-credentials, eureka-common, eureka-edge, folio-eureka, folio-vault, kafka-credentials, keycloak-credentials, kong-credentials, mod-pubsub-system-user, opensearch-credentials, and s3-credentials.
 Create k8s VaultStaticSecrets by applying the secrets.yaml file:
 ```
-envsubst < secrets.yaml | kubectl -n ${namespace} apply -f -
+kubectl -n ${namespace} apply -f ${namespace}/infrastructure/secrets.yaml
 ```
 
-## Install Infrastructire in the cluster namespace (Kong, Keycloak, Elasticsearch, Postfix)
+## Install Infrastructure in the cluster namespace (Kong, Keycloak, Elasticsearch, Postfix)
 ```
 for I in `ls ${namespace}/infrastructure/*_application.yaml`; do kubectl -n ${namespace} apply -f $I; done
 ```
@@ -20,11 +20,22 @@ for I in `ls ${namespace}/infrastructure/*_application.yaml`; do kubectl -n ${na
 helm upgrade --install -n folio-test --version v24.7.4 keycloak bitnami/keycloak -f folio-test/infrastructure/keycloak.yaml
 ```
 
-## Install Vault in the cluster namespace
+## Install Vault in the cluster namespace if there are issues with ArgoCD app
 ```
 helm -n ${namespace} install -f folio-test/infrastructure/vault.yaml vault hashicorp/vault
 ```
-Then create the folio-backend-admin-client secret in cluster namespace vault under `secret/folio/master`
+Initialize vault with secrets by first exec'ing into vault-0 pod:
+```
+vault operator init -key-shares=1 -key-threshold=1
+vault operator unseal <Unseal Key 1>
+vault login <Initial Root Token>
+vault token create -id=<root id>
+vault secrets enable -path=secret -version=2 kv
+vault kv put secret/folio/master folio-backend-admin-client=<password>
+vault kv put secret/folio/master mgr-applications=<rand 32 char>
+vault kv put secret/folio/master mgr-tenant-entitlements=<rand 32 char>
+vault kv put secret/folio/master mgr-tenants=<rand 32 char>
+```
 
 ## Deploy mgr-* modules
 ```
@@ -54,7 +65,7 @@ Get the application descriptors for other required apps and repeat the process:
 curl -X POST --location "$KONG_URL/applications" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -d@"$APP_FILE"
 ```
 
-Check the applications posted by logging into the folio-k8s-pod shell and doing:
+Check the applications posted by exec'ing into the folio-eureka-pod shell and doing:
 ```
 curl "$KONG_URL/applications"
 ```
@@ -65,9 +76,10 @@ curl -X DELETE --location "$KONG_URL/applications/$APP_ID" -H "Authorization: Be
 ```
 
 ## Deploy backend modules for each application
+Scripts will process all JSON files in the namespace directory if no filename is passed as first argument.
 ```
-python ./create_module_values.py $APP_FILE -n $namespace
-python ./create_applications.py $APP_FILE -n $namespace -x apply
+python ./create_module_values.py -n $namespace
+python ./create_applications.py -n $namespace -x apply
 ```
 
 ## Register the applications
@@ -186,8 +198,15 @@ curl -sX DELETE "$KONG_URL/entitlements" -d "{\"tenantId\":\"$tenantUUID\", \"ap
 curl -X POST --location "$KONG_URL/reinstall/modules?async=true&tenantParameters=loadReference=true,loadSample=false"  -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" --data "{\"tenantId\": \"$tenantUUID\", \"applicationId\": \"$APP_ID\", \"modules\": [$MODULE_IDS]}"
 ```
 
-## Create the Admin User
+## Bootstrap the Admin User
 Using the [sidecar-module-access-client](#sidecar-client-login)
+From the folio-eureka-pod (has env vars needed), run:
+```
+python3 bootstrap_admin_user.py -c -e $LIBSYS_EMAIL -f Libsys -l Admin -p $LIBSYS_PASSWORD -u $LIBSYS_USER
+```
+
+### Commands for each step of the admin user-creation process
+#### Create Admin User
 ```
 curl -X POST --location "$KONG_URL/users-keycloak/users" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul' --data-raw '{
     "username": "eureka_admin",
@@ -200,7 +219,7 @@ curl -X POST --location "$KONG_URL/users-keycloak/users" -H "Authorization: Bear
 }'
 ```
 
-### Create User credentials
+#### Create User credentials
 ```
 curl -X POST --location "$KONG_URL/authn/credentials" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul' --data '{
     "username": "eureka_admin",
@@ -208,7 +227,7 @@ curl -X POST --location "$KONG_URL/authn/credentials" -H "Authorization: Bearer 
     "password": "SecretPassword"
 }'
 ```
-### Create Admin Role
+#### Create Admin Role
 ```
 curl -X POST --location "$KONG_URL/roles" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul' --data '{
     "name": "adminRole",
@@ -218,9 +237,10 @@ curl -X POST --location "$KONG_URL/roles" -H "Authorization: Bearer $TOKEN" -H '
 ```
 adminRoleId=$(curl -s --location "$KONG_URL/roles?limit=500" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul' | jq -r '.roles[] | select(.name == "adminRole") | .id')
 ```
-### Get all of the capabilities
+#### Get all of the capabilities
 ```
 curl -s --location "$KONG_URL/capabilities?limit=3000" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul' > json/all-capabilities.json
+curl -s --location "$KONG_URL/capabilities?limit=3000&offset=3000" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul' >> json/all-capabilities.json
 ```
 ```
 cat json/all-capabilities.json | jq '.capabilities[].id' > json/all-capability-ids.json
@@ -237,16 +257,16 @@ Construct a json file:
 }"
 ```
 
-### Assign Capabilities to Role
+#### Assign Capabilities to Role
 ```
 curl -X POST --location "$KONG_URL/roles/capabilities" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul' -d@json/all-capability-ids.json
 ```
-#### Check the role capabilities
+##### Check the role capabilities
 ```
 curl -s --location "$KONG_URL/roles/$adminRoleId/capabilities?limit=5000" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul'
 ```
 
-### Add Admin Role to Admin User
+#### Add Admin Role to Admin User
 ```
 curl -X POST --location "$KONG_URL/roles/users" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul' -d "{ \"userId\": \"<userId from Keycloak Attributes>\", \"roleIds\": [\"$adminRoleId\"]}"
 ```
@@ -264,8 +284,82 @@ TOKEN=$(curl -sX POST -d client_id="sidecar-module-access-client" -d client_secr
 
 ## Notes
  - All modules must have all possible "SYSTEM_USER_ENABLED" vars set to false. This is handled in the `create_module_values.py` script by setting: `{"name": "FOLIO_SYSTEM_USER_ENABLED", "value": "false"}, {"name": "SYSTEM_USER_CREATED", "value": "false"}, {"name": "SYSTEM_USER_ENABLED", "value": "false"}`
- - In `platform-complete` the `stripes.config.js`, `module.exports["config"]["hasAllPerms"]` setting must be "true" in order for the user to be able to see the app settings.
 
+## Build Stripes for Eureka
+1. Go to sul-dlss/folio-platform-complete
+1. `git fetch --tags upstream`
+1. Checkout a branch for the flower release, e.g. `git checkout -b R1-2025-csp-4-eureka-test R1-2025-csp-4`
+1. Go to folio-org/platform-lsp and view the code for the tagged flower release.
+1. Copy the package.json file to your folio-platform-complete branch.
+1. Copy the stripes.config.js file to your folio-platform-complete branch.
+1. Copy the stripes.modules.js file into the stripes.config.js file you just copied, in a `modules` JSON object.
+1. Modify the stripes.config.js file, inserting the correct URL for authentication and gateway. Modify the config, e.g.:
+```
+  config: {
+    logCategories: 'core,path,action,xhr',
+    logPrefix: '--',
+    maxUnpagedResourceCount: 2000,
+    idleSessionWarningSeconds: 60,
+    welcomeMessage: 'FOLIO TEST Sunflower CSP 4 - Stanford University',
+    platformName: 'FOLIO Test Sunflower CSP 4',
+    helpUrl: 'https://sites.google.com/stanford.edu/folio-training-central/help',
+    showPerms: false,
+    isSingleTenant: true,
+    tenantOptions: {sul: {name: "sul", clientId: "sul-application"}},
+    enableEcsRequests: false,
+    preserveConsole: true,
+    useSecureTokens: true,
+    hasAllPerms: false,
+    aboutInstallDate: "2026-1-23",
+    aboutInstallMessage: "Eureka Test Sunflower CSP 4",
+    rtr: {
+      idleSessionTTL: '1h',
+      idleModalTTL: '30s',
+    }
+  }
+```
+1. We don't bother removing modules anymore; it's too much trouble.
+1. Modify the branding section:
+```
+branding: {
+    logo: {
+      src: './tenant-assets/logo.png',
+      alt: 'Stanford University',
+    },
+    favicon: {
+      src: './tenant-assets/stanford-favicon.png',
+    },
+  }
+```
+1. Copy the following files from another branch:
+```
+git checkout {current branch-name}-{namespace} -- .github/workflows/push.yml
+git checkout {current branch-name}-{namespace} -- tenant-assets/MainNav.css
+git checkout {current branch-name}-{namespace} -- tenant-assets/Pane.css
+git checkout {current branch-name}-{namespace} -- tenant-assets/logo.png
+git checkout {current branch-name}-{namespace} -- tenant-assets/stanford-favicon.ico
+git checkout {current branch-name}-{namespace} -- tenant-assets/stanford-favicon.png
+```
+1. `git diff docker/Dockerfile` and add in the changes, e.g.:
+```
+
+COPY tenant-assets/MainNav.css node_modules/@folio/stripes-core/src/components/MainNav
+COPY tenant-assets/Pane.css node_modules/@folio/stripes-components/lib/Pane
+
+ARG OKAPI_URL=https://folio-test-api.stanford.edu
+ARG TENANT_ID=sul
+<snip>
+<make sure these are after the yarn build output run command>
+RUN mkdir /usr/share/nginx/html/sul
+COPY tenant-assets/logo.png /usr/share/nginx/html/sul/logo.png
+```
+1. Modify the `docker/nginx.conf` file, adding this location block:
+```
+location /sul {
+    alias /usr/share/nginx/html/sul/;
+}
+```
+1. Commit the changes and push a new branch to origin.
 
 ## Upgrading to a new Flower Release
 1. Fetch and save new application descriptors.
@@ -299,8 +393,7 @@ TOKEN=$(curl -sX POST -d client_id="sidecar-module-access-client" -d client_secr
 
     curl -X POST --location "$KONG_URL/entitlements?async=true&tenantParameters=loadReference=true,loadSample=false" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" --data "{\"tenantId\":\"$tenantUUID\", \"applications\": [$APP_IDS]}"
     ```
-1. [Get all of the capabilities](#get-all-of-the-capabilities)
-1. [Assign capabilities to the adminRole](#assign-capabilities-to-role) using PUT instead of POST.
+1. Run the bootstrap_admin_user.py script without any flags to add all the capabilities to the adminRole.
 
 ## Elasticsearch Indexing
 ### recreate resource index (drops index): [authority, location]
