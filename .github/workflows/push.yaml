@@ -10,9 +10,7 @@ jobs:
         image:
           - name: folio-eureka
             dockerfile: ./Dockerfile
-          - name: folio-custom-theme
-            dockerfile: custom-theme/Dockerfile
-    
+
     permissions:
       contents: read
       packages: write
