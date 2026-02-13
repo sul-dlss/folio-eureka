@@ -33,7 +33,7 @@ vault token create -id=<root id>
 vault secrets enable -path=secret -version=2 kv
 vault kv put secret/folio/master folio-backend-admin-client=<password>
 vault kv put secret/folio/master mgr-applications=<rand 32 char>
-vault kv put secret/folio/master mgr-tenant-rentitlements=<rand 32 char>
+vault kv put secret/folio/master mgr-tenant-entitlements=<rand 32 char>
 vault kv put secret/folio/master mgr-tenants=<rand 32 char>
 ```
 
