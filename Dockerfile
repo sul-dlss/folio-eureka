@@ -2,7 +2,6 @@ FROM alpine:latest
 
 RUN apk add curl
 RUN apk add jq
-RUN apk add jq
 RUN apk add bash
 RUN apk add less
 RUN apk add vim
