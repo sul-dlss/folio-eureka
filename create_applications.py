@@ -83,8 +83,8 @@ def create_applications(filename):
 
         if Path(f"{args.namespace}/modules/{module_name}/sidecar.yaml").exists():
             values_files.append(f"$values/{args.namespace}/modules/{module_name}/sidecar.yaml")
-        else:
-            values_files.append(f"$values/{args.namespace}/common/sidecar.yaml")
+        elif not module_name.startswith("edge-"):
+                values_files.append(f"$values/{args.namespace}/common/sidecar.yaml")
 
         if Path(f"{args.namespace}/modules/{module_name}/probes.yaml").exists():
             values_files.append(f"$values/{args.namespace}/modules/{module_name}/probes.yaml")

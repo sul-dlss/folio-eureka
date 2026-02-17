@@ -1,0 +1,11 @@
+ingress:
+  enabled: true
+  className: nginx
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+  hosts:
+    - host: "folio-ncip-stage.stanford.edu"
+      paths:
+        - path: '/'
+          pathType: Prefix
+          servicePort: 80
