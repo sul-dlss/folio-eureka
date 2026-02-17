@@ -1,3 +1,6 @@
+javaOpts:
+  - "-Dokapi_url=http://kong:8000"
+
 extraJavaOpts: 
 - "-XX:MaxRAMPercentage=80"
 - "-XX:MinRAMPercentage=80"
