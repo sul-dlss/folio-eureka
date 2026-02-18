@@ -5,19 +5,3 @@ resources:
   limits:
     cpu: 100m
     memory: 1024M
-
-dbMaxPoolSize: 10
-
-configMaps:
-  zserver-config:
-    enabled: true
-    name: zserver-config
-    mountPath: /usr/src/app/etc
-    fileName: config.sul.json
-    existingConfig: zserver.conf
-  mod-search-graphql-query:
-    enabled: true
-    name: mod-search-graphql-query
-    mountPath: /usr/src/app/etc
-    fileName: mod-search.graphql-query
-    existingConfig: mod-search-graphql-query
