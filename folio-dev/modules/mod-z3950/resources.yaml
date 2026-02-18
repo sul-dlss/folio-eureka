@@ -21,15 +21,3 @@ configMaps:
     mountPath: /usr/src/app/etc
     fileName: mod-search.graphql-query
     existingConfig: mod-search-graphql-query
-
-extraEnvVars: |
-  - name: FOLIO_USER
-    valueFrom:
-      secretKeyRef:
-        key: OKAPI_READONLY_APP_USER
-        name: db-connect-modules
-  - name: FOLIO_PASSWORD
-    valueFrom:
-      secretKeyRef:
-        key: OKAPI_READONLY_APP_PASSWORD
-        name: db-connect-modules

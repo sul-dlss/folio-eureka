@@ -1,0 +1,11 @@
+extraEnvVars: |
+  - name: FOLIO_USER
+    valueFrom:
+      secretKeyRef:
+        key: READONLY_APP_USER
+        name: db-credentials
+  - name: FOLIO_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        key: READONLY_APP_PASSWORD
+        name: db-credentials
