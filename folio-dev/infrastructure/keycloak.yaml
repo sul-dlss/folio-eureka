@@ -30,7 +30,7 @@ extraEnvVars:
   - name: FIPS
     value: "false"
   - name: KC_HOSTNAME  
-    value: "https://keycloak-folio-dev.stanford.edu" 
+    value: "https://keycloak-folio-dev.stanford.edu:8443" 
   - name: KC_HOSTNAME_DEBUG
     value: "true"
   - name: KC_FOLIO_BE_ADMIN_CLIENT_ID
@@ -106,7 +106,7 @@ service:
     http: 8080
     https: 8443
 ingress:
-  enabled: true
+  enabled: false
   hostnameStrict: false
   hostname: keycloak-folio-dev.stanford.edu
   ingressClassName: "nginx"
