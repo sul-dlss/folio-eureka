@@ -209,10 +209,13 @@ def entitle_applications(token, app_id, tenant_uuid, mgr_entitle_url):
         "tenantId": tenant_uuid,
         "applications": [app_id]
     }
+    async_entitlement: bool = json.dumps(os.getenv("ASYNC", True))
+    load_ref: bool = json.dumps(os.getenv("REF_DATA", True))
+    load_sample: bool = json.dumps(os.getenv("SAMPLE_DATA", False))
     with httpx.Client(timeout=60.0) as client:
         try:
             response = client.post(
-                f"{mgr_entitle_url}/entitlements?async=true&tenantParameters=loadReference=true,loadSample=false",
+                f"{mgr_entitle_url}/entitlements?async={async_entitlement}&tenantParameters=loadReference={load_ref},loadSample={load_sample}",
                 headers={
                     "content-type": "application/json",
                     "Authorization": f"Bearer {token}",
