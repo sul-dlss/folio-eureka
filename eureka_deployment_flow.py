@@ -69,7 +69,7 @@ def register_applications(token, data, mgr_app_url):
                 },
                 data=json.dumps(data)
             )
-            print(response.status_code)
+            print(response)
             response.raise_for_status()
         except httpx.HTTPStatusError as exc:
             print(exc)
@@ -84,7 +84,7 @@ def registered_apps(token, mgr_app_url):
                     "Authorization": f"Bearer {token}"
                 }
             )
-            print(response.status_code)
+            print(response)
             apps = json.loads(response.text).get("applicationDescriptors")
             if len(apps) == 0:
               print("No applications are registered")
@@ -106,7 +106,7 @@ def delete_applications(token, app_id, mgr_app_url):
                     "Authorization": f"Bearer {token}"
                 }
             )
-            print(response.status_code)
+            print(response)
             response.raise_for_status()
         except httpx.HTTPStatusError as exc:
             print(exc)
@@ -132,7 +132,7 @@ def register_module(token, module, mgr_app_url):
                 },
                 data=json.dumps(module)
             )
-            print(response.status_code)
+            print(response)
             response.raise_for_status()
         except httpx.TimeoutException:
             print("Request timed out!")
@@ -155,7 +155,7 @@ def re_register_module(token, module, mgr_app_url):
                 },
                 data=json.dumps(module)
             )
-            print(response.status_code)
+            print(response)
             response.raise_for_status()
         except httpx.HTTPStatusError as exc:
             if exc.response.status_code == 401:
@@ -178,7 +178,7 @@ def create_tenant(token, mgr_tenants_url) -> str:
                 },
                 data=json.dumps(data)
             )
-            print(response.status_code)
+            print(response)
             tenant_uuid = json.loads(response.text).get("id")
             response.raise_for_status()
         except httpx.HTTPStatusError as exc:
@@ -196,7 +196,7 @@ def tenant_id(token, mgr_tenants_url) -> str:
                     "Authorization": f"Bearer {token}"
                 }
             )
-            print(response.status_code)
+            print(response)
             tenant_uuid = json.loads(response.text).get("id")
             response.raise_for_status()
         except httpx.HTTPStatusError as exc:
@@ -220,7 +220,7 @@ def entitle_applications(token, app_id, tenant_uuid, mgr_entitle_url):
                 },
                 data=json.dumps(data)
             )
-            print(response.status_code)
+            print(response)
             flow_id = json.loads(response.text).get("flowId")
             print(f"Flow ID: {flow_id}")
             response.raise_for_status()
@@ -241,7 +241,7 @@ def _token():
         }
     )
 
-    print(response.status_code)
+    print(response)
     token = response.json()["access_token"]
     return token
 
