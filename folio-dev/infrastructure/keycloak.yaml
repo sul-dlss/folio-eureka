@@ -142,7 +142,7 @@ extraDeploy:
       namespace: folio-dev
     spec:
       hostnames:
-      - keycloak-folio-dev.stanford.edu:8443
+      - keycloak-folio-dev.stanford.edu
       parentRefs:
       - name: default
         namespace: envoy-gateway-system

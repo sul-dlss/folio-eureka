@@ -151,7 +151,7 @@ extraDeploy:
       namespace: folio-dev
     spec:
       hostnames:
-      - kong-folio-dev.stanford.edu:8443
+      - kong-folio-dev.stanford.edu
       parentRefs:
       - name: default
         namespace: envoy-gateway-system
