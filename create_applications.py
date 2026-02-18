@@ -17,8 +17,12 @@ parser.add_argument("-p", "--prod_replicasets", action="store_true", default=Fal
 parser.add_argument("-r", "--helm_repo", default="folio-helm-v2-dlss", help="the Helm repository to use for the applications (folio-helm-v2-dlss by default)")
 parser.add_argument("-v", "--values_branch", default="main", help="the branch in the values repository to use for the applications (main by default)")
 parser.add_argument("-x", "--execute", required=False, default="dry-run", choices=["apply", "dry-run"], help="whether to apply the applications to ArgoCD or just do a dry-run (dry-run by default)")
+parser.add_argument("--no_generate", required=False, default=False, action="store_true", help="whether to skip generating the applications")
 
 args = parser.parse_args()
+
+if args.no_generate and args.execute == "dry-run":
+    parser.error("--no_generate is set, but --execute is 'dry-run'. No applications will be generated or applied.")
 
 def application_manifest(name, version, namespace, repo_url, values_files):
     data = {
@@ -108,16 +112,18 @@ def create_applications(filename):
         repo_url = os.popen(f"helm repo list | grep {args.helm_repo} | awk '{{print $2}}'").read().strip()
 
         app_file = f"{args.namespace}/modules/{module_name}/application.yaml"
-        with open(app_file, "w") as file:
-            file.write(application_manifest(
-                name=module_name,
-                version=chart_version,
-                namespace=args.namespace,
-                repo_url=repo_url,
-                values_files=values_files
-            ))
+        
+        if not args.no_generate:
+            with open(app_file, "w") as file:
+                file.write(application_manifest(
+                    name=module_name,
+                    version=chart_version,
+                    namespace=args.namespace,
+                    repo_url=repo_url,
+                    values_files=values_files
+                ))
 
-        print(f"Generated application manifest for {module_name}")
+            print(f"Generated application manifest for {module_name}")
 
         if args.execute == "apply":
             kubectl_command = f"kubectl -n {args.namespace} apply -f {app_file}"
