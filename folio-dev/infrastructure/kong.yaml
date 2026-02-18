@@ -39,6 +39,14 @@ service:
     proxyHttps: 443
     adminHttp: 8001
     adminHttps: 8444
+ingress:
+  ingressClassName: "nginx"
+  pathType: ImplementationSpecific
+  hostname: kong-folio-dev.stanford.edu
+  enabled: false
+  annotations:
+    nginx.ingress.kubernetes.io/client-body-buffer-size: 512M
+    nginx.ingress.kubernetes.io/proxy-body-size: 512M
 kong:
   livenessProbe:
     enabled: false
@@ -143,7 +151,7 @@ extraDeploy:
       namespace: folio-dev
     spec:
       hostnames:
-      - kong-folio-dev.stanford.edu
+      - kong-folio-dev.stanford.edu:8443
       parentRefs:
       - name: default
         namespace: envoy-gateway-system
