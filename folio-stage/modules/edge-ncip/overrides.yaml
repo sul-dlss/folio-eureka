@@ -13,8 +13,7 @@ image:
   tag: 1.10.1
 integrations:
   eureka-edge:
-    enabled: true
-    existingSecret: eureka-edge
+    enabled: false
   okapi:
     enabled: false
   systemuser:
