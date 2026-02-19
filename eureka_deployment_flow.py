@@ -11,51 +11,65 @@ parser = argparse.ArgumentParser(
                     epilog="-------")
 
 parser.add_argument("filename", nargs="*", help="The application descriptor JSON file or files to process. If not provided, all JSON files in the namespace directory will be processed.")
+parser.add_argument("-n", "--namespace", required=True, help="the Kubernetes namespace for the applications.")
 parser.add_argument("-a", "--register_apps", action="store_true", default=False, help="register applications")
 parser.add_argument("-d", "--delete_apps", action="store_true", default=False, help="delete applications (for upgrading flower release)")
-parser.add_argument("-e", "--entitle", action="store_true", default=False, help="entitle applications")
 parser.add_argument("-m", "--register_modules", action="store_true", default=False, help="register modules for discovery")
 parser.add_argument("-u", "--reregister_modules", action="store_true", default=False, help="re-register modules for discovery")
-parser.add_argument("-n", "--namespace", required=True, help="the Kubernetes namespace for the applications.")
 parser.add_argument("-t", "--create_tenant", action="store_true", default=False, help="create tenant")
+parser.add_argument("-e", "--entitle", action="store_true", default=False, help="entitle applications")
 
 args = parser.parse_args()
 
-def main(file):
+def main():
     global token
     token = _token()
     mgr_app_url = os.getenv("MGR_APP_URL", "http://mgr-applications")
     mgr_tenants_url = os.getenv("MGR_TENANTS_URL", "http://mgr-tenants")
     mgr_entitle_url = os.getenv("MGR_ENTITLE_URL", "http://mgr-tenant-entitlements")
-    with open(file, "r") as fo:
-        data = json.load(fo)
-        app_id = data["id"]
-        if args.register_apps:
-            print(f"Register {app_id}")
-            register_applications(token, data, mgr_app_url)
-            registered_apps(token, mgr_app_url)
-        if args.delete_apps:
-            print(f"Delete {app_id}")
-            delete_applications(token, app_id, mgr_app_url)
-            registered_apps(token, mgr_app_url)
-        if args.entitle:
-            print(f"Entitling {app_id}")
-            tenant_uuid = tenant_id(token, mgr_tenants_url)
-            entitle_applications(token, app_id, tenant_uuid, mgr_entitle_url)
-        if args.register_modules:
-            print(f"Registering modules for {app_id}")
-            for module in data["modules"]:
-                updated_module = module_discovery_object(module)
-                register_module(token, updated_module, mgr_app_url)
-        if args.reregister_modules:
-            print(f"Re-registering modules for {app_id}")
-            for module in data["modules"]:
-                updated_module = module_discovery_object(module)
-                re_register_module(token, updated_module, mgr_app_url)
-        if args.create_tenant:
+    files: list = []
+    if args.filename:
+        for file in args.filename:
+            files.append(file)
+    else:
+        for file in Path(args.namespace).glob("*.json"):
+            files.append(file)
+    if args.create_tenant:
             print("Creating tenant")
             tenant_uuid = create_tenant(token, mgr_tenants_url)
             print(f"Created tenant sul, uuid: {tenant_uuid}")
+    if args.entitle:
+        app_ids: list = []
+        for file in files:
+            with open(file, "r") as fo:
+                data = json.load(fo)
+                app_ids.append(data["id"])
+
+        print(f"Entitling {app_ids}")
+        tenant_uuid = tenant_id(token, mgr_tenants_url)
+        entitle_applications(token, app_ids, tenant_uuid, mgr_entitle_url)
+    for file in files:
+        with open(file, "r") as fo:
+            data = json.load(fo)
+            app_id = data["id"]
+            if args.register_apps:
+                print(f"Register {app_id}")
+                register_applications(token, data, mgr_app_url)
+                registered_apps(token, mgr_app_url)
+            if args.delete_apps:
+                print(f"Delete {app_id}")
+                delete_applications(token, app_id, mgr_app_url)
+                registered_apps(token, mgr_app_url)
+            if args.register_modules:
+                print(f"Registering modules for {app_id}")
+                for module in data["modules"]:
+                    updated_module = module_discovery_object(module)
+                    register_module(token, updated_module, mgr_app_url)
+            if args.reregister_modules:
+                print(f"Re-registering modules for {app_id}")
+                for module in data["modules"]:
+                    updated_module = module_discovery_object(module)
+                    re_register_module(token, updated_module, mgr_app_url)
 
 
 def register_applications(token, data, mgr_app_url):
@@ -121,7 +135,6 @@ def module_discovery_object(module) -> dict:
 
 def register_module(token, module, mgr_app_url):
     print(f"POSTING to /modules/{module['name']}/discovery")
-    print(module)
     with httpx.Client(timeout=60.0) as client:
         try:
             response = client.post(
@@ -204,14 +217,15 @@ def tenant_id(token, mgr_tenants_url) -> str:
     return tenant_uuid
 
 
-def entitle_applications(token, app_id, tenant_uuid, mgr_entitle_url):
+def entitle_applications(token, app_ids, tenant_uuid, mgr_entitle_url):
     data = {
         "tenantId": tenant_uuid,
-        "applications": [app_id]
+        "applications": app_ids
     }
     async_entitlement: bool = json.dumps(os.getenv("ASYNC", True))
     load_ref: bool = json.dumps(os.getenv("REF_DATA", True))
     load_sample: bool = json.dumps(os.getenv("SAMPLE_DATA", False))
+    print(f"Entitlement params: async={async_entitlement}&tenantParameters=loadReference={load_ref},loadSample={load_sample}")
     with httpx.Client(timeout=60.0) as client:
         try:
             response = client.post(
@@ -250,10 +264,4 @@ def _token():
 
 
 if __name__ == "__main__":
-    if args.filename:
-        for file in args.filename:
-            main(file)
-    else:
-        descriptor_files = Path(args.namespace).glob("*.json")
-        for file in descriptor_files:
-            main(file)
+    main()
