@@ -18,19 +18,19 @@ parser = argparse.ArgumentParser(
                     KC_ADMIN_CLIENT_SECRET=<from folio-eureka k8s secret>
                     ASYNC=true
                     REF_DATA=true
-                    SAMPE_DATA=false
+                    SAMPLE_DATA=false
                     FLOW_STAGES=true""",
                     epilog="-------")
 
 parser.add_argument("filename", nargs="*", help="The application descriptor JSON file or files to process. If not provided, all JSON files in the namespace directory will be processed.")
 parser.add_argument("-n", "--namespace", required=True, help="the Kubernetes namespace for the applications.")
-parser.add_argument("-a", "--register_apps", action="store_true", default=False, help="register applications")
-parser.add_argument("-d", "--delete_apps", action="store_true", default=False, help="delete applications (for upgrading flower release)")
-parser.add_argument("-m", "--register_modules", action="store_true", default=False, help="register modules for discovery")
-parser.add_argument("-u", "--reregister_modules", action="store_true", default=False, help="re-register modules for discovery")
-parser.add_argument("-t", "--create_tenant", action="store_true", default=False, help="create tenant")
-parser.add_argument("-e", "--entitle", action="store_true", default=False, help="entitle applications")
-parser.add_argument("-f", "--flow_id", help="FlowId to get entitlement-flow state")
+parser.add_argument("-a", "--register_apps", action="store_true", default=False, help="register applications, uses MGR_APP_URL")
+parser.add_argument("-d", "--delete_apps", action="store_true", default=False, help="delete applications (for upgrading flower release), uses MGR_APP_URL")
+parser.add_argument("-m", "--register_modules", action="store_true", default=False, help="register modules for discovery, uses MGR_APP_URL")
+parser.add_argument("-u", "--reregister_modules", action="store_true", default=False, help="re-register modules for discovery, uses MGR_APP_URL")
+parser.add_argument("-t", "--create_tenant", action="store_true", default=False, help="create tenant, uses MGR_TENANTS_URL")
+parser.add_argument("-e", "--entitle", action="store_true", default=False, help="entitle applications, uses MGR_ENTITLE_URL, ASYNC, REF_DATA, SAMPLE_DATA")
+parser.add_argument("-f", "--flow_id", help="FlowId to get entitlement-flow state, uses FLOW_STAGES")
 
 args = parser.parse_args()
 

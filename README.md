@@ -70,7 +70,7 @@ Register applications, register modules, create tenant, create entitlements
                     KC_ADMIN_CLIENT_SECRET=<from folio-eureka k8s secret>
                     ASYNC=true
                     REF_DATA=true
-                    SAMPE_DATA=false
+                    SAMPLE_DATA=false
                     FLOW_STAGES=true
 
 positional arguments:
@@ -81,16 +81,16 @@ options:
   -h, --help            show this help message and exit
   -n NAMESPACE, --namespace NAMESPACE
                         the Kubernetes namespace for the applications.
-  -a, --register_apps   register applications
-  -d, --delete_apps     delete applications (for upgrading flower release)
+  -a, --register_apps   register applications, uses MGR_APP_URL
+  -d, --delete_apps     delete applications (for upgrading flower release), uses MGR_APP_URL
   -m, --register_modules
-                        register modules for discovery
+                        register modules for discovery, uses MGR_APP_URL
   -u, --reregister_modules
-                        re-register modules for discovery
-  -t, --create_tenant   create tenant
-  -e, --entitle         entitle applications
+                        re-register modules for discovery, uses MGR_APP_URL
+  -t, --create_tenant   create tenant, uses MGR_TENANTS_URL
+  -e, --entitle         entitle applications, uses MGR_ENTITLE_URL, ASYNC, REF_DATA, SAMPLE_DATA
   -f FLOW_ID, --flow_id FLOW_ID
-                        FlowId to get entitlement-flow state
+                        FlowId to get entitlement-flow state, uses FLOW_STAGES
 ```
 ### Register the applications
 ```
