@@ -7,7 +7,19 @@ from pathlib import Path
 
 parser = argparse.ArgumentParser(
                     prog="EurekaDeploymentFlow",
-                    description="Register applications, register modules, create tenant, create entitlements",
+                    formatter_class=argparse.RawDescriptionHelpFormatter,
+                    description="""Register applications, register modules, create tenant, create entitlements
+                    Default env vars:
+                    MGR_APP_URL=http://mgr-applications
+                    MGR_TENANTS_URL=http://mgr-tenants
+                    MGR_ENTITLE_URL=http://mgr-tenant-entitlements
+                    KC_URL=http://keycloak:8080
+                    KC_ADMIN_CLIENT_ID=folio-backend-admin-client
+                    KC_ADMIN_CLIENT_SECRET=<from folio-eureka k8s secret>
+                    ASYNC=true
+                    REF_DATA=true
+                    SAMPE_DATA=false
+                    FLOW_STAGES=true""",
                     epilog="-------")
 
 parser.add_argument("filename", nargs="*", help="The application descriptor JSON file or files to process. If not provided, all JSON files in the namespace directory will be processed.")

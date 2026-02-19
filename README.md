@@ -61,6 +61,17 @@ eureka_deployment_flow.py -h
 usage: EurekaDeploymentFlow [-h] -n NAMESPACE [-a] [-d] [-m] [-u] [-t] [-e] [-f FLOW_ID] [filename ...]
 
 Register applications, register modules, create tenant, create entitlements
+                    Default env vars:
+                    MGR_APP_URL=http://mgr-applications
+                    MGR_TENANTS_URL=http://mgr-tenants
+                    MGR_ENTITLE_URL=http://mgr-tenant-entitlements
+                    KC_URL=http://keycloak:8080
+                    KC_ADMIN_CLIENT_ID=folio-backend-admin-client
+                    KC_ADMIN_CLIENT_SECRET=<from folio-eureka k8s secret>
+                    ASYNC=true
+                    REF_DATA=true
+                    SAMPE_DATA=false
+                    FLOW_STAGES=true
 
 positional arguments:
   filename              The application descriptor JSON file or files to process. If not provided, all JSON files in the
