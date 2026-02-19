@@ -227,7 +227,8 @@ def tenant_id(token, mgr_tenants_url) -> str:
                 }
             )
             print(response.text)
-            tenant_uuid = json.loads(response.text).get("id")
+            tenant_uuid = json.loads(response.text)[0].get("id")
+            print(f"Tenant ID: {tenant_uuid}")
             response.raise_for_status()
         except httpx.HTTPStatusError as exc:
             print(exc)

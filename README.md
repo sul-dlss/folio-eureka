@@ -92,14 +92,14 @@ options:
   -f FLOW_ID, --flow_id FLOW_ID
                         FlowId to get entitlement-flow state, uses FLOW_STAGES
 ```
-### Register the applications
+### Register all the applications
 ```
-eureka_deployment_flow.py -n ${namespace} -a
+python eureka_deployment_flow.py -n ${namespace} -a
 ```
 
 Delete any extra applications as needed, e.g.:
 ```
-eureka_deployment_flow.py ${namespace}/application-descriptor-fqm.json ${namespace}/application-descriptor-linked-data.json -n ${namespace} -d
+python eureka_deployment_flow.py ${namespace}/application-descriptor-fqm.json ${namespace}/application-descriptor-linked-data.json -n ${namespace} -d
 ```
 
 ### Deploy backend modules for each application
@@ -109,20 +109,20 @@ python ./create_module_values.py -n $namespace
 python ./create_applications.py -n $namespace -x apply
 ```
 
-### Register the modules for discovery
+### Register all the modules for discovery
 ```
-eureka_deployment_flow.py -n ${namespace} -m
+python eureka_deployment_flow.py -n ${namespace} -m
 ```
 
 ### Create the tenant
 ```
-eureka_deployment_flow.py -n ${namespace} -t
+python eureka_deployment_flow.py -n ${namespace} -t
 ```
 
 ### Create Entitlements
 #### Create entitlements for app-platform-minimal (Make sure all modules are up and running, may need to do multiple times due to timeouts)
 ```
-eureka_deployment_flow.py ${namespace}/application-descriptor-minimal.json -n ${namespace} -e
+python eureka_deployment_flow.py ${namespace}/application-descriptor-minimal.json -n ${namespace} -e
 ```
 
 ### Create keycloak system users - mod-users-keycloak and mod-login-keycloak
@@ -156,13 +156,13 @@ Restart the mod-*-keycloak modules.
 ### Create entitlements for the rest of the applications
 **Here we keep app-platform-minimal in the list, thinking only it will fail and the others will POST okay**
 ```
-eureka_deployment_flow.py -n ${namespace} -e
+python eureka_deployment_flow.py -n ${namespace} -e
 ```
 
 ### Monitor entitlements process
 Use flow_id printed from entitlements step
 ```
-eureka_deployment_flow.py -n ${namespace} -f ${flow_id}
+python eureka_deployment_flow.py -n ${namespace} -f ${flow_id}
 ```
 ## Create sul-application redirect URIs in Keycloak
 **Use curls or the UI**
@@ -192,7 +192,7 @@ curl -X PUT \
 Using the [sidecar-module-access-client](#sidecar-client-login)
 From the folio-eureka-pod (has env vars needed), run:
 ```
-python3 bootstrap_admin_user.py -c -e $LIBSYS_EMAIL -f Libsys -l Admin -p $LIBSYS_PASSWORD -u $LIBSYS_USER
+python bootstrap_admin_user.py -c -e $LIBSYS_EMAIL -f Libsys -l Admin -p $LIBSYS_PASSWORD -u $LIBSYS_USER
 ```
 
 ## Curls for Eureka Deployment and Entitlement Flow
