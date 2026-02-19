@@ -18,6 +18,7 @@ parser.add_argument("-m", "--register_modules", action="store_true", default=Fal
 parser.add_argument("-u", "--reregister_modules", action="store_true", default=False, help="re-register modules for discovery")
 parser.add_argument("-t", "--create_tenant", action="store_true", default=False, help="create tenant")
 parser.add_argument("-e", "--entitle", action="store_true", default=False, help="entitle applications")
+parser.add_argument("-f", "--flow_id", help="FlowId to get entitlement-flow state")
 
 args = parser.parse_args()
 
@@ -48,6 +49,8 @@ def main():
         print(f"Entitling {app_ids}")
         tenant_uuid = tenant_id(token, mgr_tenants_url)
         entitle_applications(token, app_ids, tenant_uuid, mgr_entitle_url)
+    if args.flow_id:
+        entitlement_flow(token, args.flow_id, mgr_entitle_url)
     for file in files:
         with open(file, "r") as fo:
             data = json.load(fo)
@@ -240,6 +243,17 @@ def entitle_applications(token, app_ids, tenant_uuid, mgr_entitle_url):
             print(response)
             flow_id = json.loads(response.text).get("flowId")
             print(f"Flow ID: {flow_id}")
+            response.raise_for_status()
+        except httpx.HTTPStatusError as exc:
+            print(exc)
+
+
+def entitlement_flow(flow_id, mgr_entitle_url):
+    include_stages: bool = json.dumps(os.getenv("FLOW_STAGES", True))
+    with httpx.Client(timeout=20.0) as client:
+        try:
+            response = client.get(f"{mgr_entitle_url}/entitlement-flows/{flow_id}?includeStages={include_stages}")
+            print(response)
             response.raise_for_status()
         except httpx.HTTPStatusError as exc:
             print(exc)
