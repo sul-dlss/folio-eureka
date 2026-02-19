@@ -62,7 +62,7 @@ def main():
         tenant_uuid = tenant_id(token, mgr_tenants_url)
         entitle_applications(token, app_ids, tenant_uuid, mgr_entitle_url)
     if args.flow_id:
-        entitlement_flow(token, args.flow_id, mgr_entitle_url)
+        entitlement_flow(args.flow_id, mgr_entitle_url)
     for file in files:
         with open(file, "r") as fo:
             data = json.load(fo)
@@ -227,7 +227,7 @@ def tenant_id(token, mgr_tenants_url) -> str:
                 }
             )
             print(response.text)
-            tenant_uuid = json.loads(response.text)[0].get("id")
+            tenant_uuid = json.loads(response.text)["tenants"][0].get("id")
             print(f"Tenant ID: {tenant_uuid}")
             response.raise_for_status()
         except httpx.HTTPStatusError as exc:
@@ -268,7 +268,8 @@ def entitlement_flow(flow_id, mgr_entitle_url):
     with httpx.Client(timeout=20.0) as client:
         try:
             response = client.get(f"{mgr_entitle_url}/entitlement-flows/{flow_id}?includeStages={include_stages}")
-            print(response.text)
+            pp_json = json.dumps(response.json(), indent=2)
+            print(pp_json)
             response.raise_for_status()
         except httpx.HTTPStatusError as exc:
             print(exc)
@@ -287,7 +288,7 @@ def _token():
         }
     )
 
-    print(response.text)
+    print(response.status_code)
     token = response.json()["access_token"]
     return token
 
