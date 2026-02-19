@@ -98,7 +98,7 @@ def register_applications(token, data, mgr_app_url):
                 },
                 data=json.dumps(data)
             )
-            print(response)
+            print(response.text)
             response.raise_for_status()
         except httpx.HTTPStatusError as exc:
             print(exc)
@@ -113,7 +113,7 @@ def registered_apps(token, mgr_app_url):
                     "Authorization": f"Bearer {token}"
                 }
             )
-            print(response)
+            print(response.text)
             apps = json.loads(response.text).get("applicationDescriptors")
             if len(apps) == 0:
               print("No applications are registered")
@@ -135,7 +135,7 @@ def delete_applications(token, app_id, mgr_app_url):
                     "Authorization": f"Bearer {token}"
                 }
             )
-            print(response)
+            print(response.text)
             response.raise_for_status()
         except httpx.HTTPStatusError as exc:
             print(exc)
@@ -149,18 +149,19 @@ def module_discovery_object(module) -> dict:
 
 
 def register_module(token, module, mgr_app_url):
-    print(f"POSTING to /modules/{module['name']}/discovery")
+    module_id = f"{module['name']}-{module['version']}"
+    print(f"POSTING to /modules/{module_id}/discovery")
     with httpx.Client(timeout=60.0) as client:
         try:
             response = client.post(
-                f"{mgr_app_url}/modules/{module['name']}/discovery",
+                f"{mgr_app_url}/modules/{module_id}/discovery",
                 headers={
                     "content-type": "application/json",
                     "Authorization": f"Bearer {token}"
                 },
                 data=json.dumps(module)
             )
-            print(response)
+            print(response.text)
             response.raise_for_status()
         except httpx.TimeoutException:
             print("Request timed out!")
@@ -171,19 +172,20 @@ def register_module(token, module, mgr_app_url):
 
 
 def re_register_module(token, module, mgr_app_url):
-    print(f"PUTTING to /modules/{module['name']}/discovery")
+    module_id = f"{module['name']}-{module['version']}"
+    print(f"PUTTING to /modules/{module_id}/discovery")
     print(module)
     with httpx.Client(timeout=60.0) as client:
         try:
             response = client.put(
-                f"{mgr_app_url}/modules/{module['name']}/discovery",
+                f"{mgr_app_url}/modules/{module_id}/discovery",
                 headers={
                     "content-type": "application/json",
                     "Authorization": f"Bearer {token}"
                 },
                 data=json.dumps(module)
             )
-            print(response)
+            print(response.text)
             response.raise_for_status()
         except httpx.HTTPStatusError as exc:
             if exc.response.status_code == 401:
@@ -206,7 +208,7 @@ def create_tenant(token, mgr_tenants_url) -> str:
                 },
                 data=json.dumps(data)
             )
-            print(response)
+            print(response.text)
             tenant_uuid = json.loads(response.text).get("id")
             response.raise_for_status()
         except httpx.HTTPStatusError as exc:
@@ -224,7 +226,7 @@ def tenant_id(token, mgr_tenants_url) -> str:
                     "Authorization": f"Bearer {token}"
                 }
             )
-            print(response)
+            print(response.text)
             tenant_uuid = json.loads(response.text).get("id")
             response.raise_for_status()
         except httpx.HTTPStatusError as exc:
@@ -252,7 +254,7 @@ def entitle_applications(token, app_ids, tenant_uuid, mgr_entitle_url):
                 },
                 data=json.dumps(data)
             )
-            print(response)
+            print(response.text)
             flow_id = json.loads(response.text).get("flowId")
             print(f"Flow ID: {flow_id}")
             response.raise_for_status()
@@ -265,7 +267,7 @@ def entitlement_flow(flow_id, mgr_entitle_url):
     with httpx.Client(timeout=20.0) as client:
         try:
             response = client.get(f"{mgr_entitle_url}/entitlement-flows/{flow_id}?includeStages={include_stages}")
-            print(response)
+            print(response.text)
             response.raise_for_status()
         except httpx.HTTPStatusError as exc:
             print(exc)
@@ -284,7 +286,7 @@ def _token():
         }
     )
 
-    print(response)
+    print(response.text)
     token = response.json()["access_token"]
     return token
 
