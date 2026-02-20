@@ -18,13 +18,15 @@ integrations:
 extraJavaOpts:
   - "-Dlogging.level.root=DEBUG"
 
+replicaCount: 2
+
 resources:
   limits:
     cpu: 600m
-    memory: 2Gi
+    memory: 1024M
   requests:
     cpu: 300m
-    memory: 512Mi
+    memory: 896M
 
 # service:
 #   type: ClusterIP

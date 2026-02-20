@@ -4,6 +4,6 @@ resources:
     memory: 866M
   limits:
     cpu: 100m
-    memory: 1900Mi
+    memory: 1440M
 
 dbMaxPoolSize: 10
