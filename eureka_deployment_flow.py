@@ -240,9 +240,9 @@ def entitle_applications(token, app_ids, tenant_uuid, mgr_entitle_url):
         "tenantId": tenant_uuid,
         "applications": app_ids
     }
-    async_entitlement: bool = json.dumps(os.getenv("ASYNC", True))
-    load_ref: bool = json.dumps(os.getenv("REF_DATA", True))
-    load_sample: bool = json.dumps(os.getenv("SAMPLE_DATA", False))
+    async_entitlement: bool = os.getenv("ASYNC", True)
+    load_ref: bool = os.getenv("REF_DATA", True)
+    load_sample: bool = os.getenv("SAMPLE_DATA", False)
     print(f"Entitlement params: async={async_entitlement}&tenantParameters=loadReference={load_ref},loadSample={load_sample}")
     with httpx.Client(timeout=60.0) as client:
         try:
@@ -264,7 +264,7 @@ def entitle_applications(token, app_ids, tenant_uuid, mgr_entitle_url):
 
 
 def entitlement_flow(flow_id, mgr_entitle_url):
-    include_stages: bool = json.dumps(os.getenv("FLOW_STAGES", True))
+    include_stages: bool = os.getenv("FLOW_STAGES", True)
     with httpx.Client(timeout=20.0) as client:
         try:
             response = client.get(f"{mgr_entitle_url}/entitlement-flows/{flow_id}?includeStages={include_stages}")
