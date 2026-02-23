@@ -31,6 +31,7 @@ parser.add_argument("-u", "--reregister_modules", action="store_true", default=F
 parser.add_argument("-t", "--create_tenant", action="store_true", default=False, help="create tenant, uses MGR_TENANTS_URL")
 parser.add_argument("-e", "--entitle", action="store_true", default=False, help="entitle applications, uses MGR_ENTITLE_URL, ASYNC, REF_DATA, SAMPLE_DATA")
 parser.add_argument("-f", "--flow_id", help="FlowId to get entitlement-flow state, uses FLOW_STAGES")
+parser.add_argument("-l", "--list_entitlements", action="store_true", default=False, help="list applications and modules entitled, uses MGR_ENTITLE_URL")
 
 args = parser.parse_args()
 
@@ -63,6 +64,8 @@ def main():
         entitle_applications(token, app_ids, tenant_uuid, mgr_entitle_url)
     if args.flow_id:
         entitlement_flow(args.flow_id, mgr_entitle_url)
+    if args.list_entitlements:
+        entitlements(mgr_entitle_url)
     for file in files:
         with open(file, "r") as fo:
             data = json.load(fo)
@@ -268,6 +271,17 @@ def entitlement_flow(flow_id, mgr_entitle_url):
     with httpx.Client(timeout=20.0) as client:
         try:
             response = client.get(f"{mgr_entitle_url}/entitlement-flows/{flow_id}?includeStages={include_stages}")
+            pp_json = json.dumps(response.json(), indent=2)
+            print(pp_json)
+            response.raise_for_status()
+        except httpx.HTTPStatusError as exc:
+            print(exc)
+
+
+def entitlements(mgr_entitle_url):
+    with httpx.Client(timeout=20.0) as client:
+        try:
+            response = client.get(f"{mgr_entitle_url}/entitlements?limit=99&includeModules=true")
             pp_json = json.dumps(response.json(), indent=2)
             print(pp_json)
             response.raise_for_status()
