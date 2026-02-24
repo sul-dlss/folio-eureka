@@ -53,78 +53,76 @@ TOKEN=$(curl -sX POST -d client_id="folio-backend-admin-client" -d client_secret
 curl -sX PUT "$KC_URL/admin/realms/master" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -d'{"accessTokenLifespan": "3600", "ssoSessionIdleTimeout": "3600"}'
 ```
 
-## Post the applications
-Get the application descriptors for app-platform-minimal from the repository [folio-org/app-platform-minimal](https://github.com/folio-org/app-platform-minimal) and select the version tag 1.0.43 for Ramsons R2-2024-csp-8. Copy the application-descriptor.json file from there and save as $namespace/application-descriptor-minimal.json.
-
-Get the application descriptors for app-platform-complete from the repository [folio-org/app-platform-complete](https://github.com/folio-org/app-platform-complete) and select the version tag 1.1.89 for Ramsons R2-2024-csp-8. Copy the application-descriptor.json file from there and save as $namespace/application-descriptor-complete.json. 
-
-Make sure the tag value for app-platform-minimal matches the version saved to application-descriptor-minimal.json (listed in the depencies array of the app-platform-complete descriptor).
-
-Get the application descriptors for other required apps and repeat the process:
+## Eureka Deployment and Entitlement Flow
+In the folio-eureka-pod, run the eureka_deployment_flow.py script:
 ```
-curl -X POST --location "$KONG_URL/applications" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -d@"$APP_FILE"
-```
+eureka_deployment_flow.py -h
 
-Check the applications posted by exec'ing into the folio-eureka-pod shell and doing:
+usage: EurekaDeploymentFlow [-h] -n NAMESPACE [-a] [-d] [-m] [-u] [-t] [-e] [-f FLOW_ID] [filename ...]
+
+Register applications, register modules, create tenant, create entitlements
+                    Default env vars:
+                    MGR_APP_URL=http://mgr-applications
+                    MGR_TENANTS_URL=http://mgr-tenants
+                    MGR_ENTITLE_URL=http://mgr-tenant-entitlements
+                    KC_URL=http://keycloak:8080
+                    KC_ADMIN_CLIENT_ID=folio-backend-admin-client
+                    KC_ADMIN_CLIENT_SECRET=<from folio-eureka k8s secret>
+                    ASYNC=true
+                    REF_DATA=true
+                    SAMPLE_DATA=false
+                    FLOW_STAGES=true
+
+positional arguments:
+  filename              The application descriptor JSON file or files to process. If not provided, all JSON files in the
+                        namespace directory will be processed.
+
+options:
+  -h, --help            show this help message and exit
+  -n NAMESPACE, --namespace NAMESPACE
+                        the Kubernetes namespace for the applications.
+  -a, --register_apps   register applications, uses MGR_APP_URL
+  -d, --delete_apps     delete applications (for upgrading flower release), uses MGR_APP_URL
+  -m, --register_modules
+                        register modules for discovery, uses MGR_APP_URL
+  -u, --reregister_modules
+                        re-register modules for discovery, uses MGR_APP_URL
+  -t, --create_tenant   create tenant, uses MGR_TENANTS_URL
+  -e, --entitle         entitle applications, uses MGR_ENTITLE_URL, ASYNC, REF_DATA, SAMPLE_DATA
+  -f FLOW_ID, --flow_id FLOW_ID
+                        FlowId to get entitlement-flow state, uses FLOW_STAGES
 ```
-curl "$KONG_URL/applications"
+### Register all the applications
+```
+python eureka_deployment_flow.py -n ${namespace} -a
 ```
 
 Delete any extra applications as needed, e.g.:
 ```
-curl -X DELETE --location "$KONG_URL/applications/$APP_ID" -H "Authorization: Bearer $TOKEN"
+python eureka_deployment_flow.py ${namespace}/application-descriptor-fqm.json ${namespace}/application-descriptor-linked-data.json -n ${namespace} -d
 ```
 
-## Deploy backend modules for each application
+### Deploy backend modules for each application
 Scripts will process all JSON files in the namespace directory if no filename is passed as first argument.
 ```
 python ./create_module_values.py -n $namespace
 python ./create_applications.py -n $namespace -x apply
 ```
 
-## Register the applications
+### Register all the modules for discovery
 ```
-APP_ID=$APP_ID python3 ./discovery-modules.py
-```
-
-## Create the tenant
-```
-curl -X POST --location "$KONG_URL/tenants" --header "Authorization: Bearer $TOKEN" --header 'Content-Type: application/json' --data '{"name": "sul", "description": "Stanford University Libraries"}'
+python eureka_deployment_flow.py -n ${namespace} -m
 ```
 
-### Get the tenantUUID
+### Create the tenant
 ```
-tenantUUID=$(curl -sX GET "$KONG_URL/tenants" | jq -r '.tenants | .[] | .id')
-```
-
-## Check or create sul-application redirect URIs in Keycloak
-### 1. Get Keycloak client UUID for the tenant application
-```
-CLIENT_UUID=$(curl -X GET  "$KC_URL/admin/realms/$TENANT_ID/clients?clientId=$TENANT_ID-application"   -H "Authorization: Bearer $TOKEN"   -H 'Content-Type: application/json' | jq -r '.[].id')
-```
-### 2. Update client to set tenant UI URLs and origins
-```
-curl -X PUT \
-  "$KC_URL/admin/realms/$TENANT_ID/clients/$CLIENT_UUID" \
-  -H "Authorization: Bearer $TOKEN" \
-  -H 'Content-Type: application/json' \
-  --data "{
-    \"rootUrl\": \"https://${namespace}.stanford.edu\",
-    \"baseUrl\": \"https://${namespace}.stanford.edu\",
-    \"adminUrl\": \"https://${namespace}.stanford.edu\",
-    \"redirectUris\": [\"https://${namespace}.stanford.edu/*\", \"http://localhost:3000/*\"],
-    \"webOrigins\": [\"/*\"],
-    \"authorizationServicesEnabled\": true,
-    \"serviceAccountsEnabled\": true,
-    \"attributes\": {\"post.logout.redirect.uris\": \"/*##https://${namespace}.stanford.edu/*\"}
-  }"
+python eureka_deployment_flow.py -n ${namespace} -t
 ```
 
-## Create Entitlements
-
-### Create entitlements for app-platform-minimal (Make sure all modules are up and running, may need to do multiple times due to timeouts)
+### Create Entitlements
+#### Create entitlements for app-platform-minimal (Make sure all modules are up and running, may need to do multiple times due to timeouts)
 ```
-curl -X POST --location "$KONG_URL/entitlements?async=true&tenantParameters=loadReference=true,loadSample=false" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" --data "{\"tenantId\":\"$tenantUUID\", \"applications\": [\"$APP_ID\"]}"
+python eureka_deployment_flow.py ${namespace}/application-descriptor-minimal.json -n ${namespace} -e
 ```
 
 ### Create keycloak system users - mod-users-keycloak and mod-login-keycloak
@@ -154,6 +152,85 @@ curl -X POST --location "$KONG_URL/authn/credentials" -H "Authorization: Bearer 
 ```
 
 Restart the mod-*-keycloak modules.
+
+### Create entitlements for the rest of the applications
+**Here we keep app-platform-minimal in the list, thinking only it will fail and the others will POST okay**
+```
+python eureka_deployment_flow.py ${namespace}/application-descriptor-acquisitions.json ${namespace}/application-descriptor-bulk-edit.json ${namespace}/application-descriptor-complete.json ${namespace}/application-descriptor-edge.json ${namespace}/application-descriptor-erm-usage.json ${namespace}/application-descriptor-fqm.json ${namespace}/application-descriptor-linked-data.json ${namespace}/application-descriptor-marc-migrations.json ${namespace}/application-descriptor-reading-room.json ${namespace}/application-descriptor-reporting.json ${namespace}/application-descriptor-z3950.json -n ${namespace} -e
+```
+
+### Monitor entitlements process
+Use flow_id printed from entitlements step
+```
+python eureka_deployment_flow.py -n ${namespace} -f ${flow_id}
+```
+## Create sul-application redirect URIs in Keycloak
+**Use curls or the UI**
+### 1. Get Keycloak client UUID for the tenant application
+```
+CLIENT_UUID=$(curl -X GET  "$KC_URL/admin/realms/$TENANT_ID/clients?clientId=$TENANT_ID-application"   -H "Authorization: Bearer $TOKEN"   -H 'Content-Type: application/json' | jq -r '.[].id')
+```
+### 2. Update client to set tenant UI URLs and origins
+```
+curl -X PUT \
+  "$KC_URL/admin/realms/$TENANT_ID/clients/$CLIENT_UUID" \
+  -H "Authorization: Bearer $TOKEN" \
+  -H 'Content-Type: application/json' \
+  --data "{
+    \"rootUrl\": \"https://${namespace}.stanford.edu\",
+    \"baseUrl\": \"https://${namespace}.stanford.edu\",
+    \"adminUrl\": \"https://${namespace}.stanford.edu\",
+    \"redirectUris\": [\"https://${namespace}.stanford.edu/*\", \"http://localhost:3000/*\"],
+    \"webOrigins\": [\"/*\"],
+    \"authorizationServicesEnabled\": true,
+    \"serviceAccountsEnabled\": true,
+    \"attributes\": {\"post.logout.redirect.uris\": \"/*##https://${namespace}.stanford.edu/*\"}
+  }"
+```
+
+## Bootstrap the Admin User
+Using the [sidecar-module-access-client](#sidecar-client-login)
+From the folio-eureka-pod (has env vars needed), run:
+```
+python bootstrap_admin_user.py -c -e $LIBSYS_EMAIL -f Libsys -l Admin -p $LIBSYS_PASSWORD -u $LIBSYS_USER
+```
+
+## Curls for Eureka Deployment and Entitlement Flow
+### Register the applications
+Get the application descriptors for app-platform-minimal from the repository [folio-org/app-platform-minimal](https://github.com/folio-org/app-platform-minimal) and select the version tag 1.0.43 for Ramsons R2-2024-csp-8. Copy the application-descriptor.json file from there and save as $namespace/application-descriptor-minimal.json.
+
+Get the application descriptors for app-platform-complete from the repository [folio-org/app-platform-complete](https://github.com/folio-org/app-platform-complete) and select the version tag 1.1.89 for Ramsons R2-2024-csp-8. Copy the application-descriptor.json file from there and save as $namespace/application-descriptor-complete.json. 
+
+Make sure the tag value for app-platform-minimal matches the version saved to application-descriptor-minimal.json (listed in the depencies array of the app-platform-complete descriptor).
+
+Get the application descriptors for other required apps and repeat the process:
+```
+curl -X POST --location "$KONG_URL/applications" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -d@"$APP_FILE"
+```
+
+Check the applications posted by exec'ing into the folio-eureka-pod shell and doing:
+```
+curl "$KONG_URL/applications"
+```
+
+Delete any extra applications as needed, e.g.:
+```
+curl -X DELETE --location "$KONG_URL/applications/$APP_ID" -H "Authorization: Bearer $TOKEN"
+```
+### Register the modules for discovery
+```
+APP_ID=$APP_ID python3 ./discovery-modules.py
+```
+
+### Create the tenant
+```
+curl -X POST --location "$KONG_URL/tenants" --header "Authorization: Bearer $TOKEN" --header 'Content-Type: application/json' --data '{"name": "sul", "description": "Stanford University Libraries"}'
+```
+
+### Get the tenantUUID
+```
+tenantUUID=$(curl -sX GET "$KONG_URL/tenants" | jq -r '.tenants | .[] | .id')
+```
 
 ### Create entitlements for app-platform-complete (Make sure all modules are up and running, may need to repeat due to timeouts)
 Use the [folio-backend-admin-client](#get-a-token-from-the-master-realm) id 
@@ -204,12 +281,6 @@ curl -sX DELETE "$KONG_URL/entitlements" -d "{\"tenantId\":\"$tenantUUID\", \"ap
 curl -X POST --location "$KONG_URL/reinstall/modules?async=true&tenantParameters=loadReference=true,loadSample=false"  -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" --data "{\"tenantId\": \"$tenantUUID\", \"applicationId\": \"$APP_ID\", \"modules\": [$MODULE_IDS]}"
 ```
 
-## Bootstrap the Admin User
-Using the [sidecar-module-access-client](#sidecar-client-login)
-From the folio-eureka-pod (has env vars needed), run:
-```
-python3 bootstrap_admin_user.py -c -e $LIBSYS_EMAIL -f Libsys -l Admin -p $LIBSYS_PASSWORD -u $LIBSYS_USER
-```
 
 ### Commands for each step of the admin user-creation process
 #### Create Admin User
