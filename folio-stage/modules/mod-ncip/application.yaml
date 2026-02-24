@@ -17,9 +17,10 @@ spec:
     helm:
       valueFiles:
       - $values/folio-stage/modules/mod-ncip/overrides.yaml
-      - $values/folio-stage/modules/mod-ncip/resources.yaml
+      - $values/folio-stage/common/resources.yaml
       - $values/folio-stage/common/sidecar.yaml
       - $values/folio-stage/common/probes.yaml
+      - $values/folio-stage/modules/mod-ncip/java_opts.yaml
     repoURL: https://sul-dlss.github.io/folio-helm-v2
     targetRevision: 2.0.41
   - ref: values
