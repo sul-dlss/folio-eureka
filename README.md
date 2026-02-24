@@ -156,7 +156,7 @@ Restart the mod-*-keycloak modules.
 ### Create entitlements for the rest of the applications
 **Here we keep app-platform-minimal in the list, thinking only it will fail and the others will POST okay**
 ```
-python eureka_deployment_flow.py -n ${namespace} -e
+python eureka_deployment_flow.py ${namespace}/application-descriptor-acquisitions.json ${namespace}/application-descriptor-bulk-edit.json ${namespace}/application-descriptor-complete.json ${namespace}/application-descriptor-edge.json ${namespace}/application-descriptor-erm-usage.json ${namespace}/application-descriptor-fqm.json ${namespace}/application-descriptor-linked-data.json ${namespace}/application-descriptor-marc-migrations.json ${namespace}/application-descriptor-reading-room.json ${namespace}/application-descriptor-reporting.json ${namespace}/application-descriptor-z3950.json -n ${namespace} -e
 ```
 
 ### Monitor entitlements process
