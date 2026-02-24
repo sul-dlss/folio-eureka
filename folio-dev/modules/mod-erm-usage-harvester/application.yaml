@@ -17,6 +17,7 @@ spec:
     helm:
       valueFiles:
       - $values/folio-dev/modules/mod-erm-usage-harvester/overrides.yaml
+      - $values/folio-dev/modules/mod-erm-usage-harvester/extra_env.yaml
       - $values/folio-dev/common/resources.yaml
       - $values/folio-dev/common/sidecar.yaml
       - $values/folio-dev/common/probes.yaml
