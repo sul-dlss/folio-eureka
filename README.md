@@ -280,6 +280,26 @@ curl -sX DELETE "$KONG_URL/entitlements" -d "{\"tenantId\":\"$tenantUUID\", \"ap
 ```
 curl -X POST --location "$KONG_URL/reinstall/modules?async=true&tenantParameters=loadReference=true,loadSample=false"  -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" --data "{\"tenantId\": \"$tenantUUID\", \"applicationId\": \"$APP_ID\", \"modules\": [$MODULE_IDS]}"
 ```
+### Reinstall many modules (up to 25 per API constraint)
+```
+curl -sX POST "http://mgr-tenant-entitlements/reinstall/modules?tenantParameters=loadReference=true,loadSampe=false" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" -d@reinstall.json
+```
+
+reinstall.json:
+```
+{
+  "tenantId": "2d4c4f01-d4f0-437c-ab1c-a9fe19fd4c15",
+  "applicationId": "app-platform-complete-2.2.13",
+  "modules": [
+    "mod-quick-marc-7.0.0",
+    "mod-source-record-manager-3.10.9",
+    "mod-di-converter-storage-2.4.2",
+    "mod-source-record-storage-5.10.13",
+    "mod-data-import-3.3.5",
+    "mod-copycat-1.8.1"
+  ]
+}
+```
 
 
 ### Commands for each step of the admin user-creation process
