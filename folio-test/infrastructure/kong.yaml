@@ -7,7 +7,7 @@ image:
   tag: 3.9.2
   pullPolicy: Always
 useDaemonset: false
-replicaCount: 2
+replicaCount: 1
 containerSecurityContext:
   enabled: true
   seLinuxOptions: {}
@@ -133,10 +133,10 @@ kong:
   resources:
     requests:
       ephemeral-storage: 50Mi
-      memory: 6144M
+      memory: 9Gi
     limits:
       ephemeral-storage: 1Gi
-      memory: 6144M
+      memory: 12Gi
 ingressController:
   enabled: false
 migration:
