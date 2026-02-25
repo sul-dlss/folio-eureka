@@ -4,6 +4,6 @@ resources:
     memory: 2592M
   limits:
     cpu: 1
-    memory: 2880
+    memory: 2880M
 
 dbMaxPoolSize: 10
