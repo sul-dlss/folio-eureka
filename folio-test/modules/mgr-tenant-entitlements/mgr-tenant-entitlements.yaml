@@ -15,15 +15,13 @@ integrations:
     enabled: true
     existingSecret: "kafka-credentials"
 
-replicaCount: 2
-
 resources:
   limits:
     cpu: 600m
     memory: 1024M
   requests:
     cpu: 300m
-    memory: 896M
+    memory: 512M
 
 extraEnvVars:
   - name: KC_JWKS_BASE_URL
