@@ -1,5 +1,5 @@
 ingress:
-  enabled: true
+  enabled: false
   className: nginx
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
@@ -9,3 +9,82 @@ ingress:
         - path: '/'
           pathType: Prefix
           servicePort: 80
+
+extraDeploy:
+  - |
+    apiVersion: gateway.envoyproxy.io/v1alpha1
+    kind: BackendTrafficPolicy
+    metadata:
+      name: edge-ncip-custom-error-page
+      namespace: folio-test
+    spec:
+        targetRefs:
+          - kind: HTTPRoute
+            group: gateway.networking.k8s.io
+            name: edge-ncip-backend
+        responseOverride:
+          - match:
+              statusCodes:
+              - type: Value
+                value: 403
+            response:
+              contentType: text/html
+              body:
+                type: Inline
+                inline: "You are not authorized to access FOLIO. A connection to the Stanford Network is required."
+    ---
+    apiVersion: gateway.networking.k8s.io/v1
+    kind: HTTPRoute
+    metadata:
+      name: edge-ncip-backend
+      namespace: folio-test
+    spec:
+      rules:
+      - backendRefs:
+        - name: edge-ncip
+          port: 80
+        matches:
+          - path:
+              type: PathPrefix
+              value: /
+      hostnames:
+      - folio-ncip-test.stanford.edu
+      parentRefs:
+      - name: default
+        namespace: envoy-gateway-system
+    ---
+    apiVersion: gateway.envoyproxy.io/v1alpha1
+    kind: SecurityPolicy
+    metadata:
+      name: edge-ncip-ip-limits
+      namespace: folio-test
+    spec:
+        targetRefs:
+          - kind: HTTPRoute
+            group: gateway.networking.k8s.io
+            name: edge-ncip-backend
+        authorization:
+          defaultAction: Allow
+          rules:
+            - action: Deny
+              principal:
+                clientCIDRs: []
+    ---
+    apiVersion: gateway.envoyproxy.io/v1alpha1
+    kind: SecurityPolicy
+    metadata:
+      name: edge-ncip-cors
+      namespace: folio-test
+    spec:
+        targetRefs:
+          - kind: HTTPRoute
+            group: gateway.networking.k8s.io
+            name: edge-ncip-backend
+        cors:
+          allowOrigins:
+          - http://kong:8000
+          allowMethods:
+          - GET
+          - OPTIONS
+          - POST
+          - PUT
