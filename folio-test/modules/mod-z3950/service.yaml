@@ -32,7 +32,7 @@ extraDeploy:
     apiVersion: gateway.envoyproxy.io/v1alpha1
     kind: BackendTrafficPolicy
     metadata:
-      name: platform-complete-custom-error-page
+      name: sru-custom-error-page
       namespace: folio-test
     spec:
         targetRefs:
