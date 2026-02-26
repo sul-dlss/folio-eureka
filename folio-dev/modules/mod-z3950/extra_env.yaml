@@ -17,9 +17,9 @@ extraEnvVars: |
     valueFrom:
       secretKeyRef:
         key: READONLY_APP_USER
-        name: db-credentials
+        name: folio-eureka
   - name: FOLIO_PASSWORD
     valueFrom:
       secretKeyRef:
         key: READONLY_APP_PASSWORD
-        name: db-credentials
+        name: folio-eureka
