@@ -99,6 +99,7 @@ metadata:
     app.kubernetes.io/instance: setae-api
     app.kubernetes.io/version: "1.0.0"
 spec:
+  ingressClassName: nginx
   rules:
     - host: "folio-setae-api-test.stanford.edu"
       http:
