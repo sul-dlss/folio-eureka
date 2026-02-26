@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: setae-api
+  namespace: folio-test
+spec:
+  project: folio-test
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: folio-test
+  source:
+    path: infrastructure/setae.yaml
+    repoURL: https://github.com/sul-dlss/folio-eureka
+    targetRevision: main
+operation:
+  sync:
+    syncStrategy:
+      hook: {}
