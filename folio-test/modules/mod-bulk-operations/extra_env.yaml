@@ -6,3 +6,5 @@ integrations:
 extraEnvVars: |
   - name: S3_IS_AWS
     value: 'true'
+  - name: OKAPI_URL
+    value: "http://localhost:8082"
