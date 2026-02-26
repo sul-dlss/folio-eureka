@@ -9,9 +9,11 @@ spec:
     server: https://kubernetes.default.svc
     namespace: folio-test
   source:
-    path: folio-test/infrastructure/setae.yaml
+    path: folio-test/infrastructure
+    directory:
+      include: 'setae.yaml'
     repoURL: https://github.com/sul-dlss/folio-eureka
-    targetRevision: setae-api
+    targetRevision: main
 operation:
   sync:
     syncStrategy:
