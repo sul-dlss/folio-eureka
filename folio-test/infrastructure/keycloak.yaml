@@ -85,11 +85,12 @@ extraEnvVars:
   - name: BASE_LOGO_FILES_URL
     value: "http://folio-test.stanford.edu"
 proxy: "edge"
+replicaCount: 3
 resources:
   requests:
-    memory: 3072Mi
+    memory: 2250M
   limits:
-    memory: 4096Mi
+    memory: 2750M
 postgresql:
   enabled: false
 externalDatabase:

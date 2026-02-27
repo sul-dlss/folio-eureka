@@ -21,7 +21,7 @@ extraJavaOpts:
 resources:
   limits:
     cpu: 600m
-    memory: 2Gi
+    memory: 1024Mi
   requests:
     cpu: 300m
     memory: 512Mi
