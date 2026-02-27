@@ -3,10 +3,6 @@ kind: Application
 metadata:
   name: mod-ebsconet
   namespace: folio-stage
-operation:
-  sync:
-    syncStrategy:
-      hook: {}
 spec:
   destination:
     namespace: folio-stage

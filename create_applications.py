@@ -53,13 +53,6 @@ def application_manifest(name, version, namespace, repo_url, values_files):
                     "targetRevision": args.values_branch,
                 }
             ]
-        },
-        "operation": {
-            "sync": {
-                "syncStrategy": {
-                    "hook": {}
-                }
-            }
         }
     }
     return yaml.dump(data)

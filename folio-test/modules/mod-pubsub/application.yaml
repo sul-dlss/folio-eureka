@@ -3,10 +3,6 @@ kind: Application
 metadata:
   name: mod-pubsub
   namespace: folio-test
-operation:
-  sync:
-    syncStrategy:
-      hook: {}
 spec:
   destination:
     namespace: folio-test

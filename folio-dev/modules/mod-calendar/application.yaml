@@ -3,10 +3,6 @@ kind: Application
 metadata:
   name: mod-calendar
   namespace: folio-dev
-operation:
-  sync:
-    syncStrategy:
-      hook: {}
 spec:
   destination:
     namespace: folio-dev

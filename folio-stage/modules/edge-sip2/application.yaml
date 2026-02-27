@@ -3,10 +3,6 @@ kind: Application
 metadata:
   name: edge-sip2
   namespace: folio-stage
-operation:
-  sync:
-    syncStrategy:
-      hook: {}
 spec:
   destination:
     namespace: folio-stage
