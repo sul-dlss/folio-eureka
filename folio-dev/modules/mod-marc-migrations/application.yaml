@@ -3,10 +3,6 @@ kind: Application
 metadata:
   name: mod-marc-migrations
   namespace: folio-dev
-operation:
-  sync:
-    syncStrategy:
-      hook: {}
 spec:
   destination:
     namespace: folio-dev

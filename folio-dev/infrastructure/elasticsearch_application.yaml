@@ -3,10 +3,6 @@ kind: Application
 metadata:
   name: elasticsearch
   namespace: folio-dev
-operation:
-  sync:
-    syncStrategy:
-      hook: {}
 spec:
   project: folio-dev
   destination:

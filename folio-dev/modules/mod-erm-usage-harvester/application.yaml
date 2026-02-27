@@ -3,10 +3,6 @@ kind: Application
 metadata:
   name: mod-erm-usage-harvester
   namespace: folio-dev
-operation:
-  sync:
-    syncStrategy:
-      hook: {}
 spec:
   destination:
     namespace: folio-dev
@@ -17,10 +13,10 @@ spec:
     helm:
       valueFiles:
       - $values/folio-dev/modules/mod-erm-usage-harvester/overrides.yaml
-      - $values/folio-dev/modules/mod-erm-usage-harvester/extra_env.yaml
       - $values/folio-dev/common/resources.yaml
       - $values/folio-dev/common/sidecar.yaml
       - $values/folio-dev/common/probes.yaml
+      - $values/folio-dev/modules/mod-erm-usage-harvester/extra_env.yaml
     repoURL: https://sul-dlss.github.io/folio-helm-v2
     targetRevision: 4.4.49
   - ref: values

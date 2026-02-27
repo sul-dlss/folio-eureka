@@ -18,7 +18,3 @@ spec:
     - repoURL: https://github.com/sul-dlss/folio-eureka
       targetRevision: main
       ref: values
-operation:
-  sync:
-    syncStrategy:
-      hook: {}

@@ -3,10 +3,6 @@ kind: Application
 metadata:
   name: mod-search
   namespace: folio-stage
-operation:
-  sync:
-    syncStrategy:
-      hook: {}
 spec:
   destination:
     namespace: folio-stage
@@ -20,6 +16,7 @@ spec:
       - $values/folio-stage/modules/mod-search/resources.yaml
       - $values/folio-stage/common/sidecar.yaml
       - $values/folio-stage/common/probes.yaml
+      - $values/folio-stage/modules/mod-search/extra_env.yaml
     repoURL: https://sul-dlss.github.io/folio-helm-v2
     targetRevision: 3.1.44
   - ref: values

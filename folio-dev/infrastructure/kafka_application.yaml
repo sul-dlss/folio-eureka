@@ -3,10 +3,6 @@ kind: Application
 metadata:
   name: kafka-folio-dev
   namespace: folio-dev
-operation:
-  sync:
-    syncStrategy:
-      hook: {}
 spec:
   project: folio-dev
   destination:

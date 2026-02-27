@@ -3,10 +3,6 @@ kind: Application
 metadata:
   name: kafka-folio-stage
   namespace: folio-stage
-operation:
-  sync:
-    syncStrategy:
-      hook: {}
 spec:
   project: folio-stage
   destination:
