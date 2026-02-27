@@ -1,9 +1,7 @@
 resources:
   requests:
     cpu: 150m
-    memory: 896M
+    memory: 2550M
   limits:
     cpu: 300m
-    memory: 1024M
-
-dbMaxPoolSize: 10
+    memory: 2800M
