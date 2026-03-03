@@ -1,13 +1,3 @@
-ingress:
-  enabled: true
-  className: nginx
-  hosts:
-    - host: "folio-ncip-dev.stanford.edu"
-      paths:
-        - path: '/'
-          pathType: Prefix
-          servicePort: 80
-
 extraDeploy:
   - |
     apiVersion: gateway.envoyproxy.io/v1alpha1
