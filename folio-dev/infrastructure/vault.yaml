@@ -18,6 +18,7 @@ server:
   extraSecretEnvironmentVars:
     - envName: UNSEAL_KEY
       secretName: folio-vault
+      secretKey: UNSEAL_KEY
   postStart:
     - /bin/sh
     - -c
