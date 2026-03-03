@@ -48,7 +48,7 @@ extraDeploy:
     spec:
       rules:
       - backendRefs:
-        - name: sru
+        - name: mod-z3950
           port: 80
         matches:
           - path:
