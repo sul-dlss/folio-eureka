@@ -12,5 +12,5 @@ resources:
   limits:
     cpu: 200m
     memory: 512M
-
+recreateOnRedeploy: false
 replicaCount: 2
