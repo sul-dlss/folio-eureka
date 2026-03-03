@@ -136,27 +136,6 @@ migration:
   args: ["echo 'Hello kong!'"]
 extraDeploy:
   - |
-    apiVersion: gateway.envoyproxy.io/v1alpha1
-    kind: BackendTrafficPolicy
-    metadata:
-      name: kong-custom-error-page
-      namespace: folio-dev
-    spec:
-        targetRefs:
-          - kind: HTTPRoute
-            group: gateway.networking.k8s.io
-            name: kong-backend
-        responseOverride:
-          - match:
-              statusCodes:
-              - type: Value
-                value: 403
-            response:
-              contentType: text/html
-              body:
-                type: Inline
-                inline: "You are not authorized to access FOLIO. A connection to the Stanford Network is required."
-    ---
     apiVersion: gateway.networking.k8s.io/v1
     kind: HTTPRoute
     metadata:
@@ -176,7 +155,7 @@ extraDeploy:
         - path:
             type: PathPrefix
             value: /
-  - |
+---
     apiVersion: gateway.envoyproxy.io/v1alpha1
     kind: SecurityPolicy
     metadata:
