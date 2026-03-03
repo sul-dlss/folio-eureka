@@ -39,14 +39,6 @@ service:
     proxyHttps: 443
     adminHttp: 8001
     adminHttps: 8444
-ingress:
-  ingressClassName: "nginx"
-  pathType: ImplementationSpecific
-  hostname: folio-test-api.stanford.edu
-  enabled: true
-  annotations:
-    nginx.ingress.kubernetes.io/client-body-buffer-size: 512M
-    nginx.ingress.kubernetes.io/proxy-body-size: 512M
 kong:
   livenessProbe:
     enabled: false

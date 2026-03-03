@@ -1,13 +1,3 @@
-ingress:
-  enabled: true
-  className: "nginx"
-  hosts:
-    - host: "folio-sru-test.stanford.edu"
-      paths:
-        - path: '/'
-          pathType: Prefix
-          servicePort: 80
-  tls: []
 service:
   type: NodePort
   ports:

@@ -155,7 +155,7 @@ extraDeploy:
         - path:
             type: PathPrefix
             value: /
-  - |
+---
     apiVersion: gateway.envoyproxy.io/v1alpha1
     kind: SecurityPolicy
     metadata:
