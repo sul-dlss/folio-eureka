@@ -44,23 +44,6 @@ extraDeploy:
     apiVersion: gateway.envoyproxy.io/v1alpha1
     kind: SecurityPolicy
     metadata:
-      name: edge-ncip-ip-limits
-      namespace: folio-dev
-    spec:
-        targetRefs:
-          - kind: HTTPRoute
-            group: gateway.networking.k8s.io
-            name: edge-ncip-backend
-        authorization:
-          defaultAction: Allow
-          rules:
-            - action: Allow
-              principal:
-                clientCIDRs: []
-    ---
-    apiVersion: gateway.envoyproxy.io/v1alpha1
-    kind: SecurityPolicy
-    metadata:
       name: edge-ncip-cors
       namespace: folio-dev
     spec:
