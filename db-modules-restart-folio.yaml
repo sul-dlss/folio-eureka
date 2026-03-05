@@ -85,4 +85,4 @@ spec:
                     mod-users 
                     mod-users-keycloak 
               command: [ "/bin/bash", "-c", "--" ]
-              args: [ "for M in $DB_MODULES; do kubectl -n folio-test rollout restart deployment/$M; sleep 30; done" ]
+              args: [ "for M in $DB_MODULES; do kubectl -n $namespace rollout restart deployment/$M; sleep 30; done" ]
