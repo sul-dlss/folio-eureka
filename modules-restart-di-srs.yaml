@@ -1,0 +1,38 @@
+# To apply this file, run:
+# SRS_MODULES='$SRS_MODULES' envsubst < modules-restart-di-srs.yaml | kubectl -n $namespace apply -f -
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: srs-modules-restart
+  namespace: $namespace
+spec:
+  concurrencyPolicy: Forbid
+  schedule: '39 12 * * 1-5' # 5:39 AM Pacific, Monday to Friday
+  # schedule: '0 0 29 2 1' # noop
+  suspend: true
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      activeDeadlineSeconds: 600
+      ttlSecondsAfterFinished: 14400 # 4 hours
+      template:
+        spec:
+          serviceAccountName: folio-k8s
+          restartPolicy: Never
+          containers:
+            - name: kubectl
+              image: bitnamilegacy/kubectl
+              env:
+                - name: SRS_MODULES
+                  value: | 
+                    mod-data-import 
+                    mod-di-converter-storage 
+                    mod-inventory 
+                    mod-inventory-storage 
+                    mod-source-record-storage 
+                    mod-source-record-manager 
+                    mod-copycat
+              command: [ "/bin/bash", "-c", "--" ]
+              args: [ "for M in $SRS_MODULES; do kubectl -n $namespace rollout restart deployments/$M; done" ]
