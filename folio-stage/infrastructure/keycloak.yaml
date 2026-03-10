@@ -29,7 +29,7 @@ extraEnvVars:
   - name: FIPS
     value: "false"
   - name: KC_HOSTNAME
-    value: "https://keycloak-folio-stage.stanford.edu"
+    value: "https://keycloak-folio-stage.stanford.edu:8443"
   - name: KC_HOSTNAME_DEBUG
     value: "true"
   - name: KC_FOLIO_BE_ADMIN_CLIENT_ID
@@ -83,7 +83,7 @@ extraEnvVars:
         name: keycloak-credentials
         key: KC_BOOTSTRAP_ADMIN_PASSWORD
   - name: BASE_LOGO_FILES_URL
-    value: "http://folio-stage.stanford.edu"
+    value: "http://folio-stage.stanford.edu:8443"
 proxy: "edge"
 resources:
   requests:
@@ -114,18 +114,9 @@ service:
     http: 8080
     https: 8443
 ingress:
-  enabled: true
-  hostnameStrict: false
-  hostname: keycloak-folio-stage.stanford.edu
-  ingressClassName: "nginx"
-  annotations:
-    kubernetes.io/ingress.class: nginx
+  enabled: false
 adminIngress:
   enabled: false
-  hostname: keycloak-admin-folio-stage.stanford.edu
-  ingressClassName: "nginx"
-  annotations:
-    kubernetes.io/ingress.class: nginx
 livenessProbe:
   enabled: true
   initialDelaySeconds: 60
@@ -205,23 +196,41 @@ extraDeploy:
           - action: Allow
             principal:
               clientCIDRs:
+              - "52.53.107.5/32"
+              - "18.144.135.31/32"
+              - "23.244.192.27/32"
               - "54.245.203.243/32"
+              - "34.214.229.235/32"
+              - "35.161.222.214/32"
+              - "18.219.235.193/32"
               - "171.64.0.0/14"
               - "10.32.0.0/15"
               - "10.34.0.0/15"
               - "10.96.0.0/11"
               - "10.98.0.0/15"
               - "10.130.0.0/18"
-              - "10.130.64.0/18" 
-              - "10.130.128.0/18" 
-              - "10.130.192.0/18" 
-              - "172.24.0.0/14" 
-              - "172.20.206.128/25" 
-              - "172.20.207.0/25" 
-              - "171.66.16.0/21" 
-              - "171.66.24.0/21" 
-              - "171.66.176.0/20" 
-              - "204.63.231.0/25" 
+              - "10.130.64.0/18"
+              - "10.130.128.0/18"
+              - "10.130.192.0/18"
+              - "172.24.0.0/14"
+              - "172.20.206.128/25"
+              - "172.20.207.0/25"
+              - "171.66.16.0/21"
+              - "171.66.24.0/21"
+              - "171.66.176.0/20"
+              - "204.63.231.0/25"
               - "10.109.48.0/25"
-              - "10.109.48.128/25" 
+              - "10.109.48.128/25"
               - "171.66.1.0/24"
+              - "35.203.130.101/32"
+              - "35.203.131.135/32"
+              - "35.192.213.120/32"
+              - "104.198.197.19/32"
+              - "52.175.234.32/32"
+              - "20.29.204.55/32"
+              - "52.250.48.144/32"
+              - "10.142.204.81/32"
+              - "10.142.204.82/32"
+              - "62.153.143.224/28"
+              - "87.129.225.56/29"
+              - "52.38.29.98/32"
