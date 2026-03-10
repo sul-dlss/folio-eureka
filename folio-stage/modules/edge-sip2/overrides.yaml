@@ -10,7 +10,7 @@ eureka:
     value: 'false'
 image:
   repository: folioorg/edge-sip2
-  tag: 3.3.3
+  tag: 3.4.2
 integrations:
   eureka-edge:
     enabled: false

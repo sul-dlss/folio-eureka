@@ -10,7 +10,7 @@ eureka:
     value: 'false'
 image:
   repository: folioorg/mod-fqm-manager
-  tag: 3.0.17
+  tag: 4.0.15
 integrations:
   db:
     enabled: true

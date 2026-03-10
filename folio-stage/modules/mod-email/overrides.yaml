@@ -10,7 +10,7 @@ eureka:
     value: 'false'
 image:
   repository: folioorg/mod-email
-  tag: 1.18.1
+  tag: 1.19.1
 integrations:
   db:
     enabled: true

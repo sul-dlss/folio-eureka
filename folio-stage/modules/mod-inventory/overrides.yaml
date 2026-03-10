@@ -10,7 +10,7 @@ eureka:
     value: 'false'
 image:
   repository: folioorg/mod-inventory
-  tag: 21.0.17
+  tag: 21.1.16
 integrations:
   db:
     enabled: true
