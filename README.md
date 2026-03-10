@@ -17,12 +17,12 @@ for I in `ls ${namespace}/infrastructure/*_application.yaml`; do kubectl -n ${na
 
 ### keycloak helm install commands if there are issues with the ArgoCD app
 ```
-helm upgrade --install -n ${namespace} --version v24.7.4 keycloak bitnami/keycloak -f folio-test/infrastructure/keycloak.yaml
+helm upgrade --install -n ${namespace} --version v24.7.4 keycloak bitnami/keycloak -f ${namespace}/infrastructure/keycloak.yaml
 ```
 
 ## Install Vault in the cluster namespace if there are issues with ArgoCD app
 ```
-helm -n ${namespace} install --version v0.32.0 -f folio-test/infrastructure/vault.yaml vault hashicorp/vault
+helm -n ${namespace} install --version v0.32.0 -f ${namespace}/infrastructure/vault.yaml vault hashicorp/vault
 ```
 Initialize vault with secrets by first exec'ing into vault-0 pod:
 ```
