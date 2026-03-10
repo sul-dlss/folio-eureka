@@ -111,7 +111,7 @@ kong:
   - name: KONG_NGINX_HTTP_LARGE_CLIENT_HEADER_BUFFERS
     value: "4 16k"
   - name: KONG_ADMIN_GUI_API_URL
-    value: "https://kong-folio-dev.stanford.edu"
+    value: "https://folio-dev-api.stanford.edu"
   - name: KONG_NGINX_HTTPS_LARGE_CLIENT_HEADER_BUFFERS
     value: "4 16k"
   - name: KONG_PROXY_LISTEN
@@ -143,7 +143,7 @@ extraDeploy:
       namespace: folio-dev
     spec:
       hostnames:
-      - kong-folio-dev.stanford.edu
+      - folio-dev-api.stanford.edu
       parentRefs:
       - name: default
         namespace: envoy-gateway-system
