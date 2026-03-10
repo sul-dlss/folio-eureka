@@ -1,7 +1,7 @@
 # folio-eureka
 
 ## Version Management
-To get the versions of the modules for Eureka, select the appropriate flower release tag from [folio-org/platform-lsp](https://github.com/folio-org/platform-lsp). Find the app versions from the install-applications.json file and then select the versioned tag from the corresponding application name folio-org repository. Update the deployment specifications versions of folio-module-sidecar, keycloak, kong, mgr-applications, mgr-tenants, and mgr-tenant-entitlements based on the versions is management-modules.json file for the flower release tag.
+To get the versions of the modules for Eureka, select the appropriate flower release tag from [folio-org/platform-lsp](https://github.com/folio-org/platform-lsp). Find the app versions from the install-applications.json file and then select the versioned tag from the corresponding application name folio-org repository. Update the deployment specification versions of folio-module-sidecar, keycloak, kong, mgr-applications, mgr-tenants, and mgr-tenant-entitlements based on the versions in platform-lsp/management-modules.json file for the flower release tag.
 
 ## Secrets
 Add to [Vault](https://vault.sul.stanford.edu/) key-value pairs for db-credentials, eureka-common, eureka-edge, folio-eureka, folio-vault, kafka-credentials, keycloak-credentials, kong-credentials, mod-pubsub-system-user, opensearch-credentials, and s3-credentials.
