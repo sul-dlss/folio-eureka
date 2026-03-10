@@ -16,8 +16,6 @@ metrics:
       release: prometheus
       component: folio-stage-elastic
 global:
-  # Future versions will use 'defaultStorageClass'
-  # defaultStorageClass: "mayastor-3"
   storageClass: "mayastor-3"
 coordinating:
   replicaCount: 3
