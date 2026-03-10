@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: edge-ncip
+  name: mod-linked-data
   namespace: folio-stage
 spec:
   destination:
@@ -9,17 +9,15 @@ spec:
     server: https://kubernetes.default.svc
   project: folio-stage
   sources:
-  - chart: edge-ncip
+  - chart: mod-linked-data
     helm:
       valueFiles:
-      - $values/folio-stage/modules/edge-ncip/overrides.yaml
-      - $values/folio-stage/modules/edge-ncip/resources.yaml
+      - $values/folio-stage/modules/mod-linked-data/overrides.yaml
+      - $values/folio-stage/common/resources.yaml
+      - $values/folio-stage/common/sidecar.yaml
       - $values/folio-stage/common/probes.yaml
-      - $values/folio-stage/modules/edge-ncip/service.yaml
-      - $values/folio-stage/modules/edge-ncip/java_opts.yaml
-      - $values/folio-stage/modules/edge-ncip/extra_env.yaml
     repoURL: https://sul-dlss.github.io/folio-helm-v2
-    targetRevision: 1.10.0
+    targetRevision: 1.0.26
   - ref: values
     repoURL: https://github.com/sul-dlss/folio-eureka
     targetRevision: main

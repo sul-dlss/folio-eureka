@@ -1,0 +1,4 @@
+#mod-z3950 does not serve health check endpoint
+startupProbe: {}
+readinessProbe: {}
+livenessProbe: {}

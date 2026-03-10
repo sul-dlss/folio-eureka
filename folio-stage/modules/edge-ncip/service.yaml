@@ -1,41 +1,10 @@
-ingress:
-  enabled: true
-  className: nginx
-  hosts:
-    - host: "folio-ncip-stage.stanford.edu"
-      paths:
-        - path: '/'
-          pathType: Prefix
-          servicePort: 80
-
 extraDeploy:
   - |
-    apiVersion: gateway.envoyproxy.io/v1alpha1
-    kind: BackendTrafficPolicy
-    metadata:
-      name: edge-ncip-custom-error-page
-      namespace: folio-stage
-    spec:
-        targetRefs:
-          - kind: HTTPRoute
-            group: gateway.networking.k8s.io
-            name: edge-ncip-backend
-        responseOverride:
-          - match:
-              statusCodes:
-              - type: Value
-                value: 403
-            response:
-              contentType: text/html
-              body:
-                type: Inline
-                inline: "You are not authorized to access FOLIO. A connection to the Stanford Network is required."
-    ---
     apiVersion: gateway.networking.k8s.io/v1
     kind: HTTPRoute
     metadata:
       name: edge-ncip-backend
-      namespace: folio-stage
+      namespace: folio-test
     spec:
       rules:
       - backendRefs:
@@ -46,7 +15,7 @@ extraDeploy:
               type: PathPrefix
               value: /
       hostnames:
-      - folio-ncip-stage.stanford.edu
+      - folio-ncip-test.stanford.edu
       parentRefs:
       - name: default
         namespace: envoy-gateway-system
@@ -55,7 +24,7 @@ extraDeploy:
     kind: SecurityPolicy
     metadata:
       name: edge-ncip-cors
-      namespace: folio-stage
+      namespace: folio-test
     spec:
         targetRefs:
           - kind: HTTPRoute

@@ -1,18 +1,12 @@
 resources:
   requests:
     cpu: 300m
-    memory: 2048M
+    memory: 2480M
   limits:
     cpu: 500m
-    memory: 3210M
+    memory: 2592M
 
 integrations:
   opensearch:
     enabled: true
     existingSecret: "opensearch-credentials"
-  
-extraEnvVars: |
-  - name: OKAPI_URL
-    value: "http://kong:8000"
-# - name: INITIAL_LANGUAGES
-#   value: "eng,chi,jpn,kor,rus"

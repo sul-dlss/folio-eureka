@@ -1,0 +1,3 @@
+extraEnvVars: |
+  - name: OKAPI_URL
+    value: "http://kong:8000"

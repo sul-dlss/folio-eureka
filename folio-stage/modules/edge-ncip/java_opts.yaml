@@ -1,9 +1,5 @@
-extraJavaOpts: 
-- "-Dlog4j2.formatMsgNoLookups=true"
-- "-XX:MaxRAMPercentage=80"
-- "-XX:MinRAMPercentage=80"
-- "-Dsecure_store=Ephemeral"
-- "-Drequest_timeout_ms=60000"
-- "-Dsecure_store_props=/etc/edge/ephemeral.properties"
-- "-Dokapi_url=http://kong:8000"
-- "-Dport=8081"
+javaOpts:
+  - "-Dokapi_url=http://kong:8000"
+  - "-XX:MaxRAMPercentage=80"
+  - "-XX:MinRAMPercentage=80"
+  - "-Drequest_timeout_ms=60000"
