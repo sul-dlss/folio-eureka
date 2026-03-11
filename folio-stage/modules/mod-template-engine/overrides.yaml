@@ -10,7 +10,7 @@ eureka:
     value: 'false'
 image:
   repository: folioorg/mod-template-engine
-  tag: 1.21.0
+  tag: 1.22.0
 integrations:
   db:
     enabled: true

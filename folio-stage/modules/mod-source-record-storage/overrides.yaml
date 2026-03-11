@@ -10,7 +10,7 @@ eureka:
     value: 'false'
 image:
   repository: folioorg/mod-source-record-storage
-  tag: 5.9.17
+  tag: 5.10.13
 integrations:
   db:
     enabled: true

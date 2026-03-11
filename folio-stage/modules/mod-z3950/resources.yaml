@@ -5,10 +5,3 @@ resources:
   limits:
     cpu: 100m
     memory: 1024M
-
-dbMaxPoolSize: 10
-
-integrations:
-  s3:
-    enabled: true
-    existingSecret: "s3-credentials"

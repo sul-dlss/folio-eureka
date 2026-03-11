@@ -6,4 +6,3 @@ integrations:
 extraEnvVars: |
   - name: OKAPI_URL
     value: "http://localhost:8082"
-  

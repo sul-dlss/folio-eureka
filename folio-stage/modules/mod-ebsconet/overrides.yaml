@@ -10,7 +10,7 @@ eureka:
     value: 'false'
 image:
   repository: folioorg/mod-ebsconet
-  tag: 2.3.1
+  tag: 2.4.0
 integrations:
   db:
     enabled: true

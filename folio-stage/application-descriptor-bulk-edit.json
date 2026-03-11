@@ -1,0 +1,921 @@
+{
+  "id": "app-bulk-edit-1.0.8",
+  "name": "app-bulk-edit",
+  "version": "1.0.8",
+  "description": "Application descriptor for the FOLIO bulk-edit application",
+  "platform": "complete",
+  "modules": [  {
+    "name": "mod-bulk-operations",
+    "version": "2.2.8"
+  }],
+  "uiModules": [  {
+    "name": "folio_bulk-edit",
+    "version": "5.0.2"
+  }],
+  "dependencies":   [
+        {
+      "name": "app-platform-complete",
+      "version": "^2.0.0"
+    },
+        {
+      "name": "app-fqm",
+      "version": "^1.0.0"
+    }
+  ],
+  "moduleDescriptors": [  {
+    "id": "mod-bulk-operations-2.2.8",
+    "name": "Bulk operations API.",
+    "provides":     [
+            {
+        "id": "bulk-operations",
+        "version": "1.6",
+        "handlers":         [
+                    {
+            "methods": ["POST"],
+            "pathPattern": "/bulk-operations/upload",
+            "permissionsRequired": ["bulk-operations.item.upload.post"],
+            "modulePermissions": []
+          },
+                    {
+            "methods": ["POST"],
+            "pathPattern": "/bulk-operations/query",
+            "permissionsRequired": ["bulk-operations.item.query.post"],
+            "modulePermissions":             [
+              "fqm.entityTypes.item.get",
+              "fqm.query.async.post"
+            ]
+          },
+                    {
+            "methods": ["POST"],
+            "pathPattern": "/bulk-operations/{operationId}/content-update",
+            "permissionsRequired": ["bulk-operations.item.content-update.post"],
+            "modulePermissions": []
+          },
+                    {
+            "methods": ["POST"],
+            "pathPattern": "/bulk-operations/{operationId}/marc-content-update",
+            "permissionsRequired": ["bulk-operations.item.marc-content-update.post"],
+            "modulePermissions": []
+          },
+                    {
+            "methods": ["GET"],
+            "pathPattern": "/bulk-operations/{operationId}/preview",
+            "permissionsRequired": ["bulk-operations.item.preview.get"],
+            "modulePermissions":             [
+              "addresstypes.item.get",
+              "departments.item.get",
+              "usergroups.item.get",
+              "user-settings.custom-fields.collection.get",
+              "okapi.proxy.tenants.modules.list",
+              "inventory-storage.item-damaged-statuses.item.get",
+              "inventory-storage.item-note-types.item.get",
+              "inventory-storage.item-note-types.collection.get",
+              "inventory-storage.service-points.item.get",
+              "users.item.get",
+              "inventory-storage.instances.item.get",
+              "inventory-storage.holdings-types.item.get",
+              "inventory-storage.holdings-note-types.collection.get",
+              "inventory-storage.locations.item.get",
+              "inventory-storage.call-number-types.item.get",
+              "inventory-storage.electronic-access-relationships.item.get",
+              "inventory-storage.holdings-note-types.item.get",
+              "inventory-storage.ill-policies.item.get",
+              "inventory-storage.holdings-sources.item.get",
+              "inventory-storage.statistical-codes.item.get",
+              "inventory-storage.instance-note-types.item.get",
+              "inventory-storage.instance-note-types.collection.get",
+              "inventory-storage.contributor-types.item.get",
+              "inventory-storage.instance-types.item.get",
+              "inventory-storage.instance-formats.item.get",
+              "consortia.consortium.item.get",
+              "user-tenants.collection.get",
+              "consortia.user-tenants.collection.get",
+              "mapping-rules.get",
+              "consortium-search.holdings.batch.collection.get",
+              "consortium-search.items.batch.collection.get"
+            ]
+          },
+                    {
+            "methods": ["GET"],
+            "pathPattern": "/bulk-operations/{operationId}/preview/download",
+            "permissionsRequired": ["bulk-operations.item.preview.download.get"],
+            "modulePermissions":             [
+              "addresstypes.item.get",
+              "departments.item.get",
+              "usergroups.item.get",
+              "user-settings.custom-fields.collection.get",
+              "okapi.proxy.tenants.modules.list",
+              "inventory-storage.item-damaged-statuses.item.get",
+              "inventory-storage.item-note-types.item.get",
+              "inventory-storage.item-note-types.collection.get",
+              "inventory-storage.service-points.item.get",
+              "users.item.get",
+              "inventory-storage.instances.item.get",
+              "inventory-storage.holdings-types.item.get",
+              "inventory-storage.locations.item.get",
+              "inventory-storage.call-number-types.item.get",
+              "inventory-storage.electronic-access-relationships.item.get",
+              "inventory-storage.holdings-note-types.item.get",
+              "inventory-storage.holdings-note-types.collection.get",
+              "inventory-storage.ill-policies.item.get",
+              "inventory-storage.holdings-sources.item.get",
+              "inventory-storage.statistical-codes.item.get",
+              "inventory-storage.instance-note-types.item.get",
+              "consortium-search.holdings.batch.collection.get",
+              "consortium-search.items.batch.collection.get",
+              "mapping-rules.get"
+            ]
+          },
+                    {
+            "methods": ["POST"],
+            "pathPattern": "/bulk-operations/{operationId}/start",
+            "permissionsRequired": ["bulk-operations.item.start.post"],
+            "modulePermissions":             [
+              "addresstypes.item.get",
+              "addresstypes.collection.get",
+              "bulk-edit.item.post",
+              "bulk-edit.start.item.post",
+              "data-export.job.item.post",
+              "data-export.job.item.get",
+              "configuration.entries.collection.get",
+              "departments.item.get",
+              "departments.collection.get",
+              "inventory.items.item.put",
+              "inventory.items.collection.get",
+              "inventory-storage.call-number-types.item.get",
+              "inventory-storage.call-number-types.collection.get",
+              "inventory-storage.electronic-access-relationships.item.get",
+              "inventory-storage.electronic-access-relationships.collection.get",
+              "inventory-storage.holdings.item.put",
+              "inventory-storage.holdings.item.get",
+              "inventory-storage.holdings.collection.get",
+              "inventory-storage.holdings-sources.item.get",
+              "inventory-storage.holdings-sources.collection.get",
+              "inventory-storage.holdings-types.item.get",
+              "inventory-storage.holdings-types.collection.get",
+              "inventory-storage.holdings-note-types.item.get",
+              "inventory-storage.holdings-note-types.collection.get",
+              "inventory-storage.locations.item.get",
+              "inventory-storage.locations.collection.get",
+              "inventory-storage.loan-types.item.get",
+              "inventory-storage.loan-types.collection.get",
+              "inventory-storage.material-types.collection.get",
+              "inventory-storage.ill-policies.item.get",
+              "inventory-storage.ill-policies.collection.get",
+              "inventory-storage.instances.item.get",
+              "inventory-storage.instances.collection.get",
+              "inventory-storage.item-note-types.item.get",
+              "inventory-storage.item-note-types.collection.get",
+              "inventory-storage.item-damaged-statuses.item.get",
+              "inventory-storage.item-damaged-statuses.collection.get",
+              "inventory-storage.service-points.item.get",
+              "inventory-storage.service-points.collection.get",
+              "inventory-storage.statistical-codes.item.get",
+              "inventory-storage.statistical-codes.collection.get",
+              "inventory-storage.statistical-code-types.item.get",
+              "users.item.put",
+              "users.item.get",
+              "users.collection.get",
+              "usergroups.item.get",
+              "usergroups.collection.get",
+              "user-settings.custom-fields.collection.get",
+              "inventory-storage.instance-statuses.collection.get",
+              "inventory-storage.instance-statuses.item.get",
+              "inventory-storage.modes-of-issuance.collection.get",
+              "inventory-storage.modes-of-issuance.item.get",
+              "inventory-storage.instance-types.collection.get",
+              "inventory-storage.instance-types.item.get",
+              "inventory-storage.nature-of-content-terms.collection.get",
+              "inventory-storage.nature-of-content-terms.item.get",
+              "inventory-storage.instance-formats.collection.get",
+              "inventory-storage.instance-formats.item.get",
+              "inventory.instances.item.put",
+              "inventory-storage.instance-note-types.item.get",
+              "inventory-storage.instance-note-types.collection.get",
+              "consortia.consortium.item.get",
+              "user-tenants.collection.get",
+              "consortia.user-tenants.collection.get",
+              "consortium-search.holdings.collection.get",
+              "consortium-search.holdings.batch.collection.get",
+              "data-import.uploaddefinitions.post",
+              "data-import.uploadDefinitions.item.get",
+              "data-import.upload.file.post",
+              "data-import.uploadDefinitions.files.item.post",
+              "data-import.uploadDefinitions.processFiles.item.post",
+              "converter-storage.jobprofile.collection.get",
+              "converter-storage.jobprofile.item.get",
+              "converter-storage.jobprofile.post",
+              "metadata-provider.jobExecutions.collection.get",
+              "metadata-provider.journalRecords.collection.get",
+              "metadata-provider.jobLogEntries.collection.get",
+              "converter-storage.matchprofile.post",
+              "converter-storage.actionprofile.post",
+              "converter-storage.mappingprofile.post",
+              "source-storage.source-records.item.get",
+              "data-import.splitconfig.get",
+              "data-import.uploadUrl.item.get",
+              "data-import.assembleStorageFile.post",
+              "source-storage.source-records.item.get",
+              "perms.users.get",
+              "permissions.users.item.get"
+            ]
+          },
+                    {
+            "methods": ["GET"],
+            "pathPattern": "/bulk-operations/{operationId}/errors",
+            "permissionsRequired": ["bulk-operations.item.errors.get"],
+            "modulePermissions": ["bulk-edit.errors.collection.get"]
+          },
+                    {
+            "methods": ["GET"],
+            "pathPattern": "/bulk-operations/{operationId}/errors/download",
+            "permissionsRequired": ["bulk-operations.item.errors.download.get"],
+            "modulePermissions": ["bulk-edit.errors.collection.get"]
+          },
+                    {
+            "methods": ["GET"],
+            "pathPattern": "/bulk-operations",
+            "permissionsRequired": ["bulk-operations.collection.get"],
+            "modulePermissions": []
+          },
+                    {
+            "methods": ["GET"],
+            "pathPattern": "/bulk-operations/{operationId}",
+            "permissionsRequired": ["bulk-operations.item.get"],
+            "modulePermissions":             [
+              "fqm.query.sync.get",
+              "fqm.query.async.results.get",
+              "bulk-edit.item.post",
+              "bulk-edit.start.item.post",
+              "data-export.job.item.post",
+              "data-export.job.item.get",
+              "metadata-provider.jobExecutions.collection.get",
+              "metadata-provider.journalRecords.collection.get",
+              "metadata-provider.jobLogEntries.collection.get",
+              "source-storage.parsed-records.fetch.collection.post",
+              "data-import.splitconfig.get"
+            ]
+          },
+                    {
+            "methods": ["GET"],
+            "pathPattern": "/bulk-operations/{operationId}/download",
+            "permissionsRequired": ["bulk-operations.download.item.get"],
+            "modulePermissions":             [
+              "inventory-storage.holdings-note-types.collection.get",
+              "inventory-storage.item-note-types.collection.get",
+              "consortia.consortium.item.get",
+              "user-tenants.collection.get",
+              "consortia.user-tenants.collection.get",
+              "metadata-provider.jobexecutions.get",
+              "consortium-search.holdings.batch.collection.get",
+              "consortium-search.items.batch.collection.get"
+            ]
+          },
+                    {
+            "methods": ["GET"],
+            "pathPattern": "/bulk-operations/list-users",
+            "permissionsRequired": ["bulk-operations.list-users.collection.get"],
+            "modulePermissions": ["users.collection.get"]
+          },
+                    {
+            "methods": ["DELETE"],
+            "pathPattern": "/bulk-operations/{operationId}/files/{fileName}",
+            "permissionsRequired": ["bulk-operations.files.item.delete"],
+            "modulePermissions": []
+          },
+                    {
+            "methods": ["POST"],
+            "pathPattern": "/bulk-operations/{operationId}/cancel",
+            "permissionsRequired": ["bulk-operations.item.cancel.post"],
+            "modulePermissions": []
+          },
+                    {
+            "methods": ["GET"],
+            "pathPattern": "/bulk-operations/used-tenants/{operationId}",
+            "permissionsRequired": ["bulk-operations.used.tenants.get"],
+            "modulePermissions": []
+          }
+        ]
+      },
+            {
+        "id": "_tenant",
+        "version": "2.0",
+        "interfaceType": "system",
+        "handlers":         [
+                    {
+            "methods": ["POST"],
+            "pathPattern": "/_/tenant",
+            "permissionsRequired": [],
+            "modulePermissions":             [
+              "users.collection.get",
+              "users.item.post",
+              "login.item.post",
+              "login.item.delete",
+              "perms.users.get",
+              "perms.users.item.post",
+              "perms.users.assign.immutable",
+              "perms.users.assign.mutable"
+            ]
+          },
+                    {
+            "methods":             [
+              "GET",
+              "DELETE"
+            ],
+            "pathPattern": "/_/tenant/{id}"
+          }
+        ]
+      },
+            {
+        "id": "_timer",
+        "version": "1.0",
+        "interfaceType": "system",
+        "handlers": [        {
+          "methods": ["POST"],
+          "pathPattern": "/bulk-operations/clean-up-log-files",
+          "modulePermissions": [],
+          "unit": "day",
+          "delay": "1"
+        }]
+      }
+    ],
+    "permissionSets":     [
+            {
+        "permissionName": "bulk-operations.item.upload.post",
+        "displayName": "upload identifiers list to initiate bulk-operation",
+        "description": "Upload identifiers list to initiate bulk-operation"
+      },
+            {
+        "permissionName": "bulk-operations.item.query.post",
+        "displayName": "trigger bulk edit by query",
+        "description": "Trigger bulk edit by query"
+      },
+            {
+        "permissionName": "bulk-operations.item.content-update.post",
+        "displayName": "upload content updates for bulk operation",
+        "description": "Upload content updates for bulk operation"
+      },
+            {
+        "permissionName": "bulk-operations.item.marc-content-update.post",
+        "displayName": "upload MARC content updates for bulk operation",
+        "description": "Upload MARC content updates for bulk operation"
+      },
+            {
+        "permissionName": "bulk-operations.item.preview.get",
+        "displayName": "get bulk operation preview",
+        "description": "Get bulk operation preview"
+      },
+            {
+        "permissionName": "bulk-operations.item.preview.download.get",
+        "displayName": "download bulk operation preview",
+        "description": "Download bulk operation preview"
+      },
+            {
+        "permissionName": "bulk-operations.item.start.post",
+        "displayName": "start bulk operation",
+        "description": "Start bulk operation"
+      },
+            {
+        "permissionName": "bulk-operations.item.errors.get",
+        "displayName": "get errors for bulk operation",
+        "description": "Get errors for bulk operation"
+      },
+            {
+        "permissionName": "bulk-operations.item.errors.download.get",
+        "displayName": "download bulk operation errors",
+        "description": "Download bulk operation errors"
+      },
+            {
+        "permissionName": "bulk-operations.item.get",
+        "displayName": "get bulk operation by id",
+        "description": "Get bulk operation By Id"
+      },
+            {
+        "permissionName": "bulk-operations.collection.get",
+        "displayName": "get list of bulk operations",
+        "description": "Get list of bulk operations"
+      },
+            {
+        "permissionName": "bulk-operations.download.item.get",
+        "displayName": "download Bulk Operation files by id",
+        "description": "Download Bulk Operation Files By Id"
+      },
+            {
+        "permissionName": "bulk-operations.list-users.collection.get",
+        "displayName": "get distinct list of users who ran bulk edit",
+        "description": "All users who ran bulk edit"
+      },
+            {
+        "permissionName": "bulk-operations.files.item.delete",
+        "displayName": "delete file by operation id and file name",
+        "description": "Delete file by operation id and file name"
+      },
+            {
+        "permissionName": "bulk-operations.item.cancel.post",
+        "displayName": "cancel operation by id",
+        "description": "Cancel operation by id"
+      },
+            {
+        "permissionName": "bulk-operations.used.tenants.get",
+        "displayName": "get used tenants by operation id",
+        "description": "Get used tenants by operation id"
+      },
+            {
+        "permissionName": "bulk-operations.item.inventory.get",
+        "displayName": "bulk edit inventory read permissions",
+        "description": "Bulk edit inventory read permissions"
+      },
+            {
+        "permissionName": "bulk-operations.item.users.get",
+        "displayName": "bulk edit users read permissions",
+        "description": "Bulk edit users read permissions"
+      },
+            {
+        "permissionName": "bulk-operations.item.inventory.put",
+        "displayName": "bulk edit inventory write permissions",
+        "description": "Bulk edit inventory write permissions"
+      },
+            {
+        "permissionName": "bulk-operations.item.users.put",
+        "displayName": "bulk edit users write permissions",
+        "description": "Bulk edit users write permissions"
+      },
+            {
+        "permissionName": "bulk-operations.all",
+        "displayName": "bulk-operations all",
+        "description": "All permissions for bulk-operations module",
+        "subPermissions":         [
+          "bulk-operations.item.upload.post",
+          "bulk-operations.item.content-update.post",
+          "bulk-operations.item.marc-content-update.post",
+          "bulk-operations.item.preview.get",
+          "bulk-operations.item.preview.download.get",
+          "bulk-operations.item.start.post",
+          "bulk-operations.item.errors.get",
+          "bulk-operations.item.errors.download.get",
+          "bulk-operations.item.get",
+          "bulk-operations.collection.get",
+          "bulk-operations.download.item.get",
+          "bulk-operations.list-users.collection.get",
+          "bulk-operations.files.item.delete",
+          "bulk-operations.item.cancel.post",
+          "bulk-operations.item.query.post",
+          "bulk-operations.used.tenants.get"
+        ]
+      }
+    ],
+    "requires":     [
+            {
+        "id": "login",
+        "version": "5.0 6.0 7.0"
+      },
+            {
+        "id": "configuration",
+        "version": "2.0"
+      },
+            {
+        "id": "holdings-storage",
+        "version": "7.0 8.0"
+      },
+            {
+        "id": "instance-storage",
+        "version": "9.0 10.0 11.0"
+      },
+            {
+        "id": "inventory",
+        "version": "12.0 13.0 14.0"
+      },
+            {
+        "id": "locations",
+        "version": "3.1"
+      },
+            {
+        "id": "loan-types",
+        "version": "2.3"
+      },
+            {
+        "id": "electronic-access-relationships",
+        "version": "1.0"
+      },
+            {
+        "id": "statistical-codes",
+        "version": "1.0"
+      },
+            {
+        "id": "ill-policies",
+        "version": "1.0"
+      },
+            {
+        "id": "holdings-types",
+        "version": "1.0"
+      },
+            {
+        "id": "call-number-types",
+        "version": "1.0"
+      },
+            {
+        "id": "holdings-sources",
+        "version": "1.0"
+      },
+            {
+        "id": "holdings-note-types",
+        "version": "1.0"
+      },
+            {
+        "id": "item-note-types",
+        "version": "1.0"
+      },
+            {
+        "id": "item-damaged-statuses",
+        "version": "1.0"
+      },
+            {
+        "id": "service-points",
+        "version": "3.3"
+      },
+            {
+        "id": "users",
+        "version": "16.0"
+      },
+            {
+        "id": "bulk-edit",
+        "version": "4.3"
+      },
+            {
+        "id": "data-export-spring",
+        "version": "1.0 2.0"
+      },
+            {
+        "id": "instance-statuses",
+        "version": "1.0"
+      },
+            {
+        "id": "modes-of-issuance",
+        "version": "1.1"
+      },
+            {
+        "id": "instance-types",
+        "version": "2.0"
+      },
+            {
+        "id": "nature-of-content-terms",
+        "version": "1.0"
+      },
+            {
+        "id": "instance-formats",
+        "version": "2.0"
+      },
+            {
+        "id": "fqm-query",
+        "version": "1.0 2.0"
+      },
+            {
+        "id": "entity-types",
+        "version": "1.0 2.0"
+      },
+            {
+        "id": "instance-note-types",
+        "version": "1.0"
+      },
+            {
+        "id": "contributor-types",
+        "version": "2.0"
+      },
+            {
+        "id": "permissions",
+        "version": "5.7"
+      },
+            {
+        "id": "data-import-converter-storage",
+        "version": "1.5"
+      },
+            {
+        "id": "source-manager-job-executions",
+        "version": "3.4"
+      },
+            {
+        "id": "metadata-provider-job-execution-logs",
+        "version": "1.1"
+      },
+            {
+        "id": "mapping-rules-provider",
+        "version": "2.0"
+      },
+            {
+        "id": "source-storage-batch",
+        "version": "1.3"
+      },
+            {
+        "id": "consortium-search",
+        "version": "2.1"
+      },
+            {
+        "id": "data-import",
+        "version": "3.2"
+      },
+            {
+        "id": "user-tenants",
+        "version": "1.0"
+      }
+    ],
+    "optional":     [
+            {
+        "id": "custom-fields",
+        "version": "3.0"
+      },
+            {
+        "id": "users-keycloak",
+        "version": "1.0"
+      },
+            {
+        "id": "permissions-users",
+        "version": "1.0"
+      },
+            {
+        "id": "consortia",
+        "version": "1.1"
+      }
+    ],
+    "metadata": {"user":     {
+      "type": "system",
+      "permissions":       [
+        "users.collection.get",
+        "data-import.splitconfig.get",
+        "metadata-provider.jobExecutions.collection.get",
+        "metadata-provider.jobLogEntries.collection.get",
+        "source-storage.parsed-records.fetch.collection.post",
+        "inventory-storage.contributor-types.collection.get"
+      ]
+    }},
+    "launchDescriptor":     {
+      "dockerImage": "mod-bulk-operations:2.2.8",
+      "dockerPull": false,
+      "dockerArgs": {"HostConfig":       {
+        "Memory": 3072000000,
+        "PortBindings": {"8081/tcp": [{"HostPort": "%p"}]}
+      }},
+      "env":       [
+                {
+          "name": "JAVA_OPTIONS",
+          "value": "-XX:MaxRAMPercentage=66.0"
+        },
+                {
+          "name": "DB_HOST",
+          "value": "postgres"
+        },
+                {
+          "name": "DB_PORT",
+          "value": "5432"
+        },
+                {
+          "name": "DB_USERNAME",
+          "value": "folio_admin"
+        },
+                {
+          "name": "DB_PASSWORD",
+          "value": "folio_admin"
+        },
+                {
+          "name": "DB_DATABASE",
+          "value": "okapi_modules"
+        },
+                {
+          "name": "DB_QUERYTIMEOUT",
+          "value": "60000"
+        },
+                {
+          "name": "DB_CHARSET",
+          "value": "UTF-8"
+        },
+                {
+          "name": "DB_MAXPOOLSIZE",
+          "value": "5"
+        },
+                {
+          "name": "KAFKA_HOST",
+          "value": "10.0.2.15"
+        },
+                {
+          "name": "KAFKA_PORT",
+          "value": "9092"
+        },
+                {
+          "name": "S3_URL",
+          "value": "http://127.0.0.1:9000/"
+        },
+                {
+          "name": "S3_REGION",
+          "value": ""
+        },
+                {
+          "name": "S3_BUCKET",
+          "value": "test-bucket2"
+        },
+                {
+          "name": "S3_ACCESS_KEY_ID",
+          "value": "AKIAIOSFODNN7EXAMPLE"
+        },
+                {
+          "name": "S3_SECRET_ACCESS_KEY",
+          "value": "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+        },
+                {
+          "name": "S3_IS_AWS",
+          "value": false
+        },
+                {
+          "name": "OKAPI_URL",
+          "value": "http://okapi:9130"
+        },
+                {
+          "name": "SYSTEM_USER_NAME",
+          "value": "mod-bulk-operations-system-user"
+        },
+                {
+          "name": "SYSTEM_USER_PASSWORD",
+          "value": "mod-bulk-operations-system-user"
+        },
+                {
+          "name": "SYSTEM_USER_ENABLED",
+          "value": "true"
+        },
+                {
+          "name": "ENV",
+          "value": "folio"
+        },
+                {
+          "name": "MAX_UPLOADING_RETRIES",
+          "value": "50"
+        }
+      ]
+    }
+  }],
+  "uiModuleDescriptors": [  {
+    "id": "folio_bulk-edit-5.0.2",
+    "name": "Description for bulk edit",
+    "requires":     [
+            {
+        "id": "bulk-operations",
+        "version": "1.0"
+      },
+            {
+        "id": "entity-types",
+        "version": "2.0"
+      },
+            {
+        "id": "users",
+        "version": "15.4 16.0"
+      }
+    ],
+    "optional": [],
+    "permissionSets":     [
+            {
+        "permissionName": "module.bulk-edit.enabled",
+        "displayName": "UI: Bulk edit module is enabled",
+        "subPermissions": [],
+        "visible": false
+      },
+            {
+        "permissionName": "ui-bulk-edit.base-view.manage",
+        "replaces": ["ui-bulk-edit.view.base"],
+        "displayName": "Bulk Edit: View base permissions",
+        "subPermissions":         [
+          "module.bulk-edit.enabled",
+          "bulk-operations.item.preview.get",
+          "bulk-operations.item.preview.download.get",
+          "bulk-operations.item.errors.get",
+          "bulk-operations.download.item.get",
+          "bulk-operations.collection.get",
+          "bulk-operations.item.get",
+          "usergroups.collection.get",
+          "data-export.job.item.download",
+          "configuration.entries.collection.get"
+        ],
+        "visible": false
+      },
+            {
+        "permissionName": "ui-bulk-edit.base-edit.manage",
+        "replaces": ["ui-bulk-edit.edit.base"],
+        "displayName": "Bulk Edit: View edit permissions",
+        "subPermissions":         [
+          "ui-bulk-edit.base-view.manage",
+          "bulk-operations.item.upload.post",
+          "bulk-operations.item.cancel.post",
+          "bulk-operations.item.content-update.post",
+          "bulk-operations.item.marc-content-update.post",
+          "bulk-operations.item.start.post",
+          "inventory-storage.loan-types.collection.get",
+          "inventory-storage.locations.collection.get",
+          "inventory-storage.location-units.institutions.collection.get",
+          "inventory-storage.location-units.campuses.collection.get",
+          "inventory-storage.location-units.libraries.collection.get",
+          "remote-storage.mappings.collection.get",
+          "usergroups.collection.get",
+          "bulk-operations.used.tenants.get",
+          "consortia.publications.item.get",
+          "consortia.publications.item.post",
+          "consortia.publications-results.item.get",
+          "consortium-search.institutions.collection.get",
+          "consortium-search.campuses.collection.get",
+          "consortium-search.libraries.collection.get",
+          "inventory-storage.statistical-codes.collection.get",
+          "inventory-storage.statistical-code-types.collection.get"
+        ],
+        "visible": false
+      },
+            {
+        "permissionName": "ui-bulk-edit.users.csv.view",
+        "replaces": ["ui-bulk-edit.view"],
+        "displayName": "Bulk Edit: Local - View user records",
+        "subPermissions":         [
+          "ui-bulk-edit.base-view.manage",
+          "ui-bulk-edit.base-edit.manage",
+          "bulk-operations.item.users.get"
+        ],
+        "visible": true
+      },
+            {
+        "permissionName": "ui-bulk-edit.users.csv.edit",
+        "replaces": ["ui-bulk-edit.edit"],
+        "displayName": "Bulk Edit: Local - Edit user records",
+        "subPermissions":         [
+          "ui-bulk-edit.users.csv.view",
+          "ui-bulk-edit.base-edit.manage",
+          "bulk-operations.item.users.put"
+        ],
+        "visible": true
+      },
+            {
+        "permissionName": "ui-bulk-edit.inventory.view",
+        "replaces": ["ui-bulk-edit.app-view"],
+        "displayName": "Bulk Edit: In app - View inventory records",
+        "subPermissions":         [
+          "ui-bulk-edit.base-view.manage",
+          "ui-bulk-edit.base-edit.manage",
+          "bulk-operations.item.inventory.get"
+        ],
+        "visible": true
+      },
+            {
+        "permissionName": "ui-bulk-edit.inventory.edit",
+        "replaces": ["ui-bulk-edit.app-edit"],
+        "displayName": "Bulk Edit: In app - Edit inventory records",
+        "subPermissions":         [
+          "ui-bulk-edit.inventory.view",
+          "ui-bulk-edit.base-edit.manage",
+          "inventory-storage.item-note-types.collection.get",
+          "inventory-storage.holdings-note-types.collection.get",
+          "inventory-storage.electronic-access-relationships.collection.get",
+          "bulk-operations.item.inventory.put"
+        ],
+        "visible": true
+      },
+            {
+        "permissionName": "ui-bulk-edit.users.edit",
+        "replaces": ["ui-bulk-edit.app-edit.users"],
+        "displayName": "Bulk edit: In app - Edit user records",
+        "subPermissions":         [
+          "ui-bulk-edit.base-edit.manage",
+          "bulk-operations.item.users.get",
+          "bulk-operations.item.users.put"
+        ],
+        "visible": true
+      },
+            {
+        "permissionName": "ui-bulk-edit.logs.view",
+        "displayName": "Bulk edit: Can view logs",
+        "subPermissions":         [
+          "bulk-operations.download.item.get",
+          "bulk-operations.collection.get",
+          "bulk-operations.list-users.collection.get",
+          "users.collection.get"
+        ],
+        "visible": true
+      },
+            {
+        "permissionName": "ui-bulk-edit.query.execute",
+        "replaces": ["ui-bulk-edit.query"],
+        "displayName": "Bulk edit: Can build query",
+        "subPermissions":         [
+          "module.bulk-edit.enabled",
+          "usergroups.item.get",
+          "addresstypes.item.get",
+          "inventory-storage.statistical-codes.item.get",
+          "inventory-storage.item-note-types.item.get",
+          "inventory-storage.call-number-types.item.get",
+          "inventory-storage.call-number-types.item.get",
+          "inventory-storage.electronic-access-relationships.item.get",
+          "fqm.version.get",
+          "fqm.entityTypes.collection.get",
+          "fqm.entityTypes.item.get",
+          "fqm.entityTypes.item.columnValues.get",
+          "fqm.query.async.results.get",
+          "fqm.query.async.post",
+          "fqm.query.async.delete",
+          "bulk-operations.item.query.post"
+        ],
+        "visible": true
+      }
+    ]
+  }]
+}

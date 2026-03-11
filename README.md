@@ -1,7 +1,7 @@
 # folio-eureka
 
 ## Version Management
-To get the versions of the modules for Eureka, select the appropriate flower release tag from [folio-org/platform-lsp](https://github.com/folio-org/platform-lsp). Find the app versions from the install-applications.json file and then select the versioned tag from the corresponding application name folio-org repository.
+To get the versions of the modules for Eureka, select the appropriate flower release tag from [folio-org/platform-lsp](https://github.com/folio-org/platform-lsp). Find the app versions from the install-applications.json file and then select the versioned tag from the corresponding application name folio-org repository. Update the deployment specification versions of folio-module-sidecar, keycloak, kong, mgr-applications, mgr-tenants, and mgr-tenant-entitlements based on the versions in platform-lsp/management-modules.json file for the flower release tag.
 
 ## Secrets
 Add to [Vault](https://vault.sul.stanford.edu/) key-value pairs for db-credentials, eureka-common, eureka-edge, folio-eureka, folio-vault, kafka-credentials, keycloak-credentials, kong-credentials, mod-pubsub-system-user, opensearch-credentials, and s3-credentials.
@@ -17,12 +17,12 @@ for I in `ls ${namespace}/infrastructure/*_application.yaml`; do kubectl -n ${na
 
 ### keycloak helm install commands if there are issues with the ArgoCD app
 ```
-helm upgrade --install -n folio-test --version v24.7.4 keycloak bitnami/keycloak -f folio-test/infrastructure/keycloak.yaml
+helm upgrade --install -n ${namespace} --version v24.7.4 keycloak bitnami/keycloak -f ${namespace}/infrastructure/keycloak.yaml
 ```
 
 ## Install Vault in the cluster namespace if there are issues with ArgoCD app
 ```
-helm -n ${namespace} install -f folio-test/infrastructure/vault.yaml vault hashicorp/vault
+helm -n ${namespace} install --version v0.32.0 -f ${namespace}/infrastructure/vault.yaml vault hashicorp/vault
 ```
 Initialize vault with secrets by first exec'ing into vault-0 pod:
 ```
@@ -34,11 +34,30 @@ vault secrets enable -path=secret -version=2 kv
 vault kv put secret/folio/master folio-backend-admin-client=<password> mgr-applications=<rand 32 char> mgr-tenant-entitlements=<rand 32 char> mgr-tenants=<rand 32 char>
 ```
 
+## Module Deployment Specifications
+Create the deployment specifications for the FOLIO backend and edge modules using the create_module_values.py script. Create the ArgoCD applications using the create_applications.py script. The default helm repo alias in the script is "folio-helm-v2-dlss", which should be set to https://sul-dlss.github.io/folio-helm-v2 in your local environment. The scripts will process all JSON files in the namespace directory if no filename is passed as first argument. Use the `-p, --prod_replicasets` flag when creating deployment specs and applications for folio-test and folio-prod namespaces. Commit all files and open a pull request.
+```
+python ./create_module_values.py -n ${namespace}
+python ./create_applications.py -n ${namespace}
+```
+
+### Deploy backend and edge modules for each application
+Use the `--no_generate` flag to apply ArgoCD applications as defined in the main branch of the repository. If deploying to folio-test or folio-prod namespaces, deploy modules without prod-level replicasets before entitling applications by excluding the `--no_generate` flag.
+```
+python ./create_applications.py -n $namespace -x apply
+```
+After creating applications, go to ArgoCD and sync apps (the applications do not auto-sync when applied).
+
 ## Deploy mgr-* modules
 ```
 for M in `ls ${namespace}/modules/mgr-*/application.yaml`; do kubectl -n ${namespace} apply -f $M; done
 ```
 
+## Deploy the folio-eureka-pod
+Exec into the folio-eureka-pod once it is applied and do the rest of the process from there.
+```
+kubectl -n ${namespace} apply -f folio-eureka-pod.yaml
+```
 
 ## Get a token from the master realm
 ```
@@ -99,13 +118,6 @@ Delete any extra applications as needed, e.g.:
 python eureka_deployment_flow.py ${namespace}/application-descriptor-fqm.json ${namespace}/application-descriptor-linked-data.json -n ${namespace} -d
 ```
 
-### Deploy backend modules for each application
-Scripts will process all JSON files in the namespace directory if no filename is passed as first argument.
-```
-python ./create_module_values.py -n $namespace
-python ./create_applications.py -n $namespace -x apply
-```
-
 ### Register all the modules for discovery
 ```
 python eureka_deployment_flow.py -n ${namespace} -m
@@ -122,6 +134,7 @@ python eureka_deployment_flow.py -n ${namespace} -t
 python eureka_deployment_flow.py ${namespace}/application-descriptor-minimal.json -n ${namespace} -e
 ```
 
+**We shouldn't need to do this per [MODUSERSKC-145](https://folio-org.atlassian.net/browse/MODUSERSKC-145)**
 ### Create keycloak system users - mod-users-keycloak and mod-login-keycloak
 #### After entitling app-platform-minimal a keycloak user in the sul realm and a vault secret is created for mod-roles-keycloak only.
 
@@ -151,7 +164,6 @@ curl -X POST --location "$KONG_URL/authn/credentials" -H "Authorization: Bearer 
 Restart the mod-*-keycloak modules.
 
 ### Create entitlements for the rest of the applications
-**Here we keep app-platform-minimal in the list, thinking only it will fail and the others will POST okay**
 ```
 python eureka_deployment_flow.py ${namespace}/application-descriptor-acquisitions.json ${namespace}/application-descriptor-bulk-edit.json ${namespace}/application-descriptor-complete.json ${namespace}/application-descriptor-edge.json ${namespace}/application-descriptor-erm-usage.json ${namespace}/application-descriptor-fqm.json ${namespace}/application-descriptor-linked-data.json ${namespace}/application-descriptor-marc-migrations.json ${namespace}/application-descriptor-reading-room.json ${namespace}/application-descriptor-reporting.json ${namespace}/application-descriptor-z3950.json -n ${namespace} -e
 ```

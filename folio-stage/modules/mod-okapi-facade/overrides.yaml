@@ -10,7 +10,7 @@ eureka:
     value: 'false'
 image:
   repository: folioorg/mod-okapi-facade
-  tag: 2.0.3
+  tag: 3.0.0
 integrations:
   db:
     enabled: true

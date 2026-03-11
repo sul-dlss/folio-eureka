@@ -10,7 +10,7 @@ eureka:
     value: 'false'
 image:
   repository: folioorg/mod-feesfines
-  tag: 19.2.3
+  tag: 19.3.2
 integrations:
   db:
     enabled: true

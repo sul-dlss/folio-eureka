@@ -10,10 +10,10 @@ eureka:
     value: 'false'
 image:
   repository: folioorg/edge-ncip
-  tag: 1.10.1
+  tag: 1.10.2
 integrations:
   eureka-edge:
-    enabled: false
+    enabled: true
   okapi:
     enabled: false
   systemuser:
