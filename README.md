@@ -199,6 +199,8 @@ curl -X PUT \
 
 ## Bootstrap the Admin User
 Using the [sidecar-module-access-client](#sidecar-client-login)
+
+**Add the sidecar-module-access-client secret SIDECAR_SECRET to the folio-eureka secret, sync the VaultStaticSecret, restart the folio-eureka-pod and continue.**
 From the folio-eureka-pod (has env vars needed), run:
 ```
 python bootstrap_admin_user.py -c -e $LIBSYS_EMAIL -f Libsys -l Admin -p $LIBSYS_PASSWORD -u $LIBSYS_USER
