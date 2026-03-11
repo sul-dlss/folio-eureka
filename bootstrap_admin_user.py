@@ -6,10 +6,10 @@ import os
 
 parser = argparse.ArgumentParser(
                     prog="BootstrapAdminRole",
-                    description="Bootstrap adminRole and user for FOLIO Eureka platform",
+                    description="Bootstrap libsys_role and user for FOLIO Eureka platform",
                     epilog="-------")
 
-parser.add_argument("-c", "--create_user", action="store_true", default=False, help="create user, else just add new capabilities to adminRole")
+parser.add_argument("-c", "--create_user", action="store_true", default=False, help="create user, else just add new capabilities to libsys_role")
 parser.add_argument("-e", "--email", help="admin user email address")
 parser.add_argument("-f", "--first_name", help="admin user first name")
 parser.add_argument("-l", "--last_name", help="admin user last name")
@@ -41,16 +41,16 @@ def main():
         user_id = create_kc_user(token, args)
         print("Creating admin user credentials")
         create_credentials(token, user_id, args)
-        print("Creating adminRole")
+        print("Creating libsys_role")
         create_role(token)
         role_id = admin_role_id(token)
         capabilities = all_capabilities(token)
-        print("Adding all capabilities to adminRole")
+        print("Adding all capabilities to libsys_role")
         assign_capabilities(token, role_id, capabilities)
-        print("Assigning admin user to adminRole")
+        print("Assigning admin user to libsys_role")
         assign_role(token, user_id, role_id)
     else:
-        print("Adding all capabilities to adminRole")
+        print("Adding all capabilities to libsys_role")
         role_id = admin_role_id(token)
         capabilities = all_capabilities(token)
         assign_capabilities(token, role_id, capabilities)
@@ -111,8 +111,8 @@ def create_credentials(token, user_id, args):
 
 
 def create_role(token):
-    data = { "name": "adminRole",
-             "description": "Admin role"
+    data = { "name": "libsys_role",
+             "description": "Role for LibSys ONLY"
            }
     kong_url = os.getenv("KONG_URL", "http://kong:8000")
     with httpx.Client(timeout=20.0) as client:
@@ -137,7 +137,7 @@ def admin_role_id(token):
     with httpx.Client(timeout=20.0) as client:
         try:
             response = client.get(
-                f"{kong_url}/roles?query=name==\"adminRole\"",
+                f"{kong_url}/roles?query=name==\"libsys_role\"",
                 headers={
                     "content-type": "application/json",
                     "Authorization": f"Bearer {token}",
