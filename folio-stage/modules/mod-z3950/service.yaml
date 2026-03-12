@@ -57,3 +57,51 @@ extraDeploy:
           - OPTIONS
           - POST
           - PUT
+    ---
+    apiVersion: gateway.envoyproxy.io/v1alpha1
+    kind: BackendTrafficPolicy
+    metadata:
+      name: sru-custom-error-page
+      namespace: folio-stage
+    spec:
+        targetRefs:
+          - kind: HTTPRoute
+            group: gateway.networking.k8s.io
+            name: sru-backend
+        responseOverride:
+          - match:
+              statusCodes:
+              - type: Value
+                value: 403
+            response:
+              contentType: text/html
+              body:
+                type: Inline
+                inline: "You are not authorized to access FOLIO. A connection to the Stanford Network is required."
+    ---
+    apiVersion: gateway.envoyproxy.io/v1alpha1
+    kind: SecurityPolicy
+    metadata:
+      name: sru-ip-limits
+      namespace: folio-stage
+    spec:
+        targetRefs:
+          - kind: HTTPRoute
+            group: gateway.networking.k8s.io
+            name: sru-backend
+        authorization:
+          defaultAction: Deny
+          rules:
+            - action: Allow
+              principal:
+                clientCIDRs:
+                - "34.239.232.112/32"
+                - "132.174.2.0/24"
+                - "132.174.4.0/24"
+                - "132.174.8.0/24"
+                - "132.174.100.0/24"
+                - "132.174.107.0/24"
+                - "104.130.29.217/32"
+                - "172.99.68.239/32"
+                - "172.99.69.191/32"
+                - "172.99.67.176/32"
