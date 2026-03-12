@@ -1,0 +1,56 @@
+ingress:
+  enabled: true
+  className: nginx
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+  hosts:
+    - host: "folio-ncip-prod.stanford.edu"
+      paths:
+        - path: '/'
+          pathType: Prefix
+          servicePort: 80
+  tls:
+    - secretName: folio-ncip-prod-tls
+      hosts:
+        - folio-ncip-prod.stanford.edu
+
+extraDeploy:
+  - |
+    apiVersion: gateway.networking.k8s.io/v1
+    kind: HTTPRoute
+    metadata:
+      name: edge-ncip-backend
+      namespace: folio-prod
+    spec:
+      rules:
+      - backendRefs:
+        - name: edge-ncip
+          port: 80
+        matches:
+          - path:
+              type: PathPrefix
+              value: /
+      hostnames:
+      - folio-ncip-prod.stanford.edu
+      parentRefs:
+      - name: default
+        namespace: envoy-gateway-system
+    ---
+    apiVersion: gateway.envoyproxy.io/v1alpha1
+    kind: SecurityPolicy
+    metadata:
+      name: edge-ncip-cors
+      namespace: folio-prod
+    spec:
+        targetRefs:
+          - kind: HTTPRoute
+            group: gateway.networking.k8s.io
+            name: edge-ncip-backend
+        cors:
+          allowOrigins:
+          - http://kong:8000
+          allowMethods:
+          - GET
+          - OPTIONS
+          - POST
+          - PUT

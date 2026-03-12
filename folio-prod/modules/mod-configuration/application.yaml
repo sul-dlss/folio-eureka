@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mod-configuration
+  namespace: folio-prod
+spec:
+  destination:
+    namespace: folio-prod
+    server: https://kubernetes.default.svc
+  project: folio-prod
+  sources:
+  - chart: mod-configuration
+    helm:
+      valueFiles:
+      - $values/folio-prod/modules/mod-configuration/overrides.yaml
+      - $values/folio-prod/modules/mod-configuration/resources.yaml
+      - $values/folio-prod/common/sidecar.yaml
+      - $values/folio-prod/common/probes.yaml
+      - $values/folio-prod/modules/mod-configuration/replicas.yaml
+    repoURL: https://sul-dlss.github.io/folio-helm-v2
+    targetRevision: 5.9.50
+  - ref: values
+    repoURL: https://github.com/sul-dlss/folio-eureka
+    targetRevision: main

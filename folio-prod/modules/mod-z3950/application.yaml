@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mod-z3950
+  namespace: folio-prod
+spec:
+  destination:
+    namespace: folio-prod
+    server: https://kubernetes.default.svc
+  project: folio-prod
+  sources:
+  - chart: mod-z3950
+    helm:
+      valueFiles:
+      - $values/folio-prod/modules/mod-z3950/overrides.yaml
+      - $values/folio-prod/modules/mod-z3950/resources.yaml
+      - $values/folio-prod/common/sidecar.yaml
+      - $values/folio-prod/modules/mod-z3950/probes.yaml
+      - $values/folio-prod/modules/mod-z3950/replicas.yaml
+      - $values/folio-prod/modules/mod-z3950/service.yaml
+      - $values/folio-prod/modules/mod-z3950/extra_env.yaml
+    repoURL: https://sul-dlss.github.io/folio-helm-v2
+    targetRevision: 3.5.0
+  - ref: values
+    repoURL: https://github.com/sul-dlss/folio-eureka
+    targetRevision: main

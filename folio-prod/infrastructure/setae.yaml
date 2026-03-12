@@ -1,0 +1,233 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: setae-api
+  labels:
+    app.kubernetes.io/name: setae-api
+    app.kubernetes.io/instance: setae-api
+    app.kubernetes.io/version: "1.0.0"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: setae-api
+  labels:
+    app.kubernetes.io/name: setae-api
+    app.kubernetes.io/instance: setae-api
+    app.kubernetes.io/version: "1.0.0"
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: setae-api
+    app.kubernetes.io/instance: setae-api
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: setae-api
+  labels:
+    app.kubernetes.io/name: setae-api
+    app.kubernetes.io/instance: setae-api
+    app.kubernetes.io/version: "1.0.0"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: setae-api
+      app.kubernetes.io/instance: setae-api
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: setae-api
+        app.kubernetes.io/instance: setae-api
+    spec:
+      serviceAccountName: setae-api
+      securityContext:
+        {}
+      containers:
+        - name: setae-api
+          securityContext:
+            {}
+          image: "ghcr.io/sul-dlss/folio-setae-api:docker-fastapi"
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          env:
+              # The base image by default will use the number of available cores to create the worker processes.
+              # This will be a very high number by default when deployed in the cluster!
+              # See '/gunicorn_conf.py' on base image: tiangolo/uvicorn-gunicorn-fastapi:python3.8
+            - name: WORKERS_PER_CORE
+              value: ".05"
+            - name: OKAPI_URL
+              valueFrom:
+                secretKeyRef:
+                  key: KONG_URL
+                  name: folio-eureka
+            - name: OKAPI_TENANT
+              value: "sul"
+            - name: OKAPI_USER
+              valueFrom:
+                secretKeyRef:
+                  key: READONLY_APP_USER
+                  name: folio-eureka
+            - name: OKAPI_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: READONLY_APP_PASSWORD
+                  name: folio-eureka
+          resources:
+            limits:
+              cpu: 150m
+              memory: 512M
+            requests:
+              cpu: 50m
+              memory: 256M
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: setae-api
+  labels:
+    app.kubernetes.io/name: setae-api
+    app.kubernetes.io/instance: setae-api
+    app.kubernetes.io/version: "1.0.0"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: "folio-setae-api-prod.stanford.edu"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: setae-api
+                port:
+                  number: 80
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: BackendTrafficPolicy
+metadata:
+  name: setae-api-custom-error-page
+  namespace: folio-prod
+spec:
+    targetRefs:
+      - kind: HTTPRoute
+        group: gateway.networking.k8s.io
+        name: setae-api-backend
+    responseOverride:
+      - match:
+          statusCodes:
+          - type: Value
+            value: 403
+        response:
+          contentType: text/html
+          body:
+            type: Inline
+            inline: "You are not authorized to access FOLIO. A connection to the Stanford Network is required."
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: setae-api-backend
+  namespace: folio-prod
+spec:
+  rules:
+  - backendRefs:
+    - name: setae-api
+      port: 80
+    matches:
+      - path:
+          type: PathPrefix
+          value: /
+  hostnames:
+  - folio-setae-api-test.stanford.edu
+  parentRefs:
+  - name: default
+    namespace: envoy-gateway-system
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: setae-api-ip-limits
+  namespace: folio-prod
+spec:
+    targetRefs:
+      - kind: HTTPRoute
+        group: gateway.networking.k8s.io
+        name: setae-api-backend
+    authorization:
+      defaultAction: Deny
+      rules:
+        - action: Allow
+          principal:
+            clientCIDRs:
+            - "52.9.21.118/32"
+            - "54.153.8.197/32"
+            - "52.53.107.5/32"
+            - "18.144.135.31/32"
+            - "23.244.192.27/32"
+            - "54.245.203.243/32"
+            - "34.214.229.235/32"
+            - "35.161.222.214/32"
+            - "18.219.235.193/32"
+            - "171.64.0.0/14"
+            - "171.66.1.0/24"
+            - "10.32.0.0/15"
+            - "10.34.0.0/15"
+            - "10.96.0.0/11"
+            - "10.98.0.0/15"
+            - "10.130.0.0/16"
+            - "10.130.64.0/18"
+            - "10.130.128.0/18"
+            - "10.130.192.0/18"
+            - "172.24.0.0/14"
+            - "172.20.206.128/25"
+            - "172.20.207.0/25"
+            - "171.66.16.0/21"
+            - "171.66.24.0/21"
+            - "171.66.176.0/20"
+            - "204.63.231.0/25"
+            - "10.109.48.0/25"
+            - "10.109.48.128/25"
+            - "35.203.130.101/32"
+            - "35.203.131.135/32"
+            - "35.192.213.120/32"
+            - "104.198.197.19/32"
+            - "216.54.57.225/32"
+            - "20.230.202.69/32"
+            - "52.175.234.32/32"
+            - "20.29.204.55/32"
+            - "52.250.48.144/32"
+            - "10.142.204.81/32"
+            - "10.142.204.82/32"
+            - "100.21.119.186/32"
+            - "34.209.252.69/32"
+            - "44.241.166.134/32"
+            - "52.38.29.98/32"
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: setae-api-cors
+  namespace: folio-prod
+spec:
+    targetRefs:
+      - kind: HTTPRoute
+        group: gateway.networking.k8s.io
+        name: setae-api-backend
+    cors:
+      allowOrigins:
+      - http://kong:8000
+      allowMethods:
+      - GET
+      - OPTIONS
+      - POST
+      - PUT

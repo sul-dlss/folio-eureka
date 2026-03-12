@@ -1,0 +1,12 @@
+resources:
+  requests:
+    cpu: 300m
+    memory: 2480M
+  limits:
+    cpu: 500m
+    memory: 2592M
+
+integrations:
+  opensearch:
+    enabled: true
+    existingSecret: "opensearch-credentials"

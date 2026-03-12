@@ -1,0 +1,36 @@
+deploymentStrategy: RollingUpdate
+eureka:
+  enabled: true
+  extraEnvVars:
+  - name: FOLIO_SYSTEM_USER_ENABLED
+    value: 'false'
+  - name: SYSTEM_USER_CREATED
+    value: 'false'
+  - name: SYSTEM_USER_ENABLED
+    value: 'false'
+image:
+  repository: folioorg/mod-entities-links
+  tag: 4.0.3
+integrations:
+  db:
+    enabled: true
+    existingSecret: db-credentials
+  kafka:
+    enabled: true
+    existingSecret: kafka-credentials
+  okapi:
+    enabled: false
+  s3:
+    enabled: true
+    existingSecret: s3-credentials
+  systemuser:
+    enabled: false
+podSecurityContext:
+  fsGroup: 2000
+securityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+    - ALL
+  runAsNonRoot: true
+  runAsUser: 1000

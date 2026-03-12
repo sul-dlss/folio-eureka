@@ -1,0 +1,1 @@
+extraJavaOpts: -XX:MaxRAMPercentage=80 -XX:MinRAMPercentage=80 -XX:+UseG1GC -Dspring.datasource.url=jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_DATABASE}?stringtype=unspecified

@@ -1,0 +1,6 @@
+configMaps:
+  ephemeral:
+    enabled: true
+    fileName: ephemeral.properties
+    mountPath: /etc/edge
+    existingConfig: edge-connexion-ephemeral.properties

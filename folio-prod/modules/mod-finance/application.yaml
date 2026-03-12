@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mod-finance
+  namespace: folio-prod
+spec:
+  destination:
+    namespace: folio-prod
+    server: https://kubernetes.default.svc
+  project: folio-prod
+  sources:
+  - chart: mod-finance
+    helm:
+      valueFiles:
+      - $values/folio-prod/modules/mod-finance/overrides.yaml
+      - $values/folio-prod/modules/mod-finance/resources.yaml
+      - $values/folio-prod/common/sidecar.yaml
+      - $values/folio-prod/common/probes.yaml
+      - $values/folio-prod/modules/mod-finance/replicas.yaml
+    repoURL: https://sul-dlss.github.io/folio-helm-v2
+    targetRevision: 4.8.48
+  - ref: values
+    repoURL: https://github.com/sul-dlss/folio-eureka
+    targetRevision: main
