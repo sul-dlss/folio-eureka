@@ -16,17 +16,6 @@ service:
       port: 9997
       containerPort: 9997
       targetPort: zserver
-ingress:
-  enabled: true
-  className: "nginx"
-  hosts:
-    - host: "folio-sru-prod.stanford.edu"
-      paths:
-        - path: '/'
-          pathType: Prefix
-          servicePort: 80
-  tls: []
-
 extraDeploy:
   - |
     apiVersion: gateway.networking.k8s.io/v1
