@@ -11,9 +11,92 @@ spec:
     # Just spin & wait forever
     command: [ "/bin/bash", "-c", "--" ]
     args: [ "while true; do sleep 60; done;" ]
-    envFrom:
-      - secretRef:
-          name: folio-eureka
+    env:
+        - name: MGR_APP_URL
+          valueFrom:
+            secretKeyRef:
+              name: eureka-common
+              key: AM_CLIENT_URL
+        - name: MGR_ENTITLE_URL
+          valueFrom:
+            secretKeyRef:
+              name: eureka-common
+              key: TE_URL
+        - name: MGR_TENANTS_URL
+          valueFrom:
+            secretKeyRef:
+              name: eureka-common
+              key: MT_CLIENT_URL
+        - name: KC_ADMIN_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: eureka-common
+              key: KC_ADMIN_CLIENT_ID
+        - name: KC_ADMIN_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: eureka-common
+              key: KC_ADMIN_CLIENT_SECRET
+        - name: KC_URL
+          valueFrom:
+            secretKeyRef:
+              name: eureka-common
+              key: KC_URL
+        - name: SIDECAR_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: eureka-common
+              key: KC_SERVICE_CLIENT_ID
+        - name: SIDECAR_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: folio-eureka
+              key: SIDECAR_SECRET
+        - name: KONG_URL
+          valueFrom:
+            secretKeyRef:
+              name: folio-eureka
+              key: KONG_URL
+        - name: LIBSYS_EMAIL
+          valueFrom:
+            secretKeyRef:
+              name: folio-eureka
+              key: LIBSYS_EMAIL
+        - name: LIBSYS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: folio-eureka
+              key: LIBSYS_PASSWORD
+        - name: LIBSYS_USER
+          valueFrom:
+            secretKeyRef:
+              name: folio-eureka
+              key: LIBSYS_USER
+        - name: READONLY_APP_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: folio-eureka
+              key: READONLY_APP_PASSWORD
+        - name: READONLY_APP_USER
+          valueFrom:
+            secretKeyRef:
+              name: folio-eureka
+              key: READONLY_APP_USER
+        - name: REPORTING_DB_PASS
+          valueFrom:
+            secretKeyRef:
+              name: folio-eureka
+              key: REPORTING_DB_PASS
+        - name: REPORTING_DB_URL
+          valueFrom:
+            secretKeyRef:
+              name: folio-eureka
+              key: REPORTING_DB_URL
+        - name: REPORTING_DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: folio-eureka
+              key: REPORTING_DB_USER
     resources:
       limits:
         cpu: 128m
