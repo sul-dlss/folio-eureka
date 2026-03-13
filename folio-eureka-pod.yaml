@@ -97,6 +97,16 @@ spec:
             secretKeyRef:
               name: folio-eureka
               key: REPORTING_DB_USER
+        - name: TENANT_ID
+          valueFrom:
+            secretKeyRef:
+              name: folio-eureka
+              key: TENANT_ID
+        - name: namespace
+          valueFrom:
+            secretKeyRef:
+              name: folio-eureka
+              key: namespace
     resources:
       limits:
         cpu: 128m
