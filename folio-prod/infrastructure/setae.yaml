@@ -53,7 +53,7 @@ spec:
         - name: setae-api
           securityContext:
             {}
-          image: "ghcr.io/sul-dlss/folio-setae-api:docker-fastapi"
+          image: "ghcr.io/sul-dlss/folio-setae-api:main"
           imagePullPolicy: Always
           ports:
             - name: http
