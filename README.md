@@ -134,35 +134,6 @@ python eureka_deployment_flow.py -n ${namespace} -t
 python eureka_deployment_flow.py ${namespace}/application-descriptor-minimal.json -n ${namespace} -e
 ```
 
-**We shouldn't need to do this per [MODUSERSKC-145](https://folio-org.atlassian.net/browse/MODUSERSKC-145)**
-### Create keycloak system users - mod-users-keycloak and mod-login-keycloak
-#### After entitling app-platform-minimal a keycloak user in the sul realm and a vault secret is created for mod-roles-keycloak only.
-
-Create system users for mod-users-keycloak and mod-login-keycloak, example using the [sidecar-module-access-client](#sidecar-client-login)
-```
-curl -X POST --location "$KONG_URL/users-keycloak/users" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul' --data-raw '{
-    "username": "mod-users-keycloak",
-    "active": true,
-    "personal": {
-        "lastName": "System"
-    }
-}'
-```
-Add a password to vault
-```
-vault kv patch secret/folio/sul mod-users-keycloak="<random 32 characters>"
-```
-Add the password to keycloak via UI or curl
-```
-curl -X POST --location "$KONG_URL/authn/credentials" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul' --data '{
-    "username": "mod-users-keycloak",
-    "userId": "<userId from users-keycloak/users POST response>",
-    "password": "<random 32 character password from vault: secret/folio/sul>"
-}'
-```
-
-Restart the mod-*-keycloak modules.
-
 ### Create entitlements for the rest of the applications
 ```
 python eureka_deployment_flow.py ${namespace}/application-descriptor-acquisitions.json ${namespace}/application-descriptor-bulk-edit.json ${namespace}/application-descriptor-complete.json ${namespace}/application-descriptor-edge.json ${namespace}/application-descriptor-erm-usage.json ${namespace}/application-descriptor-fqm.json ${namespace}/application-descriptor-linked-data.json ${namespace}/application-descriptor-marc-migrations.json ${namespace}/application-descriptor-reading-room.json ${namespace}/application-descriptor-reporting.json ${namespace}/application-descriptor-z3950.json -n ${namespace} -e

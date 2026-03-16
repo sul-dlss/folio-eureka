@@ -1,0 +1,462 @@
+{
+  "id": "app-linked-data-1.1.6",
+  "name": "app-linked-data",
+  "version": "1.1.6",
+  "description": "Linked Data application descriptor",
+  "platform": "complete",
+  "modules": [  {
+    "name": "mod-linked-data",
+    "version": "1.0.4"
+  }],
+  "uiModules": [  {
+    "name": "folio_ld-folio-wrapper",
+    "version": "1.3.3"
+  }],
+  "dependencies": [  {
+    "name": "app-platform-complete",
+    "version": "^2.0.0-SNAPSHOT"
+  }],
+  "moduleDescriptors": [  {
+    "id": "mod-linked-data-1.0.4",
+    "name": "Linked Data Module",
+    "provides":     [
+            {
+        "id": "linked-data",
+        "version": "1.0",
+        "handlers":         [
+                    {
+            "methods": ["POST"],
+            "pathPattern": "/linked-data/resource",
+            "permissionsRequired": ["linked-data.resources.bib.post"],
+            "modulePermissions":             [
+              "mapping-metadata.get",
+              "mapping-metadata.type.item.get",
+              "inventory-storage.instances.item.post",
+              "inventory-storage.instances.item.put",
+              "inventory-storage.instances.item.delete",
+              "inventory-storage.instance-types.item.post",
+              "inventory-storage.preceding-succeeding-titles.collection.get",
+              "inventory-storage.preceding-succeeding-titles.item.get",
+              "inventory-storage.preceding-succeeding-titles.item.post",
+              "inventory-storage.preceding-succeeding-titles.item.put",
+              "inventory-storage.preceding-succeeding-titles.item.delete",
+              "search.instances.collection.get",
+              "source-storage.snapshots.post",
+              "source-storage.records.formatted.item.get",
+              "source-storage.records.post",
+              "source-storage.records.generation.item.put",
+              "specification-storage.specifications.collection.get",
+              "specification-storage.specification.rules.collection.get",
+              "mod-settings.global.read.ui-quick-marc.lccn-duplicate-check.manage",
+              "mod-settings.entries.collection.get"
+            ]
+          },
+                    {
+            "methods": ["POST"],
+            "pathPattern": "/linked-data/authority-assignment-check",
+            "permissionsRequired": ["linked-data.authority-assignment-check.post"],
+            "modulePermissions": []
+          },
+                    {
+            "methods": ["GET"],
+            "pathPattern": "/linked-data/resource/{id}",
+            "permissionsRequired": ["linked-data.resources.bib.get"],
+            "modulePermissions": []
+          },
+                    {
+            "methods": ["GET"],
+            "pathPattern": "/linked-data/resource/{id}/marc",
+            "permissionsRequired": ["linked-data.resources.bib.marc.get"],
+            "modulePermissions": []
+          },
+                    {
+            "methods": ["PUT"],
+            "pathPattern": "/linked-data/resource/{id}",
+            "permissionsRequired": ["linked-data.resources.bib.put"],
+            "modulePermissions":             [
+              "mapping-metadata.get",
+              "mapping-metadata.type.item.get",
+              "inventory-storage.instances.item.post",
+              "inventory-storage.instances.item.put",
+              "inventory-storage.instances.item.delete",
+              "inventory-storage.instance-types.item.post",
+              "inventory-storage.preceding-succeeding-titles.collection.get",
+              "inventory-storage.preceding-succeeding-titles.item.get",
+              "inventory-storage.preceding-succeeding-titles.item.post",
+              "inventory-storage.preceding-succeeding-titles.item.put",
+              "inventory-storage.preceding-succeeding-titles.item.delete",
+              "search.instances.collection.get",
+              "source-storage.snapshots.post",
+              "source-storage.records.formatted.item.get",
+              "source-storage.records.post",
+              "source-storage.records.generation.item.put",
+              "specification-storage.specifications.collection.get",
+              "specification-storage.specification.rules.collection.get",
+              "mod-settings.global.read.ui-quick-marc.lccn-duplicate-check.manage",
+              "mod-settings.entries.collection.get"
+            ]
+          },
+                    {
+            "methods": ["DELETE"],
+            "pathPattern": "/linked-data/resource/{id}",
+            "permissionsRequired": ["linked-data.resources.bib.delete"],
+            "modulePermissions": []
+          },
+                    {
+            "methods": ["GET"],
+            "pathPattern": "/linked-data/resource/metadata/{inventoryId}/id",
+            "permissionsRequired": ["linked-data.resources.bib.id.get"],
+            "modulePermissions": []
+          },
+                    {
+            "methods": ["GET"],
+            "pathPattern": "/linked-data/inventory-instance/{inventoryId}/import-supported",
+            "permissionsRequired": ["linked-data.resources.support-check.get"],
+            "modulePermissions": ["source-storage.records.formatted.item.get"]
+          },
+                    {
+            "methods": ["GET"],
+            "pathPattern": "/linked-data/inventory-instance/{inventoryId}/preview",
+            "permissionsRequired": ["linked-data.resources.preview.get"],
+            "modulePermissions": ["source-storage.records.formatted.item.get"]
+          },
+                    {
+            "methods": ["POST"],
+            "pathPattern": "/linked-data/inventory-instance/{inventoryId}/import",
+            "permissionsRequired": ["linked-data.resources.import.post"],
+            "modulePermissions":             [
+              "source-storage.records.formatted.item.get",
+              "mapping-metadata.get",
+              "mapping-metadata.type.item.get",
+              "inventory-storage.instances.item.post",
+              "inventory-storage.instances.item.put",
+              "inventory-storage.instances.item.delete",
+              "inventory-storage.instance-types.item.post",
+              "inventory-storage.preceding-succeeding-titles.collection.get",
+              "inventory-storage.preceding-succeeding-titles.item.get",
+              "inventory-storage.preceding-succeeding-titles.item.post",
+              "inventory-storage.preceding-succeeding-titles.item.put",
+              "inventory-storage.preceding-succeeding-titles.item.delete",
+              "source-storage.snapshots.post",
+              "source-storage.records.post",
+              "source-storage.records.generation.item.put"
+            ]
+          },
+                    {
+            "methods": ["PUT"],
+            "pathPattern": "/linked-data/reindex",
+            "permissionsRequired": ["linked-data.resources.reindex.post"],
+            "modulePermissions": []
+          },
+                    {
+            "methods": ["GET"],
+            "pathPattern": "/linked-data/profile",
+            "permissionsRequired": ["linked-data.profiles.get"]
+          },
+                    {
+            "methods": ["GET"],
+            "pathPattern": "/linked-data/resource/{id}/graph",
+            "permissionsRequired": ["linked-data.resources.graph.get"],
+            "modulePermissions": []
+          }
+        ]
+      },
+            {
+        "id": "_tenant",
+        "version": "2.0",
+        "interfaceType": "system",
+        "handlers":         [
+                    {
+            "methods": ["POST"],
+            "pathPattern": "/_/tenant",
+            "modulePermissions": []
+          },
+                    {
+            "methods":             [
+              "DELETE",
+              "GET"
+            ],
+            "pathPattern": "/_/tenant/{id}"
+          }
+        ]
+      }
+    ],
+    "requires":     [
+            {
+        "id": "source-storage-records",
+        "version": "3.2 3.3"
+      },
+            {
+        "id": "specification-storage",
+        "version": "1.0"
+      },
+            {
+        "id": "search",
+        "version": "1.3"
+      },
+            {
+        "id": "settings",
+        "version": "1.1"
+      }
+    ],
+    "permissionSets":     [
+            {
+        "permissionName": "linked-data.resources.bib.get",
+        "displayName": "Linked Data: Get a bibliographic (Work or Instance) resource",
+        "description": "Get a bibliographic (Work or Instance) linked-data resource"
+      },
+            {
+        "permissionName": "linked-data.resources.bib.post",
+        "displayName": "Linked Data: Create a bibliographic (Work or Instance) resource",
+        "description": "Create a bibliographic (Work or Instance) linked-data resource"
+      },
+            {
+        "permissionName": "linked-data.resources.bib.put",
+        "displayName": "Linked Data: Update a bibliographic (Work or Instance) resource",
+        "description": "Update a bibliographic (Work or Instance) linked-data resource"
+      },
+            {
+        "permissionName": "linked-data.resources.bib.delete",
+        "displayName": "Linked Data: Delete a bibliographic (Work or Instance) resource",
+        "description": "Delete a bibliographic (Work or Instance) linked-data resource"
+      },
+            {
+        "permissionName": "linked-data.resources.reindex.post",
+        "displayName": "Linked Data: Reindex resources in mod-search index",
+        "description": "Reindex linked-data resources in mod-search index"
+      },
+            {
+        "permissionName": "linked-data.resources.graph.get",
+        "displayName": "Linked Data: Get the graph view of a resource",
+        "description": "Get the graph view of a linked-data resource"
+      },
+            {
+        "permissionName": "linked-data.resources.bib.marc.get",
+        "displayName": "Linked Data: Get the derived MARC record of an Instance resource",
+        "description": "Get the derived MARC record of a linked-data Instance resource"
+      },
+            {
+        "permissionName": "linked-data.resources.bib.id.get",
+        "displayName": "Linked Data: Get the ID of an instance resource using the inventory instance ID",
+        "description": "Get the ID of a linked-data instance resource using the inventory instance ID"
+      },
+            {
+        "permissionName": "linked-data.resources.support-check.get",
+        "displayName": "Linked Data: Check if marc to bib conversion is supported",
+        "description": "Check if marc to bib conversion is supported by mod-linked-data"
+      },
+            {
+        "permissionName": "linked-data.resources.preview.get",
+        "displayName": "Linked Data: Get the preview of a resource",
+        "description": "Get the preview of a linked-data resource"
+      },
+            {
+        "permissionName": "linked-data.resources.import.post",
+        "displayName": "Linked Data: Create a bibliographic resource derived from MARC record",
+        "description": "Create a bibliographic linked-data resource derived from MARC record"
+      },
+            {
+        "permissionName": "linked-data.profiles.get",
+        "displayName": "Linked Data: Get the profiles for performing CRUD operations on resources",
+        "description": "Get the profiles for performing CRUD operations on linked-data resources"
+      },
+            {
+        "permissionName": "linked-data.authority-assignment-check.post",
+        "displayName": "Linked Data: Check an authority can be assigned on target type",
+        "description": "Check an authority can be assigned on work as type"
+      }
+    ],
+    "launchDescriptor":     {
+      "dockerImage": "mod-linked-data:1.0.4",
+      "dockerPull": false,
+      "dockerArgs": {"HostConfig":       {
+        "Memory": 1073741824,
+        "PortBindings": {"8081/tcp": [{"HostPort": "%p"}]}
+      }},
+      "env":       [
+                {
+          "name": "SERVER_PORT",
+          "value": "8081"
+        },
+                {
+          "name": "ENV",
+          "value": "folio"
+        },
+                {
+          "name": "JAVA_OPTIONS",
+          "value": "-XX:MaxRAMPercentage=85.0 -Xss4m"
+        },
+                {
+          "name": "DB_HOST",
+          "value": "postgres"
+        },
+                {
+          "name": "DB_PORT",
+          "value": "5432"
+        },
+                {
+          "name": "DB_USERNAME",
+          "value": "folio_admin"
+        },
+                {
+          "name": "DB_PASSWORD",
+          "value": "folio_admin"
+        },
+                {
+          "name": "DB_DATABASE",
+          "value": "okapi_modules"
+        },
+                {
+          "name": "SPRING_PROFILES_ACTIVE",
+          "value": ""
+        },
+                {
+          "name": "KAFKA_HOST",
+          "value": "kafka"
+        },
+                {
+          "name": "KAFKA_PORT",
+          "value": "9092"
+        },
+                {
+          "name": "KAFKA_SECURITY_PROTOCOL",
+          "value": "PLAINTEXT"
+        },
+                {
+          "name": "KAFKA_SSL_KEYSTORE_LOCATION",
+          "value": ""
+        },
+                {
+          "name": "KAFKA_SSL_KEYSTORE_PASSWORD",
+          "value": ""
+        },
+                {
+          "name": "KAFKA_SSL_TRUSTSTORE_LOCATION",
+          "value": ""
+        },
+                {
+          "name": "KAFKA_SSL_TRUSTSTORE_PASSWORD",
+          "value": ""
+        },
+                {
+          "name": "KAFKA_CONSUMER_MAX_POLL_RECORDS",
+          "value": "200"
+        },
+                {
+          "name": "KAFKA_SOURCE_RECORD_DOMAIN_EVENT_TOPIC_PATTERN",
+          "value": "(folio\\.)(.*\\.)srs.source_records"
+        },
+                {
+          "name": "KAFKA_SOURCE_RECORD_DOMAIN_EVENT_CONCURRENCY",
+          "value": "1"
+        },
+                {
+          "name": "KAFKA_INVENTORY_INSTANCE_EVENT_TOPIC_PATTERN",
+          "value": "(folio\\.)(.*\\.)inventory.instance"
+        },
+                {
+          "name": "KAFKA_INVENTORY_INSTANCE_EVENT_CONCURRENCY",
+          "value": "1"
+        },
+                {
+          "name": "KAFKA_RETRY_INTERVAL_MS",
+          "value": "2000"
+        },
+                {
+          "name": "KAFKA_RETRY_DELIVERY_ATTEMPTS",
+          "value": "6"
+        },
+                {
+          "name": "KAFKA_WORK_SEARCH_INDEX_TOPIC",
+          "value": "linked-data.work"
+        },
+                {
+          "name": "KAFKA_WORK_SEARCH_INDEX_TOPIC_PARTITIONS",
+          "value": "1"
+        },
+                {
+          "name": "KAFKA_WORK_SEARCH_INDEX_TOPIC_REPLICATION_FACTOR",
+          "value": ""
+        },
+                {
+          "name": "KAFKA_INVENTORY_INSTANCE_INGRESS_EVENT_TOPIC",
+          "value": ""
+        },
+                {
+          "name": "CACHE_TTL_SPEC_RULES_MS",
+          "value": "18000000"
+        },
+                {
+          "name": "CACHE_TTL_SETTINGS_ENTRIES_MS",
+          "value": "18000000"
+        },
+                {
+          "name": "CACHE_TTL_MODULE_STATE_MS",
+          "value": "18000000"
+        }
+      ]
+    }
+  }],
+  "uiModuleDescriptors": [  {
+    "id": "folio_ld-folio-wrapper-1.3.3",
+    "name": "Linked Data Editor - Folio Wrapper",
+    "requires":     [
+            {
+        "id": "linked-data",
+        "version": "1.0"
+      },
+            {
+        "id": "search",
+        "version": "1.3"
+      },
+            {
+        "id": "browse",
+        "version": "2.0"
+      },
+            {
+        "id": "authority-source-files",
+        "version": "2.2"
+      },
+            {
+        "id": "source-storage-records",
+        "version": "3.4"
+      }
+    ],
+    "optional": [],
+    "permissionSets":     [
+            {
+        "permissionName": "module.ld-folio-wrapper.enabled",
+        "displayName": "Linked Data: Module is enabled",
+        "subPermissions": [],
+        "visible": true
+      },
+            {
+        "permissionName": "ui-linked-data.all",
+        "displayName": "Linked Data: All Permissions",
+        "subPermissions":         [
+          "module.ld-folio-wrapper.enabled",
+          "inventory-storage.authority-source-files.collection.get",
+          "linked-data.authority-assignment-check.post",
+          "linked-data.resources.bib.get",
+          "linked-data.resources.bib.post",
+          "linked-data.resources.bib.put",
+          "linked-data.resources.bib.delete",
+          "linked-data.resources.bib.marc.get",
+          "linked-data.resources.reindex.post",
+          "linked-data.resources.graph.get",
+          "linked-data.resources.bib.id.get",
+          "linked-data.resources.support-check.get",
+          "linked-data.resources.preview.get",
+          "linked-data.resources.import.post",
+          "linked-data.profiles.get",
+          "search.linked-data.work.collection.get",
+          "search.authorities.collection.get",
+          "browse.authorities.collection.get",
+          "search.facets.collection.get",
+          "source-storage.records.formatted.item.get"
+        ],
+        "visible": true
+      }
+    ]
+  }]
+}

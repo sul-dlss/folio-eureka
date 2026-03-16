@@ -1,0 +1,10 @@
+service:
+  type: NodePort
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8080
+      containerPort: 8080
+      targetPort: http
+  annotations: {}
+# - hosts: folio-connexion-dev.stanford.edu, folio-connexion-test.stanford.edu, folio-connexion-prod.stanford.edu

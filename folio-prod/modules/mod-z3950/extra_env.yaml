@@ -1,0 +1,25 @@
+configMaps:
+  zserver-config:
+    enabled: true
+    name: zserver-config
+    mountPath: /usr/src/app/etc
+    fileName: config.sul.json
+    existingConfig: zserver.conf
+  mod-search-graphql-query:
+    enabled: true
+    name: mod-search-graphql-query
+    mountPath: /usr/src/app/etc
+    fileName: mod-search.graphql-query
+    existingConfig: mod-search-graphql-query
+
+extraEnvVars: |
+  - name: FOLIO_USER
+    valueFrom:
+      secretKeyRef:
+        key: READONLY_APP_USER
+        name: folio-eureka
+  - name: FOLIO_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        key: READONLY_APP_PASSWORD
+        name: folio-eureka

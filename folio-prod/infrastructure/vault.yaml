@@ -1,0 +1,46 @@
+global:
+  enabled: true
+injector:
+  enabled: false
+server:
+  dataStorage:
+    enabled: true
+    size: 10Gi
+    mountPath: "/vault/data"
+    storageClass: "mayastor-3"
+    accessMode: ReadWriteOnce
+    annotations: {}
+    labels: {}
+  authDelegator:
+    enabled: false
+  extraEnvironmentVars:
+    VAULT_DEV_ROOT_TOKEN_ID: root
+  extraSecretEnvironmentVars:
+    - envName: UNSEAL_KEY
+      secretName: folio-vault
+      secretKey: UNSEAL_KEY
+  postStart:
+    - /bin/sh
+    - -c
+    - > 
+      sleep 10;
+      if [ -n "$UNSEAL_KEY" ]; then vault operator unseal $UNSEAL_KEY; fi
+  ha:
+    enabled: false
+  ingress:
+    enabled: false
+  logLevel: debug
+  metrics:
+    enabled: false
+  resources:
+    limits:
+      cpu: 1024m
+      memory: 1Gi
+    requests:
+      cpu: 100m
+      memory: 256Mi
+  service:
+    port: 8200
+    type: ClusterIP
+ui:
+  enabled: true

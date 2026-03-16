@@ -1,0 +1,4 @@
+# Disable edge-sip2, does not respond to checks
+startupProbe: {}
+livenessProbe: {}
+readinessProbe: {}

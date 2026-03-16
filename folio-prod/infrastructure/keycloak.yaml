@@ -1,0 +1,235 @@
+global: 
+  security: 
+    allowInsecureImages: true
+image:
+  registry: folioorg
+  repository: folio-keycloak
+  tag: 26.4.2
+  pullPolicy: Always
+auth:
+  adminUser: admin
+  existingSecret: keycloak-credentials
+  passwordSecretKey: KC_BOOTSTRAP_ADMIN_PASSWORD
+usePasswordFiles: false
+extraEnvVars:
+  - name: KEYCLOAK_PROXY_ADDRESS_FORWARDING
+    value: "true"
+  - name: PROXY_ADDRESS_FORWARDING
+    value: "true"
+  - name: KC_HTTP_ENABLED
+    value: "true"
+  - name: KC_HTTP_PORT
+    value: "8080"
+  - name: KC_HEALTH_ENABLED
+    value: "true"
+  - name: KC_LOG_LEVEL
+    value: "INFO"
+  - name: KC_HOSTNAME_BACKCHANNEL_DYNAMIC
+    value: "true"
+  - name: FIPS
+    value: "false"
+  - name: KC_HOSTNAME
+    value: "https://keycloak-folio-prod.stanford.edu"
+  - name: KC_HOSTNAME_DEBUG
+    value: "true"
+  - name: KC_FOLIO_BE_ADMIN_CLIENT_ID
+    valueFrom:
+      secretKeyRef:
+        name: eureka-common
+        key: KC_ADMIN_CLIENT_ID
+  - name: KC_FOLIO_BE_ADMIN_CLIENT_SECRET
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-credentials
+        key: KC_FOLIO_BE_ADMIN_CLIENT_SECRET
+  - name: KC_HTTPS_KEY_STORE_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-credentials
+        key: KC_HTTPS_KEY_STORE_PASSWORD
+  - name: KC_DB_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-credentials
+        key: KC_DB_PASSWORD
+  - name: KC_DB_URL_DATABASE
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-credentials
+        key: KC_DB_URL_DATABASE
+  - name: KC_DB_URL_HOST
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-credentials
+        key: KC_DB_URL_HOST
+  - name: KC_DB_URL_PORT
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-credentials
+        key: KC_DB_URL_PORT
+  - name: KC_DB_USERNAME
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-credentials
+        key: KC_DB_USERNAME
+  - name: KC_BOOTSTRAP_ADMIN_USERNAME
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-credentials
+        key: KC_BOOTSTRAP_ADMIN_USERNAME
+  - name: KC_BOOTSTRAP_ADMIN_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-credentials
+        key: KC_BOOTSTRAP_ADMIN_PASSWORD
+  - name: BASE_LOGO_FILES_URL
+    value: "http://folio.stanford.edu"
+proxy: "edge"
+replicaCount: 3
+resources:
+  requests:
+    memory: 2250M
+  limits:
+    memory: 2750M
+postgresql:
+  enabled: false
+externalDatabase:
+  host: "sul-folio-db-prod.stanford.edu"
+  port: 9999
+  database: "keycloak"
+  user: "keycloak"
+  existingSecret: keycloak-credentials
+  existingSecretUserKey: KC_DB_USERNAME
+  existingSecretPasswordKey: KC_DB_PASSWORD
+  name: "keycloak" 
+logging:
+  output: default
+  level: DEBUG
+enableDefaultInitContainers: false
+containerSecurityContext:
+  enabled: false
+networkPolicy:
+  enabled: false
+service:
+  ports:
+    http: 8080
+    https: 8443
+ingress:
+  enabled: false
+adminIngress:
+  enabled: false
+livenessProbe:
+  enabled: true
+  initialDelaySeconds: 60
+  periodSeconds: 1
+  timeoutSeconds: 10
+  failureThreshold: 5
+  successThreshold: 1
+readinessProbe:
+  enabled: true
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 10
+  failureThreshold: 10
+  successThreshold: 1
+startupProbe:
+  enabled: false
+  initialDelaySeconds: 30
+  periodSeconds: 5
+  timeoutSeconds: 1
+  failureThreshold: 300
+  successThreshold: 1
+extraDeploy:
+  - |
+    apiVersion: gateway.envoyproxy.io/v1alpha1
+    kind: BackendTrafficPolicy
+    metadata:
+      name: keycloak-custom-error-page
+      namespace: folio-prod
+    spec:
+        targetRefs:
+          - kind: HTTPRoute
+            group: gateway.networking.k8s.io
+            name: keycloak-backend
+        responseOverride:
+          - match:
+              statusCodes:
+              - type: Value
+                value: 403
+            response:
+              contentType: text/html
+              body:
+                type: Inline
+                inline: "You are not authorized to access FOLIO. A connection to the Stanford Network is required."
+    ---
+    apiVersion: gateway.networking.k8s.io/v1
+    kind: HTTPRoute
+    metadata:
+      name: keycloak-backend
+      namespace: folio-prod
+    spec:
+      hostnames:
+      - keycloak-folio-prod.stanford.edu
+      parentRefs:
+      - name: default
+        namespace: envoy-gateway-system
+      rules:
+      - backendRefs:
+        - name: keycloak
+          port: 8080
+        matches:
+        - path:
+            type: PathPrefix
+            value: /
+  - |
+    apiVersion: gateway.envoyproxy.io/v1alpha1
+    kind: SecurityPolicy
+    metadata:
+      name: keycloak-ip-limits
+    spec:
+      targetRefs:
+        - group: gateway.networking.k8s.io
+          kind: HTTPRoute
+          name: keycloak-backend
+      authorization:
+        defaultAction: Deny
+        rules:
+          - action: Allow
+            principal:
+              clientCIDRs:
+              - "52.9.21.118/32"
+              - "54.153.8.197/32"
+              - "52.53.107.5/32"
+              - "18.144.135.31/32"
+              - "23.244.192.27/32"
+              - "54.245.203.243/32"
+              - "171.64.0.0/14"
+              - "10.32.0.0/15"
+              - "10.34.0.0/15"
+              - "10.96.0.0/11"
+              - "10.98.0.0/15"
+              - "10.130.0.0/18"
+              - "10.130.64.0/18"
+              - "10.130.128.0/18"
+              - "10.130.192.0/18"
+              - "172.24.0.0/14"
+              - "172.20.206.128/25"
+              - "172.20.207.0/25"
+              - "171.66.16.0/21"
+              - "171.66.24.0/21"
+              - "171.66.176.0/20"
+              - "204.63.231.0/25"
+              - "10.109.48.0/25"
+              - "10.109.48.128/25"
+              - "171.66.1.0/24"
+              - "35.203.130.101/32"
+              - "35.203.131.135/32"
+              - "35.192.213.120/32"
+              - "104.198.197.19/32"
+              - "216.54.57.225/32"
+              - "20.230.202.69/32"
+              - "52.175.234.32/32"
+              - "20.29.204.55/32"
+              - "52.250.48.144/32"
+              - "10.142.204.81/32"
+              - "10.142.204.82/32"

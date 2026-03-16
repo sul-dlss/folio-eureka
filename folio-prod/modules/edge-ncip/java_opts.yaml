@@ -1,0 +1,5 @@
+javaOpts:
+  - "-Dokapi_url=http://kong:8000"
+  - "-XX:MaxRAMPercentage=80"
+  - "-XX:MinRAMPercentage=80"
+  - "-Drequest_timeout_ms=60000"
