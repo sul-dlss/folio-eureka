@@ -126,7 +126,7 @@ spec:
           type: PathPrefix
           value: /
   hostnames:
-  - folio-setae-api-test.stanford.edu
+  - folio-setae-api-prod.stanford.edu
   parentRefs:
   - name: default
     namespace: envoy-gateway-system
