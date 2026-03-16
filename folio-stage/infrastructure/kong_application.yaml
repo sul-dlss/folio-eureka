@@ -14,7 +14,6 @@ spec:
       helm:
         valueFiles:
           - $values/folio-stage/infrastructure/kong.yaml
-          - $values/folio-stage/infrastructure/allowed_ips.yaml
         skipCrds: true
     - repoURL: https://github.com/sul-dlss/folio-eureka
       targetRevision: main
