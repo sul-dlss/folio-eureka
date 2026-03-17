@@ -11,6 +11,7 @@ RUN apk add py3-pip
 RUN apk add lsb-release
 RUN apk add kubectl
 RUN apk add openjdk21
+RUN apk add envsubst
 
 WORKDIR /home/folio-eureka
 
