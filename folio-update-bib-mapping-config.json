@@ -1,0 +1,6 @@
+{
+  "okapiUrl": "${KONG_URL}",
+  "tenant": "${TENANT_ID}",
+  "username": "${LIBSYS_USER}",
+  "password": "${LIBSYS_PASSWORD}"
+}
