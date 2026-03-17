@@ -10,15 +10,18 @@ RUN apk add python3
 RUN apk add py3-pip
 RUN apk add lsb-release
 RUN apk add kubectl
+RUN apk add openjdk21
 
 WORKDIR /home/folio-eureka
 
 COPY folio-dev ./folio-dev/
 COPY folio-test ./folio-test/
 COPY folio-stage ./folio-stage/
+COPY folio-prod ./folio-prod/
 COPY ./*.yaml .
 COPY ./*.json .
 COPY ./*.py .
+COPY ./*.jar .
 COPY requirements.txt .
 
 # Create venv
