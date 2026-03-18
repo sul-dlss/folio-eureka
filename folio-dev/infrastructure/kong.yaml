@@ -155,7 +155,26 @@ extraDeploy:
         - path:
             type: PathPrefix
             value: /
-    ---
+  - | 
+    apiVersion: gateway.envoyproxy.io/v1alpha1
+    kind: SecurityPolicy
+    metadata:
+      name: kong-cors
+      namespace: folio-dev
+    spec:
+        targetRefs:
+          - kind: HTTPRoute
+            group: gateway.networking.k8s.io
+            name: kong-backend
+        cors:
+          allowOrigins:
+          - https://folio-dev.stanford.edu
+          allowMethods:
+          - GET
+          - OPTIONS
+          - POST
+          - PUT
+  - |
     apiVersion: gateway.envoyproxy.io/v1alpha1
     kind: SecurityPolicy
     metadata:
