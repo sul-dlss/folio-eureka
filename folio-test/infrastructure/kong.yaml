@@ -168,7 +168,7 @@ extraDeploy:
             name: kong-backend
         cors:
           allowOrigins:
-          - https://folio-test.stanford.edu
+          - "*"
           allowMethods:
           - GET
           - OPTIONS

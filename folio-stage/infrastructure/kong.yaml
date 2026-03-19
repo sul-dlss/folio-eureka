@@ -170,7 +170,7 @@ extraDeploy:
             name: kong-backend
         cors:
           allowOrigins:
-          - https://folio-stage.stanford.edu
+          - "*"
           allowMethods:
           - GET
           - OPTIONS
