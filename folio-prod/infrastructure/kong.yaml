@@ -159,6 +159,25 @@ extraDeploy:
     apiVersion: gateway.envoyproxy.io/v1alpha1
     kind: SecurityPolicy
     metadata:
+      name: kong-cors
+      namespace: folio-test
+    spec:
+        targetRefs:
+          - kind: HTTPRoute
+            group: gateway.networking.k8s.io
+            name: kong-backend
+        cors:
+          allowOrigins:
+          - "*"
+          allowMethods:
+          - GET
+          - OPTIONS
+          - POST
+          - PUT
+  - |
+    apiVersion: gateway.envoyproxy.io/v1alpha1
+    kind: SecurityPolicy
+    metadata:
       name: kong-ip-limits
     spec:
       targetRefs:
