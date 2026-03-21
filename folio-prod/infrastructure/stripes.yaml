@@ -2,6 +2,7 @@ image:
   pullPolicy: Always
   repository: ghcr.io/sul-dlss/folio-platform-complete
   tag: R1-2025-csp-4-eureka-prod
+replicaCount: 2
 
 startupProbeEnabled : true
 livenessProbeEnabled : true
