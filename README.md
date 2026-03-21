@@ -72,7 +72,7 @@ curl -sX PUT "$KC_URL/admin/realms/master" -H "Authorization: Bearer $TOKEN" -H 
 ## Eureka Deployment and Entitlement Flow
 In the folio-eureka-pod, run the eureka_deployment_flow.py script:
 ```
-eureka_deployment_flow.py -h
+python eureka_deployment_flow.py -h
 
 usage: EurekaDeploymentFlow [-h] -n NAMESPACE [-a] [-d] [-m] [-u] [-t] [-e] [-f FLOW_ID] [filename ...]
 
