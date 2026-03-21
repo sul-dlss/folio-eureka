@@ -35,14 +35,11 @@ controller:
 heapOpts: "-XX:MaxRAMPercentage=80 -XX:MinRAMPercentage=80 -XX:+UseG1GC"
 
 extraConfig: |
-  num.partitions=12
   default.replication.factor=3
   log.retention.hours=72
   log.retention.bytes=6442000000
   num.network.threads=5
-
-# Add to extraConfig to delete topics if needed
-# deleteTopicEnable=true
+  deleteTopicEnable=true
 
 kraft:
   existingClusterIdSecret: kafka-credentials
