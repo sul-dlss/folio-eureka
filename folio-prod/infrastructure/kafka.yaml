@@ -35,7 +35,6 @@ controller:
 heapOpts: "-XX:MaxRAMPercentage=80 -XX:MinRAMPercentage=80 -XX:+UseG1GC"
 
 extraConfig: |
-  num.partitions=12
   default.replication.factor=3
   log.retention.hours=72
   log.retention.bytes=6442000000
@@ -43,6 +42,7 @@ extraConfig: |
   deleteTopicEnable=true
 
 # Add to extraConfig to delete topics if needed
+  # num.partitions=12
 # deleteTopicEnable=true
 
 kraft:
