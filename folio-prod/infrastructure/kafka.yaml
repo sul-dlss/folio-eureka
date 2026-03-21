@@ -41,10 +41,6 @@ extraConfig: |
   num.network.threads=5
   deleteTopicEnable=true
 
-# Add to extraConfig to delete topics if needed
-  # num.partitions=12
-# deleteTopicEnable=true
-
 kraft:
   existingClusterIdSecret: kafka-credentials
 sasl:
