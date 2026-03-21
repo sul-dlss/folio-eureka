@@ -40,6 +40,7 @@ extraConfig: |
   log.retention.hours=72
   log.retention.bytes=6442000000
   num.network.threads=5
+  deleteTopicEnable=true
 
 # Add to extraConfig to delete topics if needed
 # deleteTopicEnable=true
