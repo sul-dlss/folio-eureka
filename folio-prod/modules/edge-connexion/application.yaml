@@ -15,6 +15,7 @@ spec:
       - $values/folio-prod/modules/edge-connexion/overrides.yaml
       - $values/folio-prod/modules/edge-connexion/resources.yaml
       - $values/folio-prod/modules/edge-connexion/probes.yaml
+      - $values/folio-prod/modules/edge-connexion/replicas.yaml
       - $values/folio-prod/modules/edge-connexion/service.yaml
       - $values/folio-prod/modules/edge-connexion/java_opts.yaml
       - $values/folio-prod/modules/edge-connexion/extra_env.yaml
