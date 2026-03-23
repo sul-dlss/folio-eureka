@@ -14,7 +14,7 @@ spec:
       valueFiles:
       - $values/folio-prod/modules/mod-inventory-storage/overrides.yaml
       - $values/folio-prod/modules/mod-inventory-storage/resources.yaml
-      - $values/folio-prod/common/sidecar.yaml
+      - $values/folio-prod/modules/mod-inventory-storage/sidecar.yaml
       - $values/folio-prod/common/probes.yaml
       - $values/folio-prod/modules/mod-inventory-storage/replicas.yaml
       - $values/folio-prod/modules/mod-inventory-storage/extra_env.yaml
