@@ -155,6 +155,8 @@ extraDeploy:
         - path:
             type: PathPrefix
             value: /
+        timeouts:
+          request: "30s"
     ---
     apiVersion: gateway.envoyproxy.io/v1alpha1
     kind: SecurityPolicy
