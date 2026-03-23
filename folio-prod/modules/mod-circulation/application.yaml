@@ -14,7 +14,7 @@ spec:
       valueFiles:
       - $values/folio-prod/modules/mod-circulation/overrides.yaml
       - $values/folio-prod/modules/mod-circulation/resources.yaml
-      - $values/folio-prod/common/sidecar.yaml
+      - $values/folio-prod/modules/mod-circulation/sidecar.yaml
       - $values/folio-prod/modules/mod-circulation/probes.yaml
       - $values/folio-prod/modules/mod-circulation/replicas.yaml
     repoURL: https://sul-dlss.github.io/folio-helm-v2
