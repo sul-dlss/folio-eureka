@@ -6,7 +6,7 @@ data:
   config.sul.json: |
     {
       "okapi": {
-        "url": "https://kong-folio-dev.stanford.edu:8443",
+        "url": "https://folio-dev-api.stanford.edu",
         "tenant": "sul"
       },
       "login": {
