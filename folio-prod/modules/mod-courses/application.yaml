@@ -13,7 +13,7 @@ spec:
     helm:
       valueFiles:
       - $values/folio-prod/modules/mod-courses/overrides.yaml
-      - $values/folio-prod/modules/mod-courses/resources.yaml
+      - $values/folio-prod/common/resources.yaml
       - $values/folio-prod/common/sidecar.yaml
       - $values/folio-prod/common/probes.yaml
       - $values/folio-prod/modules/mod-courses/replicas.yaml
