@@ -5,6 +5,10 @@ extraEnvVars: |
     value: "3"
   - name: "MAX_REQUEST_SIZE"
     value: "10485760"
+  - name: "SRS_MARCINDEXERS_DELETE_PLANNEDTIME"
+    value: "01:55,03:55"
+  - name: "SRS_MARCINDEXERS_DELETE_DIRTYBATCHSIZE"
+    value: "50000"
   - name: DI_PARSED_RECORDS_CHUNK_SAVED_PARTITIONS
     value: "12"
   - name: DI_SRS_MARC_AUTHORITY_RECORD_MATCHED_PARTITIONS
