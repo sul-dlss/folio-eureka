@@ -16,6 +16,7 @@ spec:
       - $values/folio-dev/modules/mod-serials-management/resources.yaml
       - $values/folio-dev/common/sidecar.yaml
       - $values/folio-dev/modules/mod-serials-management/probes.yaml
+      - $values/folio-dev/common/java_opts.yaml
     repoURL: https://sul-dlss.github.io/folio-helm-v2
     targetRevision: 1.0.48
   - ref: values

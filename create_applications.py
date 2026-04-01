@@ -96,6 +96,8 @@ def create_applications(filename):
         
         if Path(f"{args.namespace}/modules/{module_name}/java_opts.yaml").exists():
             values_files.append(f"$values/{args.namespace}/modules/{module_name}/java_opts.yaml")
+        else:
+            values_files.append(f"$values/{args.namespace}/common/java_opts.yaml")
         
         if Path(f"{args.namespace}/modules/{module_name}/extra_env.yaml").exists():
             values_files.append(f"$values/{args.namespace}/modules/{module_name}/extra_env.yaml")

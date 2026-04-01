@@ -1,0 +1,4 @@
+extraJavaOpts: 
+  - "-XX:MaxRAMPercentage=80" 
+  - "-XX:MinRAMPercentage=80" 
+  - "-XX:+UseG1GC"

@@ -15,7 +15,6 @@ spec:
       - $values/folio-prod/modules/edge-sip2/overrides.yaml
       - $values/folio-prod/modules/edge-sip2/resources.yaml
       - $values/folio-prod/modules/edge-sip2/probes.yaml
-      - $values/folio-prod/modules/edge-sip2/replicas.yaml
       - $values/folio-prod/modules/edge-sip2/service.yaml
       - $values/folio-prod/modules/edge-sip2/java_opts.yaml
       - $values/folio-prod/modules/edge-sip2/extra_env.yaml

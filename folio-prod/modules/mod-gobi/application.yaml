@@ -16,7 +16,7 @@ spec:
       - $values/folio-prod/modules/mod-gobi/resources.yaml
       - $values/folio-prod/common/sidecar.yaml
       - $values/folio-prod/common/probes.yaml
-      - $values/folio-prod/modules/mod-gobi/replicas.yaml
+      - $values/folio-prod/common/java_opts.yaml
     repoURL: https://sul-dlss.github.io/folio-helm-v2
     targetRevision: 2.7.49
   - ref: values
