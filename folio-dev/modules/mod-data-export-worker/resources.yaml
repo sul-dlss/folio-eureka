@@ -6,8 +6,6 @@ resources:
     cpu: 500m
     memory: 2048M
 
-dbMaxPoolSize: 10
-
 integrations:
   s3:
     enabled: true

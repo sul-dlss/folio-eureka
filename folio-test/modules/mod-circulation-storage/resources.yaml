@@ -6,4 +6,4 @@ resources:
     cpu: 1
     memory: 2880M
 
-dbMaxPoolSize: 20
+
