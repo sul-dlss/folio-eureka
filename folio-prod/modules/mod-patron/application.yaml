@@ -16,6 +16,7 @@ spec:
       - $values/folio-prod/modules/mod-patron/resources.yaml
       - $values/folio-prod/common/sidecar.yaml
       - $values/folio-prod/common/probes.yaml
+      - $values/folio-prod/modules/mod-patron/replicas.yaml
       - $values/folio-prod/common/java_opts.yaml
     repoURL: https://sul-dlss.github.io/folio-helm-v2
     targetRevision: 6.0.47

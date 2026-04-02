@@ -16,6 +16,7 @@ spec:
       - $values/folio-prod/modules/mod-z3950/resources.yaml
       - $values/folio-prod/common/sidecar.yaml
       - $values/folio-prod/modules/mod-z3950/probes.yaml
+      - $values/folio-prod/modules/mod-z3950/replicas.yaml
       - $values/folio-prod/modules/mod-z3950/service.yaml
       - $values/folio-prod/common/java_opts.yaml
       - $values/folio-prod/modules/mod-z3950/extra_env.yaml
