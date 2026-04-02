@@ -1,0 +1,3 @@
+extraEnvVars: |
+  - name: DB_MAXPOOLSIZE
+    value: "20"
