@@ -1,4 +1,4 @@
-# DB_MODULES='$DB_MODULES' envsubst < db-modules-restart-job.yaml | kubectl -n $namespace apply -f -
+# DB_MODULES='$DB_MODULES' M='$M' envsubst < db-modules-restart-job.yaml | kubectl -n $namespace apply -f -
 #
 apiVersion: batch/v1
 kind: CronJob
@@ -15,7 +15,7 @@ spec:
   jobTemplate:
     spec:
       backoffLimit: 0
-      activeDeadlineSeconds: 3600
+      activeDeadlineSeconds: 7200
       ttlSecondsAfterFinished: 14400 # 4 hours
       template:
         spec:
@@ -51,11 +51,11 @@ spec:
                     mod-fqm-manager
                     mod-inventory-storage
                     mod-invoice-storage
-                    mod-ldp mod-licenses
+                    mod-licenses
                     mod-lists
                     mod-login-keycloak
-                    mod-notes mod-notify
-                    mod-oai-pmh
+                    mod-notes 
+                    mod-notify
                     mod-okapi-facade
                     mod-orders-storage
                     mod-organizations-storage
@@ -75,4 +75,4 @@ spec:
                     mod-users
                     mod-users-keycloak
               command: [ "/bin/bash", "-c", "--" ]
-              args: [ "for M in $DB_MODULES; do kubectl -n $namespace rollout restart deployment/$M; sleep 30; done" ]
+              args: [ "for M in $DB_MODULES; do kubectl -n $namespace rollout restart deployment/$M; sleep 60; done" ]

@@ -1,4 +1,4 @@
-# KAFKA_MODULES='$KAFKA_MODULES' envsubst < kafka-modules-restart.yaml | kubectl -n $namespace apply -f -
+# KAFKA_MODULES='$KAFKA_MODULES' M='$M' envsubst < kafka-modules-restart.yaml | kubectl -n $namespace apply -f -
 #
 apiVersion: batch/v1
 kind: CronJob
