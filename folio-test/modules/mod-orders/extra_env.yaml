@@ -1,0 +1,7 @@
+extraEnvVars:
+  - name: DI_ORDER_CREATED_READY_FOR_POST_PROCESSING_PARTITIONS
+    value: "12"
+  - name: DI_ORDER_CREATED_PARTITIONS
+    value: "12"
+  - name: DI_PENDING_ORDER_CREATED_PARTITIONS
+    value: "12"
