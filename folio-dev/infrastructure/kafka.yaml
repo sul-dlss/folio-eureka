@@ -39,9 +39,9 @@ extraConfig: |
   default.replication.factor=3
   log.retention.hours=72
   log.retention.bytes=6442000000
-  num.network.threads=5
+  num.network.threads=8
   num.io.threads=12
-  max.poll.interval.ms=600000
+  max.poll.interval.ms=1800000
 
 # Add to extraConfig to delete topics if needed
 # deleteTopicEnable=true
