@@ -16,5 +16,5 @@ spec:
         valueFiles:
         - $values/folio-test/infrastructure/kafka.yaml
     - repoURL: https://github.com/sul-dlss/folio-eureka
-      targetRevision: main
+      targetRevision: kafka-tuning
       ref: values
