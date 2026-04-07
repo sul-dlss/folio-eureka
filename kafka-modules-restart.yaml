@@ -1,0 +1,50 @@
+# KAFKA_MODULES='$KAFKA_MODULES' M='$M' envsubst < kafka-modules-restart.yaml | kubectl -n $namespace apply -f -
+#
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: kafka-modules-restart
+  namespace: $namespace
+spec:
+  concurrencyPolicy: Forbid
+  # schedule: '59 6 * * *' # 11:59 PM Pacific
+  schedule: '0 0 29 2 1' # noop
+  suspend: true
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      activeDeadlineSeconds: 600
+      ttlSecondsAfterFinished: 14400 # 4 hours
+      template:
+        spec:
+          serviceAccountName: folio-k8s
+          restartPolicy: Never
+          containers:
+            - name: kubectl
+              image: bitnamilegacy/kubectl
+              env:
+                - name: KAFKA_MODULES
+                  value: |-
+                    mod-audit
+                    mod-bulk-operations
+                    mod-circulation
+                    mod-circulation-storage
+                    mod-data-export
+                    mod-data-export-spring
+                    mod-data-export-worker
+                    mod-data-import
+                    mod-di-converter-storage
+                    mod-entities-links
+                    mod-inventory
+                    mod-inventory-storage
+                    mod-invoice
+                    mod-orders
+                    mod-pubsub
+                    mod-quick-marc
+                    mod-search
+                    mod-source-record-storage
+                    mod-source-record-manager
+              command: [ "/bin/bash", "-c", "--" ]
+              args: [ "for M in $KAFKA_MODULES; do kubectl -n $namespace rollout restart deployments/$M; done" ]

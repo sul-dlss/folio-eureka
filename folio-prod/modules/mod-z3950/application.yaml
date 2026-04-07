@@ -18,6 +18,7 @@ spec:
       - $values/folio-prod/modules/mod-z3950/probes.yaml
       - $values/folio-prod/modules/mod-z3950/replicas.yaml
       - $values/folio-prod/modules/mod-z3950/service.yaml
+      - $values/folio-prod/common/java_opts.yaml
       - $values/folio-prod/modules/mod-z3950/extra_env.yaml
     repoURL: https://sul-dlss.github.io/folio-helm-v2
     targetRevision: 3.5.0

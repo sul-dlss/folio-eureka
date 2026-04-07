@@ -7,3 +7,5 @@ extraEnvVars: |
     value: "3000000"
   - name: REPLICATION_FACTOR
     value: {{ .Values.replicaCount | quote }}
+  - name: DB_MAXPOOLSIZE
+    value: "20"

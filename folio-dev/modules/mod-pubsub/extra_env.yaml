@@ -10,3 +10,5 @@ extraEnvVars: |
       secretKeyRef:
           name: mod-pubsub-system-user
           key: SYSTEM_USER_PASSWORD
+  - name: DB_MAXPOOLSIZE
+    value: "20"
