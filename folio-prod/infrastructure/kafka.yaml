@@ -40,7 +40,7 @@ extraConfig: |
   log.retention.bytes=6442000000
   num.network.threads=8
   num.io.threads=12
-  max.poll.interval.ms=1800000
+  max.poll.interval.ms=600000
   deleteTopicEnable=true
 
 kraft:
