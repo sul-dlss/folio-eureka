@@ -7,7 +7,7 @@ sidecarContainers:
         cpu: 200m
         memory: 512M
       limits:
-        cpu: 300m
+        cpu: 500m
         memory: 1024M
     extraEnvVars:
       - name: KC_JWKS_BASE_URL
