@@ -3,3 +3,4 @@ extraJavaOpts:
   - "-XX:MinRAMPercentage=80" 
   - "-Dsrm.kafka.DataImportConsumer.loadLimit=8"
   - "-Dsrm.kafka.DataImportConsumer.globalLoadLimit=64"
+
