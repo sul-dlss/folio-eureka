@@ -1,3 +1,0 @@
-extraJavaOpts:
-  - "-Dspring.datasource.hikari.idle-timeout"
-  - "-Dspring.datasource.hikari.max-lifetime"
