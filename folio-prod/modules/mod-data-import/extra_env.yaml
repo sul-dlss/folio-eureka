@@ -1,5 +1,5 @@
 extraEnvVars:
   - name: DI_INITIALIZATION_STARTED_PARTITIONS
-    value: "12"
+    value: "8"
   - name: DI_RAW_RECORDS_CHUNK_READ_PARTITIONS
-    value: "12"
+    value: "8"
