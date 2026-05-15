@@ -162,6 +162,18 @@ extraDeploy:
           request: "120s"
   - |
     apiVersion: gateway.envoyproxy.io/v1alpha1
+    kind: BackendTrafficPolicy
+    metadata:
+      name: kong-request-buffer
+    spec:
+      targetRefs:
+      - group: gateway.networking.k8s.io
+        kind: HTTPRoute
+        name: kong-backend
+      requestBuffer:
+        limit: 256M
+  - |
+    apiVersion: gateway.envoyproxy.io/v1alpha1
     kind: SecurityPolicy
     metadata:
       name: kong-ip-limits
