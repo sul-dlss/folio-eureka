@@ -1,6 +1,6 @@
-# namespace='$namespace' envsubst < mod-search-cleanup-cronjob.yaml | kubectl apply -f -
+# namespace="$namespace" envsubst < mod-search-cleanup-cronjob.yaml | kubectl apply -f -
 # Apply the configmap first:
-#   namespace='$namespace' envsubst < mod-search-cleanup-configmap.yaml | kubectl apply -f -
+#   namespace="$namespace" envsubst < mod-search-cleanup-configmap.yaml | kubectl apply -f -
 #
 apiVersion: batch/v1
 kind: CronJob
