@@ -22,9 +22,6 @@ data:
       exit 0
     fi
 
-    echo "Deleted resource_ids_job rows for temp tables:"
-    echo "$TABLES"
-
     for tbl in $TABLES; do
       echo "Dropping table: sul_mod_search.$tbl"
       PGPASSWORD=$DB_PASSWORD psql $PGCONN \
