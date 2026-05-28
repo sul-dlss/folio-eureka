@@ -13,9 +13,12 @@ data:
     PGCONN="-h $DB_HOST -p $DB_PORT -U $DB_USERNAME -d $DB_DATABASE"
 
     TABLES=$(PGPASSWORD=$DB_PASSWORD psql $PGCONN -t -A \
-      -c "DELETE FROM sul_mod_search.resource_ids_job
-          WHERE created_date < NOW() - INTERVAL '1 week'
-          RETURNING temp_table_name;")
+      -c "WITH deleted AS (
+            DELETE FROM sul_mod_search.resource_ids_job
+            WHERE created_date < NOW() - INTERVAL '1 week'
+            RETURNING temp_table_name
+          )
+          SELECT temp_table_name FROM deleted;")
 
     if [ -z "$TABLES" ]; then
       echo "No expired resource_ids_job rows found."
