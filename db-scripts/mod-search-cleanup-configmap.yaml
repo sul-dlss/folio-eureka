@@ -1,0 +1,30 @@
+# namespace='$namespace' envsubst < mod-search-cleanup-configmap.yaml | kubectl apply -f -
+#
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mod-search-cleanup-sql
+  namespace: $namespace
+data:
+  cleanup.sql: |
+    DO $$
+    DECLARE
+        tbl TEXT;
+        tables_to_drop TEXT[];
+    BEGIN
+        WITH deleted AS (
+            DELETE FROM sul_mod_search.resource_ids_job
+            WHERE created_date < NOW() - INTERVAL '1 week'
+            RETURNING temp_table_name
+        )
+        SELECT array_agg(temp_table_name) INTO tables_to_drop FROM deleted;
+
+        IF tables_to_drop IS NOT NULL THEN
+            FOREACH tbl IN ARRAY tables_to_drop LOOP
+                EXECUTE format('DROP TABLE IF EXISTS sul_mod_search.%I', tbl);
+                RAISE NOTICE 'Dropped table: sul_mod_search.%', tbl;
+            END LOOP;
+        ELSE
+            RAISE NOTICE 'No expired resource_ids_job rows found.';
+        END IF;
+    END $$;

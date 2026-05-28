@@ -1,0 +1,53 @@
+# namespace='$namespace' envsubst < mod-search-cleanup-cronjob.yaml | kubectl apply -f -
+# Apply the configmap first:
+#   namespace='$namespace' envsubst < mod-search-cleanup-configmap.yaml | kubectl apply -f -
+#
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: mod-search-cleanup
+  namespace: $namespace
+spec:
+  concurrencyPolicy: Forbid
+  schedule: '0 2 * * 0' # weekly Sunday 2am
+  suspend: true
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      activeDeadlineSeconds: 3600
+      ttlSecondsAfterFinished: 86400
+      template:
+        spec:
+          restartPolicy: Never
+          volumes:
+            - name: sql-scripts
+              configMap:
+                name: mod-search-cleanup-sql
+          containers:
+            - name: psql-cleanup
+              image: postgres:16-alpine
+              envFrom:
+                - secretRef:
+                    name: db-credentials
+              command: ["/bin/sh", "-c"]
+              args:
+                - >-
+                  PGPASSWORD=$DB_PASSWORD psql
+                  -h $DB_HOST
+                  -p $DB_PORT
+                  -U $DB_USERNAME
+                  -d $DB_DATABASE
+                  -f /scripts/cleanup.sql
+              volumeMounts:
+                - name: sql-scripts
+                  mountPath: /scripts
+                  readOnly: true
+              resources:
+                requests:
+                  cpu: 50m
+                  memory: 64Mi
+                limits:
+                  cpu: 200m
+                  memory: 128Mi
