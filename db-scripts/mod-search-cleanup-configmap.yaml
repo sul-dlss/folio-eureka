@@ -1,4 +1,4 @@
-# namespace="$namespace" envsubst < mod-search-cleanup-configmap.yaml | kubectl apply -f -
+# namespace="folio-test" envsubst '$namespace' < mod-search-cleanup-configmap.yaml | kubectl apply -f -
 #
 apiVersion: v1
 kind: ConfigMap
@@ -6,25 +6,27 @@ metadata:
   name: mod-search-cleanup-sql
   namespace: $namespace
 data:
-  cleanup.sql: |
-    DO $$
-    DECLARE
-        tbl TEXT;
-        tables_to_drop TEXT[];
-    BEGIN
-        WITH deleted AS (
-            DELETE FROM sul_mod_search.resource_ids_job
-            WHERE created_date < NOW() - INTERVAL '1 week'
-            RETURNING temp_table_name
-        )
-        SELECT array_agg(temp_table_name) INTO tables_to_drop FROM deleted;
+  cleanup.sh: |
+    #!/bin/sh
+    set -e
 
-        IF tables_to_drop IS NOT NULL THEN
-            FOREACH tbl IN ARRAY tables_to_drop LOOP
-                EXECUTE format('DROP TABLE IF EXISTS sul_mod_search.%I', tbl);
-                RAISE NOTICE 'Dropped table: sul_mod_search.%', tbl;
-            END LOOP;
-        ELSE
-            RAISE NOTICE 'No expired resource_ids_job rows found.';
-        END IF;
-    END $$;
+    PGCONN="-h $DB_HOST -p $DB_PORT -U $DB_USERNAME -d $DB_DATABASE"
+
+    TABLES=$(PGPASSWORD=$DB_PASSWORD psql $PGCONN -t -A \
+      -c "DELETE FROM sul_mod_search.resource_ids_job
+          WHERE created_date < NOW() - INTERVAL '1 week'
+          RETURNING temp_table_name;")
+
+    if [ -z "$TABLES" ]; then
+      echo "No expired resource_ids_job rows found."
+      exit 0
+    fi
+
+    echo "Deleted resource_ids_job rows for temp tables:"
+    echo "$TABLES"
+
+    for tbl in $TABLES; do
+      echo "Dropping table: sul_mod_search.$tbl"
+      PGPASSWORD=$DB_PASSWORD psql $PGCONN \
+        -c "DROP TABLE IF EXISTS sul_mod_search.\"$tbl\";"
+    done

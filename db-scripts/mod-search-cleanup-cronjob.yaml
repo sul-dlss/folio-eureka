@@ -31,15 +31,7 @@ spec:
               envFrom:
                 - secretRef:
                     name: db-credentials
-              command: ["/bin/sh", "-c"]
-              args:
-                - >-
-                  PGPASSWORD=$DB_PASSWORD psql
-                  -h $DB_HOST
-                  -p $DB_PORT
-                  -U $DB_USERNAME
-                  -d $DB_DATABASE
-                  -f /scripts/cleanup.sql
+              command: ["/bin/sh", "/scripts/cleanup.sh"]
               volumeMounts:
                 - name: sql-scripts
                   mountPath: /scripts
