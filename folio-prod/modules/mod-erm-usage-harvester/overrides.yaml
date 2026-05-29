@@ -22,7 +22,6 @@ integrations:
     enabled: false
   systemuser:
     enabled: true
-    name: "mod-erm-usage-harvester"
 podSecurityContext:
   fsGroup: 2000
 securityContext:
