@@ -21,7 +21,7 @@ integrations:
   okapi:
     enabled: false
   systemuser:
-    enabled: false
+    enabled: true
 podSecurityContext:
   fsGroup: 2000
 securityContext:
