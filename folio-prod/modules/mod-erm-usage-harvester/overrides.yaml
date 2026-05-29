@@ -21,7 +21,8 @@ integrations:
   okapi:
     enabled: false
   systemuser:
-    enabled: false
+    enabled: true
+    name: "mod-erm-usage-harvester"
 podSecurityContext:
   fsGroup: 2000
 securityContext:
