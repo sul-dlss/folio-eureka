@@ -19,10 +19,16 @@ data:
             RETURNING temp_table_name
           )
           SELECT temp_table_name FROM deleted;")
-
+      
     if [ -z "$TABLES" ]; then
       echo "No expired resource_ids_job rows found."
       exit 0
+    else
+      echo "Found expired resource_ids_job rows for tables."
+      INSERT_SQL=$(printf "INSERT INTO public.mod_search_cleanup_log (temp_table_name) VALUES ('%s');\n" $TABLES)
+      PGPASSWORD=$DB_PASSWORD psql $PGCONN \
+        -c "CREATE TABLE IF NOT EXISTS public.mod_search_cleanup_log (temp_table_name TEXT, cleaned_at TIMESTAMPTZ DEFAULT NOW());" \
+        -c "$INSERT_SQL"
     fi
 
     for tbl in $TABLES; do
