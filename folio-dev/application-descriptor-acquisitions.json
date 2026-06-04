@@ -1,140 +1,120 @@
 {
-  "id": "app-acquisitions-1.0.25",
+  "id": "app-acquisitions-1.0.29",
   "name": "app-acquisitions",
-  "version": "1.0.25",
+  "version": "1.0.29",
   "description": "Application Descriptor Repository for the FOLIO Acquisitions application",
-  "platform": "complete",
   "modules":   [
         {
-      "id": "mod-organizations-2.1.0",
-      "name": "mod-organizations",
-      "version": "2.1.0",
-      "url": null
-    },
-        {
-      "id": "mod-organizations-storage-4.9.1",
-      "name": "mod-organizations-storage",
-      "version": "4.9.1",
-      "url": null
-    },
-        {
-      "id": "mod-orders-13.0.8",
-      "name": "mod-orders",
-      "version": "13.0.8",
-      "url": null
-    },
-        {
-      "id": "mod-orders-storage-13.9.5",
-      "name": "mod-orders-storage",
-      "version": "13.9.5",
-      "url": null
-    },
-        {
-      "id": "mod-invoice-6.0.3",
-      "name": "mod-invoice",
-      "version": "6.0.3",
-      "url": null
-    },
-        {
-      "id": "mod-invoice-storage-6.0.0",
-      "name": "mod-invoice-storage",
-      "version": "6.0.0",
-      "url": null
-    },
-        {
-      "id": "mod-finance-5.1.1",
-      "name": "mod-finance",
-      "version": "5.1.1",
-      "url": null
-    },
-        {
-      "id": "mod-finance-storage-8.8.4",
+      "id": "mod-finance-storage-8.8.8",
       "name": "mod-finance-storage",
-      "version": "8.8.4",
-      "url": null
+      "version": "8.8.8"
+    },
+        {
+      "id": "mod-orders-storage-13.9.8",
+      "name": "mod-orders-storage",
+      "version": "13.9.8"
+    },
+        {
+      "id": "mod-finance-5.1.3",
+      "name": "mod-finance",
+      "version": "5.1.3"
+    },
+        {
+      "id": "mod-organizations-storage-4.9.2",
+      "name": "mod-organizations-storage",
+      "version": "4.9.2"
+    },
+        {
+      "id": "mod-invoice-storage-6.0.1",
+      "name": "mod-invoice-storage",
+      "version": "6.0.1"
+    },
+        {
+      "id": "mod-organizations-2.1.1",
+      "name": "mod-organizations",
+      "version": "2.1.1"
+    },
+        {
+      "id": "mod-orders-13.0.10",
+      "name": "mod-orders",
+      "version": "13.0.10"
+    },
+        {
+      "id": "mod-invoice-6.0.4",
+      "name": "mod-invoice",
+      "version": "6.0.4"
     }
   ],
   "uiModules":   [
         {
+      "id": "folio_claims-1.0.1",
+      "name": "folio_claims",
+      "version": "1.0.1"
+    },
+        {
       "id": "folio_organizations-6.0.1",
       "name": "folio_organizations",
-      "version": "6.0.1",
-      "url": null
+      "version": "6.0.1"
     },
         {
       "id": "folio_orders-8.0.5",
       "name": "folio_orders",
-      "version": "8.0.5",
-      "url": null
+      "version": "8.0.5"
     },
         {
       "id": "folio_invoice-7.0.5",
       "name": "folio_invoice",
-      "version": "7.0.5",
-      "url": null
+      "version": "7.0.5"
     },
         {
       "id": "folio_finance-8.0.4",
       "name": "folio_finance",
-      "version": "8.0.4",
-      "url": null
+      "version": "8.0.4"
     },
         {
       "id": "folio_receiving-7.0.2",
       "name": "folio_receiving",
-      "version": "7.0.2",
-      "url": null
-    },
-        {
-      "id": "folio_claims-1.0.0",
-      "name": "folio_claims",
-      "version": "1.0.0",
-      "url": null
+      "version": "7.0.2"
     },
         {
       "id": "folio_acquisition-units-6.0.0",
       "name": "folio_acquisition-units",
-      "version": "6.0.0",
-      "url": null
+      "version": "6.0.0"
     },
         {
       "id": "folio_plugin-find-organization-6.0.0",
       "name": "folio_plugin-find-organization",
-      "version": "6.0.0",
-      "url": null
+      "version": "6.0.0"
     },
         {
       "id": "folio_plugin-find-contact-6.0.0",
       "name": "folio_plugin-find-contact",
-      "version": "6.0.0",
-      "url": null
+      "version": "6.0.0"
     },
         {
       "id": "folio_plugin-find-interface-6.0.0",
       "name": "folio_plugin-find-interface",
-      "version": "6.0.0",
-      "url": null
+      "version": "6.0.0"
     },
         {
       "id": "folio_plugin-find-fund-4.0.0",
       "name": "folio_plugin-find-fund",
-      "version": "4.0.0",
-      "url": null
+      "version": "4.0.0"
     },
         {
       "id": "folio_plugin-find-po-line-6.0.1",
       "name": "folio_plugin-find-po-line",
-      "version": "6.0.1",
-      "url": null
+      "version": "6.0.1"
     }
   ],
   "dependencies": [  {
     "name": "app-platform-complete",
-    "version": "^2.0.0"
+    "version": "^2.0.0",
+    "preRelease": null
   }],
   "moduleDescriptors":   [
         {
-      "id": "mod-organizations-2.1.0",
+      "id": "mod-organizations-2.1.1",
       "name": "Organizations business logic module",
       "provides":       [
                 {
@@ -358,7 +338,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-organizations:2.1.0",
+        "dockerImage": "mod-organizations:2.1.1",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 357913941,
@@ -371,7 +351,7 @@
       }
     },
         {
-      "id": "mod-organizations-storage-4.9.1",
+      "id": "mod-organizations-storage-4.9.2",
       "name": "Organizations CRUD module",
       "provides":       [
                 {
@@ -1374,7 +1354,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-organizations-storage:4.9.1",
+        "dockerImage": "mod-organizations-storage:4.9.2",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 357913941,
@@ -1429,7 +1409,7 @@
       }
     },
         {
-      "id": "mod-orders-13.0.8",
+      "id": "mod-orders-13.0.10",
       "name": "Orders Business Logic Module",
       "provides":       [
                 {
@@ -3668,7 +3648,7 @@
         ]
       }},
       "launchDescriptor":       {
-        "dockerImage": "mod-orders:13.0.8",
+        "dockerImage": "mod-orders:13.0.10",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 1073741824,
@@ -3723,7 +3703,7 @@
       }
     },
         {
-      "id": "mod-orders-storage-13.9.5",
+      "id": "mod-orders-storage-13.9.8",
       "name": "Orders CRUD module",
       "provides":       [
                 {
@@ -5269,7 +5249,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-orders-storage:13.9.5",
+        "dockerImage": "mod-orders-storage:13.9.8",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 357913941,
@@ -5328,7 +5308,7 @@
       }
     },
         {
-      "id": "mod-invoice-6.0.3",
+      "id": "mod-invoice-6.0.4",
       "name": "Invoice business logic module",
       "provides":       [
                 {
@@ -6406,7 +6386,7 @@
         ]
       }},
       "launchDescriptor":       {
-        "dockerImage": "mod-invoice:6.0.3",
+        "dockerImage": "mod-invoice:6.0.4",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 838860800,
@@ -6469,7 +6449,7 @@
       }
     },
         {
-      "id": "mod-invoice-storage-6.0.0",
+      "id": "mod-invoice-storage-6.0.1",
       "name": "Invoice CRUD module",
       "provides":       [
                 {
@@ -7164,7 +7144,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-invoice-storage:6.0.0",
+        "dockerImage": "mod-invoice-storage:6.0.1",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 357913941,
@@ -7219,7 +7199,7 @@
       }
     },
         {
-      "id": "mod-finance-5.1.1",
+      "id": "mod-finance-5.1.3",
       "name": "Finance business logic module",
       "provides":       [
                 {
@@ -8635,7 +8615,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-finance:5.1.1",
+        "dockerImage": "mod-finance:5.1.3",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 536870912,
@@ -8648,7 +8628,7 @@
       }
     },
         {
-      "id": "mod-finance-storage-8.8.4",
+      "id": "mod-finance-storage-8.8.8",
       "name": "Finance CRUD module",
       "provides":       [
                 {
@@ -9749,7 +9729,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-finance-storage:8.8.4",
+        "dockerImage": "mod-finance-storage:8.8.8",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 357913941,
@@ -11870,7 +11850,7 @@
       ]
     },
         {
-      "id": "folio_claims-1.0.0",
+      "id": "folio_claims-1.0.1",
       "name": "UI module for claiming",
       "requires":       [
                 {
