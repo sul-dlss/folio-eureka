@@ -10,7 +10,7 @@ spec:
     namespace: folio-dev
   sources:
     - repoURL: https://sul-dlss.github.io/folio-helm-v2
-      targetRevision: 2.24.0
+      targetRevision: 2.24.1
       helm:
         valueFiles:
           - $values/folio-dev/infrastructure/stripes.yaml
