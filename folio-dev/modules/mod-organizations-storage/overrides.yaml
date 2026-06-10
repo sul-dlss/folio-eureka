@@ -10,7 +10,7 @@ eureka:
     value: 'false'
 image:
   repository: folioorg/mod-organizations-storage
-  tag: 4.9.1
+  tag: 4.9.2
 integrations:
   db:
     enabled: true

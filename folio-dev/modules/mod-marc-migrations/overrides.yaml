@@ -10,7 +10,7 @@ eureka:
     value: 'false'
 image:
   repository: folioorg/mod-marc-migrations
-  tag: 2.0.4
+  tag: 2.0.5
 integrations:
   db:
     enabled: true

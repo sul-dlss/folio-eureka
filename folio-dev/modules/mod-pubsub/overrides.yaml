@@ -3,7 +3,7 @@ eureka:
   enabled: true
 image:
   repository: folioorg/mod-pubsub
-  tag: 2.16.1
+  tag: 2.16.3
 integrations:
   db:
     enabled: true

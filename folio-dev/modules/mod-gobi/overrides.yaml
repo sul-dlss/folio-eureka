@@ -10,7 +10,7 @@ eureka:
     value: 'false'
 image:
   repository: folioorg/mod-gobi
-  tag: 3.0.1
+  tag: 3.0.2
 integrations:
   db:
     enabled: true

@@ -1,7 +1,7 @@
 sidecarContainers:
   eureka:
     image:
-      tag: 3.0.16
+      tag: 3.0.19
     resources:
       requests:
         cpu: 100m

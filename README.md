@@ -365,80 +365,7 @@ TOKEN=$(curl -sX POST -d client_id="sidecar-module-access-client" -d client_secr
  - All modules must have all possible "SYSTEM_USER_ENABLED" vars set to false. This is handled in the `create_module_values.py` script by setting: `{"name": "FOLIO_SYSTEM_USER_ENABLED", "value": "false"}, {"name": "SYSTEM_USER_CREATED", "value": "false"}, {"name": "SYSTEM_USER_ENABLED", "value": "false"}`
 
 ## Build Stripes for Eureka
-1. Go to sul-dlss/folio-platform-complete
-1. `git fetch --tags upstream`
-1. Checkout a branch for the flower release, e.g. `git checkout -b R1-2025-csp-4-eureka-test R1-2025-csp-4`
-1. Go to folio-org/platform-lsp and view the code for the tagged flower release.
-1. Copy the package.json file to your folio-platform-complete branch.
-1. Copy the stripes.config.js file to your folio-platform-complete branch.
-1. Copy the stripes.modules.js file into the stripes.config.js file you just copied, in a `modules` JSON object.
-1. Modify the stripes.config.js file, inserting the correct URL for authentication and gateway. Modify the config, e.g.:
-```
-  config: {
-    logCategories: 'core,path,action,xhr',
-    logPrefix: '--',
-    maxUnpagedResourceCount: 2000,
-    idleSessionWarningSeconds: 60,
-    welcomeMessage: 'FOLIO TEST Sunflower CSP 4 - Stanford University',
-    platformName: 'FOLIO Test Sunflower CSP 4',
-    helpUrl: 'https://sites.google.com/stanford.edu/folio-training-central/help',
-    showPerms: false,
-    isSingleTenant: true,
-    tenantOptions: {sul: {name: "sul", clientId: "sul-application"}},
-    enableEcsRequests: false,
-    preserveConsole: true,
-    useSecureTokens: true,
-    hasAllPerms: false,
-    aboutInstallDate: "2026-1-23",
-    aboutInstallMessage: "Eureka Test Sunflower CSP 4",
-    rtr: {
-      idleSessionTTL: '1h',
-      idleModalTTL: '30s',
-    }
-  }
-```
-1. We don't bother removing modules anymore; it's too much trouble.
-1. Modify the branding section:
-```
-branding: {
-    logo: {
-      src: './tenant-assets/logo.png',
-      alt: 'Stanford University',
-    },
-    favicon: {
-      src: './tenant-assets/stanford-favicon.png',
-    },
-  }
-```
-1. Copy the following files from another branch:
-```
-git checkout {current branch-name}-{namespace} -- .github/workflows/push.yml
-git checkout {current branch-name}-{namespace} -- tenant-assets/MainNav.css
-git checkout {current branch-name}-{namespace} -- tenant-assets/Pane.css
-git checkout {current branch-name}-{namespace} -- tenant-assets/logo.png
-git checkout {current branch-name}-{namespace} -- tenant-assets/stanford-favicon.ico
-git checkout {current branch-name}-{namespace} -- tenant-assets/stanford-favicon.png
-```
-1. `git diff docker/Dockerfile` and add in the changes, e.g.:
-```
-
-COPY tenant-assets/MainNav.css node_modules/@folio/stripes-core/src/components/MainNav
-COPY tenant-assets/Pane.css node_modules/@folio/stripes-components/lib/Pane
-
-ARG OKAPI_URL=https://folio-test-api.stanford.edu
-ARG TENANT_ID=sul
-<snip>
-<make sure these are after the yarn build output run command>
-RUN mkdir /usr/share/nginx/html/sul
-COPY tenant-assets/logo.png /usr/share/nginx/html/sul/logo.png
-```
-1. Modify the `docker/nginx.conf` file, adding this location block:
-```
-location /sul {
-    alias /usr/share/nginx/html/sul/;
-}
-```
-1. Commit the changes and push a new branch to origin.
+Follow the instructions on the [sul-dlss/folio-platform-lsp wiki page](https://github.com/sul-dlss/folio-platform-lsp/wiki)
 
 ## Upgrading to a new Flower Release
 1. Fetch and save new application descriptors.
@@ -475,27 +402,4 @@ location /sul {
 1. Run the bootstrap_admin_user.py script without any flags to add all the capabilities to the adminRole.
 
 ## Elasticsearch Indexing
-### recreate resource index (drops index): [authority, location]
-```
-curl -sX POST --location "$KONG_URL/search/index/inventory/reindex" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul' --data "{ \"recreateIndex\": \"true\", \"resourceName\": \"$RESOURCE\"}"
-```
-### recreate instances index (build new data model)
-```
-curl -sX POST --location "$KONG_URL/search/index/instance-records/reindex/full" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul'
-```
-### monitor status for resource reindexing
-```
-curl -s --location "$KONG_URL/search/index/instance-records/reindex/status" -H "Authorization: Bearer $TOKEN" -H 'x-okapi-tenant: sul' | jq
-```
-### reindex failed merge ranges
-```
-curl -sX POST --location "$KONG_URL/search/index/instance-records/reindex/merge/failed" -H "Authorization: Bearer $TOKEN" -H 'x-okapi-tenant: sul'
-```
-### reindex "instance" "subject" "contributor" "classification" "call-number"
-```
-curl -sX POST --location "$KONG_URL/search/index/instance-records/reindex/upload" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H 'x-okapi-tenant: sul' --data "{ \"entityTypes\": [ \"$ENTITY\" ] }"
-```
-### Upload Re-Index
-```
-curl -sX POST --location "$KONG_URL/search/index/instance-records/reindex/upload" -H "Authorization: Bearer $TOKEN" -H 'x-okapi-tenant: sul' -H 'Content-Type: application/json' --data "{ \"entityTypes\": [ \"instance\" ]}"
-```
+Use the rake tasks in sul-dlss/folio-tasks to index inventory data. [Inventory Indexing wiki page](https://github.com/sul-dlss/folio-tasks/wiki#inventory-indexing-using-mod-search-api)
