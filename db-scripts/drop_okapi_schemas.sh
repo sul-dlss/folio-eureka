@@ -2,6 +2,11 @@ psql -h localhost -U okapi okapi <<EOF
 DO \$\$ DECLARE
   r RECORD;
 BEGIN
+
+  FOR r IN (SELECT tablename FROM pg_tables WHERE schemaname = 'sul_mod_search') LOOP 
+      EXECUTE 'DROP TABLE sul_mod_search.' || quote_ident(r.tablename) || ' CASCADE'; 
+  END LOOP;
+
   FOR r IN (
     SELECT schema_name FROM information_schema.schemata
     WHERE schema_name LIKE 'sul_%'
@@ -11,7 +16,6 @@ BEGIN
     EXECUTE 'DROP SCHEMA IF EXISTS ' || quote_ident(r.schema_name) || ' CASCADE';
   END LOOP;
 
-BEGIN 
   FOR r IN (SELECT tablename FROM pg_tables WHERE schemaname = 'public') LOOP 
       EXECUTE 'DROP TABLE public.' || quote_ident(r.tablename) || ' CASCADE'; 
   END LOOP; 
