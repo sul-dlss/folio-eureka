@@ -1,20 +1,24 @@
 FROM alpine:latest
 
-RUN apk add curl
-RUN apk add jq
-RUN apk add bash
-RUN apk add less
-RUN apk add vim
-RUN apk add coreutils
-RUN apk add python3
-RUN apk add py3-pip
-RUN apk add lsb-release
-RUN apk add kubectl
-RUN apk add openjdk21
-RUN apk add envsubst
+# Install required packages
+RUN apk add --no-cache \
+    curl \
+    jq \
+    bash \
+    less \
+    vim \
+    coreutils \
+    python3 \
+    py3-pip \
+    lsb-release \
+    kubectl \
+    openjdk21 \
+    envsubst
 
+# Set the working directory
 WORKDIR /home/folio-eureka
 
+# Copy application files
 COPY folio-dev ./folio-dev/
 COPY folio-test ./folio-test/
 COPY folio-stage ./folio-stage/
@@ -25,9 +29,13 @@ COPY ./*.py .
 COPY ./*.jar .
 COPY requirements.txt .
 
-# Create venv
-RUN python3 -m venv venv
-RUN chmod +x venv/bin/activate
-RUN source venv/bin/activate
-ENV PATH="venv/bin:$PATH"
-RUN pip3 install -r requirements.txt
+# Create virtual environment and install requirements
+RUN python3 -m venv venv && \
+    . venv/bin/activate && \
+    pip install -r requirements.txt
+
+# Add activation of the virtual environment to the shell initialization
+RUN echo "source /home/folio-eureka/venv/bin/activate" >> /home/folio-eureka/.bashrc
+
+# Set the PATH for later commands
+ENV PATH="/home/folio-eureka/venv/bin:$PATH"
