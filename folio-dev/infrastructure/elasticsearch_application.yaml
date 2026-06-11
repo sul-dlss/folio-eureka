@@ -9,7 +9,7 @@ spec:
     server: https://kubernetes.default.svc
     namespace: folio-dev
   sources:
-    - repoURL: oci://registry-1.docker.io/bitnamicharts/elasticsearch
+    - repoURL: https://charts.bitnami.com/bitnami
       chart: elasticsearch
       targetRevision: 19.6.0
       helm:

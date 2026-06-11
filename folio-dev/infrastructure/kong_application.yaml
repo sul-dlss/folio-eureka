@@ -9,7 +9,7 @@ spec:
     server: https://kubernetes.default.svc
   sources:
     - chart: kong
-      repoURL: oci://registry-1.docker.io/bitnamicharts/kong
+      repoURL: https://charts.bitnami.com/bitnami
       targetRevision: 12.0.11
       helm:
         valueFiles:
