@@ -10,7 +10,7 @@ eureka:
     value: 'false'
 image:
   repository: folioorg/mod-courses
-  tag: 1.4.12
+  tag: 1.4.13
 integrations:
   db:
     enabled: true
