@@ -1,7 +1,7 @@
 {
   "id": "app-edge-complete-3.0.0",
   "name": "app-edge-complete",
-  "version": "3.0.0",
+  "version": "2.0.16",
   "description": "Application comprised of Folio edge modules",
   "platform": "complete",
   "modules":   [
