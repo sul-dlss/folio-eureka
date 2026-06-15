@@ -9,7 +9,7 @@ metadata:
   namespace: $namespace
 spec:
   concurrencyPolicy: Forbid
-  schedule: '0 2 * * 0' # weekly Sunday 2am
+  schedule: '0 9 * * *' # daily at 2am PACIFIC
   suspend: true
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 3

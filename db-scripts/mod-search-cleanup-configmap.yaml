@@ -15,7 +15,7 @@ data:
     TABLES=$(PGPASSWORD=$DB_PASSWORD psql $PGCONN -t -A \
       -c "WITH deleted AS (
             DELETE FROM sul_mod_search.resource_ids_job
-            WHERE created_date < NOW() - INTERVAL '1 week'
+            WHERE created_date < NOW() - INTERVAL '1 minute'
             RETURNING temp_table_name
           )
           SELECT temp_table_name FROM deleted;")
