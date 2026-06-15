@@ -24,13 +24,16 @@ args = parser.parse_args()
 if args.no_generate and args.execute == "dry-run":
     parser.error("--no_generate is set, but --execute is 'dry-run'. No applications will be generated or applied.")
 
-def application_manifest(name, version, namespace, repo_url, values_files):
+def application_manifest(name, version, namespace, application, repo_url, values_files):
     data = {
         "apiVersion": "argoproj.io/v1alpha1",
         "kind": "Application",
         "metadata": {
             "name": name,
             "namespace": namespace,
+            "labels": {
+                "application": application,
+            }
         },
         "spec": {
             "project": namespace,
@@ -68,6 +71,7 @@ def create_applications(filename):
 
     for module in modules:
         module_name = module["name"]
+        app_type = "module" if module_name.startswith("mod-") else "edge"
         dir = Path(f"{args.namespace}/modules/{module_name}")
         dir.mkdir(parents=True, exist_ok=True)
         values_files = []
@@ -114,6 +118,7 @@ def create_applications(filename):
                     name=module_name,
                     version=chart_version,
                     namespace=args.namespace,
+                    application=app_type,
                     repo_url=repo_url,
                     values_files=values_files
                 ))

@@ -3,13 +3,15 @@ kind: Application
 metadata:
   name: keycloak
   namespace: folio-dev
+  labels:
+    application: infrastructure
 spec:
   destination:
     namespace: folio-dev
     server: https://kubernetes.default.svc
   sources:
     - chart: keycloak
-      repoURL: oci://registry-1.docker.io/bitnamicharts/keycloak
+      repoURL: https://charts.bitnami.com/bitnami
       targetRevision: 24.7.4
       helm:
         valueFiles:

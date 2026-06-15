@@ -30,6 +30,7 @@ parser.add_argument("-m", "--register_modules", action="store_true", default=Fal
 parser.add_argument("-u", "--reregister_modules", action="store_true", default=False, help="re-register modules for discovery, uses MGR_APP_URL")
 parser.add_argument("-t", "--create_tenant", action="store_true", default=False, help="create tenant, uses MGR_TENANTS_URL")
 parser.add_argument("-e", "--entitle", action="store_true", default=False, help="entitle applications, uses MGR_ENTITLE_URL, ASYNC, REF_DATA, SAMPLE_DATA")
+parser.add_argument("-p", "--put_entitlements", action="store_true", default=False, help="upgrade applications, uses MGR_ENTITLE_URL, ASYNC, REF_DATA, SAMPLE_DATA")
 parser.add_argument("-f", "--flow_id", help="FlowId to get entitlement-flow state, uses FLOW_STAGES")
 parser.add_argument("-l", "--list_entitlements", action="store_true", default=False, help="list applications and modules entitled, uses MGR_ENTITLE_URL")
 
@@ -62,6 +63,16 @@ def main():
         print(f"Entitling {app_ids}")
         tenant_uuid = tenant_id(token, mgr_tenants_url)
         entitle_applications(token, app_ids, tenant_uuid, mgr_entitle_url)
+    if args.put_entitlements:
+        app_ids: list = []
+        for file in files:
+            with open(file, "r") as fo:
+                data = json.load(fo)
+                app_ids.append(data["id"])
+
+        print(f"Upgrading {app_ids}")
+        tenant_uuid = tenant_id(token, mgr_tenants_url)
+        upgrade_applications(token, app_ids, tenant_uuid, mgr_entitle_url)
     if args.flow_id:
         entitlement_flow(args.flow_id, mgr_entitle_url)
     if args.list_entitlements:
@@ -250,6 +261,34 @@ def entitle_applications(token, app_ids, tenant_uuid, mgr_entitle_url):
     with httpx.Client(timeout=60.0) as client:
         try:
             response = client.post(
+                f"{mgr_entitle_url}/entitlements?async={async_entitlement}&tenantParameters=loadReference={load_ref},loadSample={load_sample}",
+                headers={
+                    "content-type": "application/json",
+                    "Authorization": f"Bearer {token}",
+                    "x-okapi-token": token
+                },
+                data=json.dumps(data)
+            )
+            print(response.text)
+            flow_id = json.loads(response.text).get("flowId")
+            print(f"Flow ID: {flow_id}")
+            response.raise_for_status()
+        except httpx.HTTPStatusError as exc:
+            print(exc)
+
+
+def upgrade_applications(token, app_ids, tenant_uuid, mgr_entitle_url):
+    data = {
+        "tenantId": tenant_uuid,
+        "applications": app_ids
+    }
+    async_entitlement: bool = os.getenv("ASYNC", True)
+    load_ref: bool = os.getenv("REF_DATA", True)
+    load_sample: bool = os.getenv("SAMPLE_DATA", False)
+    print(f"Entitlement params: async={async_entitlement}&tenantParameters=loadReference={load_ref},loadSample={load_sample}")
+    with httpx.Client(timeout=60.0) as client:
+        try:
+            response = client.put(
                 f"{mgr_entitle_url}/entitlements?async={async_entitlement}&tenantParameters=loadReference={load_ref},loadSample={load_sample}",
                 headers={
                     "content-type": "application/json",
