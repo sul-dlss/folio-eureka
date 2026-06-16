@@ -1,3 +1,13 @@
 extraEnvVars: |
   - name: OKAPI_URL
     value: "http://localhost:8082"
+  - name: SUL_USER_NAME
+    valuefrom:
+      secretKeyRef:
+        name: folio-eureka
+        key: SUL_ERM_USER_NAME
+  - name: SUL_USER_PASSWORD
+    valuefrom:
+      secretKeyRef:
+        name: folio-eureka
+        key: SUL_ERM_USER_PASS
