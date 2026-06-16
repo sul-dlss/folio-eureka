@@ -10,7 +10,7 @@ eureka:
     value: 'false'
 image:
   repository: folioorg/mod-z3950
-  tag: 4.4.1
+  tag: 4.3.0
 integrations:
   db:
     enabled: true
