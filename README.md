@@ -74,7 +74,7 @@ In the folio-eureka-pod, run the eureka_deployment_flow.py script:
 ```
 python eureka_deployment_flow.py -h
 
-usage: EurekaDeploymentFlow [-h] -n NAMESPACE [-a] [-d] [-m] [-u] [-t] [-e] [-f FLOW_ID] [filename ...]
+usage: EurekaDeploymentFlow [-h] -n NAMESPACE [-a] [-d] [-m] [-u] [-t] [-e] [-p] [-f FLOW_ID] [-l] [filename ...]
 
 Register applications, register modules, create tenant, create entitlements
                     Default env vars:
@@ -105,8 +105,12 @@ options:
                         re-register modules for discovery, uses MGR_APP_URL
   -t, --create_tenant   create tenant, uses MGR_TENANTS_URL
   -e, --entitle         entitle applications, uses MGR_ENTITLE_URL, ASYNC, REF_DATA, SAMPLE_DATA
+  -p, --put_entitlements
+                        upgrade applications, uses MGR_ENTITLE_URL, ASYNC, REF_DATA, SAMPLE_DATA
   -f FLOW_ID, --flow_id FLOW_ID
                         FlowId to get entitlement-flow state, uses FLOW_STAGES
+  -l, --list_entitlements
+                        list applications and modules entitled, uses MGR_ENTITLE_URL
 ```
 ### Register all the applications
 ```
