@@ -3,13 +3,15 @@ kind: Application
 metadata:
   name: elasticsearch
   namespace: folio-test
+  labels:
+    application: infrastructure
 spec:
   project: folio-test
   destination:
     server: https://kubernetes.default.svc
     namespace: folio-test
   sources:
-    - repoURL: oci://registry-1.docker.io/bitnamicharts/elasticsearch
+    - repoURL: https://charts.bitnami.com/bitnami
       chart: elasticsearch
       targetRevision: 19.6.0
       helm:
