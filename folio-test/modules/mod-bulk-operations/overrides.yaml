@@ -10,7 +10,7 @@ eureka:
     value: 'false'
 image:
   repository: folioorg/mod-bulk-operations
-  tag: 2.2.8
+  tag: 2.2.9
 integrations:
   db:
     enabled: true

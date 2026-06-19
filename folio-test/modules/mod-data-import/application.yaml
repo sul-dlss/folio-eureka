@@ -1,6 +1,8 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
+  labels:
+    application: module
   name: mod-data-import
   namespace: folio-test
 spec:
@@ -17,8 +19,9 @@ spec:
       - $values/folio-test/common/sidecar.yaml
       - $values/folio-test/common/probes.yaml
       - $values/folio-test/common/java_opts.yaml
+      - $values/folio-test/modules/mod-data-import/extra_env.yaml
     repoURL: https://sul-dlss.github.io/folio-helm-v2
-    targetRevision: 3.1.44
+    targetRevision: 3.1.49
   - ref: values
     repoURL: https://github.com/sul-dlss/folio-eureka
     targetRevision: main

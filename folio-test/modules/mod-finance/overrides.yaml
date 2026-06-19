@@ -10,7 +10,7 @@ eureka:
     value: 'false'
 image:
   repository: folioorg/mod-finance
-  tag: 5.1.1
+  tag: 5.1.3
 integrations:
   db:
     enabled: true

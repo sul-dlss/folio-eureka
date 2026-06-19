@@ -1,508 +1,426 @@
 {
-  "id": "app-platform-complete-2.2.13",
+  "id": "app-platform-complete-2.5.10",
   "name": "app-platform-complete",
-  "version": "2.2.13",
+  "version": "2.5.10",
   "description": "Application comprised of most Folio modules not present in app-platform-minimal",
-  "platform": "base",
   "modules":   [
+        {
+      "id": "mod-agreements-7.2.5",
+      "name": "mod-agreements",
+      "version": "7.2.5"
+    },
+        {
+      "id": "mod-licenses-6.2.5",
+      "name": "mod-licenses",
+      "version": "6.2.5"
+    },
+        {
+      "id": "mod-service-interaction-4.2.6",
+      "name": "mod-service-interaction",
+      "version": "4.2.6"
+    },
+        {
+      "id": "mod-inventory-storage-29.0.19",
+      "name": "mod-inventory-storage",
+      "version": "29.0.19"
+    },
+        {
+      "id": "mod-audit-2.11.5",
+      "name": "mod-audit",
+      "version": "2.11.5"
+    },
+        {
+      "id": "mod-search-5.0.13",
+      "name": "mod-search",
+      "version": "5.0.13"
+    },
+        {
+      "id": "mod-serials-management-2.0.5",
+      "name": "mod-serials-management",
+      "version": "2.0.5"
+    },
+        {
+      "id": "mod-circulation-24.4.20",
+      "name": "mod-circulation",
+      "version": "24.4.20"
+    },
+        {
+      "id": "mod-inventory-21.1.20",
+      "name": "mod-inventory",
+      "version": "21.1.20"
+    },
+        {
+      "id": "mod-user-import-3.10.3",
+      "name": "mod-user-import",
+      "version": "3.10.3"
+    },
+        {
+      "id": "mod-template-engine-1.22.2",
+      "name": "mod-template-engine",
+      "version": "1.22.2"
+    },
+        {
+      "id": "mod-data-export-5.3.0",
+      "name": "mod-data-export",
+      "version": "5.3.0"
+    },
+        {
+      "id": "mod-event-config-2.9.1",
+      "name": "mod-event-config",
+      "version": "2.9.1"
+    },
+        {
+      "id": "mod-pubsub-2.16.3",
+      "name": "mod-pubsub",
+      "version": "2.16.3"
+    },
+        {
+      "id": "mod-di-converter-storage-2.4.3",
+      "name": "mod-di-converter-storage",
+      "version": "2.4.3"
+    },
+        {
+      "id": "mod-circulation-storage-17.4.3",
+      "name": "mod-circulation-storage",
+      "version": "17.4.3"
+    },
+        {
+      "id": "mod-patron-blocks-1.12.3",
+      "name": "mod-patron-blocks",
+      "version": "1.12.3"
+    },
+        {
+      "id": "mod-courses-1.4.13",
+      "name": "mod-courses",
+      "version": "1.4.13"
+    },
+        {
+      "id": "mod-data-import-3.3.6",
+      "name": "mod-data-import",
+      "version": "3.3.6"
+    },
+        {
+      "id": "mod-feesfines-19.3.3",
+      "name": "mod-feesfines",
+      "version": "19.3.3"
+    },
+        {
+      "id": "mod-patron-6.3.6",
+      "name": "mod-patron",
+      "version": "6.3.6"
+    },
+        {
+      "id": "mod-rtac-3.8.3",
+      "name": "mod-rtac",
+      "version": "3.8.3"
+    },
+        {
+      "id": "mod-gobi-3.0.2",
+      "name": "mod-gobi",
+      "version": "3.0.2"
+    },
+        {
+      "id": "mod-data-export-worker-3.4.14",
+      "name": "mod-data-export-worker",
+      "version": "3.4.14"
+    },
+        {
+      "id": "mod-record-specifications-2.0.3",
+      "name": "mod-record-specifications",
+      "version": "2.0.3"
+    },
+        {
+      "id": "mod-source-record-manager-3.10.11",
+      "name": "mod-source-record-manager",
+      "version": "3.10.11"
+    },
+        {
+      "id": "mod-source-record-storage-5.10.15",
+      "name": "mod-source-record-storage",
+      "version": "5.10.15"
+    },
         {
       "id": "mod-graphql-1.13.1",
       "name": "mod-graphql",
-      "version": "1.13.1",
-      "url": null
+      "version": "1.13.1"
     },
         {
       "id": "mod-quick-marc-7.0.0",
       "name": "mod-quick-marc",
-      "version": "7.0.0",
-      "url": null
-    },
-        {
-      "id": "mod-inventory-storage-29.0.16",
-      "name": "mod-inventory-storage",
-      "version": "29.0.16",
-      "url": null
-    },
-        {
-      "id": "mod-circulation-storage-17.4.1",
-      "name": "mod-circulation-storage",
-      "version": "17.4.1",
-      "url": null
-    },
-        {
-      "id": "mod-search-5.0.8",
-      "name": "mod-search",
-      "version": "5.0.8",
-      "url": null
-    },
-        {
-      "id": "mod-inventory-21.1.16",
-      "name": "mod-inventory",
-      "version": "21.1.16",
-      "url": null
-    },
-        {
-      "id": "mod-circulation-24.4.13",
-      "name": "mod-circulation",
-      "version": "24.4.13",
-      "url": null
-    },
-        {
-      "id": "mod-feesfines-19.3.2",
-      "name": "mod-feesfines",
-      "version": "19.3.2",
-      "url": null
-    },
-        {
-      "id": "mod-patron-blocks-1.12.2",
-      "name": "mod-patron-blocks",
-      "version": "1.12.2",
-      "url": null
+      "version": "7.0.0"
     },
         {
       "id": "mod-entities-links-4.0.3",
       "name": "mod-entities-links",
-      "version": "4.0.3",
-      "url": null
-    },
-        {
-      "id": "mod-source-record-manager-3.10.9",
-      "name": "mod-source-record-manager",
-      "version": "3.10.9",
-      "url": null
-    },
-        {
-      "id": "mod-di-converter-storage-2.4.2",
-      "name": "mod-di-converter-storage",
-      "version": "2.4.2",
-      "url": null
-    },
-        {
-      "id": "mod-patron-6.3.3",
-      "name": "mod-patron",
-      "version": "6.3.3",
-      "url": null
-    },
-        {
-      "id": "mod-data-export-5.2.3",
-      "name": "mod-data-export",
-      "version": "5.2.3",
-      "url": null
+      "version": "4.0.3"
     },
         {
       "id": "mod-data-export-spring-3.5.2",
       "name": "mod-data-export-spring",
-      "version": "3.5.2",
-      "url": null
-    },
-        {
-      "id": "mod-data-export-worker-3.4.10",
-      "name": "mod-data-export-worker",
-      "version": "3.4.10",
-      "url": null
-    },
-        {
-      "id": "mod-rtac-3.8.2",
-      "name": "mod-rtac",
-      "version": "3.8.2",
-      "url": null
+      "version": "3.5.2"
     },
         {
       "id": "mod-remote-storage-3.4.3",
       "name": "mod-remote-storage",
-      "version": "3.4.3",
-      "url": null
+      "version": "3.4.3"
     },
         {
       "id": "mod-calendar-3.3.1",
       "name": "mod-calendar",
-      "version": "3.3.1",
-      "url": null
-    },
-        {
-      "id": "mod-audit-2.11.1",
-      "name": "mod-audit",
-      "version": "2.11.1",
-      "url": null
-    },
-        {
-      "id": "mod-courses-1.4.12",
-      "name": "mod-courses",
-      "version": "1.4.12",
-      "url": null
-    },
-        {
-      "id": "mod-source-record-storage-5.10.13",
-      "name": "mod-source-record-storage",
-      "version": "5.10.13",
-      "url": null
-    },
-        {
-      "id": "mod-data-import-3.3.5",
-      "name": "mod-data-import",
-      "version": "3.3.5",
-      "url": null
-    },
-        {
-      "id": "mod-agreements-7.2.3",
-      "name": "mod-agreements",
-      "version": "7.2.3",
-      "url": null
-    },
-        {
-      "id": "mod-licenses-6.2.3",
-      "name": "mod-licenses",
-      "version": "6.2.3",
-      "url": null
+      "version": "3.3.1"
     },
         {
       "id": "mod-email-1.19.1",
       "name": "mod-email",
-      "version": "1.19.1",
-      "url": null
-    },
-        {
-      "id": "mod-event-config-2.9.0",
-      "name": "mod-event-config",
-      "version": "2.9.0",
-      "url": null
+      "version": "1.19.1"
     },
         {
       "id": "mod-notify-3.4.1",
       "name": "mod-notify",
-      "version": "3.4.1",
-      "url": null
+      "version": "3.4.1"
     },
         {
       "id": "mod-sender-1.14.2",
       "name": "mod-sender",
-      "version": "1.14.2",
-      "url": null
-    },
-        {
-      "id": "mod-template-engine-1.22.0",
-      "name": "mod-template-engine",
-      "version": "1.22.0",
-      "url": null
-    },
-        {
-      "id": "mod-pubsub-2.16.1",
-      "name": "mod-pubsub",
-      "version": "2.16.1",
-      "url": null
-    },
-        {
-      "id": "mod-gobi-3.0.1",
-      "name": "mod-gobi",
-      "version": "3.0.1",
-      "url": null
+      "version": "1.14.2"
     },
         {
       "id": "mod-copycat-1.8.1",
       "name": "mod-copycat",
-      "version": "1.8.1",
-      "url": null
+      "version": "1.8.1"
     },
         {
       "id": "mod-kb-ebsco-java-6.0.1",
       "name": "mod-kb-ebsco-java",
-      "version": "6.0.1",
-      "url": null
+      "version": "6.0.1"
     },
         {
       "id": "mod-ncip-1.16.1",
       "name": "mod-ncip",
-      "version": "1.16.1",
-      "url": null
+      "version": "1.16.1"
     },
         {
       "id": "mod-inventory-update-4.1.0",
       "name": "mod-inventory-update",
-      "version": "4.1.0",
-      "url": null
-    },
-        {
-      "id": "mod-user-import-3.10.2",
-      "name": "mod-user-import",
-      "version": "3.10.2",
-      "url": null
-    },
-        {
-      "id": "mod-service-interaction-4.2.3",
-      "name": "mod-service-interaction",
-      "version": "4.2.3",
-      "url": null
+      "version": "4.1.0"
     },
         {
       "id": "mod-ebsconet-2.4.0",
       "name": "mod-ebsconet",
-      "version": "2.4.0",
-      "url": null
+      "version": "2.4.0"
     },
         {
       "id": "mod-batch-print-1.3.0",
       "name": "mod-batch-print",
-      "version": "1.3.0",
-      "url": null
-    },
-        {
-      "id": "mod-serials-management-2.0.4",
-      "name": "mod-serials-management",
-      "version": "2.0.4",
-      "url": null
-    },
-        {
-      "id": "mod-record-specifications-2.0.2",
-      "name": "mod-record-specifications",
-      "version": "2.0.2",
-      "url": null
+      "version": "1.3.0"
     }
   ],
   "uiModules":   [
         {
+      "id": "folio_users-12.1.17",
+      "name": "folio_users",
+      "version": "12.1.17"
+    },
+        {
+      "id": "folio_stripes-marc-components-2.0.3",
+      "name": "folio_stripes-marc-components",
+      "version": "2.0.3"
+    },
+        {
+      "id": "folio_inventory-13.0.14",
+      "name": "folio_inventory",
+      "version": "13.0.14"
+    },
+        {
+      "id": "folio_stripes-inventory-components-2.0.9",
+      "name": "folio_stripes-inventory-components",
+      "version": "2.0.9"
+    },
+        {
       "id": "folio_marc-authorities-7.0.3",
       "name": "folio_marc-authorities",
-      "version": "7.0.3",
-      "url": null
+      "version": "7.0.3"
     },
         {
       "id": "folio_stripes-authority-components-6.0.3",
       "name": "folio_stripes-authority-components",
-      "version": "6.0.3",
-      "url": null
+      "version": "6.0.3"
     },
         {
       "id": "folio_quick-marc-10.0.4",
       "name": "folio_quick-marc",
-      "version": "10.0.4",
-      "url": null
-    },
-        {
-      "id": "folio_inventory-13.0.11",
-      "name": "folio_inventory",
-      "version": "13.0.11",
-      "url": null
+      "version": "10.0.4"
     },
         {
       "id": "folio_servicepoints-8.0.0",
       "name": "folio_servicepoints",
-      "version": "8.0.0",
-      "url": null
+      "version": "8.0.0"
     },
         {
       "id": "folio_plugin-create-inventory-records-6.0.0",
       "name": "folio_plugin-create-inventory-records",
-      "version": "6.0.0",
-      "url": null
+      "version": "6.0.0"
     },
         {
       "id": "folio_plugin-find-instance-9.0.2",
       "name": "folio_plugin-find-instance",
-      "version": "9.0.2",
-      "url": null
+      "version": "9.0.2"
     },
         {
       "id": "folio_plugin-find-package-title-7.0.0",
       "name": "folio_plugin-find-package-title",
-      "version": "7.0.0",
-      "url": null
+      "version": "7.0.0"
     },
         {
       "id": "folio_checkin-11.0.3",
       "name": "folio_checkin",
-      "version": "11.0.3",
-      "url": null
+      "version": "11.0.3"
     },
         {
       "id": "folio_checkout-12.0.2",
       "name": "folio_checkout",
-      "version": "12.0.2",
-      "url": null
+      "version": "12.0.2"
     },
         {
       "id": "folio_circulation-11.0.4",
       "name": "folio_circulation",
-      "version": "11.0.4",
-      "url": null
+      "version": "11.0.4"
     },
         {
       "id": "folio_plugin-find-user-8.0.0",
       "name": "folio_plugin-find-user",
-      "version": "8.0.0",
-      "url": null
+      "version": "8.0.0"
     },
         {
       "id": "folio_data-export-7.0.0",
       "name": "folio_data-export",
-      "version": "7.0.0",
-      "url": null
+      "version": "7.0.0"
     },
         {
       "id": "folio_export-manager-4.0.0",
       "name": "folio_export-manager",
-      "version": "4.0.0",
-      "url": null
+      "version": "4.0.0"
     },
         {
       "id": "folio_plugin-bursar-export-5.0.1",
       "name": "folio_plugin-bursar-export",
-      "version": "5.0.1",
-      "url": null
+      "version": "5.0.1"
     },
         {
       "id": "folio_remote-storage-7.0.1",
       "name": "folio_remote-storage",
-      "version": "7.0.1",
-      "url": null
+      "version": "7.0.1"
     },
         {
       "id": "folio_circulation-log-6.0.2",
       "name": "folio_circulation-log",
-      "version": "6.0.2",
-      "url": null
+      "version": "6.0.2"
     },
         {
       "id": "folio_calendar-12.0.0",
       "name": "folio_calendar",
-      "version": "12.0.0",
-      "url": null
+      "version": "12.0.0"
     },
         {
       "id": "folio_courses-7.0.3",
       "name": "folio_courses",
-      "version": "7.0.3",
-      "url": null
+      "version": "7.0.3"
     },
         {
       "id": "folio_requests-12.0.4",
       "name": "folio_requests",
-      "version": "12.0.4",
-      "url": null
+      "version": "12.0.4"
     },
         {
       "id": "folio_data-import-9.0.2",
       "name": "folio_data-import",
-      "version": "9.0.2",
-      "url": null
+      "version": "9.0.2"
     },
         {
       "id": "folio_plugin-find-import-profile-9.0.0",
       "name": "folio_plugin-find-import-profile",
-      "version": "9.0.0",
-      "url": null
+      "version": "9.0.0"
     },
         {
       "id": "folio_agreements-12.0.2",
       "name": "folio_agreements",
-      "version": "12.0.2",
-      "url": null
+      "version": "12.0.2"
     },
         {
       "id": "folio_plugin-find-agreement-12.0.0",
       "name": "folio_plugin-find-agreement",
-      "version": "12.0.0",
-      "url": null
+      "version": "12.0.0"
     },
         {
       "id": "folio_eholdings-11.0.1",
       "name": "folio_eholdings",
-      "version": "11.0.1",
-      "url": null
+      "version": "11.0.1"
     },
         {
       "id": "folio_licenses-12.0.1",
       "name": "folio_licenses",
-      "version": "12.0.1",
-      "url": null
+      "version": "12.0.1"
     },
         {
       "id": "folio_plugin-find-license-12.0.0",
       "name": "folio_plugin-find-license",
-      "version": "12.0.0",
-      "url": null
+      "version": "12.0.0"
     },
         {
       "id": "folio_local-kb-admin-9.0.0",
       "name": "folio_local-kb-admin",
-      "version": "9.0.0",
-      "url": null
+      "version": "9.0.0"
     },
         {
       "id": "folio_plugin-find-eresource-8.0.0",
       "name": "folio_plugin-find-eresource",
-      "version": "8.0.0",
-      "url": null
+      "version": "8.0.0"
     },
         {
       "id": "folio_dashboard-7.0.0",
       "name": "folio_dashboard",
-      "version": "7.0.0",
-      "url": null
+      "version": "7.0.0"
     },
         {
       "id": "folio_tenant-settings-10.0.0",
       "name": "folio_tenant-settings",
-      "version": "10.0.0",
-      "url": null
+      "version": "10.0.0"
     },
         {
       "id": "folio_gobi-settings-4.0.0",
       "name": "folio_gobi-settings",
-      "version": "4.0.0",
-      "url": null
+      "version": "4.0.0"
     },
         {
       "id": "folio_handler-stripes-registry-3.0.0",
       "name": "folio_handler-stripes-registry",
-      "version": "3.0.0",
-      "url": null
+      "version": "3.0.0"
     },
         {
       "id": "folio_myprofile-10.0.0",
       "name": "folio_myprofile",
-      "version": "10.0.0",
-      "url": null
+      "version": "10.0.0"
     },
         {
       "id": "folio_plugin-find-authority-5.0.1",
       "name": "folio_plugin-find-authority",
-      "version": "5.0.1",
-      "url": null
+      "version": "5.0.1"
     },
         {
       "id": "folio_service-interaction-4.0.0",
       "name": "folio_service-interaction",
-      "version": "4.0.0",
-      "url": null
-    },
-        {
-      "id": "folio_users-12.1.14",
-      "name": "folio_users",
-      "version": "12.1.14",
-      "url": null
+      "version": "4.0.0"
     },
         {
       "id": "folio_serials-management-2.0.4",
       "name": "folio_serials-management",
-      "version": "2.0.4",
-      "url": null
-    },
-        {
-      "id": "folio_stripes-marc-components-2.0.2",
-      "name": "folio_stripes-marc-components",
-      "version": "2.0.2",
-      "url": null
-    },
-        {
-      "id": "folio_stripes-inventory-components-2.0.8",
-      "name": "folio_stripes-inventory-components",
-      "version": "2.0.8",
-      "url": null
+      "version": "2.0.4"
     }
   ],
   "dependencies": [  {
     "name": "app-platform-minimal",
-    "version": "^2.0.0"
+    "version": "^2.0.0",
+    "preRelease": null
   }],
   "moduleDescriptors":   [
         {
@@ -772,7 +690,7 @@
       }
     },
         {
-      "id": "mod-inventory-storage-29.0.16",
+      "id": "mod-inventory-storage-29.0.19",
       "name": "Inventory Storage Module",
       "replaces": ["inventory-storage"],
       "requires": [      {
@@ -3752,7 +3670,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-inventory-storage:29.0.16",
+        "dockerImage": "mod-inventory-storage:29.0.19",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 715827883,
@@ -3919,7 +3837,7 @@
       }
     },
         {
-      "id": "mod-circulation-storage-17.4.1",
+      "id": "mod-circulation-storage-17.4.3",
       "name": "Circulation Storage Module",
       "requires":       [
                 {
@@ -5183,7 +5101,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-circulation-storage:17.4.1",
+        "dockerImage": "mod-circulation-storage:17.4.3",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 536870912,
@@ -5246,7 +5164,7 @@
       }
     },
         {
-      "id": "mod-search-5.0.8",
+      "id": "mod-search-5.0.13",
       "name": "Search Module",
       "provides":       [
                 {
@@ -5952,7 +5870,7 @@
         ]
       }},
       "launchDescriptor":       {
-        "dockerImage": "mod-search:5.0.8",
+        "dockerImage": "mod-search:5.0.13",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 1073741824,
@@ -6146,6 +6064,16 @@
             "description": "Batch size for indexing subjects/contributors/classifications"
           },
                     {
+            "name": "SUB_RESOURCE_BATCH_SIZE",
+            "value": "100",
+            "description": "Defines number of sub-resources to process at a time during background indexing"
+          },
+                    {
+            "name": "STALE_LOCK_THRESHOLD_MS",
+            "value": "600000",
+            "description": "Threshold to consider a sub-resource lock as stale and eligible for release"
+          },
+                    {
             "name": "INITIAL_LANGUAGES",
             "value": "eng",
             "description": "Comma separated list of languages for multilang fields"
@@ -6279,7 +6207,7 @@
       }
     },
         {
-      "id": "mod-inventory-21.1.16",
+      "id": "mod-inventory-21.1.20",
       "name": "Inventory Module",
       "provides":       [
                 {
@@ -7257,7 +7185,7 @@
         ]
       }},
       "launchDescriptor":       {
-        "dockerImage": "mod-inventory:21.1.16",
+        "dockerImage": "mod-inventory:21.1.20",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 715827883,
@@ -7312,7 +7240,7 @@
       }
     },
         {
-      "id": "mod-circulation-24.4.13",
+      "id": "mod-circulation-24.4.20",
       "name": "Circulation Module",
       "provides":       [
                 {
@@ -9686,7 +9614,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-circulation:24.4.13",
+        "dockerImage": "mod-circulation:24.4.20",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 1073741824,
@@ -9725,7 +9653,7 @@
       }
     },
         {
-      "id": "mod-feesfines-19.3.2",
+      "id": "mod-feesfines-19.3.3",
       "name": "feesfines",
       "requires":       [
                 {
@@ -10910,7 +10838,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-feesfines:19.3.2",
+        "dockerImage": "mod-feesfines:19.3.3",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 357913941,
@@ -10957,7 +10885,7 @@
       }
     },
         {
-      "id": "mod-patron-blocks-1.12.2",
+      "id": "mod-patron-blocks-1.12.3",
       "name": "Patron Blocks Module",
       "requires":       [
                 {
@@ -11230,7 +11158,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-patron-blocks:1.12.2",
+        "dockerImage": "mod-patron-blocks:1.12.3",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 357913941,
@@ -12048,7 +11976,7 @@
       }
     },
         {
-      "id": "mod-source-record-manager-3.10.9",
+      "id": "mod-source-record-manager-3.10.11",
       "name": "Source Record Manager Module",
       "requires":       [
                 {
@@ -12841,7 +12769,7 @@
         ]
       }},
       "launchDescriptor":       {
-        "dockerImage": "mod-source-record-manager:3.10.9",
+        "dockerImage": "mod-source-record-manager:3.10.11",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 1073741824,
@@ -12904,7 +12832,7 @@
       }
     },
         {
-      "id": "mod-di-converter-storage-2.4.2",
+      "id": "mod-di-converter-storage-2.4.3",
       "replaces": ["mod-data-import-converter-storage"],
       "name": "Data Import Converter Storage",
       "requires": [      {
@@ -13446,7 +13374,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-di-converter-storage:2.4.2",
+        "dockerImage": "mod-di-converter-storage:2.4.3",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 357913941,
@@ -13493,11 +13421,11 @@
       }
     },
         {
-      "id": "mod-patron-6.3.3",
+      "id": "mod-patron-6.3.6",
       "name": "Patron Services Module",
       "provides": [      {
         "id": "patron",
-        "version": "6.5",
+        "version": "6.6",
         "handlers":         [
                     {
             "methods": ["POST"],
@@ -13540,7 +13468,9 @@
               "inventory.items.item.get",
               "inventory.instances.item.get",
               "inventory.instances.collection.get",
-              "feefines.item.get"
+              "feefines.item.get",
+              "circulation-item.item.get",
+              "circulation-item.collection.get"
             ]
           },
                     {
@@ -13646,7 +13576,15 @@
         },
                 {
           "id": "circulation-bff-requests",
-          "version": "1.1"
+          "version": "1.3"
+        },
+                {
+          "id": "circulation-item",
+          "version": "1.0"
+        },
+                {
+          "id": "allowed-service-points",
+          "version": "1.2"
         }
       ],
       "permissionSets":       [
@@ -13739,7 +13677,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-patron:6.3.3",
+        "dockerImage": "mod-patron:6.3.6",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 357913941,
@@ -13752,7 +13690,7 @@
       }
     },
         {
-      "id": "mod-data-export-5.2.3",
+      "id": "mod-data-export-5.3.0",
       "name": "Data Export Module",
       "requires":       [
                 {
@@ -14836,7 +14774,7 @@
       }
     },
         {
-      "id": "mod-data-export-worker-3.4.10",
+      "id": "mod-data-export-worker-3.4.14",
       "name": "Data Export Worker Module",
       "requires":       [
                 {
@@ -15269,7 +15207,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-data-export-worker:3.4.10",
+        "dockerImage": "mod-data-export-worker:3.4.14",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 3072000000,
@@ -15372,7 +15310,7 @@
       }
     },
         {
-      "id": "mod-rtac-3.8.2",
+      "id": "mod-rtac-3.8.3",
       "name": "Real Time Availability Check Module",
       "provides":       [
                 {
@@ -15474,7 +15412,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-rtac:3.8.2",
+        "dockerImage": "mod-rtac:3.8.3",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 357913941,
@@ -16272,7 +16210,7 @@
       }
     },
         {
-      "id": "mod-audit-2.11.1",
+      "id": "mod-audit-2.11.5",
       "name": "Audit Module",
       "requires":       [
                 {
@@ -16713,7 +16651,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-audit:2.11.1",
+        "dockerImage": "mod-audit:2.11.5",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 715827883,
@@ -16760,7 +16698,7 @@
       }
     },
         {
-      "id": "mod-courses-1.4.12",
+      "id": "mod-courses-1.4.13",
       "name": "Courses Storage Module",
       "provides":       [
                 {
@@ -17727,7 +17665,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-courses:1.4.12",
+        "dockerImage": "mod-courses:1.4.13",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 357913941,
@@ -17774,7 +17712,7 @@
       }
     },
         {
-      "id": "mod-source-record-storage-5.10.13",
+      "id": "mod-source-record-storage-5.10.15",
       "name": "Source Record Storage Module",
       "provides":       [
                 {
@@ -18192,7 +18130,7 @@
         ]
       }},
       "launchDescriptor":       {
-        "dockerImage": "mod-source-record-storage:5.10.13",
+        "dockerImage": "mod-source-record-storage:5.10.15",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 1073741824,
@@ -18251,7 +18189,7 @@
       }
     },
         {
-      "id": "mod-data-import-3.3.5",
+      "id": "mod-data-import-3.3.6",
       "name": "Data Import Module",
       "requires":       [
                 {
@@ -18709,7 +18647,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-data-import:3.3.5",
+        "dockerImage": "mod-data-import:3.3.6",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 542293850,
@@ -18856,7 +18794,7 @@
       }
     },
         {
-      "id": "mod-agreements-7.2.3",
+      "id": "mod-agreements-7.2.5",
       "name": "mod-agreements",
       "provides":       [
                 {
@@ -20446,7 +20384,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-agreements:7.2.3",
+        "dockerImage": "mod-agreements:7.2.5",
         "dockerArgs": {"HostConfig":         {
           "Memory": 4294967296,
           "PortBindings": {"8080/tcp": [{"HostPort": "%p"}]}
@@ -20485,7 +20423,7 @@
       }
     },
         {
-      "id": "mod-licenses-6.2.3",
+      "id": "mod-licenses-6.2.5",
       "name": "mod-licenses",
       "requires": [      {
         "id": "okapi",
@@ -21166,7 +21104,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-licenses:6.2.3",
+        "dockerImage": "mod-licenses:6.2.5",
         "dockerArgs": {"HostConfig":         {
           "Memory": 805306368,
           "PortBindings": {"8080/tcp": [{"HostPort": "%p"}]}
@@ -21428,7 +21366,7 @@
       }
     },
         {
-      "id": "mod-event-config-2.9.0",
+      "id": "mod-event-config-2.9.1",
       "name": "mod-event-config",
       "requires": [],
       "provides":       [
@@ -21523,7 +21461,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-event-config:2.9.0",
+        "dockerImage": "mod-event-config:2.9.1",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 357913941,
@@ -21853,7 +21791,7 @@
       }
     },
         {
-      "id": "mod-template-engine-1.22.0",
+      "id": "mod-template-engine-1.22.2",
       "name": "Template engine module",
       "requires":       [
                 {
@@ -21970,7 +21908,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-template-engine:1.22.0",
+        "dockerImage": "mod-template-engine:1.22.2",
         "dockerPull": false,
         "dockerCMD": ["verify.user=true"],
         "dockerArgs": {"HostConfig":         {
@@ -22018,7 +21956,7 @@
       }
     },
         {
-      "id": "mod-pubsub-2.16.1",
+      "id": "mod-pubsub-2.16.3",
       "name": "Pubsub",
       "requires":       [
                 {
@@ -22341,7 +22279,7 @@
         ]
       }},
       "launchDescriptor":       {
-        "dockerImage": "mod-pubsub:2.16.1",
+        "dockerImage": "mod-pubsub:2.16.3",
         "dockerArgs": {"HostConfig":         {
           "Memory": 1073741824,
           "PortBindings": {"8081/tcp": [{"HostPort": "%p"}]}
@@ -22408,7 +22346,7 @@
       }
     },
         {
-      "id": "mod-gobi-3.0.1",
+      "id": "mod-gobi-3.0.2",
       "name": "GOBI® Module",
       "provides":       [
                 {
@@ -22649,7 +22587,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-gobi:3.0.1",
+        "dockerImage": "mod-gobi:3.0.2",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 357913941,
@@ -24410,7 +24348,7 @@
       }
     },
         {
-      "id": "mod-user-import-3.10.2",
+      "id": "mod-user-import-3.10.3",
       "name": "User import",
       "provides": [      {
         "id": "user-import",
@@ -24478,7 +24416,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-user-import:3.10.2",
+        "dockerImage": "mod-user-import:3.10.3",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 357913941,
@@ -24491,7 +24429,7 @@
       }
     },
         {
-      "id": "mod-service-interaction-4.2.3",
+      "id": "mod-service-interaction-4.2.6",
       "name": "mod-service-interaction",
       "provides":       [
                 {
@@ -25174,7 +25112,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-service-interaction:4.2.3",
+        "dockerImage": "mod-service-interaction:4.2.6",
         "dockerArgs": {"HostConfig":         {
           "Memory": 1073741824,
           "PortBindings": {"8080/tcp": [{"HostPort": "%p"}]}
@@ -25490,7 +25428,7 @@
       }
     },
         {
-      "id": "mod-serials-management-2.0.4",
+      "id": "mod-serials-management-2.0.5",
       "name": "mod-serials-management",
       "provides":       [
                 {
@@ -26016,7 +25954,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-serials-management:2.0.4",
+        "dockerImage": "mod-serials-management:2.0.5",
         "dockerArgs": {"HostConfig":         {
           "Memory": 1073741824,
           "PortBindings": {"8080/tcp": [{"HostPort": "%p"}]}
@@ -26055,7 +25993,7 @@
       }
     },
         {
-      "id": "mod-record-specifications-2.0.2",
+      "id": "mod-record-specifications-2.0.3",
       "name": "Record Specifications",
       "provides":       [
                 {
@@ -26323,7 +26261,7 @@
         }
       ],
       "launchDescriptor":       {
-        "dockerImage": "mod-record-specifications:2.0.2",
+        "dockerImage": "mod-record-specifications:2.0.3",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 542293850,
@@ -26808,7 +26746,7 @@
       ]
     },
         {
-      "id": "folio_inventory-13.0.11",
+      "id": "folio_inventory-13.0.14",
       "name": "Inventory manager",
       "requires":       [
                 {
@@ -27941,7 +27879,51 @@
           ],
           "visible": true
         }
-      ]
+      ],
+      "metadata": {"stripes":       {
+        "actsAs":         [
+          "app",
+          "handler",
+          "settings"
+        ],
+        "handlerName": "eventHandler",
+        "displayName": "ui-inventory.meta.title",
+        "route": "/inventory",
+        "home": "/inventory",
+        "queryResource": "query",
+        "icons":         [
+                    {
+            "name": "app",
+            "alt": "View and manage instance records, holdings records and item records",
+            "title": "Inventory"
+          },
+                    {
+            "name": "bound-with",
+            "alt": "Bound with one or more instances or holdings",
+            "title": "Bound-with"
+          },
+                    {
+            "name": "holdings",
+            "alt": "",
+            "title": "Holding"
+          },
+                    {
+            "name": "item",
+            "alt": "",
+            "title": "Item"
+          },
+                    {
+            "name": "instance",
+            "alt": "",
+            "title": "Instance"
+          }
+        ],
+        "stripesDeps":         [
+          "@folio/stripes-acq-components",
+          "@folio/stripes-inventory-components",
+          "@folio/stripes-marc-components"
+        ]
+      }}
     },
         {
       "id": "folio_servicepoints-8.0.0",
@@ -31139,7 +31121,7 @@
       ]
     },
         {
-      "id": "folio_users-12.1.14",
+      "id": "folio_users-12.1.17",
       "name": "User management",
       "requires":       [
                 {
@@ -32339,7 +32321,26 @@
           ],
           "visible": true
         }
-      ]
+      ],
+      "metadata": {"stripes":       {
+        "actsAs":         [
+          "app",
+          "settings"
+        ],
+        "displayName": "ui-users.meta.title",
+        "route": "/users",
+        "home": "/users?sort=name",
+        "queryResource": "query",
+        "actionNames":         [
+          "stripesHome",
+          "usersSortByName"
+        ],
+        "icons": [        {
+          "name": "app",
+          "alt": "Create, view and manage users",
+          "title": "Users"
+        }]
+      }}
     },
         {
       "id": "folio_serials-management-2.0.4",
@@ -32507,7 +32508,7 @@
       ]
     },
         {
-      "id": "folio_stripes-marc-components-2.0.2",
+      "id": "folio_stripes-marc-components-2.0.3",
       "name": "Component library for Stripes Marc modules",
       "requires":       [
                 {
@@ -32520,10 +32521,11 @@
         }
       ],
       "optional": [],
-      "permissionSets": []
+      "permissionSets": [],
+      "metadata": {"stripes": {"actsAs": [""]}}
     },
         {
-      "id": "folio_stripes-inventory-components-2.0.8",
+      "id": "folio_stripes-inventory-components-2.0.9",
       "name": "",
       "requires":       [
                 {

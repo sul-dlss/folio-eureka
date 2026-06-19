@@ -1,7 +1,7 @@
 image:
   pullPolicy: Always
-  repository: ghcr.io/sul-dlss/folio-platform-complete
-  tag: R1-2025-csp-4-eureka-test
+  repository: ghcr.io/sul-dlss/folio-platform-lsp
+  tag: R1-2025-csp-7-eureka-test
 
 startupProbeEnabled : true
 livenessProbeEnabled : true
