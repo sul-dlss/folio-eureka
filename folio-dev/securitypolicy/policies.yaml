@@ -1,0 +1,35 @@
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: folio-ip-and-cors-policy
+  namespace: folio-dev
+spec:
+  targetSelectors:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      routeSelector:
+        matchLabels:
+          access: protected-standard
+  cors:
+    allowOrigins:
+      - http://kong:8000
+    allowMethods:
+      - GET
+      - OPTIONS
+      - POST
+      - PUT
+  authorization: {}
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: folio-ip-only-policy
+  namespace: folio-dev
+spec:
+  targetSelectors:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      routeSelector:
+        matchLabels:
+          access: ip-allowlist
+  authorization: {}
