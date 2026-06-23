@@ -23,6 +23,8 @@ extraDeploy:
     metadata:
       name: sru-backend
       namespace: folio-prod
+      labels:
+        access: protected-standard
     spec:
       rules:
       - backendRefs:
@@ -37,25 +39,6 @@ extraDeploy:
       parentRefs:
       - name: default
         namespace: envoy-gateway-system
-    ---
-    apiVersion: gateway.envoyproxy.io/v1alpha1
-    kind: SecurityPolicy
-    metadata:
-      name: sru-cors
-      namespace: folio-prod
-    spec:
-        targetRefs:
-          - kind: HTTPRoute
-            group: gateway.networking.k8s.io
-            name: sru-backend
-        cors:
-          allowOrigins:
-          - http://kong:8000
-          allowMethods:
-          - GET
-          - OPTIONS
-          - POST
-          - PUT
     ---
     apiVersion: gateway.envoyproxy.io/v1alpha1
     kind: BackendTrafficPolicy
@@ -77,45 +60,3 @@ extraDeploy:
               body:
                 type: Inline
                 inline: "You are not authorized to access FOLIO. A connection to the Stanford Network is required."
-    ---
-    apiVersion: gateway.envoyproxy.io/v1alpha1
-    kind: SecurityPolicy
-    metadata:
-      name: sru-ip-limits
-      namespace: folio-prod
-    spec:
-        targetRefs:
-          - kind: HTTPRoute
-            group: gateway.networking.k8s.io
-            name: sru-backend
-        authorization:
-          defaultAction: Deny
-          rules:
-            - action: Allow
-              principal:
-                clientCIDRs:
-                - "171.64.0.0/14"
-                - "171.66.1.0/24"
-                - "10.32.0.0/15"
-                - "10.34.0.0/15"
-                - "10.96.0.0/11"
-                - "10.98.0.0/15"
-                - "10.130.0.0/16"
-                - "10.130.64.0/18"
-                - "10.130.128.0/18"
-                - "10.130.192.0/18"
-                - "172.24.0.0/14"
-                - "172.20.206.128/25"
-                - "172.20.207.0/25"
-                - "171.66.16.0/21"
-                - "171.66.24.0/21"
-                - "171.66.176.0/20"
-                - "204.63.231.0/25"
-                - "10.109.48.0/25"
-                - "10.109.48.128/25"
-                - "3.211.232.9/32"
-                - "3.216.175.80/32"
-                - "52.72.186.152/32"
-                - "3.218.35.15/32"
-                - "34.239.232.112/32"
-                - "24.118.215.232/32"
