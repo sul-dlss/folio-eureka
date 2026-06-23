@@ -7,9 +7,8 @@ spec:
   targetSelectors:
     - group: gateway.networking.k8s.io
       kind: HTTPRoute
-      routeSelector:
-        matchLabels:
-          access: protected-standard
+      matchLabels:
+        access: protected-standard
   cors:
     allowOrigins:
       - http://kong:8000
@@ -29,7 +28,6 @@ spec:
   targetSelectors:
     - group: gateway.networking.k8s.io
       kind: HTTPRoute
-      routeSelector:
-        matchLabels:
-          access: ip-allowlist
+      matchLabels:
+        access: ip-allowlist
   authorization: {}
