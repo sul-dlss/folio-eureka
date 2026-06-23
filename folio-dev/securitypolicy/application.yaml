@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: folio-ip-allowlist
+  name: folio-security-policy
   namespace: folio-dev
   labels:
     application: infrastructure
