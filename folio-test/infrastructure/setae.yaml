@@ -117,7 +117,7 @@ metadata:
   name: setae-api-backend
   namespace: folio-test
   labels:
-    access: protected-standard
+    access: cors-ip-allowlist
 spec:
   rules:
   - backendRefs:

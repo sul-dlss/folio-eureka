@@ -24,7 +24,7 @@ extraDeploy:
       name: sru-backend
       namespace: folio-prod
       labels:
-        access: protected-standard
+        access: cors-ip-allowlist
     spec:
       rules:
       - backendRefs:

@@ -16,7 +16,7 @@ extraDeploy:
       name: platform-complete-backend
       namespace: folio-test
       labels:
-        access: protected-standard
+        access: cors-ip-allowlist
     spec:
       rules:
       - backendRefs:

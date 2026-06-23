@@ -8,7 +8,7 @@ spec:
     - group: gateway.networking.k8s.io
       kind: HTTPRoute
       matchLabels:
-        access: protected-standard
+        access: cors-ip-allowlist
   cors:
     allowOrigins:
       - http://kong:8000
