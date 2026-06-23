@@ -9,8 +9,10 @@ patches:
   - path: ip_list.yaml
     target:
       kind: SecurityPolicy
+      # merge key metadata.name
       name: folio-ip-and-cors-policy
   - path: ip_list.yaml
     target:
       kind: SecurityPolicy
+      # merge key metadata.name
       name: folio-ip-only-policy

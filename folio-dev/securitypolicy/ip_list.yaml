@@ -1,6 +1,7 @@
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: SecurityPolicy
 metadata:
+  # kustomization.yaml merge key patches.path.target.name
   name: patch-placeholder
 spec:
   authorization:
