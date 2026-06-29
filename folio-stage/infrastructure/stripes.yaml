@@ -3,6 +3,7 @@ image:
   repository: ghcr.io/sul-dlss/folio-platform-complete
   tag: R1-2025-csp-4-eureka-stage
 
+deploymentStrategy: RollingUpdate
 startupProbeEnabled : true
 livenessProbeEnabled : true
 readinessProbeEnabled : true

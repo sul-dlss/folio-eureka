@@ -4,6 +4,7 @@ image:
   tag: R1-2025-csp-7-eureka-test
 replicaCount: 2
 
+deploymentStrategy: RollingUpdate
 startupProbeEnabled : true
 livenessProbeEnabled : true
 readinessProbeEnabled : true
