@@ -10,7 +10,7 @@ eureka:
     value: 'false'
 image:
   repository: folioorg/mod-event-config
-  tag: 2.9.0
+  tag: 2.9.1
 integrations:
   db:
     enabled: true

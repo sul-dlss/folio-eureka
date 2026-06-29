@@ -1,6 +1,8 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
+  labels:
+    application: module
   name: mod-roles-keycloak
   namespace: folio-stage
 spec:
@@ -19,7 +21,7 @@ spec:
       - $values/folio-stage/common/java_opts.yaml
       - $values/folio-stage/modules/mod-roles-keycloak/extra_env.yaml
     repoURL: https://sul-dlss.github.io/folio-helm-v2
-    targetRevision: 0.0.51
+    targetRevision: 0.0.56
   - ref: values
     repoURL: https://github.com/sul-dlss/folio-eureka
     targetRevision: main

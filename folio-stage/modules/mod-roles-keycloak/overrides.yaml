@@ -10,7 +10,7 @@ eureka:
     value: 'false'
 image:
   repository: folioorg/mod-roles-keycloak
-  tag: 3.0.12
+  tag: 3.0.15
 integrations:
   db:
     enabled: true
