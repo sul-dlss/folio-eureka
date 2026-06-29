@@ -1,7 +1,0 @@
-{
-  "tenantId": "2d4c4f01-d4f0-437c-ab1c-a9fe19fd4c15",
-  "applicationId": "app-platform-minimal-2.0.38",
-  "modules": [
-    "mod-settings-1.2.0"
-  ]
-}
