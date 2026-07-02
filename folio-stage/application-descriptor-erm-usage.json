@@ -1,63 +1,57 @@
 {
-  "id": "app-erm-usage-2.0.4",
+  "id": "app-erm-usage-2.0.5",
   "name": "app-erm-usage",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "Application for ERM Usage platform installation for Sunflower",
-  "platform": "complete",
   "modules":   [
         {
       "id": "mod-erm-usage-5.1.1",
       "name": "mod-erm-usage",
-      "version": "5.1.1",
-      "url": null
+      "version": "5.1.1"
     },
         {
       "id": "mod-erm-usage-harvester-5.1.1",
       "name": "mod-erm-usage-harvester",
-      "version": "5.1.1",
-      "url": null
+      "version": "5.1.1"
     },
         {
       "id": "mod-eusage-reports-3.0.0",
       "name": "mod-eusage-reports",
-      "version": "3.0.0",
-      "url": null
+      "version": "3.0.0"
     }
   ],
   "uiModules":   [
         {
-      "id": "folio_plugin-eusage-reports-4.0.1",
+      "id": "folio_plugin-eusage-reports-4.0.2",
       "name": "folio_plugin-eusage-reports",
-      "version": "4.0.1",
-      "url": null
+      "version": "4.0.2"
     },
         {
       "id": "folio_erm-comparisons-8.0.1",
       "name": "folio_erm-comparisons",
-      "version": "8.0.1",
-      "url": null
+      "version": "8.0.1"
     },
         {
       "id": "folio_erm-usage-11.0.1",
       "name": "folio_erm-usage",
-      "version": "11.0.1",
-      "url": null
+      "version": "11.0.1"
     },
         {
       "id": "folio_plugin-find-erm-usage-data-provider-7.0.0",
       "name": "folio_plugin-find-erm-usage-data-provider",
-      "version": "7.0.0",
-      "url": null
+      "version": "7.0.0"
     }
   ],
   "dependencies":   [
         {
       "name": "app-platform-complete",
-      "version": "^2.0.0"
+      "version": "^2.0.0",
+      "preRelease": null
     },
         {
       "name": "app-acquisitions",
-      "version": "^1.0.0"
+      "version": "^1.0.0",
+      "preRelease": null
     }
   ],
   "moduleDescriptors":   [
@@ -1113,7 +1107,7 @@
   ],
   "uiModuleDescriptors":   [
         {
-      "id": "folio_plugin-eusage-reports-4.0.1",
+      "id": "folio_plugin-eusage-reports-4.0.2",
       "name": "Stripes plugin module to View eUsage reports",
       "requires": [      {
         "id": "eusage-reports",

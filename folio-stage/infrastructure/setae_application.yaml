@@ -3,6 +3,8 @@ kind: Application
 metadata:
   name: setae-api
   namespace: folio-stage
+  labels:
+    application: infrastructure
 spec:
   project: folio-stage
   destination:

@@ -1,6 +1,8 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
+  labels:
+    application: module
   name: mod-users
   namespace: folio-stage
 spec:
@@ -19,7 +21,7 @@ spec:
       - $values/folio-stage/common/java_opts.yaml
       - $values/folio-stage/modules/mod-users/extra_env.yaml
     repoURL: https://sul-dlss.github.io/folio-helm-v2
-    targetRevision: 19.3.41
+    targetRevision: 19.3.46
   - ref: values
     repoURL: https://github.com/sul-dlss/folio-eureka
     targetRevision: main

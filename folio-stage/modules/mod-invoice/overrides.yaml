@@ -10,7 +10,7 @@ eureka:
     value: 'false'
 image:
   repository: folioorg/mod-invoice
-  tag: 6.0.3
+  tag: 6.0.4
 integrations:
   db:
     enabled: true

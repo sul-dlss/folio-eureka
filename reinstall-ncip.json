@@ -1,7 +1,0 @@
-{
-  "tenantId": "2d4c4f01-d4f0-437c-ab1c-a9fe19fd4c15",
-  "applicationId": "app-platform-complete-2.2.13",
-  "modules": [
-    "mod-ncip-1.16.1"
-  ]
-}

@@ -3,6 +3,8 @@ kind: Application
 metadata:
   name: kafka-folio-stage
   namespace: folio-stage
+  labels:
+    application: infrastructure
 spec:
   project: folio-stage
   destination:
