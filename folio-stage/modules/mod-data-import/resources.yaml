@@ -19,23 +19,23 @@ integrations:
 #   - name: S3_FORCEPATHSTYLE
 #     value: "true"
 
-# extraVolumes:
-#   data-import-uploads:
-#     enabled: true
-#     name: data-import-uploads
-#     persistentVolumeClaim:
-#       claimName: data-import-uploads
+extraVolumes:
+  data-import-uploads:
+    enabled: true
+    name: data-import-uploads
+    persistentVolumeClaim:
+      claimName: data-import-uploads
 
-# extraVolumeMounts:
-#   data-import-uploads:
-#     enabled: true
-#     name: data-import-uploads
-#     mountPath: /usr/verticles/storage/upload
+extraVolumeMounts:
+  data-import-uploads:
+    enabled: true
+    name: data-import-uploads
+    mountPath: /usr/verticles/storage/upload
 
-# volumeClaims:
-#   data-import-uploads:
-#     enabled: true
-#     existingClaim: data-import-uploads
-    # storageClassName: nfs
-    # size: 2Gi
-    # accessModes: ReadWriteMany
+volumeClaims:
+  data-import-uploads:
+    name: "data-import-uploads"
+    enabled: true
+    storageClassName: nfs
+    size: 2Gi
+    accessModes: ReadWriteMany
