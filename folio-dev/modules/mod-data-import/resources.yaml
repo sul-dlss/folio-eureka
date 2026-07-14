@@ -35,7 +35,6 @@ extraVolumeMounts:
 volumeClaims:
   data-import-uploads:
     enabled: true
-    existingClaim: data-import-uploads
     storageClassName: nfs
     size: 2Gi
     accessModes: ReadWriteMany
