@@ -11,9 +11,9 @@ integrations:
     enabled: true
     existingSecret: "s3-credentials"
 
-# extraEnvVars: |
-#   - name: SPLIT_FILES_ENABLED
-#     value: "true"
+extraEnvVars: |
+  - name: SPLIT_FILES_ENABLED
+    value: "false"
 #   - name: AWS_SDK
 #     value: "true"
 #   - name: S3_FORCEPATHSTYLE
