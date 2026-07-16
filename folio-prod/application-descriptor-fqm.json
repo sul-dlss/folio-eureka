@@ -1,25 +1,28 @@
 {
-  "id": "app-fqm-1.0.14",
+  "id": "app-fqm-1.0.15",
   "name": "app-fqm",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "Application descriptor for the FOLIO FQM application",
-  "platform": "complete",
   "modules":   [
         {
-      "name": "mod-fqm-manager",
-      "version": "4.0.15"
+      "id": "mod-lists-3.1.6",
+      "name": "mod-lists",
+      "version": "3.1.6"
     },
         {
-      "name": "mod-lists",
-      "version": "3.1.5"
+      "id": "mod-fqm-manager-4.0.15",
+      "name": "mod-fqm-manager",
+      "version": "4.0.15"
     }
   ],
   "uiModules":   [
         {
+      "id": "folio_lists-4.0.3",
       "name": "folio_lists",
       "version": "4.0.3"
     },
         {
+      "id": "folio_plugin-query-builder-2.0.3",
       "name": "folio_plugin-query-builder",
       "version": "2.0.3"
     }
@@ -27,11 +30,13 @@
   "dependencies":   [
         {
       "name": "app-platform-complete",
-      "version": "^2.0.0"
+      "version": "^2.0.0",
+      "preRelease": null
     },
         {
       "name": "app-acquisitions",
-      "version": "^1.0.0"
+      "version": "^1.0.0",
+      "preRelease": null
     }
   ],
   "moduleDescriptors":   [
@@ -662,7 +667,7 @@
       }
     },
         {
-      "id": "mod-lists-3.1.5",
+      "id": "mod-lists-3.1.6",
       "name": "Lists",
       "provides":       [
                 {
@@ -955,7 +960,7 @@
         ]
       }},
       "launchDescriptor":       {
-        "dockerImage": "mod-lists:3.1.5",
+        "dockerImage": "mod-lists:3.1.6",
         "dockerPull": false,
         "dockerArgs": {"HostConfig":         {
           "Memory": 3221225472,

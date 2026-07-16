@@ -1,22 +1,21 @@
 {
-  "id": "app-marc-migrations-2.0.4",
+  "id": "app-marc-migrations-2.0.5",
   "name": "app-marc-migrations",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "MARC Migrations Application",
-  "platform": "complete",
   "modules": [  {
-    "id": "mod-marc-migrations-2.0.4",
+    "id": "mod-marc-migrations-2.0.5",
     "name": "mod-marc-migrations",
-    "version": "2.0.4",
-    "url": null
+    "version": "2.0.5"
   }],
   "uiModules": [],
   "dependencies": [  {
     "name": "app-platform-complete",
-    "version": "^2.0.0"
+    "version": "^2.0.0",
+    "preRelease": null
   }],
   "moduleDescriptors": [  {
-    "id": "mod-marc-migrations-2.0.4",
+    "id": "mod-marc-migrations-2.0.5",
     "name": "MARC Migrations",
     "requires":     [
             {
@@ -196,7 +195,7 @@
       }
     ],
     "launchDescriptor":     {
-      "dockerImage": "mod-marc-migrations:2.0.4",
+      "dockerImage": "mod-marc-migrations:2.0.5",
       "dockerPull": false,
       "dockerArgs": {"HostConfig":       {
         "Memory": 536870912,
