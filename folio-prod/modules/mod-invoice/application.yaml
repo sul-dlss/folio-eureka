@@ -1,6 +1,9 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
+  labels:
+    application: app-acquisitions-1.0.29
+    type: module
   name: mod-invoice
   namespace: folio-prod
 spec:
@@ -19,7 +22,7 @@ spec:
       - $values/folio-prod/modules/mod-invoice/replicas.yaml
       - $values/folio-prod/common/java_opts.yaml
     repoURL: https://sul-dlss.github.io/folio-helm-v2
-    targetRevision: 5.8.41
+    targetRevision: 5.8.46
   - ref: values
     repoURL: https://github.com/sul-dlss/folio-eureka
     targetRevision: main
