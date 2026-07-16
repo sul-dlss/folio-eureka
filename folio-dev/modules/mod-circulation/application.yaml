@@ -2,7 +2,8 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   labels:
-    application: module
+    application: app-platform-complete-2.5.10
+    type: module
   name: mod-circulation
   namespace: folio-dev
 spec:
