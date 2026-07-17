@@ -4,7 +4,7 @@ metadata:
   name: mgr-tenants
   namespace: folio-stage
   labels:
-    application: infrastructure
+    type: infrastructure
 operation:
   sync:
     syncStrategy:

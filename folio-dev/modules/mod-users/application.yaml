@@ -2,7 +2,8 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   labels:
-    application: module
+    application: app-platform-minimal-2.0.52
+    type: module
   name: mod-users
   namespace: folio-dev
 spec:

@@ -4,7 +4,7 @@ metadata:
   name: mgr-applications
   namespace: folio-test
   labels:
-    application: infrastructure
+    type: infrastructure
 operation:
   sync:
     syncStrategy:

@@ -4,7 +4,7 @@ metadata:
   name: kafka-folio-test
   namespace: folio-test
   labels:
-    application: infrastructure
+    type: infrastructure
 spec:
   project: folio-test
   destination:
