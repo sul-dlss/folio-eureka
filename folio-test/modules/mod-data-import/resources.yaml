@@ -6,19 +6,6 @@ resources:
     cpu: 300m
     memory: 1280M
 
-integrations:
-  s3:
-    enabled: true
-    existingSecret: "s3-credentials"
-
-extraEnvVars: |
-  - name: SPLIT_FILES_ENABLED
-    value: "false"
-#   - name: AWS_SDK
-#     value: "true"
-#   - name: S3_FORCEPATHSTYLE
-#     value: "true"
-
 extraVolumes:
   data-import-uploads:
     enabled: true
