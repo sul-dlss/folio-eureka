@@ -17,6 +17,7 @@ spec:
       valueFiles:
       - $values/folio-prod/modules/mod-bulk-operations/overrides.yaml
       - $values/folio-prod/modules/mod-bulk-operations/resources.yaml
+      - $values/folio-prod/modules/mod-bulk-operations/replicas.yaml
       - $values/folio-prod/common/sidecar.yaml
       - $values/folio-prod/common/probes.yaml
       - $values/folio-prod/modules/mod-bulk-operations/java_opts.yaml
