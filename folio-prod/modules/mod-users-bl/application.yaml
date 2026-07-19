@@ -1,6 +1,9 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
+  labels:
+    application: app-platform-minimal-2.0.52
+    type: module
   name: mod-users-bl
   namespace: folio-prod
 spec:
@@ -19,7 +22,7 @@ spec:
       - $values/folio-prod/modules/mod-users-bl/replicas.yaml
       - $values/folio-prod/common/java_opts.yaml
     repoURL: https://sul-dlss.github.io/folio-helm-v2
-    targetRevision: 7.6.48
+    targetRevision: 7.6.53
   - ref: values
     repoURL: https://github.com/sul-dlss/folio-eureka
     targetRevision: main

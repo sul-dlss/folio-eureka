@@ -3,6 +3,8 @@ kind: Application
 metadata:
   name: kong
   namespace: folio-prod
+  labels:
+    type: infrastructure
 spec:
   destination:
     namespace: folio-prod

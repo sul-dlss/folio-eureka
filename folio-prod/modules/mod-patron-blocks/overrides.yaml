@@ -10,7 +10,7 @@ eureka:
     value: 'false'
 image:
   repository: folioorg/mod-patron-blocks
-  tag: 1.12.2
+  tag: 1.12.3
 integrations:
   db:
     enabled: true

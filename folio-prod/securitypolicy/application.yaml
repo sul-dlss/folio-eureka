@@ -4,7 +4,7 @@ metadata:
   name: folio-security-policy
   namespace: folio-prod
   labels:
-    application: infrastructure
+    type: infrastructure
 spec:
   project: folio-prod
   destination:

@@ -3,6 +3,8 @@ kind: Application
 metadata:
   name: vault
   namespace: folio-prod
+  labels:
+    type: infrastructure
 spec:
   destination:
     namespace: folio-prod

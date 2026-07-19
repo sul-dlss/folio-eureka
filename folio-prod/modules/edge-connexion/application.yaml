@@ -1,6 +1,9 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
+  labels:
+    application: app-edge-complete-2.0.16
+    type: edge
   name: edge-connexion
   namespace: folio-prod
 spec:
@@ -20,7 +23,7 @@ spec:
       - $values/folio-prod/modules/edge-connexion/java_opts.yaml
       - $values/folio-prod/modules/edge-connexion/extra_env.yaml
     repoURL: https://sul-dlss.github.io/folio-helm-v2
-    targetRevision: 1.1.49
+    targetRevision: 1.1.54
   - ref: values
     repoURL: https://github.com/sul-dlss/folio-eureka
     targetRevision: main

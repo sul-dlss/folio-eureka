@@ -10,7 +10,7 @@ eureka:
     value: 'false'
 image:
   repository: folioorg/mod-finance-storage
-  tag: 8.8.4
+  tag: 8.8.8
 integrations:
   db:
     enabled: true
