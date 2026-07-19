@@ -6,36 +6,23 @@ resources:
     cpu: 300m
     memory: 1280M
 
-integrations:
-  s3:
+extraVolumes:
+  data-import-uploads:
     enabled: true
-    existingSecret: "s3-credentials"
+    name: data-import-uploads
+    persistentVolumeClaim:
+      claimName: data-import-uploads
 
-# extraEnvVars: |
-#   - name: SPLIT_FILES_ENABLED
-#     value: "true"
-#   - name: AWS_SDK
-#     value: "true"
-#   - name: S3_FORCEPATHSTYLE
-#     value: "true"
+extraVolumeMounts:
+  data-import-uploads:
+    enabled: true
+    name: data-import-uploads
+    mountPath: /usr/verticles/storage/upload
 
-# extraVolumes:
-#   data-import-uploads:
-#     enabled: true
-#     name: data-import-uploads
-#     persistentVolumeClaim:
-#       claimName: data-import-uploads
-
-# extraVolumeMounts:
-#   data-import-uploads:
-#     enabled: true
-#     name: data-import-uploads
-#     mountPath: /usr/verticles/storage/upload
-
-# volumeClaims:
-#   data-import-uploads:
-#     enabled: true
-#     existingClaim: data-import-uploads
-    # storageClassName: nfs
-    # size: 2Gi
-    # accessModes: ReadWriteMany
+volumeClaims:
+  data-import-uploads:
+    name: "data-import-uploads"
+    enabled: true
+    storageClassName: nfs
+    size: 2Gi
+    accessModes: ReadWriteMany
