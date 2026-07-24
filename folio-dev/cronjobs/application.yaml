@@ -13,4 +13,4 @@ spec:
   source:
     path: folio-dev/cronjobs
     repoURL: https://github.com/sul-dlss/folio-eureka
-    targetRevision: main
+    targetRevision: cronjob-apps
