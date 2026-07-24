@@ -1,17 +1,17 @@
-# To apply this file, run:
-# SRS_MODULES='$SRS_MODULES' envsubst < modules-restart-di-srs.yaml | kubectl -n $namespace apply -f -
 apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: srs-modules-restart
-  namespace: $namespace
+  namespace: folio-dev
 spec:
   concurrencyPolicy: Forbid
-  schedule: '39 12 * * 1-5' # 5:39 AM Pacific, Monday to Friday
+  timeZone: "America/Los_Angeles"
+  schedule: "30 5 * * 1-5"
   # schedule: '0 0 29 2 1' # noop
-  suspend: true
+  suspend: false
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
+  startingDeadlineSeconds: 604800  # 7 days in seconds; missed jobs won't be picked up if unsuspended after a week
   jobTemplate:
     spec:
       backoffLimit: 0
