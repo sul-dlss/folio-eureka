@@ -11,6 +11,6 @@ spec:
     server: https://kubernetes.default.svc
     namespace: folio-test
   source:
-    path: folio-test/cronjobs
+    path: folio-test/cronjobs/specs
     repoURL: https://github.com/sul-dlss/folio-eureka
     targetRevision: main
