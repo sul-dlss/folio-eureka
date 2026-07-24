@@ -1,0 +1,34 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: data-import-uploads-cleanup
+  namespace: folio-test
+spec:
+  concurrencyPolicy: Forbid
+  timeZone: "America/Los_Angeles"
+  schedule: "0 0 * * *"
+  startingDeadlineSeconds: 86400  # 1 day in seconds; missed jobs won't be picked up if unsuspended after a day
+  suspend: false
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: cleanup
+            image: alpine
+            command: ["/bin/sh", "-c"]
+            args: 
+            - |
+              echo "Starting cleanup of files older than 30 days..."
+              find /usr/verticles/storage/upload -mindepth 1 -mtime +30 -delete
+              echo "Cleanup completed successfully."
+            volumeMounts:
+            - name: data-import-uploads
+              mountPath: /usr/verticles/storage/upload
+          volumes:
+          - name: data-import-uploads
+            persistentVolumeClaim:
+              claimName: data-import-uploads
+          restartPolicy: OnFailure
