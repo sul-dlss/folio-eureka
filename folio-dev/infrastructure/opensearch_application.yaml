@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: opensearch
+  namespace: folio-dev
+  labels:
+    type: infrastructure
+spec:
+  project: folio-dev
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: folio-dev
+  sources:
+    - repoURL: https://opensearch-project.github.io/helm-charts/
+      chart: opensearch
+      targetRevision: 3.7.0
+      helm:
+        valueFiles:
+        - $values/folio-dev/infrastructure/opensearch.yaml
+    - repoURL: https://github.com/sul-dlss/folio-eureka
+      targetRevision: main
+      ref: values

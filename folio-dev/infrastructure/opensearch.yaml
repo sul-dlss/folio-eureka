@@ -22,7 +22,7 @@ roles:
 replicas: 3
 
 # if not set, falls back to parsing .Values.imageTag, then .Chart.appVersion.
-majorVersion: ""
+majorVersion: "3"
 
 global:
   # Set if you want to change the default docker registry, e.g. a private one.
@@ -52,68 +52,72 @@ config:
     # Bind to all interfaces because we don't know what IP address Docker will assign to us.
     network.host: 0.0.0.0
 
-    # Setting network.host to a non-loopback address enables the annoying bootstrap checks. "Single-node" mode disables them again.
-    # Implicitly done if ".singleNode" is set to "true".
-    # discovery.type: single-node
+  #   # Setting network.host to a non-loopback address enables the annoying bootstrap checks. "Single-node" mode disables them again.
+  #   # Implicitly done if ".singleNode" is set to "true".
+  #   # discovery.type: single-node
 
-    # Start OpenSearch Security Demo Configuration
-    # WARNING: revise all the lines below before you go into production
-    # plugins:
-    #   security:
-    #     ssl:
-    #       transport:
-    #         pemcert_filepath: esnode.pem
-    #         pemkey_filepath: esnode-key.pem
-    #         pemtrustedcas_filepath: root-ca.pem
-    #         enforce_hostname_verification: false
-    #       http:
-    #         enabled: true
-    #         pemcert_filepath: esnode.pem
-    #         pemkey_filepath: esnode-key.pem
-    #         pemtrustedcas_filepath: root-ca.pem
-    #     allow_unsafe_democertificates: true
-    #     allow_default_init_securityindex: true
-    #     authcz:
-    #       admin_dn:
-    #         - CN=kirk,OU=client,O=client,L=test,C=de
-    #     audit.type: internal_opensearch
-    #     enable_snapshot_restore_privilege: true
-    #     check_snapshot_restore_write_privileges: true
-    #     restapi:
-    #       roles_enabled: ["all_access", "security_rest_api_access"]
-    #     system_indices:
-    #       enabled: true
-    #       indices:
-    #         [
-    #           ".opendistro-alerting-config",
-    #           ".opendistro-alerting-alert*",
-    #           ".opendistro-anomaly-results*",
-    #           ".opendistro-anomaly-detector*",
-    #           ".opendistro-anomaly-checkpoints",
-    #           ".opendistro-anomaly-detection-state",
-    #           ".opendistro-reports-*",
-    #           ".opendistro-notifications-*",
-    #           ".opendistro-notebooks",
-    #           ".opendistro-asynchronous-search-response*",
-    #         ]
-    ######## End OpenSearch Security Demo Configuration ########
+  #   # Start OpenSearch Security Demo Configuration
+  #   # WARNING: revise all the lines below before you go into production
+  #   # plugins:
+  #   #   security:
+  #   #     ssl:
+  #   #       transport:
+  #   #         pemcert_filepath: esnode.pem
+  #   #         pemkey_filepath: esnode-key.pem
+  #   #         pemtrustedcas_filepath: root-ca.pem
+  #   #         enforce_hostname_verification: false
+  #   #       http:
+  #   #         enabled: true
+  #   #         pemcert_filepath: esnode.pem
+  #   #         pemkey_filepath: esnode-key.pem
+  #   #         pemtrustedcas_filepath: root-ca.pem
+  #   #     allow_unsafe_democertificates: true
+  #   #     allow_default_init_securityindex: true
+  #   #     authcz:
+  #   #       admin_dn:
+  #   #         - CN=kirk,OU=client,O=client,L=test,C=de
+  #   #     audit.type: internal_opensearch
+  #   #     enable_snapshot_restore_privilege: true
+  #   #     check_snapshot_restore_write_privileges: true
+  #   #     restapi:
+  #   #       roles_enabled: ["all_access", "security_rest_api_access"]
+  #   #     system_indices:
+  #   #       enabled: true
+  #   #       indices:
+  #   #         [
+  #   #           ".opendistro-alerting-config",
+  #   #           ".opendistro-alerting-alert*",
+  #   #           ".opendistro-anomaly-results*",
+  #   #           ".opendistro-anomaly-detector*",
+  #   #           ".opendistro-anomaly-checkpoints",
+  #   #           ".opendistro-anomaly-detection-state",
+  #   #           ".opendistro-reports-*",
+  #   #           ".opendistro-notifications-*",
+  #   #           ".opendistro-notebooks",
+  #   #           ".opendistro-asynchronous-search-response*",
+  #   #         ]
+  #   ######## End OpenSearch Security Demo Configuration ########
   # log4j2.properties:
 
 # Extra environment variables to append to this nodeGroup
 # This will be appended to the current 'env:' key. You can use any of the kubernetes env
 # syntax here
-extraEnvs: []
+extraEnvs:
 #  - name: MY_ENVIRONMENT_VAR
 #    value: the_value_goes_here
 # Chart version 2.18.0 and App Version OpenSearch 2.12.0 onwards a custom strong password needs to be provided in order to setup demo admin user.
 # Cluster will not spin-up without this unless demo config install is disabled.
-#  - name: OPENSEARCH_INITIAL_ADMIN_PASSWORD
+  - name: OPENSEARCH_INITIAL_ADMIN_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: opensearch-credentials
+        key: OPENSEARCH_INITIAL_ADMIN_PASSWORD
 #    value: <strong-password>
 
 # Allows you to load environment variables from kubernetes secret or config map
-envFrom: []
-# - secretRef:
-#     name: env-secret
+envFrom:
+- secretRef:
+    name: opensearch-credentials
 # - configMapRef:
 #     name: config-map
 
@@ -214,10 +218,10 @@ persistence:
   #   set, choosing the default provisioner.  (gp2 on AWS, standard on
   #   GKE, AWS & OpenStack)
   #
-  # storageClass: "-"
+  storageClass: "mayastor-3"
   accessModes:
     - ReadWriteOnce
-  size: 8Gi
+  size: 150Gi
   annotations: {}
 
 extraVolumes: []
@@ -488,9 +492,13 @@ sysctlInit:
 
 ## Enable to add 3rd Party / Custom plugins not offered in the default OpenSearch image.
 plugins:
-  enabled: false
-  installList: []
-  # - example-fake-plugin
+  enabled: true
+  installList:
+    - analysis-icu
+    - analysis-kuromoji
+    - analysis-nori
+    - analysis-phonetic
+    - analysis-smartcn
   removeList: []
   # - example-fake-plugin
 
