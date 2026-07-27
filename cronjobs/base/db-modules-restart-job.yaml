@@ -6,7 +6,7 @@ spec:
   concurrencyPolicy: Forbid
   timeZone: "America/Los_Angeles"
   schedule: "59 23 * * *"
-  startingDeadlineSeconds: 86400
+  startingDeadlineSeconds: 86400 # 1 day in seconds; missed jobs won't be picked up if unsuspended after a day
   suspend: true
   successfulJobsHistoryLimit: 0
   failedJobsHistoryLimit: 1
@@ -14,7 +14,7 @@ spec:
     spec:
       backoffLimit: 0
       activeDeadlineSeconds: 7200
-      ttlSecondsAfterFinished: 14400
+      ttlSecondsAfterFinished: 14400 # 4 hours
       template:
         spec:
           serviceAccountName: folio-k8s
