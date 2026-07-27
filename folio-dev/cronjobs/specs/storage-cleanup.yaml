@@ -9,7 +9,7 @@ spec:
   schedule: "0 0 * * *"
   startingDeadlineSeconds: 86400  # 1 day in seconds; missed jobs won't be picked up if unsuspended after a day
   suspend: false
-  successfulJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 0
   failedJobsHistoryLimit: 1
   jobTemplate:
     spec:

@@ -9,7 +9,7 @@ spec:
   schedule: "30 5 * * 1-5"
   # schedule: '0 0 29 2 1' # noop
   suspend: false
-  successfulJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 0
   failedJobsHistoryLimit: 1
   startingDeadlineSeconds: 604800  # 7 days in seconds; missed jobs won't be picked up if unsuspended after a week
   jobTemplate:
@@ -35,4 +35,4 @@ spec:
                     mod-source-record-manager 
                     mod-copycat
               command: [ "/bin/bash", "-c", "--" ]
-              args: [ "for M in $SRS_MODULES; do kubectl -n $namespace rollout restart deployments/$M; done" ]
+              args: [ "for M in $SRS_MODULES; do kubectl -n folio-test rollout restart deployments/$M; done" ]

@@ -10,7 +10,7 @@ spec:
   # schedule: '0 0 29 2 1' # noop
   startingDeadlineSeconds: 86400  # 1 day in seconds; missed jobs won't be picked up if unsuspended after a day
   suspend: true
-  successfulJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 0
   failedJobsHistoryLimit: 1
   jobTemplate:
     spec:
@@ -75,4 +75,4 @@ spec:
                     mod-users
                     mod-users-keycloak
               command: [ "/bin/bash", "-c", "--" ]
-              args: [ "for M in $DB_MODULES; do kubectl -n $namespace rollout restart deployment/$M; sleep 60; done" ]
+              args: [ "for M in $DB_MODULES; do kubectl -n folio-prod rollout restart deployment/$M; sleep 60; done" ]
