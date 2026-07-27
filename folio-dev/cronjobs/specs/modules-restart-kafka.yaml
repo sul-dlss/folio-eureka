@@ -10,7 +10,7 @@ spec:
   # schedule: '0 0 29 2 1' # noop
   startingDeadlineSeconds: 86400  # 1 day in seconds; missed jobs won't be picked up if unsuspended after a day
   suspend: true
-  successfulJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 0
   failedJobsHistoryLimit: 1
   jobTemplate:
     spec:
@@ -47,4 +47,4 @@ spec:
                     mod-source-record-storage 
                     mod-source-record-manager
               command: [ "/bin/bash", "-c", "--" ]
-              args: [ "for M in $KAFKA_MODULES; do kubectl -n $namespace rollout restart deployments/$M; done" ]
+              args: [ "for M in $KAFKA_MODULES; do kubectl -n folio-dev rollout restart deployments/$M; done" ]
