@@ -112,7 +112,8 @@ extraEnvs:
       secretKeyRef:
         name: opensearch-credentials
         key: OPENSEARCH_INITIAL_ADMIN_PASSWORD
-#    value: <strong-password>
+  - name: AWS_EC2_METADATA_DISABLED
+    value: "true"
 
 # Allows you to load environment variables from kubernetes secret or config map
 envFrom:
@@ -455,9 +456,9 @@ lifecycle: {}
   #         while [[ "$(curl -s -o /dev/null -w '%{http_code}\n' $ES_URL)" != "200" ]]; do sleep 1; done
   #         curl -XPUT "$ES_URL/_template/$TEMPLATE_NAME" -H 'Content-Type: application/json' -d'{"index_patterns":['\""$INDEX_PATTERN"\"'],"settings":{"number_of_shards":'$SHARD_COUNT',"number_of_replicas":'$REPLICA_COUNT'}}'
 
-keystore: []
+keystore:
 # To add secrets to the keystore:
-#  - secretName: opensearch-encryption-key
+  - secretName: elasticsearch-snapshot-s3-credentials
 
 networkPolicy:
   create: false
@@ -499,6 +500,7 @@ plugins:
     - analysis-nori
     - analysis-phonetic
     - analysis-smartcn
+    - repository-s3
   removeList: []
   # - example-fake-plugin
 
