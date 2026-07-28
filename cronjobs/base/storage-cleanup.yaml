@@ -2,7 +2,6 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: data-import-uploads-cleanup
-  namespace: folio-dev
 spec:
   concurrencyPolicy: Forbid
   timeZone: "America/Los_Angeles"

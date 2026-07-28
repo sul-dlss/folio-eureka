@@ -2,13 +2,11 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: kafka-modules-restart
-  namespace: folio-dev
 spec:
   concurrencyPolicy: Forbid
   timeZone: "America/Los_Angeles"
   schedule: "59 23 * * *"
-  # schedule: '0 0 29 2 1' # noop
-  startingDeadlineSeconds: 86400  # 1 day in seconds; missed jobs won't be picked up if unsuspended after a day
+  startingDeadlineSeconds: 86400 # 1 day in seconds; missed jobs won't be picked up if unsuspended after a day
   suspend: true
   successfulJobsHistoryLimit: 0
   failedJobsHistoryLimit: 1
@@ -25,6 +23,8 @@ spec:
             - name: kubectl
               image: bitnamilegacy/kubectl
               env:
+                - name: NAMESPACE
+                  value: PLACEHOLDER
                 - name: KAFKA_MODULES
                   value: | 
                     mod-audit 
@@ -47,4 +47,4 @@ spec:
                     mod-source-record-storage 
                     mod-source-record-manager
               command: [ "/bin/bash", "-c", "--" ]
-              args: [ "for M in $KAFKA_MODULES; do kubectl -n folio-dev rollout restart deployments/$M; done" ]
+              args: [ "for M in $KAFKA_MODULES; do kubectl -n $NAMESPACE rollout restart deployments/$M; done" ]
