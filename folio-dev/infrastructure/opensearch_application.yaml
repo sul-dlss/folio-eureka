@@ -11,7 +11,7 @@ spec:
     server: https://kubernetes.default.svc
     namespace: folio-dev
   sources:
-    - repoURL: https://opensearch-project.github.io/helm-charts/
+    - repoURL: https://opensearch-project.github.io/helm-charts
       chart: opensearch
       targetRevision: 3.7.0
       helm:
