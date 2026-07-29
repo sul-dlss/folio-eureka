@@ -13,11 +13,11 @@ masterService: "opensearch"
 
 # OpenSearch roles that will be applied to this nodeGroup
 # These will be set as environment variable "node.roles". E.g. node.roles=master,ingest,data,remote_cluster_client
+# Combined master+data+ingest nodes (perfect for our size)
 roles:
-  - master
-  - ingest
+  - cluster_manager
   - data
-  - remote_cluster_client
+  - ingest
 
 replicas: 3
 
@@ -91,11 +91,15 @@ openSearchAnnotations: {}
 # additionals labels
 labels: {}
 
-opensearchJavaOpts: "-Xmx512M -Xms512M"
+opensearchJavaOpts: "-Xmx4g -Xms4g"  # 50% of 8GB memory
 
 resources:
   requests:
-    memory: "1536Mi"
+    cpu: 2000m      # 2 cores
+    memory: 6Gi     # 6 GB RAM
+  limits:
+    cpu: 4000m      # 4 cores max
+    memory: 8Gi     # 8 GB max
 
 initResources: {}
 #  limits:
