@@ -447,44 +447,225 @@ plugins:
   # - example-fake-plugin
 
 # -- Array of extra K8s manifests to deploy
-extraObjects: []
-  # - apiVersion: secrets-store.csi.x-k8s.io/v1
-  #   kind: SecretProviderClass
-  #   metadata:
-  #     name: argocd-secrets-store
-  #   spec:
-  #     provider: aws
-  #     parameters:
-  #       objects: |
-  #         - objectName: "argocd"
-  #           objectType: "secretsmanager"
-  #           jmesPath:
-  #               - path: "client_id"
-  #                 objectAlias: "client_id"
-  #               - path: "client_secret"
-  #                 objectAlias: "client_secret"
-  #     secretObjects:
-  #     - data:
-  #       - key: client_id
-  #         objectName: client_id
-  #       - key: client_secret
-  #         objectName: client_secret
-  #       secretName: argocd-secrets-store
-  #       type: Opaque
-  #       labels:
-  #         app.kubernetes.io/part-of: argocd
-  # - |
-  #    apiVersion: policy/v1
-  #    kind: PodDisruptionBudget
-  #    metadata:
-  #      name: {{ template "opensearch.uname" . }}
-  #      labels:
-  #        {{- include "opensearch.labels" . | nindent 4 }}
-  #    spec:
-  #      minAvailable: 1
-  #      selector:
-  #        matchLabels:
-  #          {{- include "opensearch.selectorLabels" . | nindent 6 }}
+extraObjects:
+  - apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: opensearch-snapshot-config
+      namespace: folio-dev
+    data:
+      configure-snapshots.sh: |
+        #!/bin/sh
+        set -e
+        
+        OPENSEARCH_URL="http://opensearch-headless:9200"
+        
+        # Wait for OpenSearch to be ready
+        echo "Waiting for OpenSearch to be ready..."
+        MAX_RETRIES=60
+        RETRY_COUNT=0
+        
+        until curl -sf "${OPENSEARCH_URL}/_cluster/health" | grep -q '"status":"green\|yellow"'; do
+          RETRY_COUNT=$((RETRY_COUNT+1))
+          if [ $RETRY_COUNT -eq $MAX_RETRIES ]; then
+            echo "Timeout waiting for OpenSearch"
+            exit 1
+          fi
+          echo "Attempt $RETRY_COUNT/$MAX_RETRIES: Waiting for OpenSearch..."
+          sleep 10
+        done
+        
+        echo "OpenSearch is ready!"
+        
+        # Check if repository already exists
+        echo "Checking if repository 'wasabi' already exists..."
+        REPO_CHECK=$(curl -s -o /dev/null -w "%{http_code}" "${OPENSEARCH_URL}/_snapshot/wasabi")
+        
+        if [ "$REPO_CHECK" -eq 200 ]; then
+          echo "✓ Repository 'wasabi' already exists, skipping creation"
+        else
+          echo "Creating S3 snapshot repository: wasabi"
+          RESPONSE=$(curl -s -w "\n%{http_code}" -X PUT "${OPENSEARCH_URL}/_snapshot/wasabi" \
+            -H 'Content-Type: application/json' \
+            -d '{
+              "type": "s3",
+              "settings": {
+                "endpoint": "'"${S3_ENDPOINT}"'",
+                "bucket": "'"${S3_BUCKET}"'",
+                "region": "'"${S3_REGION}"'",
+                "base_path": "'"${S3_BASE_PATH}"'",
+                "protocol": "https",
+                "path_style_access": true
+              }
+            }')
+          
+          HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+          BODY=$(echo "$RESPONSE" | sed '$d')
+          
+          if [ "$HTTP_CODE" -eq 200 ] || [ "$HTTP_CODE" -eq 201 ]; then
+            echo "✓ Repository created successfully"
+            echo "$BODY"
+          else
+            echo "✗ Failed to create repository (HTTP $HTTP_CODE)"
+            echo "$BODY"
+            exit 1
+          fi
+          
+          # Verify repository
+          echo ""
+          echo "Verifying repository..."
+          VERIFY_RESPONSE=$(curl -s -w "\n%{http_code}" -X POST "${OPENSEARCH_URL}/_snapshot/wasabi/_verify")
+          HTTP_CODE=$(echo "$VERIFY_RESPONSE" | tail -n1)
+          BODY=$(echo "$VERIFY_RESPONSE" | sed '$d')
+          
+          if [ "$HTTP_CODE" -eq 200 ]; then
+            echo "✓ Repository verified successfully"
+            echo "$BODY"
+          else
+            echo "✗ Repository verification failed (HTTP $HTTP_CODE)"
+            echo "$BODY"
+            exit 1
+          fi
+        fi
+        
+        # Check if SLM policy already exists
+        echo ""
+        echo "Checking if SLM policy 'nightly_snapshots' already exists..."
+        SLM_CHECK=$(curl -s -o /dev/null -w "%{http_code}" "${OPENSEARCH_URL}/_plugins/_sm/policies/nightly_snapshots")
+        
+        if [ "$SLM_CHECK" -ne 200 ]; then
+          echo "SLM policy does not exist (HTTP $SLM_CHECK), creating..."
+          
+          SLM_RESPONSE=$(curl -s -w "\n%{http_code}" -X POST "${OPENSEARCH_URL}/_plugins/_sm/policies/nightly_snapshots" \
+            -H 'Content-Type: application/json' \
+            -d '{
+              "policy": {
+                "description": "Nightly snapshots with '"${RETENTION_DAYS}"' day retention",
+                "creation": {
+                  "schedule": {
+                    "cron": {
+                      "expression": "'"${SNAPSHOT_CRON}"'",
+                      "timezone": "'"${TIMEZONE}"'"
+                    }
+                  },
+                  "time_limit": "1h"
+                },
+                "deletion": {
+                  "schedule": {
+                    "cron": {
+                      "expression": "'"${CLEANUP_CRON}"'",
+                      "timezone": "'"${TIMEZONE}"'"
+                    }
+                  },
+                  "condition": {
+                    "max_age": "'"${RETENTION_DAYS}"'d",
+                    "max_count": '"${RETENTION_COUNT}"'
+                  },
+                  "time_limit": "1h"
+                },
+                "snapshot_config": {
+                  "indices": "*",
+                  "repository": "wasabi",
+                  "ignore_unavailable": true,
+                  "include_global_state": true,
+                  "partial": false
+                }
+              }
+            }')
+          
+          HTTP_CODE=$(echo "$SLM_RESPONSE" | tail -n1)
+          BODY=$(echo "$SLM_RESPONSE" | sed '$d')
+          
+          if [ "$HTTP_CODE" -eq 200 ] || [ "$HTTP_CODE" -eq 201 ]; then
+            echo "✓ SLM policy created successfully"
+            echo "$BODY"
+            
+            # Start SLM policy after creation
+            echo ""
+            echo "Starting SLM policy..."
+            START_RESPONSE=$(curl -s -w "\n%{http_code}" -X POST "${OPENSEARCH_URL}/_plugins/_sm/policies/nightly_snapshots/_start")
+            HTTP_CODE=$(echo "$START_RESPONSE" | tail -n1)
+            BODY=$(echo "$START_RESPONSE" | sed '$d')
+            
+            if [ "$HTTP_CODE" -eq 200 ]; then
+              echo "✓ SLM policy started successfully"
+              echo "$BODY"
+            else
+              echo "⚠ Failed to start SLM policy (HTTP $HTTP_CODE)"
+              echo "$BODY"
+            fi
+          else
+            echo "✗ Failed to create SLM policy (HTTP $HTTP_CODE)"
+            echo "$BODY"
+            # Don't exit - repository is still configured
+          fi
+        else
+          echo "✓ SLM policy 'nightly_snapshots' already exists (HTTP $SLM_CHECK), skipping creation"
+        fi
+        
+        echo ""
+        echo "==================================="
+        echo "Snapshot configuration complete!"
+        echo "==================================="
+        echo "Repository: wasabi"
+        echo "Endpoint: ${S3_ENDPOINT}"
+        echo "Bucket: ${S3_BUCKET}"
+        echo "Region: ${S3_REGION}"
+        echo "Base Path: ${S3_BASE_PATH}"
+        echo "Schedule: ${SNAPSHOT_CRON} (${TIMEZONE})"
+        echo "Retention: ${RETENTION_DAYS} days / ${RETENTION_COUNT} snapshots"
+        echo "==================================="
+
+  - apiVersion: batch/v1
+    kind: Job
+    metadata:
+      generateName: opensearch-configure-snapshots-
+      namespace: folio-dev
+      annotations:
+        argocd.argoproj.io/hook: PostSync
+        argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+        argocd.argoproj.io/sync-wave: "10"
+    spec:
+      ttlSecondsAfterFinished: 3600
+      backoffLimit: 3
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: configure-snapshots
+            image: curlimages/curl:latest
+            command:
+            - sh
+            - /scripts/configure-snapshots.sh
+            env:
+            - name: S3_ENDPOINT
+              value: "s3.us-west-1.wasabisys.com"
+            - name: S3_BUCKET
+              value: "folio-elasticsearch"
+            - name: S3_REGION
+              value: "us-west-1"
+            - name: S3_BASE_PATH
+              value: "folio-dev"
+            - name: TIMEZONE
+              value: "America/Los_Angeles"
+            - name: SNAPSHOT_CRON
+              value: "30 1 * * *"
+            - name: CLEANUP_CRON
+              value: "0 3 * * *"
+            - name: RETENTION_DAYS
+              value: "10"
+            - name: RETENTION_COUNT
+              value: "10"
+            volumeMounts:
+            - name: script
+              mountPath: /scripts
+              readOnly: true
+          volumes:
+          - name: script
+            configMap:
+              name: opensearch-snapshot-config
+              defaultMode: 0755
+
 
 # ServiceMonitor Configuration for Prometheus
 # Enabling this option will create a ServiceMonitor resource that allows Prometheus to scrape metrics from the OpenSearch service.
