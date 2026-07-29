@@ -5,11 +5,11 @@ nodeGroup: "master"
 # If discovery.type in the opensearch configuration is set to "single-node",
 # this should be set to "true"
 # If "true", replicas will be forced to 1
-singleNode: false
+singleNode: true
 
 # The service that non master groups will try to connect to when joining the cluster
 # This should be set to clusterName + "-" + nodeGroup for your master group
-masterService: "opensearch-cluster-master"
+masterService: "opensearch"
 
 # OpenSearch roles that will be applied to this nodeGroup
 # These will be set as environment variable "node.roles". E.g. node.roles=master,ingest,data,remote_cluster_client
@@ -22,7 +22,7 @@ roles:
 replicas: 3
 
 # if not set, falls back to parsing .Values.imageTag, then .Chart.appVersion.
-majorVersion: "3"
+majorVersion: "2"
 
 global:
   # Set if you want to change the default docker registry, e.g. a private one.
@@ -32,13 +32,13 @@ global:
 opensearchHome: /usr/share/opensearch
 
 # such as opensearch.yml and log4j2.properties
-config:
-  opensearch.yml: |
-    cluster.name: opensearch-cluster
-    network.host: 0.0.0.0
+# config:
+#   opensearch.yml: |
+#     cluster.name: opensearch-cluster
+#     network.host: 0.0.0.0
     
-    # Only disable HTTP SSL - let demo config handle transport SSL
-    plugins.security.ssl.http.enabled: false
+#     # Only disable HTTP SSL - let demo config handle transport SSL
+#     plugins.security.ssl.http.enabled: false
 
 # Extra environment variables to append to this nodeGroup
 # This will be appended to the current 'env:' key. You can use any of the kubernetes env
@@ -54,6 +54,8 @@ extraEnvs:
         name: opensearch-credentials
         key: OPENSEARCH_INITIAL_ADMIN_PASSWORD
   - name: AWS_EC2_METADATA_DISABLED
+    value: "true"
+  - name: DISABLE_SECURITY_PLUGIN
     value: "true"
 
 # Allows you to load environment variables from kubernetes secret or config map
@@ -89,12 +91,11 @@ openSearchAnnotations: {}
 # additionals labels
 labels: {}
 
-opensearchJavaOpts: "-Xmx2g -Xms2g"
+opensearchJavaOpts: "-Xmx512M -Xms512M"
 
 resources:
   requests:
-    cpu: "1536m"
-    memory: "4608M"
+    memory: "1536Mi"
 
 initResources: {}
 #  limits:
