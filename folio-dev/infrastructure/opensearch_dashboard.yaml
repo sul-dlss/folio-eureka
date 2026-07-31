@@ -1,0 +1,157 @@
+# OpenSearch connection - use headless service with http
+opensearchHosts: "http://opensearch-headless:9200"
+
+replicaCount: 1
+
+image:
+  repository: "opensearchproject/opensearch-dashboards"
+  tag: ""  # Will use chart appVersion (2.19.0)
+  pullPolicy: "IfNotPresent"
+
+startupProbe:
+  tcpSocket:
+    port: 5601
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 20
+  successThreshold: 1
+  initialDelaySeconds: 10
+
+livenessProbe:
+  tcpSocket:
+    port: 5601
+  periodSeconds: 20
+  timeoutSeconds: 5
+  failureThreshold: 10
+  successThreshold: 1
+  initialDelaySeconds: 10
+
+readinessProbe:
+  tcpSocket:
+    port: 5601
+  periodSeconds: 20
+  timeoutSeconds: 5
+  failureThreshold: 10
+  successThreshold: 1
+  initialDelaySeconds: 10
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+rbac:
+  create: true
+
+secretMounts: []
+
+podAnnotations: {}
+dashboardAnnotations: {}
+
+# Important: Disable security since your OpenSearch has security disabled
+extraEnvs:
+  - name: "DISABLE_SECURITY_DASHBOARDS_PLUGIN"
+    value: "true"
+  - name: "OPENSEARCH_HOSTS"
+    value: "http://opensearch-headless:9200"
+
+envFrom: []
+
+extraVolumes: []
+extraVolumeMounts: []
+extraInitContainers: ""
+extraContainers: ""
+
+podSecurityContext: {}
+
+securityContext:
+  capabilities:
+    drop:
+      - ALL
+  runAsNonRoot: true
+  runAsUser: 1000
+
+# Configure Dashboards to work without security
+config:
+  opensearch_dashboards.yml: |
+    server:
+      name: opensearch-dashboards
+      host: "0.0.0.0"
+    
+    # Disable security since OpenSearch has security disabled
+    opensearch.hosts: ["http://opensearch-headless:9200"]
+    opensearch.ssl.verificationMode: none
+    opensearch.username: ""
+    opensearch.password: ""
+    opensearch.requestHeadersWhitelist: ["securitytenant","Authorization"]
+    
+    # Disable security plugin
+    opensearch_security.multitenancy.enabled: false
+    opensearch_security.readonly_mode.roles: []
+    opensearch_security.cookie.secure: false
+
+opensearchDashboardsYml:
+  defaultMode: 0644
+
+priorityClassName: ""
+
+opensearchAccount:
+  secret: ""
+  keyPassphrase:
+    enabled: false
+
+labels: {}
+hostAliases: []
+
+serverHost: "0.0.0.0"
+
+service:
+  type: ClusterIP
+  port: 5601
+  loadBalancerIP: ""
+  nodePort: ""
+  labels: {}
+  annotations: {}
+  loadBalancerSourceRanges: []
+  httpPortName: http
+
+# Ingress disabled
+ingress:
+  enabled: false
+
+# Increase resources since default is quite low
+resources:
+  requests:
+    cpu: "500m"
+    memory: "1Gi"
+  limits:
+    cpu: "1000m"
+    memory: "2Gi"
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 3
+  targetCPU: "80"
+  targetMemory: "80"
+
+updateStrategy:
+  type: "Recreate"
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+topologySpreadConstraints: []
+
+extraObjects: []
+
+lifecycle: {}
+
+plugins:
+  enabled: false
+  installList: []
