@@ -447,8 +447,7 @@ plugins:
     - analysis-phonetic
     - analysis-smartcn
     - repository-s3
-  removeList: []
-  # - example-fake-plugin
+    - https://github.com/aiven/prometheus-exporter-plugin-for-opensearch/releases/download/2.17.1.0/prometheus-exporter-2.17.1.0.zip
 
 # -- Array of extra K8s manifests to deploy
 extraObjects:
@@ -681,7 +680,7 @@ extraObjects:
 #     - https://github.com/aiven/prometheus-exporter-plugin-for-opensearch/releases/download/x.x.x.x/prometheus-exporter-x.x.x.x.zip
 serviceMonitor:
   # Set to true to enable the ServiceMonitor resource
-  enabled: false
+  enabled: true
 
   # HTTP path where metrics are exposed.
   # Ensure this matches your OpenSearch service configuration.
@@ -692,7 +691,7 @@ serviceMonitor:
 
   # Frequency at which Prometheus will scrape metrics.
   # Adjust based on your needs.
-  interval: 10s
+  interval: 30s
 
   # additional labels to be added to the ServiceMonitor
   # labels:
