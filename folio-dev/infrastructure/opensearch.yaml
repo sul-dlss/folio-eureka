@@ -448,6 +448,8 @@ plugins:
     - analysis-smartcn
     - repository-s3
     - https://github.com/aiven/prometheus-exporter-plugin-for-opensearch/releases/download/2.17.1.0/prometheus-exporter-2.17.1.0.zip
+  removeList:
+    - query-insights
 
 # -- Array of extra K8s manifests to deploy
 extraObjects:
