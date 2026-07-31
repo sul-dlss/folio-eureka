@@ -685,7 +685,7 @@ serviceMonitor:
 
   # HTTP path where metrics are exposed.
   # Ensure this matches your OpenSearch service configuration.
-  path: /_prometheus/metrics
+  path: /_plugins/_performanceanalyzer/metrics
 
   # Scheme to use for scraping.
   scheme: http
