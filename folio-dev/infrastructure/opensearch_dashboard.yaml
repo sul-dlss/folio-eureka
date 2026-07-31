@@ -56,8 +56,6 @@ dashboardAnnotations: {}
 extraEnvs:
   - name: "DISABLE_SECURITY_DASHBOARDS_PLUGIN"
     value: "true"
-  - name: "OPENSEARCH_HOSTS"
-    value: "http://opensearch-headless:9200"
 
 envFrom: []
 
@@ -75,24 +73,11 @@ securityContext:
   runAsNonRoot: true
   runAsUser: 1000
 
-# Configure Dashboards to work without security
 config:
   opensearch_dashboards.yml: |
-    server:
-      name: opensearch-dashboards
-      host: "0.0.0.0"
-    
-    # Disable security since OpenSearch has security disabled
+    server.host: "0.0.0.0"
     opensearch.hosts: ["http://opensearch-headless:9200"]
     opensearch.ssl.verificationMode: none
-    opensearch.username: ""
-    opensearch.password: ""
-    opensearch.requestHeadersWhitelist: ["securitytenant","Authorization"]
-    
-    # Disable security plugin
-    opensearch_security.multitenancy.enabled: false
-    opensearch_security.readonly_mode.roles: []
-    opensearch_security.cookie.secure: false
 
 opensearchDashboardsYml:
   defaultMode: 0644
