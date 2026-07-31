@@ -32,13 +32,34 @@ global:
 opensearchHome: /usr/share/opensearch
 
 # such as opensearch.yml and log4j2.properties
-# config:
-#   opensearch.yml: |
-#     cluster.name: opensearch-cluster
-#     network.host: 0.0.0.0
-    
-#     # Only disable HTTP SSL - let demo config handle transport SSL
-#     plugins.security.ssl.http.enabled: false
+config:
+    performance-analyzer.properties: |
+      # WebService bind host; default to all interfaces
+      webservice-bind-host = 0.0.0.0
+
+      # Metrics data location
+      metrics-location = /dev/shm/performanceanalyzer/
+
+      # Metrics deletion interval (minutes) for metrics data.
+      metrics-deletion-interval = 1
+
+      # Cleanup metrics DB files
+      cleanup-metrics-db-files = true
+
+      # WebService exposed by App's port
+      webservice-listener-port = 9600
+
+      # Metric DB File Prefix Path location
+      metrics-db-file-prefix-path = /tmp/metricsdb_
+
+      https-enabled = false
+
+      # Plugin Stats Metadata file name
+      plugin-stats-metadata = plugin-stats-metadata
+
+      # Agent Stats Metadata file name
+      agent-stats-metadata = agent-stats-metadata
+
 
 # Extra environment variables to append to this nodeGroup
 # This will be appended to the current 'env:' key. You can use any of the kubernetes env
@@ -374,13 +395,67 @@ fullnameOverride: ""
 
 masterTerminationFix: false
 
-opensearchLifecycle: {}
-  # preStop:
-  #   exec:
-  #     command: ["/bin/sh", "-c", "echo Hello from the preStart handler > /usr/share/message"]
-  # postStart:
-  #   exec:
-  #     command: ["/bin/sh", "-c", "echo Hello from the postStart handler > /usr/share/message"]
+opensearchLifecycle:
+  postStart:
+    exec:
+      command:
+        - bash
+        - -c
+        - |
+          #!/bin/bash
+
+          echo "Waiting for OpenSearch to start..."
+          MAX_WAIT=180
+          COUNT=0
+
+          while [ $COUNT -lt $MAX_WAIT ]; do
+            if curl -sf http://localhost:9200/_cluster/health >/dev/null 2>&1; then
+              echo "OpenSearch is ready!"
+              break
+            fi
+            COUNT=$((COUNT+5))
+            echo "Waiting... ($COUNT/$MAX_WAIT seconds)"
+            sleep 5
+          done
+
+          if [ $COUNT -ge $MAX_WAIT ]; then
+            echo "Timeout waiting for OpenSearch"
+            exit 0
+          fi
+
+          # Wait for all plugins to initialize
+          echo "Waiting for plugins to initialize..."
+          sleep 15
+
+          # Enable Performance Analyzer via port 9200 (as per docs)
+          echo "Enabling Performance Analyzer..."
+
+          RESPONSE=$(curl -s -w "\n%{http_code}" -XPOST "http://localhost:9200/_plugins/_performanceanalyzer/cluster/config" \
+            -H 'Content-Type: application/json' \
+            -d '{"enabled": true}')
+
+          HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+          BODY=$(echo "$RESPONSE" | sed '$d')
+
+          echo "HTTP Code: $HTTP_CODE"
+          echo "Response: $BODY"
+
+          if [ "$HTTP_CODE" = "200" ] || [ "$HTTP_CODE" = "201" ]; then
+            echo "✓ Performance Analyzer enabled successfully"
+          else
+            echo "⚠ Failed to enable Performance Analyzer"
+          fi
+
+          # Verify status via port 9600
+          sleep 5
+          echo "Checking PA status on port 9600..."
+          STATUS=$(curl -s "http://localhost:9600/_plugins/_performanceanalyzer/cluster/config" || echo "Failed to get status")
+          echo "PA Status: $STATUS"
+
+          # Test metrics endpoint
+          echo "Testing metrics endpoint..."
+          METRICS=$(curl -s "http://localhost:9600/_plugins/_performanceanalyzer/metrics" || echo "Failed to get metrics")
+          echo "Available metrics: $METRICS"
 
 lifecycle: {}
   # preStop:
@@ -685,7 +760,7 @@ serviceMonitor:
 
   # HTTP path where metrics are exposed.
   # Ensure this matches your OpenSearch service configuration.
-  path: /_plugins/_performanceanalyzer/metrics
+  path: /_plugins/_performanceanalyzer/metrics?metrics=CPU_Utilization,Disk_Utilization,Heap_AllocRate&agg=avg
 
   # Scheme to use for scraping.
   scheme: http
