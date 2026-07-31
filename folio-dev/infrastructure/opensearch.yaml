@@ -79,7 +79,7 @@ hostAliases: []
 image:
   repository: "opensearchproject/opensearch"
   # override image tag, which is .Chart.AppVersion by default
-  tag: ""
+  tag: "2.19.6"
   pullPolicy: "IfNotPresent"
 
 podAnnotations: {}
@@ -447,7 +447,6 @@ plugins:
     - analysis-phonetic
     - analysis-smartcn
     - repository-s3
-    - https://github.com/aiven/prometheus-exporter-plugin-for-opensearch/releases/download/2.19.0.0/prometheus-exporter-2.19.0.0.zip
   removeList:
     - query-insights
 
