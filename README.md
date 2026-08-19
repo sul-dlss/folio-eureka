@@ -275,7 +275,7 @@ curl -X POST --location "$KONG_URL/reinstall/modules?async=true&tenantParameters
 ```
 ### Reinstall many modules (up to 25 per API constraint)
 ```
-curl -sX POST "http://mgr-tenant-entitlements/reinstall/modules?tenantParameters=loadReference=true,loadSampe=false" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" -d@reinstall.json
+curl -sX POST "$KONG_URL/reinstall/modules?tenantParameters=loadReference=true,loadSampe=false" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" -d@reinstall.json
 ```
 
 reinstall.json:
@@ -296,7 +296,7 @@ reinstall.json:
 
 ### Reinstall applications
 ```
-curl -sX POST "http://mgr-tenant-entitlements/reinstall/applications?tenantParameters=loadReference=true,loadSampe=false" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" -d@reinstall-apps.json
+curl -sX POST "$KONG_URL/reinstall/applications?tenantParameters=loadReference=true,loadSampe=false" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" -d@reinstall-apps.json
 ```
 
 reinstall-apps.json:
