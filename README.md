@@ -262,19 +262,26 @@ curl -sX PUT --location "$KONG_URL/entitlements?async=true&tenantParameters=load
 curl -sX DELETE "$KONG_URL/entitlements" -d "{\"tenantId\":\"$tenantUUID\", \"applications\": [$APP_IDS]}" -H 'Content-Type: application/json' -H "Authorization: Bearer $TOKEN"
 ```
 
+## Reinstalling modules or applications
+The folio-eureka-pod has the environment variables needed to complete the following curls.
+### Get a token from the master realm
+```
+TOKEN=$(curl -sX POST -d client_id="folio-backend-admin-client" -d client_secret="$KC_ADMIN_CLIENT_SECRET" -d grant_type="client_credentials" "$KC_URL/realms/master/protocol/openid-connect/token" | jq -r '.access_token')
+```
+
 ### Reinstall a single module
 ```
 curl -X POST --location "$KONG_URL/reinstall/modules?async=true&tenantParameters=loadReference=true,loadSample=false"  -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" --data "{\"tenantId\": \"$tenantUUID\", \"applicationId\": \"$APP_ID\", \"modules\": [$MODULE_IDS]}"
 ```
 ### Reinstall many modules (up to 25 per API constraint)
 ```
-curl -sX POST "http://mgr-tenant-entitlements/reinstall/modules?tenantParameters=loadReference=true,loadSampe=false" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" -d@reinstall.json
+curl -sX POST "$KONG_URL/reinstall/modules?tenantParameters=loadReference=true,loadSampe=false" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" -d@reinstall.json
 ```
 
 reinstall.json:
 ```
 {
-  "tenantId": "2d4c4f01-d4f0-437c-ab1c-a9fe19fd4c15",
+  "tenantId": "59e8c287-b812-4362-8dfa-6a1c32d03780",
   "applicationId": "app-platform-complete-2.2.13",
   "modules": [
     "mod-quick-marc-7.0.0",
@@ -283,6 +290,24 @@ reinstall.json:
     "mod-source-record-storage-5.10.13",
     "mod-data-import-3.3.5",
     "mod-copycat-1.8.1"
+  ]
+}
+```
+
+### Reinstall applications
+```
+curl -sX POST "$KONG_URL/reinstall/applications?tenantParameters=loadReference=true,loadSampe=false" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -H "x-okapi-token: $TOKEN" -d@reinstall-apps.json
+```
+
+reinstall-apps.json:
+```
+{
+  "tenantId": "59e8c287-b812-4362-8dfa-6a1c32d03780",
+  "applications": [
+    "app-acquisitions-1.0.29",
+    "app-platform-minimal-2.0.52",
+    "app-platform-complete-2.5.10",
+    "app-bulk-edit-1.0.10"
   ]
 }
 ```
