@@ -1,7 +1,7 @@
 {
-  "id": "app-platform-complete-2.5.11",
+  "id": "app-platform-complete-2.5.10",
   "name": "app-platform-complete",
-  "version": "2.5.11",
+  "version": "2.5.10",
   "description": "Application comprised of most Folio modules not present in app-platform-minimal",
   "modules": [
     {
