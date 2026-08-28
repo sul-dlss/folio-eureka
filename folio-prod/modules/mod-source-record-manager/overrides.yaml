@@ -10,7 +10,7 @@ eureka:
     value: 'false'
 image:
   repository: folioorg/mod-source-record-manager
-  tag: 3.10.11
+  tag: 3.10.12
 integrations:
   db:
     enabled: true
