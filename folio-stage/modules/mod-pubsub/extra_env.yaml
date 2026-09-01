@@ -3,6 +3,8 @@ extraEnvVars: |
     value: "http://localhost:8082"
   - name: SYSTEM_USER_ENABLED
     value: "false"
+  - name: SYSTEM_USER_CREATE
+    value: false
   - name: SYSTEM_USER_NAME
     value: "mod-pubsub"
   - name: SYSTEM_USER_PASSWORD
