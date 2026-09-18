@@ -1,0 +1,53 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: ListenerSet
+metadata:
+  name: folio-dev-listeners
+  namespace: folio-dev
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  parentRef:
+    group: gateway.networking.k8s.io
+    kind: Gateway
+    name: default
+    namespace: envoy-gateway-system
+  listeners:
+    - name: folio-dev
+      hostname: folio-dev.stanford.edu
+      port: 8443
+      protocol: HTTPS
+      allowedRoutes:
+        namespaces:
+          from: Same
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - group: ""
+            kind: Secret
+            name: folio-dev.stanford.edu-tls
+    - name: folio-dev-api
+      hostname: folio-dev-api.stanford.edu
+      port: 8443
+      protocol: HTTPS
+      allowedRoutes:
+        namespaces:
+          from: Same
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - group: ""
+            kind: Secret
+            name: folio-dev-api.stanford.edu-tls
+    - name: keycloak-folio-dev
+      hostname: keycloak-folio-dev.stanford.edu
+      port: 8443
+      protocol: HTTPS
+      allowedRoutes:
+        namespaces:
+          from: Same
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - group: ""
+            kind: Secret
+            name: keycloak-folio-dev.stanford.edu-tls

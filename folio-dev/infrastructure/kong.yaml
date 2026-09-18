@@ -144,8 +144,11 @@ extraDeploy:
       hostnames:
       - folio-dev-api.stanford.edu
       parentRefs:
-      - name: default
-        namespace: envoy-gateway-system
+      - group: gateway.networking.k8s.io
+        kind: ListenerSet
+        name: folio-dev-listeners
+        namespace: folio-dev
+        sectionName: folio-dev-api
       rules:
       - backendRefs:
         - name: kong
