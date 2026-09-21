@@ -30,5 +30,8 @@ extraDeploy:
       hostnames:
       - folio-test.stanford.edu
       parentRefs:
-      - name: default
-        namespace: envoy-gateway-system
+      - group: gateway.networking.k8s.io
+        kind: ListenerSet
+        name: folio-test-listeners
+        namespace: folio-test
+        sectionName: folio-test

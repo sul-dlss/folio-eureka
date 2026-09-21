@@ -38,8 +38,11 @@ extraDeploy:
       hostnames:
       - folio-sru-test.stanford.edu
       parentRefs:
-      - name: default
-        namespace: envoy-gateway-system
+      - group: gateway.networking.k8s.io
+        kind: ListenerSet
+        name: folio-test-listeners
+        namespace: folio-test
+        sectionName: folio-sru-test
     ---
     apiVersion: gateway.envoyproxy.io/v1alpha1
     kind: BackendTrafficPolicy
