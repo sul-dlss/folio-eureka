@@ -116,10 +116,6 @@ service:
     https: 8443
 adminIngress:
   enabled: false
-  hostname: keycloak-admin-folio-test.stanford.edu
-  ingressClassName: "nginx"
-  annotations:
-    kubernetes.io/ingress.class: nginx
 livenessProbe:
   enabled: true
   initialDelaySeconds: 60
