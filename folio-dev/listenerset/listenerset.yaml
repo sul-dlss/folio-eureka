@@ -14,7 +14,7 @@ spec:
   listeners:
     - name: folio-dev
       hostname: folio-dev.stanford.edu
-      port: 8443
+      port: 443
       protocol: HTTPS
       allowedRoutes:
         namespaces:
@@ -27,7 +27,7 @@ spec:
             name: folio-dev.stanford.edu-tls
     - name: folio-dev-api
       hostname: folio-dev-api.stanford.edu
-      port: 8443
+      port: 443
       protocol: HTTPS
       allowedRoutes:
         namespaces:
@@ -40,7 +40,7 @@ spec:
             name: folio-dev-api.stanford.edu-tls
     - name: keycloak-folio-dev
       hostname: keycloak-folio-dev.stanford.edu
-      port: 8443
+      port: 443
       protocol: HTTPS
       allowedRoutes:
         namespaces:

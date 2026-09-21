@@ -14,7 +14,7 @@ spec:
   listeners:
     - name: folio-test
       hostname: folio-test.stanford.edu
-      port: 8443
+      port: 443
       protocol: HTTPS
       allowedRoutes:
         namespaces:
@@ -27,7 +27,7 @@ spec:
             name: folio-test.stanford.edu-tls
     - name: folio-test-api
       hostname: folio-test-api.stanford.edu
-      port: 8443
+      port: 443
       protocol: HTTPS
       allowedRoutes:
         namespaces:
@@ -40,7 +40,7 @@ spec:
             name: folio-test-api.stanford.edu-tls
     - name: keycloak-folio-test
       hostname: keycloak-folio-test.stanford.edu
-      port: 8443
+      port: 443
       protocol: HTTPS
       allowedRoutes:
         namespaces:
@@ -53,7 +53,7 @@ spec:
             name: keycloak-folio-test.stanford.edu-tls
     - name: folio-sru-test
       hostname: folio-sru-test.stanford.edu
-      port: 8443
+      port: 443
       protocol: HTTPS
       allowedRoutes:
         namespaces:
@@ -66,7 +66,7 @@ spec:
             name: folio-sru-test.stanford.edu-tls
     - name: folio-ncip-test
       hostname: folio-ncip-test.stanford.edu
-      port: 8443
+      port: 443
       protocol: HTTPS
       allowedRoutes:
         namespaces:
