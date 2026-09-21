@@ -1,0 +1,6 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# Excludes application.yaml, which lives in this directory but is applied by hand
+resources:
+  - listenerset.yaml

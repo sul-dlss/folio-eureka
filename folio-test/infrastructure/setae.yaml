@@ -130,5 +130,8 @@ spec:
   hostnames:
   - folio-setae-api-test.stanford.edu
   parentRefs:
-  - name: default
-    namespace: envoy-gateway-system
+  - group: gateway.networking.k8s.io
+    kind: ListenerSet
+    name: folio-test-internal-listeners
+    namespace: folio-test
+    sectionName: folio-setae-api-test
