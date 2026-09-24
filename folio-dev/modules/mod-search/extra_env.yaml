@@ -2,4 +2,4 @@ extraEnvVars:
   - name: OKAPI_URL
     value: http://localhost:8082
   - name: ELASTICSEARCH_SERVER
-    value: false
+    value: 'false'
