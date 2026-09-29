@@ -15,6 +15,9 @@ integrations:
     enabled: false
   systemuser:
     enabled: false
+pdb:
+  enabled: true
+  minAvailable: 1
 podSecurityContext:
   fsGroup: 2000
 securityContext:

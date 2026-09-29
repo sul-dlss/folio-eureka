@@ -33,6 +33,7 @@ def base_override(name, version):
     data = {
         "image": {"repository": f"folioorg/{name}", "tag": f"{version}"},
         "podSecurityContext": {"fsGroup": 2000},
+        "pdb": {"enabled": True, "minAvailable": 1},
         "securityContext":{"capabilities": {"drop": ['ALL']},
             "runAsNonRoot": True,
             "runAsUser": 1000,
