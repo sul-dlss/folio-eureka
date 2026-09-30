@@ -10,7 +10,7 @@ useDaemonset: false
 replicaCount: 1
 pdb:
   create: true
-  minAvailable: 50%
+  maxUnavailable: 1
 containerSecurityContext:
   enabled: true
   seLinuxOptions: {}
