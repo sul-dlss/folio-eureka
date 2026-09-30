@@ -9,3 +9,13 @@ extraEnvVars: |
     value: "true"
   - name: HZ_NETWORK_JOIN_KUBERNETES_SERVICEDNS
     value: "mod-erm-usage-harvester-hazelcast.folio-test.svc.cluster.local"
+  - name: SUL_USER_NAME
+    valueFrom:
+      secretKeyRef:
+        name: mod-erm-usage-harvester-system-user
+        key: SUL_USER_NAME
+  - name: SUL_USER_PASS
+    valueFrom:
+      secretKeyRef:
+        name: mod-erm-usage-harvester-system-user
+        key: SUL_USER_PASS

@@ -4,10 +4,10 @@ extraEnvVars: |
   - name: SUL_USER_NAME
     valueFrom:
       secretKeyRef:
-        name: folio-eureka
-        key: SUL_ERM_USER_NAME
-  - name: SUL_USER_PASSWORD
+        name: mod-erm-usage-harvester-system-user
+        key: SUL_USER_NAME
+  - name: SUL_USER_PASS
     valueFrom:
       secretKeyRef:
-        name: folio-eureka
-        key: SUL_ERM_USER_PASS
+        name: mod-erm-usage-harvester-system-user
+        key: SUL_USER_PASS
