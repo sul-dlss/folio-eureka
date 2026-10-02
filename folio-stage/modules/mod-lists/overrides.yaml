@@ -25,9 +25,6 @@ integrations:
     existingSecret: s3-credentials
   systemuser:
     enabled: false
-pdb:
-  enabled: true
-  maxUnavailable: 1
 podSecurityContext:
   fsGroup: 2000
 securityContext:
