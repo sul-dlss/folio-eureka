@@ -16,6 +16,7 @@ spec:
     helm:
       valueFiles:
       - $values/folio-prod/modules/mod-data-export/overrides.yaml
+      - $values/folio-prod/modules/mod-data-export/replicas.yaml
       - $values/folio-prod/modules/mod-data-export/resources.yaml
       - $values/folio-prod/common/sidecar.yaml
       - $values/folio-prod/common/probes.yaml
