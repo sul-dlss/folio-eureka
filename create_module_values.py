@@ -29,7 +29,15 @@ S3_MODULES = [
     "mod-users",
 ]
 
-def base_override(name, version):
+def replica_count(dir):
+    replicas_file = Path(f"{dir}/replicas.yaml")
+    if replicas_file.exists():
+        with open(replicas_file, 'r') as file:
+            return (yaml.safe_load(file) or {}).get('replicaCount', 1)
+    return 1
+
+
+def base_override(name, version, replicas):
     data = {
         "image": {"repository": f"folioorg/{name}", "tag": f"{version}"},
         "podSecurityContext": {"fsGroup": 2000},
@@ -50,6 +58,9 @@ def base_override(name, version):
         "deploymentStrategy": "RollingUpdate"
     }
     
+    # A PDB on zero or one replica either blocks drains or does nothing, so skip it
+    if replicas > 1:
+        data['pdb'] = {"enabled": True, "maxUnavailable": 1}
     if name in S3_MODULES:
         data['integrations']['s3'] = {"enabled": True, "existingSecret": "s3-credentials"}
     if not name.startswith('mod-pubsub'):
@@ -86,7 +97,7 @@ def create_module_values(filename):
         
         filename = f"{dir}/overrides.yaml"
         with open(filename, 'w') as file:
-            file.write(base_override(name, version))
+            file.write(base_override(name, version, replica_count(dir)))
 
 
 if args.filename:
