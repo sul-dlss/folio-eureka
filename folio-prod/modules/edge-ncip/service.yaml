@@ -17,8 +17,11 @@ extraDeploy:
       hostnames:
       - folio-ncip-prod.stanford.edu
       parentRefs:
-      - name: default
-        namespace: envoy-gateway-system
+      - group: gateway.networking.k8s.io
+        kind: ListenerSet
+        name: folio-prod-listeners
+        namespace: folio-prod
+        sectionName: folio-ncip-prod
     ---
     apiVersion: gateway.envoyproxy.io/v1alpha1
     kind: SecurityPolicy
