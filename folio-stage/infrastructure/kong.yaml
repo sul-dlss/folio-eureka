@@ -8,6 +8,9 @@ image:
   pullPolicy: Always
 useDaemonset: false
 replicaCount: 1
+pdb:
+  create: true
+  maxUnavailable: 1
 containerSecurityContext:
   enabled: true
   seLinuxOptions: {}
