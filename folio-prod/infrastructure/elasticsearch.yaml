@@ -19,6 +19,9 @@ global:
   storageClass: "mayastor-3"
 coordinating:
   replicaCount: 3
+  pdb:
+    create: true
+    minAvailable: 1
   heapSize: 2760M
   readinessProbe:
     enabled: false
@@ -35,6 +38,9 @@ coordinating:
       memory: 4608M
 data:
   replicaCount: 3
+  pdb:
+    create: true
+    minAvailable: 1
   heapSize: 2760M
   persistence:
     size: 350Gi
@@ -56,6 +62,9 @@ data:
       memory: 4608M
 ingest:
   replicaCount: 3
+  pdb:
+    create: true
+    minAvailable: 1
   heapSize: 2304M
   readinessProbe:
     enabled: false
@@ -72,6 +81,9 @@ ingest:
       memory: 3840M
 master:
   replicaCount: 3
+  pdb:
+    create: true
+    minAvailable: 1
   heapSize: 2304M
   readinessProbe:
     enabled: false
