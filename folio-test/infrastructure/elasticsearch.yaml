@@ -109,3 +109,68 @@ initScripts:
     cat /tmp/secret_key | elasticsearch-keystore add -xvf s3.client.default.secret_key
 network:
   host: 0.0.0.0
+extraDeploy:
+  - |
+    apiVersion: policy/v1
+    kind: PodDisruptionBudget
+    metadata:
+      name: elasticsearch-master
+      labels:
+        app.kubernetes.io/name: elasticsearch
+        app.kubernetes.io/instance: elasticsearch
+        app.kubernetes.io/component: master
+    spec:
+      minAvailable: 1
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: elasticsearch
+          app.kubernetes.io/instance: elasticsearch
+          app.kubernetes.io/component: master
+    ----
+    apiVersion: policy/v1
+    kind: PodDisruptionBudget
+    metadata:
+      name: elasticsearch-ingest
+      labels:
+        app.kubernetes.io/name: elasticsearch
+        app.kubernetes.io/instance: elasticsearch
+        app.kubernetes.io/component: ingest
+    spec:
+      minAvailable: 1
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: elasticsearch
+          app.kubernetes.io/instance: elasticsearch
+          app.kubernetes.io/component: ingest
+    ----
+    apiVersion: policy/v1
+    kind: PodDisruptionBudget
+    metadata:
+      name: elasticsearch-coordinating
+      labels:
+        app.kubernetes.io/name: elasticsearch
+        app.kubernetes.io/instance: elasticsearch
+        app.kubernetes.io/component: coordinating
+    spec:
+      minAvailable: 1
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: elasticsearch
+          app.kubernetes.io/instance: elasticsearch
+          app.kubernetes.io/component: coordinating
+    ----
+    apiVersion: policy/v1
+    kind: PodDisruptionBudget
+    metadata:
+      name: elasticsearch-data
+      labels:
+        app.kubernetes.io/name: elasticsearch
+        app.kubernetes.io/instance: elasticsearch
+        app.kubernetes.io/component: data
+    spec:
+      minAvailable: 1
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: elasticsearch
+          app.kubernetes.io/instance: elasticsearch
+          app.kubernetes.io/component: data
