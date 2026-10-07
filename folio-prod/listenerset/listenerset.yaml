@@ -1,0 +1,30 @@
+# folio-setae-api-prod.stanford.edu is the one Stanford-only host here: it resolves
+# to the internal VIP, so it uses port 443 and a self-signed cert. The cert-manager
+# cluster-issuer annotation is per object, which is why it needs its own ListenerSet.
+apiVersion: gateway.networking.k8s.io/v1
+kind: ListenerSet
+metadata:
+  name: folio-prod-internal-listeners
+  namespace: folio-prod
+  annotations:
+    cert-manager.io/cluster-issuer: selfsigned
+spec:
+  parentRef:
+    group: gateway.networking.k8s.io
+    kind: Gateway
+    name: default
+    namespace: envoy-gateway-system
+  listeners:
+    - name: folio-setae-api-prod
+      hostname: folio-setae-api-prod.stanford.edu
+      port: 443
+      protocol: HTTPS
+      allowedRoutes:
+        namespaces:
+          from: Same
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - group: ""
+            kind: Secret
+            name: folio-setae-api-prod.stanford.edu-tls
