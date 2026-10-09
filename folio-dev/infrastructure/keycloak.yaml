@@ -76,6 +76,8 @@ extraEnvVars:
   - name: BASE_LOGO_FILES_URL
     value: "http://folio-dev.stanford.edu"
 proxy: "edge"
+pdb:
+  create: false
 resources:
   requests:
     memory: 3072Mi

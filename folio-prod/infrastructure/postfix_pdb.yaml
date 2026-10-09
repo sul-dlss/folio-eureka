@@ -1,0 +1,13 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: mail
+  labels:
+    app.kubernetes.io/name: mail
+    app.kubernetes.io/instance: mail
+spec:
+  maxUnavailable: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: mail
+      app.kubernetes.io/instance: mail

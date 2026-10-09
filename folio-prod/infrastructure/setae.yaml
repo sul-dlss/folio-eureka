@@ -35,7 +35,7 @@ metadata:
     app.kubernetes.io/instance: setae-api
     app.kubernetes.io/version: "1.0.0"
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app.kubernetes.io/name: setae-api
@@ -89,6 +89,21 @@ spec:
             requests:
               cpu: 50m
               memory: 256M
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: setae-api
+  labels:
+    app.kubernetes.io/name: setae-api
+    app.kubernetes.io/instance: setae-api
+    app.kubernetes.io/version: "1.0.0"
+spec:
+  maxUnavailable: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: setae-api
+      app.kubernetes.io/instance: setae-api
 ---
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: BackendTrafficPolicy

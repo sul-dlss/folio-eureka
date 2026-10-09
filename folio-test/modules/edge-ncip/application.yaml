@@ -18,6 +18,7 @@ spec:
       - $values/folio-test/modules/edge-ncip/overrides.yaml
       - $values/folio-test/modules/edge-ncip/resources.yaml
       - $values/folio-test/common/probes.yaml
+      - $values/folio-test/modules/edge-ncip/replicas.yaml
       - $values/folio-test/modules/edge-ncip/service.yaml
       - $values/folio-test/modules/edge-ncip/java_opts.yaml
       - $values/folio-test/modules/edge-ncip/extra_env.yaml
