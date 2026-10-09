@@ -6,7 +6,7 @@ spec:
   concurrencyPolicy: Forbid
   timeZone: "America/Los_Angeles"
   schedule: "30 5 * * 1-5"
-  suspend: false
+  suspend: true
   successfulJobsHistoryLimit: 0
   failedJobsHistoryLimit: 1
   startingDeadlineSeconds: 604800 # 7 days in seconds; missed jobs won't be picked up if unsuspended after a week
