@@ -151,8 +151,11 @@ extraDeploy:
       hostnames:
       - folio-stage-api.stanford.edu
       parentRefs:
-      - name: default
-        namespace: envoy-gateway-system
+      - group: gateway.networking.k8s.io
+        kind: ListenerSet
+        name: folio-stage-listeners
+        namespace: folio-stage
+        sectionName: folio-stage-api
       rules:
       - backendRefs:
         - name: kong

@@ -174,8 +174,11 @@ extraDeploy:
       hostnames:
       - keycloak-folio-stage.stanford.edu
       parentRefs:
-      - name: default
-        namespace: envoy-gateway-system
+      - group: gateway.networking.k8s.io
+        kind: ListenerSet
+        name: folio-stage-listeners
+        namespace: folio-stage
+        sectionName: keycloak-folio-stage
       rules:
       - backendRefs:
         - name: keycloak
