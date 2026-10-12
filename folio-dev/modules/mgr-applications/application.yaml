@@ -19,8 +19,9 @@ spec:
     helm:
       valueFiles:
       - $values/folio-dev/modules/mgr-applications/mgr-applications.yaml
+      - $values/folio-dev/common/db_check.yaml
     repoURL: https://sul-dlss.github.io/folio-helm-v2
-    targetRevision: 0.0.16
+    targetRevision: 0.0.19
   - ref: values
     repoURL: https://github.com/sul-dlss/folio-eureka
     targetRevision: main
