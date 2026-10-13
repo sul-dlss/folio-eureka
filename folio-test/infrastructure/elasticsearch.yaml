@@ -126,7 +126,7 @@ extraDeploy:
           app.kubernetes.io/name: elasticsearch
           app.kubernetes.io/instance: elasticsearch
           app.kubernetes.io/component: master
-    ----
+  - |
     apiVersion: policy/v1
     kind: PodDisruptionBudget
     metadata:
@@ -142,7 +142,7 @@ extraDeploy:
           app.kubernetes.io/name: elasticsearch
           app.kubernetes.io/instance: elasticsearch
           app.kubernetes.io/component: ingest
-    ----
+  - |
     apiVersion: policy/v1
     kind: PodDisruptionBudget
     metadata:
@@ -150,15 +150,15 @@ extraDeploy:
       labels:
         app.kubernetes.io/name: elasticsearch
         app.kubernetes.io/instance: elasticsearch
-        app.kubernetes.io/component: coordinating
+        app.kubernetes.io/component: coordinating-only
     spec:
       minAvailable: 1
       selector:
         matchLabels:
           app.kubernetes.io/name: elasticsearch
           app.kubernetes.io/instance: elasticsearch
-          app.kubernetes.io/component: coordinating
-    ----
+          app.kubernetes.io/component: coordinating-only
+  - |
     apiVersion: policy/v1
     kind: PodDisruptionBudget
     metadata:
