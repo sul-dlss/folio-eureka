@@ -1,0 +1,206 @@
+{
+  "id": "app-mosaic-1.0.0",
+  "name": "app-mosaic",
+  "version": "1.0.0",
+  "description": "FOLIO Mosaic Integration",
+  "dependencies": [
+    {
+      "name": "app-acquisitions",
+      "version": "^1.0.0"
+    }
+  ],
+  "modules": [
+    {
+      "name": "mod-mosaic",
+      "version": "1.0.0"
+    }
+  ],
+  "uiModules": [
+    {
+      "name": "folio_mosaic-settings",
+      "version": "1.0.0"
+    }
+  ],
+  "moduleDescriptors": [
+    {
+  "id": "mod-mosaic-1.0.0",
+  "name": "Folio mod-mosaic module",
+  "requires": [
+    {
+      "id": "orders",
+      "version": "12.1"
+    },
+    {
+      "id": "order-templates",
+      "version": "1.0"
+    },
+    {
+      "id": "organizations.organizations",
+      "version": "1.2"
+    }
+  ],
+  "provides": [
+    {
+      "id": "mosaic",
+      "version": "1.0",
+      "handlers": [
+        {
+          "methods": ["GET"],
+          "pathPattern": "/mosaic/validate",
+          "permissionsRequired": [
+            "mosaic.validate.get"
+          ],
+          "modulePermissions": []
+        },
+        {
+          "methods": ["POST"],
+          "pathPattern": "/mosaic/orders",
+          "permissionsRequired": [
+            "mosaic.orders.item.post"
+          ],
+          "modulePermissions": [
+            "orders.order-templates.item.get",
+            "orders.item.approve",
+            "orders.item.post"
+          ]
+        },
+        {
+          "methods": ["GET"],
+          "pathPattern": "/mosaic/configuration",
+          "permissionsRequired": [
+            "mosaic.configuration.item.get"
+          ],
+          "modulePermissions": []
+        },
+        {
+          "methods": ["PUT"],
+          "pathPattern": "/mosaic/configuration",
+          "permissionsRequired": [
+            "mosaic.configuration.item.put"
+          ],
+          "modulePermissions": []
+        }
+      ]
+    },
+    {
+      "id": "_tenant",
+      "version": "2.0",
+      "interfaceType": "system",
+      "handlers": [
+        {
+          "methods": ["POST"],
+          "pathPattern": "/_/tenant",
+          "modulePermissions": [
+            "orders.order-templates.item.get",
+            "orders.order-templates.item.post",
+            "organizations.organizations.collection.get",
+            "organizations.organizations.item.post"
+          ]
+        }, {
+          "methods": ["GET", "DELETE"],
+          "pathPattern": "/_/tenant/{id}"
+        }
+      ]
+    }
+  ],
+  "permissionSets": [
+    {
+      "permissionName": "mosaic.all",
+      "displayName": "Mosaic API module - all permissions",
+      "description": "All permissions for mosaic module",
+      "subPermissions": [
+        "mosaic.validate.get",
+        "mosaic.orders.item.post",
+        "mosaic.configuration.all"
+      ]
+    },
+    {
+      "permissionName": "mosaic.validate.get",
+      "displayName": "validate mosaic",
+      "description": "Validate Mosaic"
+    },
+    {
+      "permissionName": "mosaic.configuration.all",
+      "displayName": "Mosaic Configuration API - all permissions",
+      "description": "All permissions for mosaic configuration API",
+      "subPermissions": [
+        "mosaic.configuration.item.get",
+        "mosaic.configuration.item.put"
+      ]
+    },
+    {
+      "permissionName": "mosaic.orders.item.post",
+      "displayName": "post mosaic orders",
+      "description": "Create Mosaic orders"
+    },
+    {
+      "permissionName": "mosaic.configuration.item.get",
+      "displayName": "get mosaic configuration",
+      "description": "Read Mosaic configuration"
+    },
+    {
+      "permissionName": "mosaic.configuration.item.put",
+      "displayName": "put mosaic configuration",
+      "description": "Update Mosaic configuration"
+    }
+  ],
+  "launchDescriptor": {
+    "dockerImage": "mod-mosaic-1.0.0",
+    "dockerPull": false,
+    "dockerArgs": {
+      "HostConfig": {
+        "Memory": 502293850,
+        "PortBindings": {
+          "8081/tcp": [
+            {
+              "HostPort": "%p"
+            }
+          ]
+        }
+      }
+    },
+    "env": [
+      {
+        "name": "JAVA_OPTIONS",
+        "value": "-XX:MaxRAMPercentage=75.0"
+      },
+      {
+        "name": "ENV",
+        "value": "folio",
+        "description": "The logical name of the deployment, must be unique across all environments using the same shared resources"
+      },
+      {
+        "name": "OKAPI_URL",
+        "value": "http://sidecar:8081",
+        "description": "Okapi URL"
+      },
+      {
+        "name": "DB_HOST",
+        "value": "postgres",
+        "description": "Postgres hostname"
+      },
+      {
+        "name": "DB_PORT",
+        "value": "5432",
+        "description": "Postgres port"
+      },
+      {
+        "name": "DB_USERNAME",
+        "value": "folio_admin",
+        "description": "Postgres username"
+      },
+      {
+        "name": "DB_PASSWORD",
+        "value": "folio_admin",
+        "description": "Postgres username password"
+      },
+      {
+        "name": "DB_DATABASE",
+        "value": "okapi_modules",
+        "description": "Postgres database name"
+      }
+    ]
+  }
+}
+  ]
+}
