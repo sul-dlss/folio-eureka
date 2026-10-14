@@ -96,6 +96,11 @@ kong:
       secretKeyRef:
         name: kong-credentials
         key: KONG_PG_DATABASE
+  - name: KONG_PG_USER
+    valueFrom:
+      secretKeyRef:
+        name: kong-credentials
+        key: KONG_PG_USER
   - name: KONG_NGINX_PROXY_PROXY_BUFFERS
     value: "64 160k"
   - name: KONG_NGINX_PROXY_CLIENT_HEADER_BUFFER_SIZE
@@ -138,6 +143,54 @@ ingressController:
 migration:
   command: ["/bin/sh", "-c"]
   args: ["echo 'Hello kong!'"]
+# Blocks pod startup until Kong can open a session on the external database,
+# so a pod on a node without database connectivity stays visibly in Init:0/1.
+initContainers:
+  - name: db-check
+    image: postgres:16-alpine
+    imagePullPolicy: IfNotPresent
+    command: ["sh", "-c"]
+    args:
+      - >-
+        until PGPASSWORD="$KONG_PG_PASSWORD" psql -h "$KONG_PG_HOST" -p "$KONG_PG_PORT" -U "$KONG_PG_USER"
+        -d "$KONG_PG_DATABASE" -tAc 'select 1' >/dev/null; do
+        echo "Cannot connect to database $KONG_PG_HOST:$KONG_PG_PORT, retrying in 10s";
+        sleep 10;
+        done
+    env:
+      - name: KONG_PG_HOST
+        value: "{{ .Values.postgresql.external.host }}"
+      - name: KONG_PG_PORT
+        value: "{{ .Values.postgresql.external.port }}"
+      - name: KONG_PG_USER
+        valueFrom:
+          secretKeyRef:
+            name: kong-credentials
+            key: KONG_PG_USER
+      - name: KONG_PG_DATABASE
+        valueFrom:
+          secretKeyRef:
+            name: kong-credentials
+            key: KONG_PG_DATABASE
+      - name: KONG_PG_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: kong-credentials
+            key: KONG_PG_PASSWORD
+    resources:
+      requests:
+        cpu: 10m
+        memory: 32Mi
+      limits:
+        cpu: 100m
+        memory: 64Mi
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+          - ALL
+      runAsNonRoot: true
+      runAsUser: 70
 extraDeploy:
   - |
     apiVersion: gateway.networking.k8s.io/v1
