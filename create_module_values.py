@@ -29,6 +29,24 @@ S3_MODULES = [
     "mod-users",
 ]
 
+# Modules with no database schema; they get integrations.db.enabled: false
+NO_DB_MODULES = [
+    "mod-circulation",
+    "mod-ebsconet",
+    "mod-finance",
+    "mod-gobi",
+    "mod-graphql",
+    "mod-inventory-update",
+    "mod-ncip",
+    "mod-organizations",
+    "mod-patron",
+    "mod-rtac",
+    "mod-sender",
+    "mod-user-import",
+    "mod-users-bl",
+    "mod-z3950",
+]
+
 def replica_count(dir):
     replicas_file = Path(f"{dir}/replicas.yaml")
     if replicas_file.exists():
@@ -63,6 +81,8 @@ def base_override(name, version, replicas):
         data['pdb'] = {"enabled": True, "maxUnavailable": 1}
     if name in S3_MODULES:
         data['integrations']['s3'] = {"enabled": True, "existingSecret": "s3-credentials"}
+    if name in NO_DB_MODULES:
+        data['integrations']['db'] = {"enabled": False}
     if not name.startswith('mod-pubsub'):
         data['eureka']['extraEnvVars'] = [
             {"name": "FOLIO_SYSTEM_USER_ENABLED", "value": "false"},
