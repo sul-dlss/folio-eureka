@@ -67,7 +67,7 @@ def base_override(name, version, replicas):
         data['eureka']['extraEnvVars'] = [
             {"name": "FOLIO_SYSTEM_USER_ENABLED", "value": "false"},
             {"name": "SYSTEM_USER_CREATED", "value": "false"},
-            {"name": "SYSTEM_USER_ENABLED", "value": "false"},
+            {"name": "SYSTEM_USER_ENABLED", "value": "true" if name.startswith('mod-erm-usage-harvester') else "false"},
         ]
     if name.startswith('mod-reporting'):
         del data['securityContext']['runAsUser']
