@@ -52,8 +52,6 @@ kong:
       secretKeyRef:
         name: kong-credentials
         key: KONG_PASSWORD
-  - name: KONG_PG_PASSWORD_FILE
-    value: null
   - name: KONG_UPSTREAM_TIMEOUT
     value: "1200000"
   - name: KONG_UPSTREAM_SEND_TIMEOUT
@@ -89,11 +87,6 @@ kong:
       secretKeyRef:
         name: kong-credentials
         key: KONG_PG_DATABASE
-  - name: KONG_PG_USER
-    valueFrom:
-      secretKeyRef:
-        name: kong-credentials
-        key: KONG_PG_USER
   - name: KONG_NGINX_PROXY_PROXY_BUFFERS
     value: "64 160k"
   - name: KONG_NGINX_PROXY_CLIENT_HEADER_BUFFER_SIZE
