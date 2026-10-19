@@ -13,8 +13,7 @@ image:
   tag: 24.4.20
 integrations:
   db:
-    enabled: true
-    existingSecret: db-credentials
+    enabled: false
   kafka:
     enabled: true
     existingSecret: kafka-credentials

@@ -137,6 +137,60 @@ startupProbe:
   timeoutSeconds: 1
   failureThreshold: 300
   successThreshold: 1
+# Blocks pod startup until Keycloak can open a session on the external database,
+# so a pod on a node without database connectivity stays visibly in Init:0/1.
+initContainers:
+  - name: db-check
+    image: postgres:16-alpine
+    imagePullPolicy: IfNotPresent
+    command: ["sh", "-c"]
+    args:
+      - >-
+        until PGPASSWORD="$KC_DB_PASSWORD" psql -h "$KC_DB_URL_HOST" -p "$KC_DB_URL_PORT" -U "$KC_DB_USERNAME"
+        -d "$KC_DB_URL_DATABASE" -tAc 'select 1' >/dev/null; do
+        echo "Cannot connect to database $KC_DB_URL_HOST:$KC_DB_URL_PORT, retrying in 10s";
+        sleep 10;
+        done
+    env:
+      - name: KC_DB_URL_HOST
+        valueFrom:
+          secretKeyRef:
+            name: keycloak-credentials
+            key: KC_DB_URL_HOST
+      - name: KC_DB_URL_PORT
+        valueFrom:
+          secretKeyRef:
+            name: keycloak-credentials
+            key: KC_DB_URL_PORT
+      - name: KC_DB_URL_DATABASE
+        valueFrom:
+          secretKeyRef:
+            name: keycloak-credentials
+            key: KC_DB_URL_DATABASE
+      - name: KC_DB_USERNAME
+        valueFrom:
+          secretKeyRef:
+            name: keycloak-credentials
+            key: KC_DB_USERNAME
+      - name: KC_DB_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: keycloak-credentials
+            key: KC_DB_PASSWORD
+    resources:
+      requests:
+        cpu: 10m
+        memory: 32Mi
+      limits:
+        cpu: 100m
+        memory: 64Mi
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+          - ALL
+      runAsNonRoot: true
+      runAsUser: 70
 extraDeploy:
   - |
     apiVersion: gateway.envoyproxy.io/v1alpha1

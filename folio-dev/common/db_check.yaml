@@ -1,0 +1,33 @@
+# Blocks pod startup until the module can open a session on the external database,
+# so a pod on a node without database connectivity stays visibly in Init:0/1.
+initContainer:
+  enabled: true
+  image:
+    repository: postgres
+    tag: 16-alpine
+    pullPolicy: IfNotPresent
+  command: '["sh", "-c"]'
+  args:
+    - >-
+      until PGPASSWORD="$DB_PASSWORD" psql -h "$DB_HOST" -p "$DB_PORT" -U "$DB_USERNAME"
+      -d "$DB_DATABASE" -tAc 'select 1' >/dev/null; do
+      echo "Cannot connect to database $DB_HOST:$DB_PORT, retrying in 10s";
+      sleep 10;
+      done
+  envFrom:
+    - secretRef:
+        name: db-credentials
+  resources:
+    requests:
+      cpu: 10m
+      memory: 32Mi
+    limits:
+      cpu: 100m
+      memory: 64Mi
+  securityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - ALL
+    runAsNonRoot: true
+    runAsUser: 70

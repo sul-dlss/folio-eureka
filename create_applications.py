@@ -62,6 +62,14 @@ def application_manifest(name, version, namespace, application, module_type, rep
     return yaml.dump(data)
 
 
+def uses_db(module_name):
+    overrides = Path(f"{args.namespace}/modules/{module_name}/overrides.yaml")
+    if not overrides.exists():
+        return False
+    values = yaml.safe_load(overrides.read_text()) or {}
+    db = (values.get("integrations") or {}).get("db") or {}
+    return bool(db.get("enabled"))
+
 def create_applications(filename):
     with open(filename, "r") as file:
         data = json.load(file)
@@ -93,6 +101,9 @@ def create_applications(filename):
             values_files.append(f"$values/{args.namespace}/modules/{module_name}/probes.yaml")
         else:
             values_files.append(f"$values/{args.namespace}/common/probes.yaml")
+
+        if uses_db(module_name):
+            values_files.append(f"$values/{args.namespace}/common/db_check.yaml")
 
         if args.prod_replicasets and Path(f"{args.namespace}/modules/{module_name}/replicas.yaml").exists():
             values_files.append(f"$values/{args.namespace}/modules/{module_name}/replicas.yaml")
