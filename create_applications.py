@@ -59,6 +59,15 @@ def application_manifest(name, version, namespace, application, module_type, rep
             ]
         }
     }
+
+    # Deploy any extra k8s manifests the chart can't render (e.g. the mod-erm-usage-harvester Hazelcast headless Service)
+    if Path(f"{namespace}/modules/{name}/manifests/kustomization.yaml").exists():
+        data["spec"]["sources"].append({
+            "path": f"{namespace}/modules/{name}/manifests",
+            "repoURL": "https://github.com/sul-dlss/folio-eureka",
+            "targetRevision": args.values_branch,
+        })
+
     return yaml.dump(data)
 
 

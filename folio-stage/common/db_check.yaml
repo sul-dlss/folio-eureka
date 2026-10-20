@@ -31,3 +31,6 @@ initContainer:
         - ALL
     runAsNonRoot: true
     runAsUser: 70
+  # Some charts (e.g. mod-data-export) default an extendedtmp mount on initContainer
+  # whose volume is disabled; null drops it so the db check mounts nothing.
+  extraVolumeMounts: null
