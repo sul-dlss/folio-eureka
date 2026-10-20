@@ -72,6 +72,8 @@ extraEnvVars:
       secretKeyRef:
         name: keycloak-credentials
         key: KC_DB_USERNAME
+  - name: KC_DB_POOL_MAX_SIZE
+    value: "45"
   - name: KC_BOOTSTRAP_ADMIN_USERNAME
     valueFrom:
       secretKeyRef:
