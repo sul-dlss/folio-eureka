@@ -1,3 +1,5 @@
+args:
+  - event.payload.audit.enabled=true
 extraEnvVars: |
   - name: OKAPI_URL
     value: "http://localhost:8082"
