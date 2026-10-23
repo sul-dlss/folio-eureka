@@ -1,0 +1,110 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: ListenerSet
+metadata:
+  name: folio-stage-listeners
+  namespace: folio-stage
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  parentRef:
+    group: gateway.networking.k8s.io
+    kind: Gateway
+    name: default
+    namespace: envoy-gateway-system
+  listeners:
+    - name: folio-stage
+      hostname: folio-stage.stanford.edu
+      port: 443
+      protocol: HTTPS
+      allowedRoutes:
+        namespaces:
+          from: Same
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - group: ""
+            kind: Secret
+            name: folio-stage.stanford.edu-tls
+    - name: folio-stage-api
+      hostname: folio-stage-api.stanford.edu
+      port: 443
+      protocol: HTTPS
+      allowedRoutes:
+        namespaces:
+          from: Same
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - group: ""
+            kind: Secret
+            name: folio-stage-api.stanford.edu-tls
+    - name: keycloak-folio-stage
+      hostname: keycloak-folio-stage.stanford.edu
+      port: 443
+      protocol: HTTPS
+      allowedRoutes:
+        namespaces:
+          from: Same
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - group: ""
+            kind: Secret
+            name: keycloak-folio-stage.stanford.edu-tls
+    - name: folio-sru-stage
+      hostname: folio-sru-stage.stanford.edu
+      port: 443
+      protocol: HTTPS
+      allowedRoutes:
+        namespaces:
+          from: Same
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - group: ""
+            kind: Secret
+            name: folio-sru-stage.stanford.edu-tls
+    - name: folio-ncip-stage
+      hostname: folio-ncip-stage.stanford.edu
+      port: 443
+      protocol: HTTPS
+      allowedRoutes:
+        namespaces:
+          from: Same
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - group: ""
+            kind: Secret
+            name: folio-ncip-stage.stanford.edu-tls
+---
+# folio-setae-api-stage.stanford.edu is the one Stanford-only host here: it resolves
+# to the internal VIP, so it uses port 443 and a self-signed cert. The cert-manager
+# cluster-issuer annotation is per object, which is why it needs its own ListenerSet.
+apiVersion: gateway.networking.k8s.io/v1
+kind: ListenerSet
+metadata:
+  name: folio-stage-internal-listeners
+  namespace: folio-stage
+  annotations:
+    cert-manager.io/cluster-issuer: selfsigned
+spec:
+  parentRef:
+    group: gateway.networking.k8s.io
+    kind: Gateway
+    name: default
+    namespace: envoy-gateway-system
+  listeners:
+    - name: folio-setae-api-stage
+      hostname: folio-setae-api-stage.stanford.edu
+      port: 443
+      protocol: HTTPS
+      allowedRoutes:
+        namespaces:
+          from: Same
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - group: ""
+            kind: Secret
+            name: folio-setae-api-stage.stanford.edu-tls
