@@ -23,7 +23,7 @@ spec:
       - $values/folio-test/modules/mod-courses/replicas.yaml
       - $values/folio-test/common/java_opts.yaml
     repoURL: https://sul-dlss.github.io/folio-helm-v2
-    targetRevision: 1.5.52
+    targetRevision: 1.6.0
   - ref: values
     repoURL: https://github.com/sul-dlss/folio-eureka
     targetRevision: main
