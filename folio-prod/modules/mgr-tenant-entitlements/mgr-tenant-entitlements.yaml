@@ -15,6 +15,10 @@ integrations:
     enabled: true
     existingSecret: "kafka-credentials"
 
+pdb:
+  enabled: true
+  maxUnavailable: 1
+
 resources:
   limits:
     cpu: 600m
@@ -22,6 +26,8 @@ resources:
   requests:
     cpu: 300m
     memory: 512Mi
+
+replicaCount: 2
 
 extraEnvVars:
   - name: KC_JWKS_BASE_URL
