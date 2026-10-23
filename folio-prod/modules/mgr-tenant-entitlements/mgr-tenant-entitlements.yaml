@@ -17,7 +17,7 @@ integrations:
 
 pdb:
   enabled: true
-  maxUnavailable: true
+  maxUnavailable: 1
 
 resources:
   limits:
