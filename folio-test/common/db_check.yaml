@@ -2,6 +2,7 @@
 # so a pod on a node without database connectivity stays visibly in Init:0/1.
 initContainer:
   enabled: true
+  name: db-check
   image:
     repository: postgres
     tag: 16-alpine
