@@ -10,7 +10,7 @@ eureka:
     value: 'false'
 image:
   repository: folioorg/mod-mosaic
-  tag: 1.0.0
+  tag: 1.1.2
 integrations:
   db:
     enabled: true
@@ -22,6 +22,9 @@ integrations:
     enabled: false
   systemuser:
     enabled: false
+pdb:
+  enabled: true
+  maxUnavailable: 1
 podSecurityContext:
   fsGroup: 2000
 securityContext:
