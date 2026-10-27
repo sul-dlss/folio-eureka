@@ -10,7 +10,7 @@ eureka:
     value: 'false'
 image:
   repository: folioorg/mod-mosaic
-  tag: 1.1.2
+  tag: 1.0.1
 integrations:
   db:
     enabled: true

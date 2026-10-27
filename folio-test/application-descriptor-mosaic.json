@@ -1,194 +1,269 @@
 {
-  "id" : "app-mosaic-1.1.2",
-  "name" : "app-mosaic",
-  "version" : "1.1.2",
-  "description" : "Application Descriptor Repository for the FOLIO Mosaic integration",
-  "modules" : [ {
-    "id" : "mod-mosaic-1.1.2",
-    "name" : "mod-mosaic",
-    "version" : "1.1.2"
-  } ],
-  "uiModules" : [ {
-    "id" : "folio_mosaic-settings-1.1.0",
-    "name" : "folio_mosaic-settings",
-    "version" : "1.1.0"
-  } ],
-  "dependencies" : [ {
-    "name" : "app-acquisitions",
-    "version" : "~2.0.0",
-    "preRelease" : "false"
-  } ],
-  "moduleDescriptors" : [ {
-    "id" : "mod-mosaic-1.1.2",
-    "name" : "Folio mod-mosaic module",
-    "requires" : [ {
-      "id" : "orders",
-      "version" : "13.0"
-    }, {
-      "id" : "order-templates",
-      "version" : "1.0"
-    }, {
-      "id" : "organizations.organizations",
-      "version" : "1.2"
-    } ],
-    "provides" : [ {
-      "id" : "mosaic",
-      "version" : "1.0",
-      "handlers" : [ {
-        "methods" : [ "GET" ],
-        "pathPattern" : "/mosaic/validate",
-        "permissionsRequired" : [ "mosaic.validate.get" ],
-        "modulePermissions" : [ ]
-      }, {
-        "methods" : [ "POST" ],
-        "pathPattern" : "/mosaic/orders",
-        "permissionsRequired" : [ "mosaic.orders.item.post" ],
-        "modulePermissions" : [ "orders.order-templates.item.get", "orders.item.approve", "orders.item.post" ]
-      }, {
-        "methods" : [ "GET" ],
-        "pathPattern" : "/mosaic/configuration",
-        "permissionsRequired" : [ "mosaic.configuration.item.get" ],
-        "modulePermissions" : [ ]
-      }, {
-        "methods" : [ "PUT" ],
-        "pathPattern" : "/mosaic/configuration",
-        "permissionsRequired" : [ "mosaic.configuration.item.put" ],
-        "modulePermissions" : [ ]
-      }, {
-        "methods" : [ "POST" ],
-        "pathPattern" : "/mosaic/template",
-        "permissionsRequired" : [ "mosaic.template.item.post" ],
-        "modulePermissions" : [ "orders.order-templates.item.get", "orders.order-templates.item.post", "organizations.organizations.collection.get", "organizations.organizations.item.post" ]
-      } ]
-    }, {
-      "id" : "_tenant",
-      "version" : "2.0",
-      "interfaceType" : "system",
-      "handlers" : [ {
-        "methods" : [ "POST" ],
-        "pathPattern" : "/_/tenant"
-      }, {
-        "methods" : [ "GET", "DELETE" ],
-        "pathPattern" : "/_/tenant/{id}"
-      } ]
-    } ],
-    "permissionSets" : [ {
-      "permissionName" : "mosaic.all",
-      "displayName" : "Mosaic API module - all permissions",
-      "description" : "All permissions for mosaic module",
-      "subPermissions" : [ "mosaic.validate.get", "mosaic.orders.item.post", "mosaic.configuration.all", "mosaic.template.item.post" ]
-    }, {
-      "permissionName" : "mosaic.validate.get",
-      "displayName" : "validate mosaic",
-      "description" : "Validate Mosaic"
-    }, {
-      "permissionName" : "mosaic.configuration.all",
-      "displayName" : "Mosaic Configuration API - all permissions",
-      "description" : "All permissions for mosaic configuration API",
-      "subPermissions" : [ "mosaic.configuration.item.get", "mosaic.configuration.item.put" ]
-    }, {
-      "permissionName" : "mosaic.orders.item.post",
-      "displayName" : "post mosaic orders",
-      "description" : "Create Mosaic orders"
-    }, {
-      "permissionName" : "mosaic.configuration.item.get",
-      "displayName" : "get mosaic configuration",
-      "description" : "Read Mosaic configuration"
-    }, {
-      "permissionName" : "mosaic.configuration.item.put",
-      "displayName" : "put mosaic configuration",
-      "description" : "Update Mosaic configuration"
-    }, {
-      "permissionName" : "mosaic.template.item.post",
-      "displayName" : "post mosaic template",
-      "description" : "Generate default Mosaic order template"
-    } ],
-    "launchDescriptor" : {
-      "dockerImage" : "folioorg/mod-mosaic:1.1.2",
-      "dockerPull" : true,
-      "env" : [ {
-        "name" : "JAVA_OPTIONS",
-        "value" : "-XX:MaxRAMPercentage=75.0"
-      }, {
-        "name" : "ENV",
-        "value" : "folio",
-        "description" : "The logical name of the deployment, must be unique across all environments using the same shared resources"
-      }, {
-        "name" : "OKAPI_URL",
-        "value" : "http://sidecar:8081",
-        "description" : "Okapi URL"
-      }, {
-        "name" : "DB_HOST",
-        "value" : "postgres",
-        "description" : "Postgres hostname"
-      }, {
-        "name" : "DB_PORT",
-        "value" : "5432",
-        "description" : "Postgres port"
-      }, {
-        "name" : "DB_USERNAME",
-        "value" : "folio_admin",
-        "description" : "Postgres username"
-      }, {
-        "name" : "DB_PASSWORD",
-        "value" : "folio_admin",
-        "description" : "Postgres username password"
-      }, {
-        "name" : "DB_DATABASE",
-        "value" : "okapi_modules",
-        "description" : "Postgres database name"
-      } ],
-      "dockerArgs" : {
-        "HostConfig" : {
-          "Memory" : 502293850,
-          "PortBindings" : {
-            "8081/tcp" : [ {
-              "HostPort" : "%p"
-            } ]
-          }
+  "id": "app-mosaic-1.0.1",
+  "name": "app-mosaic",
+  "version": "1.0.1",
+  "description": "Application Descriptor Repository for the FOLIO Mosaic integration",
+  "modules": [
+    {
+      "id": "mod-mosaic-1.0.1",
+      "name": "mod-mosaic",
+      "version": "1.0.1"
+    }
+  ],
+  "uiModules": [
+    {
+      "id": "folio_mosaic-settings-1.0.0",
+      "name": "folio_mosaic-settings",
+      "version": "1.0.0"
+    }
+  ],
+  "dependencies": [
+    {
+      "name": "app-acquisitions",
+      "version": "^1.0.0"
+    }
+  ],
+  "moduleDescriptors": [
+    {
+      "id": "mod-mosaic-1.0.1",
+      "name": "Folio mod-mosaic module",
+      "requires": [
+        {
+          "id": "orders",
+          "version": "12.1"
+        },
+        {
+          "id": "order-templates",
+          "version": "1.0"
+        },
+        {
+          "id": "organizations.organizations",
+          "version": "1.2"
         }
+      ],
+      "provides": [
+        {
+          "id": "mosaic",
+          "version": "1.0",
+          "handlers": [
+            {
+              "methods": [
+                "GET"
+              ],
+              "pathPattern": "/mosaic/validate",
+              "permissionsRequired": [
+                "mosaic.validate.get"
+              ],
+              "modulePermissions": []
+            },
+            {
+              "methods": [
+                "POST"
+              ],
+              "pathPattern": "/mosaic/orders",
+              "permissionsRequired": [
+                "mosaic.orders.item.post"
+              ],
+              "modulePermissions": [
+                "orders.order-templates.item.get",
+                "orders.item.approve",
+                "orders.item.post"
+              ]
+            },
+            {
+              "methods": [
+                "GET"
+              ],
+              "pathPattern": "/mosaic/configuration",
+              "permissionsRequired": [
+                "mosaic.configuration.item.get"
+              ],
+              "modulePermissions": []
+            },
+            {
+              "methods": [
+                "PUT"
+              ],
+              "pathPattern": "/mosaic/configuration",
+              "permissionsRequired": [
+                "mosaic.configuration.item.put"
+              ],
+              "modulePermissions": []
+            }
+          ]
+        },
+        {
+          "id": "_tenant",
+          "version": "2.0",
+          "interfaceType": "system",
+          "handlers": [
+            {
+              "methods": [
+                "POST"
+              ],
+              "pathPattern": "/_/tenant",
+              "modulePermissions": [
+                "orders.order-templates.item.get",
+                "orders.order-templates.item.post",
+                "organizations.organizations.collection.get",
+                "organizations.organizations.item.post"
+              ]
+            },
+            {
+              "methods": [
+                "GET",
+                "DELETE"
+              ],
+              "pathPattern": "/_/tenant/{id}"
+            }
+          ]
+        }
+      ],
+      "permissionSets": [
+        {
+          "permissionName": "mosaic.all",
+          "displayName": "Mosaic API module - all permissions",
+          "description": "All permissions for mosaic module",
+          "subPermissions": [
+            "mosaic.validate.get",
+            "mosaic.orders.item.post",
+            "mosaic.configuration.all"
+          ]
+        },
+        {
+          "permissionName": "mosaic.validate.get",
+          "displayName": "validate mosaic",
+          "description": "Validate Mosaic"
+        },
+        {
+          "permissionName": "mosaic.configuration.all",
+          "displayName": "Mosaic Configuration API - all permissions",
+          "description": "All permissions for mosaic configuration API",
+          "subPermissions": [
+            "mosaic.configuration.item.get",
+            "mosaic.configuration.item.put"
+          ]
+        },
+        {
+          "permissionName": "mosaic.orders.item.post",
+          "displayName": "post mosaic orders",
+          "description": "Create Mosaic orders"
+        },
+        {
+          "permissionName": "mosaic.configuration.item.get",
+          "displayName": "get mosaic configuration",
+          "description": "Read Mosaic configuration"
+        },
+        {
+          "permissionName": "mosaic.configuration.item.put",
+          "displayName": "put mosaic configuration",
+          "description": "Update Mosaic configuration"
+        }
+      ],
+      "launchDescriptor": {
+        "dockerImage": "mod-mosaic:1.0.1",
+        "dockerPull": false,
+        "dockerArgs": {
+          "HostConfig": {
+            "Memory": 502293850,
+            "PortBindings": {
+              "8081/tcp": [
+                {
+                  "HostPort": "%p"
+                }
+              ]
+            }
+          }
+        },
+        "env": [
+          {
+            "name": "JAVA_OPTIONS",
+            "value": "-XX:MaxRAMPercentage=75.0"
+          },
+          {
+            "name": "ENV",
+            "value": "folio",
+            "description": "The logical name of the deployment, must be unique across all environments using the same shared resources"
+          },
+          {
+            "name": "OKAPI_URL",
+            "value": "http://sidecar:8081",
+            "description": "Okapi URL"
+          },
+          {
+            "name": "DB_HOST",
+            "value": "postgres",
+            "description": "Postgres hostname"
+          },
+          {
+            "name": "DB_PORT",
+            "value": "5432",
+            "description": "Postgres port"
+          },
+          {
+            "name": "DB_USERNAME",
+            "value": "folio_admin",
+            "description": "Postgres username"
+          },
+          {
+            "name": "DB_PASSWORD",
+            "value": "folio_admin",
+            "description": "Postgres username password"
+          },
+          {
+            "name": "DB_DATABASE",
+            "value": "okapi_modules",
+            "description": "Postgres database name"
+          }
+        ]
       }
     }
-  } ],
-  "uiModuleDescriptors" : [ {
-    "id" : "folio_mosaic-settings-1.1.0",
-    "name" : "UI to configure integration between FOLIO and Mosaic",
-    "requires" : [ {
-      "id" : "mosaic",
-      "version" : "1.0"
-    }, {
-      "id" : "order-templates",
-      "version" : "1.0"
-    } ],
-    "optional" : [ ],
-    "permissionSets" : [ {
-      "permissionName" : "settings.mosaic-settings.enabled",
-      "displayName" : "Mosaic settings module is enabled",
-      "subPermissions" : [ "settings.enabled" ],
-      "visible" : false
-    }, {
-      "permissionName" : "ui-mosaic-settings.settings.view",
-      "displayName" : "Settings (Mosaic integration): View settings",
-      "subPermissions" : [ "settings.mosaic-settings.enabled", "mosaic.configuration.item.get", "orders.order-templates.collection.get" ],
-      "visible" : true
-    }, {
-      "permissionName" : "ui-mosaic-settings.settings.edit",
-      "displayName" : "Settings (Mosaic integration): View and edit settings",
-      "subPermissions" : [ "ui-mosaic-settings.settings.view", "mosaic.configuration.item.put", "mosaic.template.item.post" ],
-      "visible" : true
-    } ],
-    "metadata" : {
-      "stripes" : {
-        "stripesDeps" : [ "@folio/stripes-acq-components" ],
-        "actsAs" : [ "settings" ],
-        "displayName" : "ui-mosaic-settings.meta.title",
-        "route" : "/mosaic-settings",
-        "icons" : [ {
-          "name" : "app",
-          "alt" : "Mosaic integration",
-          "title" : "Mosaic integration settings"
-        } ]
-      }
+  ],
+  "uiModuleDescriptors": [
+    {
+      "id": "folio_mosaic-settings-1.0.0",
+      "name": "UI to configure integration between FOLIO and Mosaic",
+      "requires": [
+        {
+          "id": "mosaic",
+          "version": "1.0"
+        },
+        {
+          "id": "order-templates",
+          "version": "1.0"
+        }
+      ],
+      "optional": [],
+      "permissionSets": [
+        {
+          "permissionName": "settings.mosaic-settings.enabled",
+          "displayName": "Mosaic settings module is enabled",
+          "subPermissions": [
+            "settings.enabled"
+          ],
+          "visible": false
+        },
+        {
+          "permissionName": "ui-mosaic-settings.settings.view",
+          "displayName": "Settings (Mosaic integration): View settings",
+          "subPermissions": [
+            "settings.mosaic-settings.enabled",
+            "mosaic.configuration.item.get",
+            "orders.order-templates.collection.get"
+          ],
+          "visible": true
+        },
+        {
+          "permissionName": "ui-mosaic-settings.settings.edit",
+          "displayName": "Settings (Mosaic integration): View and edit settings",
+          "subPermissions": [
+            "ui-mosaic-settings.settings.view",
+            "mosaic.configuration.item.post",
+            "mosaic.configuration.item.put"
+          ],
+          "visible": true
+        }
+      ]
     }
-  } ]
+  ]
 }
