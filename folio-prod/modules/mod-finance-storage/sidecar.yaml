@@ -1,4 +1,5 @@
 sidecarContainers:
   eureka:
-    limits:
-      cpu: 500m
+    resources:
+      limits:
+        cpu: 500m
