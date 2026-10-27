@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   labels:
-    application: app-mosaic-1.1.2
+    application: app-mosaic-1.0.1
     type: module
   name: mod-mosaic
   namespace: folio-dev
