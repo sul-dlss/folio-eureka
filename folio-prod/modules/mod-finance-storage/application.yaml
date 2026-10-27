@@ -18,6 +18,7 @@ spec:
       - $values/folio-prod/modules/mod-finance-storage/overrides.yaml
       - $values/folio-prod/modules/mod-finance-storage/resources.yaml
       - $values/folio-prod/common/sidecar.yaml
+      - $values/folio-prod/modules/mod-finance-storage/sidecar.yaml
       - $values/folio-prod/common/probes.yaml
       - $values/folio-prod/common/db_check.yaml
       - $values/folio-prod/modules/mod-finance-storage/replicas.yaml
