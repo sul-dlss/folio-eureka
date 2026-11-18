@@ -5,7 +5,9 @@ global:
   security:
     allowInsecureImages: true
 controller:
-  heapOpts: "-Xmx1024m -Xms1024m -XX:-UseBASE64Intrinsics"
+  extraEnvVars:
+    - name: KAFKA_OPTS
+      value: "-XX:-UseBASE64Intrinsics"
   resources:
     requests:
       cpu: '.5'
@@ -52,18 +54,9 @@ listeners:
     protocol: PLAINTEXT
   interbroker:
     protocol: PLAINTEXT
+# jmx-exporter disabled: its java command is hardcoded in the chart, so it cannot get -XX:-UseBASE64Intrinsics
 metrics:
   jmx:
-    image:
-      repository: bitnamilegacy/jmx-exporter
-      tag: 1.0.1-debian-12-r9
-    enabled: true
-    resources:
-      limits:
-        cpu: "1"
-        memory: 4Gi
-      requests:
-        cpu: 50m
-        memory: 24Mi
+    enabled: false
   serviceMonitor:
-    enabled: true
+    enabled: false
