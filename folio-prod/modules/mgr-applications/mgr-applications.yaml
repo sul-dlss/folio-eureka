@@ -17,6 +17,7 @@ integrations:
 
 extraJavaOpts:
   - "-Dlogging.level.root=DEBUG"
+  - "-XX:-UseBASE64Intrinsics"
 
 resources:
   limits:

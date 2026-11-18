@@ -84,6 +84,9 @@ extraEnvVars:
         key: KC_BOOTSTRAP_ADMIN_PASSWORD
   - name: BASE_LOGO_FILES_URL
     value: "http://folio-stage.stanford.edu"
+  # Keeps the chart's env-vars ConfigMap JAVA_OPTS_APPEND (jgroups clustering); env overrides envFrom
+  - name: JAVA_OPTS_APPEND
+    value: "-Djgroups.dns.query=keycloak-headless.folio-stage.svc.cluster.local -XX:-UseBASE64Intrinsics"
 proxy: "edge"
 pdb:
   create: false
