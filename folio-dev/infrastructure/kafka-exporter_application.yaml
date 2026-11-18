@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kafka-exporter-folio-dev
+  namespace: folio-dev
+  labels:
+    type: infrastructure
+spec:
+  project: folio-dev
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: folio-dev
+  sources:
+    - repoURL: https://prometheus-community.github.io/helm-charts
+      chart: prometheus-kafka-exporter
+      targetRevision: 4.1.2
+      helm:
+        valueFiles:
+        - $values/folio-dev/infrastructure/kafka-exporter.yaml
+    - repoURL: https://github.com/sul-dlss/folio-eureka
+      targetRevision: main
+      ref: values

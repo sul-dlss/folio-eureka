@@ -1,0 +1,22 @@
+image:
+  repository: docker.io/danielqsj/kafka-exporter
+  tag: v1.11.0
+
+kafkaServer:
+  - kafka-folio-stage:9092
+
+prometheus:
+  serviceMonitor:
+    enabled: true
+    namespace: folio-stage
+    additionalLabels:
+      app: prometheus-kafka-exporter
+      release: prometheus
+      component: folio-stage
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    memory: 256Mi
