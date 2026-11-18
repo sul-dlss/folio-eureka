@@ -5,3 +5,4 @@ extraJavaOpts:
 - "-XX:MaxRAMPercentage=80"
 - "-XX:MinRAMPercentage=80"
 - "-Dsecure_store=Ephemeral"
+- "-XX:-UseBASE64Intrinsics"

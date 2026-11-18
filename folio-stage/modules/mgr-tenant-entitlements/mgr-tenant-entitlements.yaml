@@ -23,6 +23,10 @@ resources:
     cpu: 300m
     memory: 512Mi
 
+extraJavaOpts:
+  - "-XX:MaxRAMPercentage=75.0"
+  - "-XX:-UseBASE64Intrinsics"
+
 extraEnvVars:
   - name: KC_JWKS_BASE_URL
     value: "http://keycloak:8080"

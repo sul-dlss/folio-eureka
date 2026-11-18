@@ -16,3 +16,5 @@ sidecarContainers:
         value: root
       - name: SECRET_STORE_VAULT_ADDRESS
         value: http://vault-internal:8200
+      - name: JAVA_TOOL_OPTIONS
+        value: "-XX:-UseBASE64Intrinsics"

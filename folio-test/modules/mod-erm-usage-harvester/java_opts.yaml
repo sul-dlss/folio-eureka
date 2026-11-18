@@ -2,3 +2,4 @@ extraJavaOpts:
   - "-XX:MaxRAMPercentage=65"
   - "-XX:MinRAMPercentage=65"
   - "-Dorg.quartz.threadPool.threadCount=2"
+  - "-XX:-UseBASE64Intrinsics"

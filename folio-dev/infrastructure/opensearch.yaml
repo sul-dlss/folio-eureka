@@ -112,7 +112,7 @@ openSearchAnnotations: {}
 # additionals labels
 labels: {}
 
-opensearchJavaOpts: "-Xmx4g -Xms4g"  # 50% of 8GB memory
+opensearchJavaOpts: "-Xmx4g -Xms4g -XX:-UseBASE64Intrinsics"  # 50% of 8GB memory
 
 resources:
   requests:

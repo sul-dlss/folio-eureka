@@ -1,3 +1,4 @@
 extraJavaOpts: 
   - "-XX:MaxRAMPercentage=80" 
   - "-XX:MinRAMPercentage=80" 
+  - "-XX:-UseBASE64Intrinsics"

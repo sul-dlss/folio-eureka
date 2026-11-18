@@ -1,2 +1,3 @@
 javaOpts:
   - "-Dservice_manager_timeout_ms=60000"
+  - "-XX:-UseBASE64Intrinsics"

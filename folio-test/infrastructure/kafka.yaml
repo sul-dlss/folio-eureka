@@ -5,6 +5,7 @@ global:
   security:
     allowInsecureImages: true
 controller:
+  heapOpts: "-Xmx1024m -Xms1024m -XX:-UseBASE64Intrinsics"
   resources:
     requests:
       cpu: '.5'
