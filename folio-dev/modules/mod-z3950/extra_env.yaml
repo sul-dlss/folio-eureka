@@ -5,12 +5,6 @@ configMaps:
     mountPath: /usr/src/app/etc
     fileName: config.sul.json
     existingConfig: zserver.conf
-  ssl2022cert:
-    enabled: true
-    name: ssl2022cert.conf
-    mountPath: /usr/src/app/etc
-    fileName: ssl2022.crt
-    existingConfig: ssl2022cert.conf
   mod-search-graphql-query:
     enabled: true
     name: mod-search-graphql-query
@@ -29,5 +23,3 @@ extraEnvVars: |
       secretKeyRef:
         key: READONLY_APP_PASSWORD
         name: folio-eureka
-  - name: PERL_LWP_SSL_CA_FILE
-    value: /usr/src/app/etc/ssl2022.crt
