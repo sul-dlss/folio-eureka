@@ -8,6 +8,9 @@ image:
   pullPolicy: Always
 useDaemonset: false
 replicaCount: 1
+# TEMPORARY (Ubuntu 22.04 node rebuild, Nov 2026): remove once all worker nodes are upgraded
+nodeSelector:
+  ubuntu: "22.04"
 containerSecurityContext:
   enabled: true
   seLinuxOptions: {}
