@@ -6,3 +6,6 @@ resources:
     cpu: 1
     memory: 2288M
 
+# TEMPORARY (Ubuntu 22.04 node rebuild, Nov 2026): remove once all worker nodes are upgraded
+nodeSelector:
+  ubuntu: "22.04"
