@@ -89,6 +89,9 @@ extraEnvVars:
   # Keeps the chart's env-vars ConfigMap JAVA_OPTS_APPEND (jgroups clustering); env overrides envFrom
   - name: JAVA_OPTS_APPEND
     value: "-Djgroups.dns.query=keycloak-headless.folio-prod.svc.cluster.local -XX:-UseBASE64Intrinsics"
+  # Fail hung DB connections fast instead of waiting ~15 min for TCP retransmits to give up
+  - name: KC_DB_URL_PROPERTIES
+    value: "?connectTimeout=10&socketTimeout=120&tcpKeepAlive=true"
 proxy: "edge"
 replicaCount: 3
 resources:
@@ -130,13 +133,19 @@ livenessProbe:
   timeoutSeconds: 10
   failureThreshold: 5
   successThreshold: 1
+# /realms/master is served from cache and stays green when the DB is unreachable;
+# /health/ready (management port, needs KC_HEALTH_ENABLED) includes a DB check.
 readinessProbe:
-  enabled: true
+  enabled: false
+customReadinessProbe:
+  httpGet:
+    path: /health/ready
+    port: 9000
+    scheme: HTTPS
   initialDelaySeconds: 30
   periodSeconds: 10
-  timeoutSeconds: 10
-  failureThreshold: 10
-  successThreshold: 1
+  timeoutSeconds: 5
+  failureThreshold: 3
 startupProbe:
   enabled: false
   initialDelaySeconds: 30
