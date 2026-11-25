@@ -89,7 +89,12 @@ extraEnvVars:
   # Keeps the chart's env-vars ConfigMap JAVA_OPTS_APPEND (jgroups clustering); env overrides envFrom
   - name: JAVA_OPTS_APPEND
     value: "-Djgroups.dns.query=keycloak-headless.folio-prod.svc.cluster.local -XX:-UseBASE64Intrinsics"
-  # Fail hung DB connections fast instead of waiting ~15 min for TCP retransmits to give up
+  # Standard Keycloak option (--db-url-properties / KC_DB_URL_PROPERTIES), not a chart value.
+  # Neither the Bitnami chart nor folio-keycloak's start.sh sets db-url, so Keycloak builds the
+  # JDBC URL from its postgres template and appends this value verbatim (must start with "?"):
+  #   jdbc:postgresql://<KC_DB_URL_HOST>:<KC_DB_URL_PORT>/<KC_DB_URL_DATABASE><KC_DB_URL_PROPERTIES>
+  # Timeouts are in seconds (pgjdbc). socketTimeout=120 fails hung connections in ~2 min instead of
+  # ~15 min of TCP retransmits (folio-prod outage 2026-11-23). Revisit for Keycloak upgrades (#226).
   - name: KC_DB_URL_PROPERTIES
     value: "?connectTimeout=10&socketTimeout=120&tcpKeepAlive=true"
 proxy: "edge"
