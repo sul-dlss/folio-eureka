@@ -259,3 +259,22 @@ extraDeploy:
         - path:
             type: PathPrefix
             value: /
+  # Alerts when a Keycloak pod is Running but failing /health/ready (e.g. cannot reach the DB)
+  - |
+    apiVersion: monitoring.coreos.com/v1
+    kind: PrometheusRule
+    metadata:
+      name: keycloak-readiness
+      namespace: folio-prod
+    spec:
+      groups:
+        - name: keycloak
+          rules:
+            - alert: KeycloakPodNotReady
+              expr: kube_pod_status_ready{namespace="folio-prod", pod=~"keycloak-[0-9]+", condition="true"} == 0
+              for: 3m
+              labels:
+                severity: warning
+              annotations:
+                summary: "Keycloak pod {{`{{ $labels.pod }}`}} is not ready"
+                description: "{{`{{ $labels.pod }}`}} has failed its readiness probe (/health/ready, which includes a DB check) for 3 minutes and is out of rotation."
